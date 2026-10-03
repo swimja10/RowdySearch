@@ -1,7 +1,8 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { LookupContext } from "./useLookup.ts";
-import type { Page } from "../page.ts";
-import type { GradeData } from "../utils/loadGradeData.ts";
+import type { GradeData } from "../hooks/useGradeData.ts";
+import type { Page, Section } from "../page.ts";
+import { pageForSection } from "../utils/pageForSection.ts";
 
 type LookupProviderProps = {
   gradeData: GradeData;
@@ -12,21 +13,22 @@ type LookupProviderProps = {
 export function LookupProvider({ gradeData, children }: LookupProviderProps) {
   const [pages, setPages] = useState<Page[]>([{ type: "search", query: "" }]);
 
-  // Clicking a cell in Schedule Planner's RowdySearch column puts the page to open after "#".
+  // A Search button in Schedule Planner's RowdySearch column puts its section after "#".
   useEffect(() => {
-    function openPageFromAddress() {
+    function openSectionFromAddress() {
       if (window.location.hash === "") return;
 
-      const page: Page = JSON.parse(decodeURIComponent(window.location.hash.slice(1)));
+      const section: Section = JSON.parse(decodeURIComponent(window.location.hash.slice(1)));
+      const page = pageForSection(section, gradeData.searchIndex);
       setPages(curr => [...curr, page]);
-      // Clear the "#" part so clicking the same cell again still works.
+      // Clear the "#" part so clicking the same Search button again still works.
       window.history.replaceState(null, "", window.location.pathname);
     }
 
-    openPageFromAddress();
-    window.addEventListener("hashchange", openPageFromAddress);
-    return () => window.removeEventListener("hashchange", openPageFromAddress);
-  }, []);
+    openSectionFromAddress();
+    window.addEventListener("hashchange", openSectionFromAddress);
+    return () => window.removeEventListener("hashchange", openSectionFromAddress);
+  }, [gradeData.searchIndex]);
 
   function openPage(page: Page) {
     setPages(curr => [...curr, page]);

@@ -10,7 +10,7 @@ export function Header() {
         ← Back
       </Button>
       <h1 className="flex items-center gap-2 text-lg font-bold">
-        <img src="/icons/icon-48.png" alt="" className="size-6 rounded-md" />
+        <img src="icons/icon-48.png" alt="" className="size-6 rounded-md" />
         RowdySearch
       </h1>
       <Button variant="secondary" className="whitespace-nowrap text-sm" onClick={() => openSearch("")}>

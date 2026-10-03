@@ -3,9 +3,9 @@
 // The sidebar lives in an iframe so the site's CSS can't break our Tailwind styles,
 // and our styles can't break the site. Tailwind classes don't exist on these pages,
 // so the tab is styled by hand here.
-import type { Page } from "../page.ts";
+import type { Section } from "../page.ts";
 
-const SIDEBAR_URL = chrome.runtime.getURL("index.html");
+const SIDEBAR_URL = chrome.runtime.getURL("dist/index.html");
 const SIDEBAR_WIDTH = "420px";
 const ON_TOP_OF_EVERYTHING = "2147483647";
 
@@ -17,10 +17,10 @@ export function addLookupTab() {
   document.body.append(sidebar, lookupTab);
 }
 
-// Opens the sidebar straight to one page, like a professor's class.
-export function showInSidebar(page: Page) {
-  // The sidebar reads the page from the part of its address after "#".
-  sidebar.src = `${SIDEBAR_URL}#${encodeURIComponent(JSON.stringify(page))}`;
+// Opens the sidebar straight to one section's professor and class.
+export function showInSidebar(section: Section) {
+  // The sidebar reads the section from the part of its address after "#".
+  sidebar.src = `${SIDEBAR_URL}#${encodeURIComponent(JSON.stringify(section))}`;
   setSidebarOpen(true);
 }
 

@@ -8,10 +8,15 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
-dist-ssr
 *.local
 venv/
+
+# dist/ is NOT ignored on purpose: it's the built extension, so anyone who clones
+# the repo can "Load unpacked" this folder in Chrome without building it first.
+
+# Windows adds these "downloaded from the internet" stamps next to downloaded files.
+# Their names contain ":", which breaks cloning the repo on Windows.
+*:Zone.Identifier
 
 # Editor directories and files
 .vscode/*
