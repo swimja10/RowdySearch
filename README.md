@@ -1,35 +1,64 @@
-# React + TypeScript + Vite
+# RowdySearch
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A Chrome extension that cuts UTSA professor research from ten minutes to one click.
 
-Currently, two official plugins are available:
+- **Schedule Planner:** a **RowdySearch** column after "Parts of Term" shows every section's
+  professor rating, their median grade in that class, and when they last taught it.
+  Click a cell to open the full details.
+- **Toolbar icon:** click the RowdySearch icon on any website to open the sidebar.
+- **Lookup tab:** an orange tab on the right edge of Schedule Planner and Register for
+  Classes opens the same sidebar.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+In the sidebar, type a search and press **Enter**:
 
-## React Compiler
+| You type | Enter opens |
+| --- | --- |
+| `Sean Beatty` | His professor page: RMP stats, reviews, median grade across every class |
+| `Beatty MAT 1213` | His MAT 1213 page: median grade, latest syllabus, every semester |
+| `linear algebra` or `MAT 1213` | The course page: every professor who teaches it, side by side |
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+Every search goes through `src/searcher.ts`.
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+## Build and load it
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run build
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+1. Open `chrome://extensions` and turn on **Developer mode**.
+2. Click **Load unpacked** and pick the `dist` folder.
+3. Pin RowdySearch from the puzzle-piece menu so its icon stays in the toolbar.
+
+After changing code, run `npm run build` again and press the reload button on the
+extension's card in `chrome://extensions`. Reload any open Schedule Planner tabs too.
+
+## Work on the sidebar
+
+`npm run dev` opens the sidebar as a normal web page, so you can work on it with hot reload.
+The column and the Lookup tab only appear once the extension is loaded in Chrome.
+
+## Try the searcher in the terminal
+
+```bash
+node searcher.ts "Darrn Meritz WRC"
+```
+
+## How it fits together
+
+| File | What it does |
+| --- | --- |
+| `public/manifest.json` | Tells Chrome about the icon, the side panel, and which sites to run on |
+| `src/background.ts` | Opens the side panel from the toolbar icon, answers the Schedule Planner column |
+| `src/content/` | Runs on the registration sites: the RowdySearch column and the Lookup tab |
+| `index.html`, `src/main.tsx`, `src/App.tsx` | The sidebar (React + Tailwind) |
+| `src/context/` | Which page the sidebar is on, plus the Back history |
+| `src/components/` | The search, professor, class, and course pages and their pieces |
+| `src/searcher.ts` | Finds professors and courses, even with typos |
+| `src/utils/` | Reads the JSON, groups classes into courses, works out median grades |
+
+## Updating the data
+
+1. Run the scrapers in `scrappers/` to get new `professors.json` and `RMP.json`.
+2. Run `python3 combine_data.py` to rebuild `data/cleaned_grade_data.json`.
+3. Run `npm run build` and reload the extension.
