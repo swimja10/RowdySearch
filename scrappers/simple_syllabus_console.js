@@ -6,12 +6,17 @@
 // 4. Keep the tab open. professors.json lands in Downloads when it finishes.
 //
 // To stop early and download what it has so far, run:  stopScrape = true
+//
+// If it stops with an error, leave the tab as it is and paste the script again:
+// it keeps what it collected (in window.scrapeData) and carries on from the
+// page currently shown. Reloading the tab clears that memory.
 (async () => {
   const MAX_PAGES = 0; // 0 = all pages
   const GRADES = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F", "W"];
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-  const data = {};
+  const data = (window.scrapeData ??= {}); // survives a re-paste, so a rerun resumes
   window.stopScrape = false;
+  let missingLinks = 0;
 
   const labelText = () =>
     (document.querySelector(".mat-mdc-paginator-range-label")?.textContent || "").trim();
@@ -19,6 +24,14 @@
     [...document.querySelectorAll("app-library-doc-card .doc-term-title")]
       .map((e) => e.textContent.trim())
       .join("|");
+
+  // The card's thumbnail is /api2/doc-png/<code>/<slug>; the syllabus itself is
+  // the same code and slug under /doc/.
+  function syllabusLink(card) {
+    const src = card.querySelector("img[src*='/doc-png/']")?.getAttribute("src") || "";
+    const m = src.match(/\/doc-png\/([^/?#]+)\/([^/?#]+)/);
+    return m ? `${new URL(src, location.href).origin}/doc/${m[1]}/${m[2]}?mode=view` : null;
+  }
 
   function parsePage() {
     let count = 0;
@@ -43,10 +56,13 @@
         const entry = (data[prof] ??= { Department: subject });
         const key = `${course} - ${subtitle.textContent.trim()} (${semester})`;
         if (!entry[key]) {
-          entry[key] = { Semester: semester, Sections: [] };
+          entry[key] = { Semester: semester, Sections: [], Syllabus: {} };
           for (const g of GRADES) entry[key][g] = null;
         }
         if (section && !entry[key].Sections.includes(section)) entry[key].Sections.push(section);
+        const link = syllabusLink(card);
+        if (link) entry[key].Syllabus[section || "-"] = link;
+        else missingLinks++;
       }
     }
     return count;
@@ -72,6 +88,7 @@
     a.click();
     a.remove();
     console.log(`downloaded professors.json with ${Object.keys(out).length} professors`);
+    if (missingLinks) console.warn(`${missingLinks} cards had no syllabus link`);
   }
 
   try {
@@ -81,6 +98,7 @@
       const label = labelText(); // "1 – 50 of 20834"
       const sig = cardSig();
       const cards = parsePage();
+      if (n === 1) console.log("first syllabus link (click to check it opens):", syllabusLink(document.querySelector("app-library-doc-card")));
       console.log(`page ${n}: ${label} (${cards} cards, ${Object.keys(data).length} professors)`);
 
       const nums = (label.match(/\d+/g) || []).map(Number);
@@ -93,13 +111,28 @@
         next.classList.contains("mat-mdc-button-disabled");
       if (window.stopScrape || atEnd || disabled || (MAX_PAGES && n >= MAX_PAGES)) break;
 
-      next.click();
-      // wait for the range label AND the cards to change, i.e. the next page rendered
-      const start = Date.now();
-      while (labelText() === label || cardSig() === sig || !cardSig()) {
-        if (Date.now() - start > 60000) throw new Error(`page after "${label}" did not load in 60s`);
-        await sleep(100);
+      // wait for the range label AND the cards to change, i.e. the next page rendered.
+      // If the site ignores the click or the request fails, click again (up to 6 tries).
+      let loaded = false;
+      for (let attempt = 1; attempt <= 6 && !loaded; attempt++) {
+        if (labelText() === label) {
+          document.querySelector("button.mat-mdc-paginator-navigation-next")?.click();
+        }
+        const start = Date.now();
+        while (Date.now() - start < 20000) {
+          if (labelText() !== label && cardSig() && cardSig() !== sig) {
+            loaded = true;
+            break;
+          }
+          await sleep(100);
+        }
+        if (!loaded) {
+          const why = labelText() === label ? "page number did not change" : "cards did not change";
+          console.warn(`page after "${label}": ${why} (attempt ${attempt} of 6)`);
+          await sleep(5000 * attempt); // back off before trying again
+        }
       }
+      if (!loaded) throw new Error(`page after "${label}" did not load after 6 attempts`);
       await sleep(300); // small pause to be polite to the server
     }
   } catch (e) {
