@@ -55,24 +55,30 @@ and Rate My Professors, gathered with the scrapers in `scrappers/` and combined 
 
 ## Challenges we ran into
 
-_Write the challenges you ran into here._
+A challenge we ran into was Fuse.js being slow on our data, and professors' names changing. Life happens and people change their names or surnames. So we built our own search engine that tolerates one wrong word in a query and is faster than Fuse.js for this data set.
+
+Our approach is a process of elimination that runs the cheapest checks first. Ahead of time, we build an index of every unique word in the data set and which professor-course entries contain it. At search time we split the query into unique words and compare each one against the index. Exact matches pass immediately. Otherwise a word gets a typo budget based on its length: none for short words and course numbers, one for medium words, two for long ones. If two words differ in length by more than the budget, we reject the pair without doing any more work. For example, "smth" and "hi" are thrown out on length alone. Only the remaining pairs get an edit distance check, and "smth" and "smith" pass with a distance of 1.
+
+An entry stays in the results if it matches all but one of the query words, which is how a professor is still found after a surname change. Finally we rank the survivors by similarity, 1 - edit distance / max(len_1, len_2). For "smth" and "smith" that is 1 - 1/5 = 0.8. We do this for every query word and take the average, so 0.8 and 1 give (0.8 + 1) / 2 = 0.9. The entries with the highest score are shown first.
 
 ## Accomplishments that we're proud of
 
-_Write what you're proud of here._
+The biggest accomplishment is the search engine, as we went into detail on how it works. That is something the team is proud of. However, the accomplishment most people care about is the median grade data. We are proud to be able to create a program that allows you to better understand who your professors are as quickly as possible. The comparison data is also powerful. You don't just see the median grade, but you can also see how the professor's median grade compares to others and the course in general. This allows students to determine whether the professor is hard or the course is. Rowdy Search is software that the team genuinely believe everyone should use.
 
 ## What we learned
 
-_Write what you learned here._
+- Better show data in Plotly.
+- Balancing complexity and simplicity in analytical mode.
+- Better deploy web scrapers to get data.
+- Sometimes a homemade algorithm might be better than a library's.
 
 ## What's next for RowdySearch
 
-_Write what's next here._
+AI integration could be next, where you send your transcript and the AI will find courses you should select based on your degree.
 
 ## Team
 
-_Write your team members here._
-
+Jacob Swim, Angelina Lu
 
 ## Working on the code
 
