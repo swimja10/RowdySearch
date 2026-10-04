@@ -6,9 +6,21 @@
 
 <p align="center">A Chrome extension that cuts UTSA professor research from ten minutes to one click.</p>
 
+## Install
+
+No building needed. The built extension is already in `dist/`.
+
+1. Clone or download this repo.
+2. Open `chrome://extensions` and turn on **Developer mode** (top right).
+3. Click **Load unpacked** and pick this folder (the one with `manifest.json` in it).
+4. Pin RowdySearch from the puzzle-piece menu so its icon stays in the toolbar.
+
+
 ## Inspiration
 
-_Write what inspired RowdySearch here._
+Joining a class is like getting into a relationship. You are going to be with them for months, and whether those months will be good or bad is up to you and the professor. So, the last thing you want is to be stuck with a professor that you hate. That is why you go on and do research on the professor by looking them up on Rate My Professors and then Simple Syllabus. 
+
+It is all very boring and tedious work. It takes me like 10 minutes to do one professor! This problem caused me to create Rowdy Search. Rowdy Search turns a 10-minute process into milliseconds! It is as simple as clicking a button. Also, the most important thing Rowdy Search has is grade distribution data. So now you have real grade data to make judgements on the professor you choose.
 
 ## What it does
 
@@ -41,8 +53,6 @@ extension APIs (Manifest V3). The data comes from UTSA grade distributions, Simp
 and Rate My Professors, gathered with the scrapers in `scrappers/` and combined with Python
 (`combine_data.py`).
 
-_Write more about how you built it here._
-
 ## Challenges we ran into
 
 _Write the challenges you ran into here._
@@ -63,14 +73,6 @@ _Write what's next here._
 
 _Write your team members here._
 
-## Install
-
-No building needed. The built extension is already in `dist/`.
-
-1. Clone or download this repo.
-2. Open `chrome://extensions` and turn on **Developer mode** (top right).
-3. Click **Load unpacked** and pick this folder (the one with `manifest.json` in it).
-4. Pin RowdySearch from the puzzle-piece menu so its icon stays in the toolbar.
 
 ## Working on the code
 
