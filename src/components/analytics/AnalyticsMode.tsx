@@ -11,7 +11,7 @@ import { ProfessorReviews } from "./ProfessorReviews.tsx";
 import { SubjectPicker } from "./SubjectPicker.tsx";
 import { useLookup } from "../../context/useLookup.ts";
 import type { Subject } from "../../page.ts";
-import { setFullScreen } from "../../utils/fullScreen.ts";
+import { setFullScreen } from "../../utils/hostPage.ts";
 import { describeSeries, isAdded, SERIES_COLORS, seriesFor, withSubjectAdded } from "../../utils/series.ts";
 import { subjectKey, subjectsToStartWith } from "../../utils/subjects.ts";
 
@@ -53,7 +53,7 @@ export function AnalyticsMode() {
         <header data-reveal className="flex items-center justify-between gap-4 opacity-0">
           <h1 className="flex items-center gap-3 text-2xl font-bold">
             <VennIcon className="h-8 w-12 text-orange-500" />
-            Analytical mode
+            Analytical Mode
           </h1>
           <Button variant="secondary" onClick={handleClose}>✕ Close</Button>
         </header>
@@ -78,7 +78,7 @@ export function AnalyticsMode() {
                 <Section title="Grade distribution">
                   <GradeDistributionChart seriesData={seriesData} />
                 </Section>
-                <Section title="Median grade">
+                <Section title="Median Grade">
                   <MedianChart seriesData={seriesData} />
                 </Section>
                 <Section title="Side by side">

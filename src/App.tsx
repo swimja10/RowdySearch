@@ -22,7 +22,7 @@ export default function App() {
   );
 }
 
-// Analytical mode covers everything. Otherwise it's the sidebar: the header and the current page.
+// Analytical Mode covers everything. Otherwise it's the sidebar: the header and the current page.
 function CurrentScreen() {
   const { isAnalyticsOpen } = useLookup();
 

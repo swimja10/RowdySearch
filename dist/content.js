@@ -46,9 +46,10 @@ var SIDEBAR_SHADOW = "-4px 0 16px rgba(0, 0, 0, 0.4)";
 var ON_TOP_OF_EVERYTHING = "2147483647";
 var sidebar = createSidebar();
 var lookupTab = createLookupTab();
-function addLookupTab() {
+function addSidebar() {
 	lookupTab.addEventListener("click", toggleSidebar);
 	window.addEventListener("message", handleSidebarMessage);
+	chrome.runtime.onMessage.addListener(handleToolbarMessage);
 	document.body.append(sidebar, lookupTab);
 }
 function showInSidebar(section) {
@@ -65,8 +66,15 @@ function setSidebarOpen(isOpen) {
 	lookupTab.textContent = isOpen ? "Close" : "Lookup";
 }
 function handleSidebarMessage(event) {
-	if (event.source !== sidebar.contentWindow || event.data?.rowdySearch !== "fullScreen") return;
-	setFullScreen(event.data.isFullScreen);
+	if (event.source !== sidebar.contentWindow) return;
+	const message = event.data;
+	if (message?.rowdySearch === "fullScreen") setFullScreen(message.isFullScreen);
+	if (message?.rowdySearch === "close") setSidebarOpen(false);
+}
+function handleToolbarMessage(message, _sender, sendResponse) {
+	if (message !== "toggleSidebar") return;
+	toggleSidebar();
+	sendResponse("done");
 }
 function setFullScreen(isFullScreen) {
 	sidebar.style.width = isFullScreen ? "100vw" : SIDEBAR_WIDTH;
@@ -176,7 +184,7 @@ var SEARCHABLE_TABLES = [{
 	columns: BANNER_SUMMARY_COLUMNS,
 	readSection: readBannerSection
 }];
-addLookupTab();
+addSidebar();
 addSearchColumns();
 new MutationObserver(addSearchColumns).observe(document.body, {
 	childList: true,

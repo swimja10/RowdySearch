@@ -6,18 +6,17 @@ A Chrome extension that cuts UTSA professor research from ten minutes to one cli
   that professor's class: median grade, Rate My Professors rating, and the last syllabus.
   It's added to Schedule Planner's section tables and Shopping Cart, and to the Summary
   table in Banner's Register for Classes.
-- **Toolbar icon:** click the RowdySearch icon on any website to open the sidebar.
-- **Lookup tab:** an orange tab on the right edge of Schedule Planner and Register for
-  Classes opens the same sidebar.
-
-- **Analytical mode:** the orange Venn diagram in the sidebar's top right corner opens a full
+- **Toolbar icon:** click the RowdySearch icon to open or close the sidebar on any website.
+  It's the same sidebar everywhere (it just can't open on Chrome's own `chrome://` pages).
+- **Lookup tab:** an orange tab on the right edge of the page also opens and closes it.
+- **Analytical Mode:** the orange Venn diagram in the sidebar's top right corner opens a full
   screen view for comparing up to 8 professors, whole courses, or one professor's class:
   a grade distribution chart (F to A+, as percent or students, lines or bars, each grade or
-  "at or above"), a median grade chart, a side-by-side stats table (average GPA, how a class
-  compares with the whole course, A's, D/F, withdrawals, RMP), and everyone's RMP reviews.
+  "at or above"), a Median Grade chart, a side-by-side table (average GPA, % above or below
+  the course average, A's, D/F, withdrawals, RMP), and everyone's RMP reviews.
   It starts out comparing whatever page you opened it from.
 
-In the sidebar, type a search and press **Enter**:
+In the sidebar or in Analytical Mode, type a search and press **Enter**:
 
 | You type | Enter opens |
 | --- | --- |
@@ -58,16 +57,16 @@ node searcher.ts "Darrn Meritz WRC"
 
 | File | What it does |
 | --- | --- |
-| `manifest.json` | Tells Chrome about the icon, the side panel, and which sites to run on |
+| `manifest.json` | Tells Chrome about the icon, its permissions, and which sites get the sidebar on their own |
 | `dist/` | The built extension that Chrome runs (made by `npm run build`, committed on purpose). `plotly.js` is the chart library and `libraries.js` is React and the other npm packages; the rest is our code |
 | `data/cleaned_grade_data.json` | Every professor's grades, syllabi, and RMP data. The sidebar reads it from here |
-| `src/background.ts` | Opens the side panel when you click the toolbar icon |
-| `src/content/` | Runs on the registration sites: the Lookup tab, and the RowdySearch column (`searchColumn.ts`) with one file per site that reads its table (`schedulePlanner.ts`, `bannerSummary.ts`) |
+| `src/background.ts` | Opens or closes the sidebar on the current page when you click the toolbar icon |
+| `src/content/` | Runs on the page: the sidebar and its Lookup tab, and the RowdySearch column (`searchColumn.ts`) with one file per site that reads its table (`schedulePlanner.ts`, `bannerSummary.ts`) |
 | `index.html`, `src/main.tsx`, `src/App.tsx` | The sidebar (React + Tailwind) |
 | `src/context/` | Which page the sidebar is on, plus the Back history |
 | `src/components/` | The search, professor, class, and course pages and their pieces |
-| `src/components/analytics/` | Analytical mode: the full screen panel, its charts (Plotly), table, and picker |
-| `src/utils/subjects.ts`, `series.ts`, `statistics.ts` | What analytical mode compares, the chart colors, and the math (GPA, percentages) |
+| `src/components/analytics/` | Analytical Mode: the full screen panel, its charts (Plotly), table, and picker |
+| `src/utils/subjects.ts`, `series.ts`, `statistics.ts` | What Analytical Mode compares, the chart colors, and the math (GPA, percentages) |
 | `src/searcher.ts` | Finds professors and courses, even with typos |
 | `src/utils/` | Reads the JSON, groups classes into courses, works out median grades |
 

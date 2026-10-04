@@ -11,6 +11,8 @@ const DARK_LAYOUT: Partial<Layout> = {
   // A row along the top, so it never covers the axis titles.
   legend: { orientation: "h", x: 0, y: 1.02, yanchor: "bottom" },
   hoverlabel: { bgcolor: "#27272a", bordercolor: "#3f3f46", font: { color: "#f4f4f5" } },
+  // Dragging on the chart does nothing (no zooming, selecting, or sliding the chart away).
+  dragmode: false,
 };
 
 const AXIS_STYLE: Partial<LayoutAxis> = {
@@ -18,11 +20,18 @@ const AXIS_STYLE: Partial<LayoutAxis> = {
   linecolor: "#3f3f46",
   zerolinecolor: "#3f3f46",
   automargin: true,
+  // The axes stay put, so the whole chart is always in view.
+  fixedrange: true,
 };
 
 const CONFIG: Partial<Config> = {
   displaylogo: false,
   responsive: true,
+  doubleClick: false,
+  // No "Share chart" button: it would upload the chart's data to Plotly's website.
+  showSendToCloud: false,
+  // Only keep Plotly's "download as a picture" button. The others zoom, slide, or select.
+  modeBarButtonsToRemove: ["zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d"],
 };
 
 type PlotlyChartProps = {

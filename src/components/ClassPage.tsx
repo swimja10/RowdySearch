@@ -30,18 +30,18 @@ export function ClassPage({ professorName, courseCode }: ClassPageProps) {
         </span>
       </div>
 
-      <ProfessorStats rmp={professor.rmp} grades={grades} medianLabel={`Median grade in ${course.code}`} />
+      <ProfessorStats rmp={professor.rmp} grades={grades} medianLabel={`Median Grade in ${course.code}`} />
 
       <Section title="Latest syllabus">
         <LatestSyllabus course={course} />
       </Section>
 
-      <Section title="What students say">
-        <Reviews reviews={professor.rmp.reviews} />
-      </Section>
-
       <Section title={`Grades in ${course.code}`}>
         <GradeBars grades={grades} />
+      </Section>
+
+      <Section title="What students say">
+        <Reviews reviews={professor.rmp.reviews} />
       </Section>
 
       <Section title="Every semester">

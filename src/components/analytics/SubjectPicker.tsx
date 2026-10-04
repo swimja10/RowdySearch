@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, type SubmitEvent } from "react";
 import Button from "../Button.tsx";
 import { useLookup } from "../../context/useLookup.ts";
 import type { Subject } from "../../page.ts";
 import { search, type Match } from "../../searcher.ts";
 import { findCourse } from "../../utils/courses.ts";
+import { pageForSearch } from "../../utils/pageForSearch.ts";
 
 const MAX_MATCHES = 6;
 
@@ -14,23 +15,35 @@ type SubjectPickerProps = {
 };
 
 // Search for something to compare, then add the professor, the whole course, or that one class.
+// Pressing Enter adds the best match, picked the same way Enter works on the sidebar's search.
 export function SubjectPicker({ canAddMore, isAdded, onAdd }: SubjectPickerProps) {
-  const { searchIndex } = useLookup();
+  const { professors, searchIndex } = useLookup();
   const [query, setQuery] = useState("");
-  const matches = search(searchIndex, query).slice(0, MAX_MATCHES);
+  const results = search(searchIndex, query);
+
+  function handleSubmit(e: SubmitEvent) {
+    e.preventDefault();
+
+    const bestSubject = pageForSearch(query, results, professors);
+    if (bestSubject === null || !canAddMore || isAdded(bestSubject)) return;
+    onAdd(bestSubject);
+    setQuery("");
+  }
 
   return (
     <div className="flex flex-col gap-2">
-      <input
-        value={query}
-        onChange={e => setQuery(e.target.value)}
-        className="w-full rounded-lg bg-zinc-800 px-4 py-2 outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
-        placeholder="Add a professor, class, or subject"
-      />
+      <form onSubmit={handleSubmit}>
+        <input
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          className="w-full rounded-lg bg-zinc-800 px-4 py-2 outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+          placeholder="Add a professor, class, or subject"
+        />
+      </form>
       {!canAddMore && (
         <span className="text-xs text-zinc-400">That's 8, the most the charts can show. Remove one to add more.</span>
       )}
-      {matches.map(match => (
+      {results.slice(0, MAX_MATCHES).map(match => (
         <MatchChoices
           key={`${match.professor} ${match.course}`}
           match={match}

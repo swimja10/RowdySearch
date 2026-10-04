@@ -9,9 +9,14 @@ export type Page =
 // These are the same things the sidebar has pages for, so it's every Page except search.
 export type Subject = Exclude<Page, { type: "search" }>;
 
-// Analytical mode sends this to the registration page (content/sidebar.ts) to cover the
-// whole screen, or to shrink back to a sidebar.
-export type FullScreenMessage = { rowdySearch: "fullScreen"; isFullScreen: boolean };
+// What the sidebar asks the web page it sits on (content/sidebar.ts) to do:
+// cover the whole screen for Analytical Mode (or shrink back), or close the sidebar.
+export type SidebarMessage =
+  | { rowdySearch: "fullScreen"; isFullScreen: boolean }
+  | { rowdySearch: "close" };
+
+// What clicking RowdySearch's icon in Chrome's toolbar (background.ts) tells the page.
+export type ToolbarMessage = "toggleSidebar";
 
 // One row of Schedule Planner's section table, sent to the sidebar by its Search button.
 export type Section = {

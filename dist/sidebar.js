@@ -415,6 +415,9 @@ function percentWhoGot(counts, grades) {
 	if (students === 0) return null;
 	return countStudents(counts, grades) / students * 100;
 }
+function percentDifference(value, average) {
+	return (value - average) / average * 100;
+}
 function gradePosition(grade) {
 	return GRADES_WORST_FIRST.indexOf(grade) + 1;
 }
@@ -830,19 +833,13 @@ function formatGpa(gpa) {
 function formatShare(percent) {
 	return percent === null ? "—" : `${Math.round(percent)}%`;
 }
-function formatGpaDifference(gpa, courseGpa) {
-	if (gpa === null || courseGpa === null) return "—";
-	const difference = gpa - courseGpa;
-	if (Math.abs(difference) < .005) return "Same";
-	return `${difference > 0 ? "▲" : "▼"} ${Math.abs(difference).toFixed(2)}`;
-}
 //#endregion
 //#region src/components/analytics/ComparisonTable.tsx
 var COLUMNS = [
 	"Comparing",
 	"Median",
 	"Avg GPA",
-	"vs. whole course",
+	"vs. course average",
 	"A's",
 	"D or F",
 	"Withdrew",
@@ -890,17 +887,17 @@ function _temp$9(column) {
 	}, column);
 }
 function ComparisonRow(t0) {
-	const $ = (0, import_compiler_runtime.c)(49);
+	const $ = (0, import_compiler_runtime.c)(52);
 	const { series } = t0;
 	const { grades } = series;
+	let gpa;
 	let t1;
 	let t2;
 	let t3;
 	let t4;
 	let t5;
-	let t6;
 	if ($[0] !== grades || $[1] !== series) {
-		const gpa = averageGpa(grades);
+		gpa = averageGpa(grades);
 		t3 = "border-t border-zinc-700 tabular-nums";
 		if ($[8] !== series) {
 			t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
@@ -910,130 +907,139 @@ function ComparisonRow(t0) {
 			$[8] = series;
 			$[9] = t4;
 		} else t4 = $[9];
-		let t7;
+		let t6;
 		if ($[10] !== grades) {
-			t7 = medianGrade(grades) ?? "—";
+			t6 = medianGrade(grades) ?? "—";
 			$[10] = grades;
-			$[11] = t7;
-		} else t7 = $[11];
-		if ($[12] !== t7) {
+			$[11] = t6;
+		} else t6 = $[11];
+		if ($[12] !== t6) {
 			t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 				className: "px-3 py-2 font-semibold",
-				children: t7
+				children: t6
 			});
-			$[12] = t7;
+			$[12] = t6;
 			$[13] = t5;
 		} else t5 = $[13];
-		t6 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
-			className: "px-3 py-2",
-			children: formatGpa(gpa)
-		});
-		t1 = "whitespace-nowrap px-3 py-2";
-		t2 = formatGpaDifference(gpa, series.courseGpa);
+		t1 = "px-3 py-2";
+		t2 = formatGpa(gpa);
 		$[0] = grades;
 		$[1] = series;
-		$[2] = t1;
-		$[3] = t2;
-		$[4] = t3;
-		$[5] = t4;
-		$[6] = t5;
-		$[7] = t6;
+		$[2] = gpa;
+		$[3] = t1;
+		$[4] = t2;
+		$[5] = t3;
+		$[6] = t4;
+		$[7] = t5;
 	} else {
-		t1 = $[2];
-		t2 = $[3];
-		t3 = $[4];
-		t4 = $[5];
-		t5 = $[6];
-		t6 = $[7];
+		gpa = $[2];
+		t1 = $[3];
+		t2 = $[4];
+		t3 = $[5];
+		t4 = $[6];
+		t5 = $[7];
 	}
-	let t7;
+	let t6;
 	if ($[14] !== t1 || $[15] !== t2) {
-		t7 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
+		t6 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: t1,
 			children: t2
 		});
 		$[14] = t1;
 		$[15] = t2;
-		$[16] = t7;
-	} else t7 = $[16];
+		$[16] = t6;
+	} else t6 = $[16];
+	let t7;
+	if ($[17] !== gpa || $[18] !== series.courseGpa) {
+		t7 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
+			className: "whitespace-nowrap px-3 py-2",
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CourseComparison, {
+				gpa,
+				courseGpa: series.courseGpa
+			})
+		});
+		$[17] = gpa;
+		$[18] = series.courseGpa;
+		$[19] = t7;
+	} else t7 = $[19];
 	let t8;
-	if ($[17] !== grades) {
+	if ($[20] !== grades) {
 		t8 = formatShare(percentWhoGot(grades, A_GRADES));
-		$[17] = grades;
-		$[18] = t8;
-	} else t8 = $[18];
+		$[20] = grades;
+		$[21] = t8;
+	} else t8 = $[21];
 	let t9;
-	if ($[19] !== t8) {
+	if ($[22] !== t8) {
 		t9 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: "px-3 py-2",
 			children: t8
 		});
-		$[19] = t8;
-		$[20] = t9;
-	} else t9 = $[20];
+		$[22] = t8;
+		$[23] = t9;
+	} else t9 = $[23];
 	let t10;
-	if ($[21] !== grades) {
+	if ($[24] !== grades) {
 		t10 = formatShare(percentWhoGot(grades, D_AND_F_GRADES));
-		$[21] = grades;
-		$[22] = t10;
-	} else t10 = $[22];
+		$[24] = grades;
+		$[25] = t10;
+	} else t10 = $[25];
 	let t11;
-	if ($[23] !== t10) {
+	if ($[26] !== t10) {
 		t11 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: "px-3 py-2",
 			children: t10
 		});
-		$[23] = t10;
-		$[24] = t11;
-	} else t11 = $[24];
+		$[26] = t10;
+		$[27] = t11;
+	} else t11 = $[27];
 	let t12;
-	if ($[25] !== grades) {
+	if ($[28] !== grades) {
 		t12 = formatShare(percentWhoGot(grades, WITHDREW));
-		$[25] = grades;
-		$[26] = t12;
-	} else t12 = $[26];
+		$[28] = grades;
+		$[29] = t12;
+	} else t12 = $[29];
 	let t13;
-	if ($[27] !== t12) {
+	if ($[30] !== t12) {
 		t13 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: "px-3 py-2",
 			children: t12
 		});
-		$[27] = t12;
-		$[28] = t13;
-	} else t13 = $[28];
+		$[30] = t12;
+		$[31] = t13;
+	} else t13 = $[31];
 	let t14;
-	if ($[29] !== grades) {
+	if ($[32] !== grades) {
 		t14 = countStudents(grades, LETTER_GRADES).toLocaleString();
-		$[29] = grades;
-		$[30] = t14;
-	} else t14 = $[30];
+		$[32] = grades;
+		$[33] = t14;
+	} else t14 = $[33];
 	let t15;
-	if ($[31] !== t14) {
+	if ($[34] !== t14) {
 		t15 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: "px-3 py-2",
 			children: t14
 		});
-		$[31] = t14;
-		$[32] = t15;
-	} else t15 = $[32];
+		$[34] = t14;
+		$[35] = t15;
+	} else t15 = $[35];
 	let t16;
-	if ($[33] !== series.professorName || $[34] !== series.rating) {
+	if ($[36] !== series.professorName || $[37] !== series.rating) {
 		t16 = series.professorName === null ? "—" : formatOutOfFive(series.rating);
-		$[33] = series.professorName;
-		$[34] = series.rating;
-		$[35] = t16;
-	} else t16 = $[35];
+		$[36] = series.professorName;
+		$[37] = series.rating;
+		$[38] = t16;
+	} else t16 = $[38];
 	let t17;
-	if ($[36] !== t16) {
+	if ($[39] !== t16) {
 		t17 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: "whitespace-nowrap px-3 py-2",
 			children: t16
 		});
-		$[36] = t16;
-		$[37] = t17;
-	} else t17 = $[37];
+		$[39] = t16;
+		$[40] = t17;
+	} else t17 = $[40];
 	let t18;
-	if ($[38] !== t11 || $[39] !== t13 || $[40] !== t15 || $[41] !== t17 || $[42] !== t3 || $[43] !== t4 || $[44] !== t5 || $[45] !== t6 || $[46] !== t7 || $[47] !== t9) {
+	if ($[41] !== t11 || $[42] !== t13 || $[43] !== t15 || $[44] !== t17 || $[45] !== t3 || $[46] !== t4 || $[47] !== t5 || $[48] !== t6 || $[49] !== t7 || $[50] !== t9) {
 		t18 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", {
 			className: t3,
 			children: [
@@ -1048,19 +1054,95 @@ function ComparisonRow(t0) {
 				t17
 			]
 		});
-		$[38] = t11;
-		$[39] = t13;
-		$[40] = t15;
-		$[41] = t17;
-		$[42] = t3;
-		$[43] = t4;
-		$[44] = t5;
-		$[45] = t6;
-		$[46] = t7;
-		$[47] = t9;
-		$[48] = t18;
-	} else t18 = $[48];
+		$[41] = t11;
+		$[42] = t13;
+		$[43] = t15;
+		$[44] = t17;
+		$[45] = t3;
+		$[46] = t4;
+		$[47] = t5;
+		$[48] = t6;
+		$[49] = t7;
+		$[50] = t9;
+		$[51] = t18;
+	} else t18 = $[51];
 	return t18;
+}
+function CourseComparison(t0) {
+	const $ = (0, import_compiler_runtime.c)(12);
+	const { gpa, courseGpa } = t0;
+	if (gpa === null || courseGpa === null) {
+		let t1;
+		if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
+			t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: "text-zinc-500",
+				children: "—"
+			});
+			$[0] = t1;
+		} else t1 = $[0];
+		return t1;
+	}
+	let t1;
+	let t2;
+	let t3;
+	let t4;
+	if ($[1] !== courseGpa || $[2] !== gpa) {
+		t4 = Symbol.for("react.early_return_sentinel");
+		bb0: {
+			const difference = Math.round(percentDifference(gpa, courseGpa));
+			if (difference === 0) {
+				let t5;
+				if ($[7] === Symbol.for("react.memo_cache_sentinel")) {
+					t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Same as average" });
+					$[7] = t5;
+				} else t5 = $[7];
+				t4 = t5;
+				break bb0;
+			}
+			if (difference > 0) {
+				t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+					className: "font-medium text-green-400",
+					children: [
+						"▲ ",
+						difference,
+						"% higher"
+					]
+				});
+				break bb0;
+			}
+			t1 = "font-medium text-red-400";
+			t2 = "▼ ";
+			t3 = Math.abs(difference);
+		}
+		$[1] = courseGpa;
+		$[2] = gpa;
+		$[3] = t1;
+		$[4] = t2;
+		$[5] = t3;
+		$[6] = t4;
+	} else {
+		t1 = $[3];
+		t2 = $[4];
+		t3 = $[5];
+		t4 = $[6];
+	}
+	if (t4 !== Symbol.for("react.early_return_sentinel")) return t4;
+	let t5;
+	if ($[8] !== t1 || $[9] !== t2 || $[10] !== t3) {
+		t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			className: t1,
+			children: [
+				t2,
+				t3,
+				"% lower"
+			]
+		});
+		$[8] = t1;
+		$[9] = t2;
+		$[10] = t3;
+		$[11] = t5;
+	} else t5 = $[11];
+	return t5;
 }
 //#endregion
 //#region src/components/analytics/PlotlyChart.tsx
@@ -1089,17 +1171,31 @@ var DARK_LAYOUT = {
 		bgcolor: "#27272a",
 		bordercolor: "#3f3f46",
 		font: { color: "#f4f4f5" }
-	}
+	},
+	dragmode: false
 };
 var AXIS_STYLE = {
 	gridcolor: "#27272a",
 	linecolor: "#3f3f46",
 	zerolinecolor: "#3f3f46",
-	automargin: true
+	automargin: true,
+	fixedrange: true
 };
 var CONFIG = {
 	displaylogo: false,
-	responsive: true
+	responsive: true,
+	doubleClick: false,
+	showSendToCloud: false,
+	modeBarButtonsToRemove: [
+		"zoom2d",
+		"pan2d",
+		"select2d",
+		"lasso2d",
+		"zoomIn2d",
+		"zoomOut2d",
+		"autoScale2d",
+		"resetScale2d"
+	]
 };
 function PlotlyChart(t0) {
 	const $ = (0, import_compiler_runtime.c)(8);
@@ -1414,7 +1510,10 @@ function MedianChart(t0) {
 		t5 = medians;
 		t6 = "outside";
 		if ($[8] === Symbol.for("react.memo_cache_sentinel")) {
-			t7 = { color: "#f4f4f5" };
+			t7 = {
+				color: "#f4f4f5",
+				size: 15
+			};
 			$[8] = t7;
 		} else t7 = $[8];
 		t1 = withGrades.map(_temp4);
@@ -1451,7 +1550,7 @@ function MedianChart(t0) {
 			textposition: t6,
 			textfont: t7,
 			marker: t8,
-			hovertemplate: "%{x}<br>Median grade %{text}<extra></extra>"
+			hovertemplate: "%{x}<br>Median Grade %{text}<extra></extra>"
 		}];
 		$[11] = t2;
 		$[12] = t3;
@@ -1466,8 +1565,13 @@ function MedianChart(t0) {
 	let t10;
 	let t11;
 	if ($[19] === Symbol.for("react.memo_cache_sentinel")) {
-		t10 = { text: "Median grade" };
-		t11 = GRADES_WORST_FIRST.map(gradePosition);
+		t10 = {
+			l: 16,
+			r: 16,
+			t: 32,
+			b: 56
+		};
+		t11 = { showgrid: false };
 		$[19] = t10;
 		$[20] = t11;
 	} else {
@@ -1479,10 +1583,10 @@ function MedianChart(t0) {
 		t12 = {
 			showlegend: false,
 			hovermode: "closest",
+			margin: t10,
+			xaxis: t11,
 			yaxis: {
-				title: t10,
-				tickvals: t11,
-				ticktext: GRADES_WORST_FIRST,
+				visible: false,
 				range: [0, GRADES_WORST_FIRST.length + 1]
 			}
 		};
@@ -1639,70 +1743,148 @@ function _temp$6(series) {
 	return series.professorName;
 }
 //#endregion
+//#region src/utils/pageForSearch.ts
+function pageForSearch(query, results, professors) {
+	if (results.length === 0) return null;
+	const [bestMatch] = results;
+	const professor = professors[bestMatch.professor];
+	const course = findCourse(professor, bestMatch.course);
+	const courseWords = [course.code, ...course.offerings.map((offering) => offering.title)].join(" ");
+	const namesProfessor = sharesAWord(query, professor.name);
+	const namesCourse = sharesAWord(query, courseWords);
+	if (namesProfessor && namesCourse) return {
+		type: "class",
+		professorName: professor.name,
+		courseCode: course.code
+	};
+	if (namesProfessor) return {
+		type: "professor",
+		professorName: professor.name
+	};
+	return {
+		type: "course",
+		courseCode: closestCourse(results.filter((match) => match.score === bestMatch.score), professors)
+	};
+}
+function closestCourse(matches, professors) {
+	const courses = /* @__PURE__ */ new Map();
+	for (const match of matches) {
+		const title = findCourse(professors[match.professor], match.course).title;
+		const teachers = (courses.get(match.course)?.teachers ?? 0) + 1;
+		courses.set(match.course, {
+			titleWords: title.split(" ").length,
+			teachers
+		});
+	}
+	return [...courses].sort(([, first], [, second]) => first.titleWords - second.titleWords || second.teachers - first.teachers)[0][0];
+}
+//#endregion
 //#region src/components/analytics/SubjectPicker.tsx
 var MAX_MATCHES = 6;
 function SubjectPicker(t0) {
-	const $ = (0, import_compiler_runtime.c)(15);
+	const $ = (0, import_compiler_runtime.c)(31);
 	const { canAddMore, isAdded, onAdd } = t0;
-	const { searchIndex } = useLookup();
+	const { professors, searchIndex } = useLookup();
 	const [query, setQuery] = (0, import_react.useState)("");
 	let t1;
-	if ($[0] !== canAddMore || $[1] !== isAdded || $[2] !== onAdd || $[3] !== query || $[4] !== searchIndex) {
-		const matches = search(searchIndex, query).slice(0, MAX_MATCHES);
-		let t2;
-		if ($[6] === Symbol.for("react.memo_cache_sentinel")) {
-			t2 = (e) => setQuery(e.target.value);
-			$[6] = t2;
-		} else t2 = $[6];
-		let t3;
-		if ($[7] !== query) {
-			t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-				value: query,
-				onChange: t2,
-				className: "w-full rounded-lg bg-zinc-800 px-4 py-2 outline-none focus-visible:ring-2 focus-visible:ring-orange-500",
-				placeholder: "Add a professor, class, or subject"
-			});
-			$[7] = query;
-			$[8] = t3;
-		} else t3 = $[8];
-		let t4;
-		if ($[9] !== canAddMore) {
-			t4 = !canAddMore && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: "text-xs text-zinc-400",
-				children: "That's 8, the most the charts can show. Remove one to add more."
-			});
-			$[9] = canAddMore;
-			$[10] = t4;
-		} else t4 = $[10];
-		let t5;
-		if ($[11] !== canAddMore || $[12] !== isAdded || $[13] !== onAdd) {
-			t5 = (match) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MatchChoices, {
+	if ($[0] !== query || $[1] !== searchIndex) {
+		t1 = search(searchIndex, query);
+		$[0] = query;
+		$[1] = searchIndex;
+		$[2] = t1;
+	} else t1 = $[2];
+	const results = t1;
+	let t2;
+	if ($[3] !== canAddMore || $[4] !== isAdded || $[5] !== onAdd || $[6] !== professors || $[7] !== query || $[8] !== results) {
+		t2 = function handleSubmit(e) {
+			e.preventDefault();
+			const bestSubject = pageForSearch(query, results, professors);
+			if (bestSubject === null || !canAddMore || isAdded(bestSubject)) return;
+			onAdd(bestSubject);
+			setQuery("");
+		};
+		$[3] = canAddMore;
+		$[4] = isAdded;
+		$[5] = onAdd;
+		$[6] = professors;
+		$[7] = query;
+		$[8] = results;
+		$[9] = t2;
+	} else t2 = $[9];
+	const handleSubmit = t2;
+	let t3;
+	if ($[10] === Symbol.for("react.memo_cache_sentinel")) {
+		t3 = (e_0) => setQuery(e_0.target.value);
+		$[10] = t3;
+	} else t3 = $[10];
+	let t4;
+	if ($[11] !== query) {
+		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+			value: query,
+			onChange: t3,
+			className: "w-full rounded-lg bg-zinc-800 px-4 py-2 outline-none focus-visible:ring-2 focus-visible:ring-orange-500",
+			placeholder: "Add a professor, class, or subject"
+		});
+		$[11] = query;
+		$[12] = t4;
+	} else t4 = $[12];
+	let t5;
+	if ($[13] !== handleSubmit || $[14] !== t4) {
+		t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("form", {
+			onSubmit: handleSubmit,
+			children: t4
+		});
+		$[13] = handleSubmit;
+		$[14] = t4;
+		$[15] = t5;
+	} else t5 = $[15];
+	let t6;
+	if ($[16] !== canAddMore) {
+		t6 = !canAddMore && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			className: "text-xs text-zinc-400",
+			children: "That's 8, the most the charts can show. Remove one to add more."
+		});
+		$[16] = canAddMore;
+		$[17] = t6;
+	} else t6 = $[17];
+	let t7;
+	if ($[18] !== canAddMore || $[19] !== isAdded || $[20] !== onAdd || $[21] !== results) {
+		let t8;
+		if ($[23] !== canAddMore || $[24] !== isAdded || $[25] !== onAdd) {
+			t8 = (match) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MatchChoices, {
 				match,
 				canAddMore,
 				isAdded,
 				onAdd
 			}, `${match.professor} ${match.course}`);
-			$[11] = canAddMore;
-			$[12] = isAdded;
-			$[13] = onAdd;
-			$[14] = t5;
-		} else t5 = $[14];
-		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			$[23] = canAddMore;
+			$[24] = isAdded;
+			$[25] = onAdd;
+			$[26] = t8;
+		} else t8 = $[26];
+		t7 = results.slice(0, MAX_MATCHES).map(t8);
+		$[18] = canAddMore;
+		$[19] = isAdded;
+		$[20] = onAdd;
+		$[21] = results;
+		$[22] = t7;
+	} else t7 = $[22];
+	let t8;
+	if ($[27] !== t5 || $[28] !== t6 || $[29] !== t7) {
+		t8 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "flex flex-col gap-2",
 			children: [
-				t3,
-				t4,
-				matches.map(t5)
+				t5,
+				t6,
+				t7
 			]
 		});
-		$[0] = canAddMore;
-		$[1] = isAdded;
-		$[2] = onAdd;
-		$[3] = query;
-		$[4] = searchIndex;
-		$[5] = t1;
-	} else t1 = $[5];
-	return t1;
+		$[27] = t5;
+		$[28] = t6;
+		$[29] = t7;
+		$[30] = t8;
+	} else t8 = $[30];
+	return t8;
 }
 function MatchChoices(t0) {
 	const $ = (0, import_compiler_runtime.c)(27);
@@ -1824,19 +2006,24 @@ function MatchChoices(t0) {
 	return t8;
 }
 //#endregion
-//#region src/utils/fullScreen.ts
-var isInsideRegistrationPage = window.parent !== window;
+//#region src/utils/hostPage.ts
+var isOnAPage = window.parent !== window;
 function setFullScreen(isFullScreen) {
-	if (!isInsideRegistrationPage) return Promise.resolve();
+	if (!isOnAPage) return Promise.resolve();
 	return new Promise((resolve) => {
 		window.addEventListener("resize", () => resolve(), { once: true });
 		setTimeout(resolve, 500);
-		const message = {
+		tellPage({
 			rowdySearch: "fullScreen",
 			isFullScreen
-		};
-		window.parent.postMessage(message, "*");
+		});
 	});
+}
+function closeSidebar() {
+	if (isOnAPage) tellPage({ rowdySearch: "close" });
+}
+function tellPage(message) {
+	window.parent.postMessage(message, "*");
 }
 //#endregion
 //#region src/components/analytics/AnalyticsMode.tsx
@@ -1929,7 +2116,7 @@ function AnalyticsMode() {
 	if ($[20] === Symbol.for("react.memo_cache_sentinel")) {
 		t9 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", {
 			className: "flex items-center gap-3 text-2xl font-bold",
-			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(VennIcon, { className: "h-8 w-12 text-orange-500" }), "Analytical mode"]
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(VennIcon, { className: "h-8 w-12 text-orange-500" }), "Analytical Mode"]
 		});
 		$[20] = t9;
 	} else t9 = $[20];
@@ -2005,7 +2192,7 @@ function AnalyticsMode() {
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GradeDistributionChart, { seriesData })
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
-					title: "Median grade",
+					title: "Median Grade",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MedianChart, { seriesData })
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
@@ -2502,7 +2689,7 @@ function ClassPage(t0) {
 		$[14] = t4;
 		$[15] = t5;
 	} else t5 = $[15];
-	const t6 = `Median grade in ${course.code}`;
+	const t6 = `Median Grade in ${course.code}`;
 	let t7;
 	if ($[16] !== grades || $[17] !== professor.rmp || $[18] !== t6) {
 		t7 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProfessorStats, {
@@ -2524,30 +2711,30 @@ function ClassPage(t0) {
 		$[20] = course;
 		$[21] = t8;
 	} else t8 = $[21];
-	let t9;
-	if ($[22] !== professor.rmp.reviews) {
-		t9 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+	const t9 = `Grades in ${course.code}`;
+	let t10;
+	if ($[22] !== grades) {
+		t10 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GradeBars, { grades });
+		$[22] = grades;
+		$[23] = t10;
+	} else t10 = $[23];
+	let t11;
+	if ($[24] !== t10 || $[25] !== t9) {
+		t11 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+			title: t9,
+			children: t10
+		});
+		$[24] = t10;
+		$[25] = t9;
+		$[26] = t11;
+	} else t11 = $[26];
+	let t12;
+	if ($[27] !== professor.rmp.reviews) {
+		t12 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
 			title: "What students say",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reviews, { reviews: professor.rmp.reviews })
 		});
-		$[22] = professor.rmp.reviews;
-		$[23] = t9;
-	} else t9 = $[23];
-	const t10 = `Grades in ${course.code}`;
-	let t11;
-	if ($[24] !== grades) {
-		t11 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GradeBars, { grades });
-		$[24] = grades;
-		$[25] = t11;
-	} else t11 = $[25];
-	let t12;
-	if ($[26] !== t10 || $[27] !== t11) {
-		t12 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
-			title: t10,
-			children: t11
-		});
-		$[26] = t10;
-		$[27] = t11;
+		$[27] = professor.rmp.reviews;
 		$[28] = t12;
 	} else t12 = $[28];
 	let t13;
@@ -2616,26 +2803,26 @@ function ClassPage(t0) {
 		$[47] = t19;
 	} else t19 = $[47];
 	let t20;
-	if ($[48] !== t12 || $[49] !== t14 || $[50] !== t19 || $[51] !== t5 || $[52] !== t7 || $[53] !== t8 || $[54] !== t9) {
+	if ($[48] !== t11 || $[49] !== t12 || $[50] !== t14 || $[51] !== t19 || $[52] !== t5 || $[53] !== t7 || $[54] !== t8) {
 		t20 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "flex flex-col gap-5",
 			children: [
 				t5,
 				t7,
 				t8,
-				t9,
+				t11,
 				t12,
 				t14,
 				t19
 			]
 		});
-		$[48] = t12;
-		$[49] = t14;
-		$[50] = t19;
-		$[51] = t5;
-		$[52] = t7;
-		$[53] = t8;
-		$[54] = t9;
+		$[48] = t11;
+		$[49] = t12;
+		$[50] = t14;
+		$[51] = t19;
+		$[52] = t5;
+		$[53] = t7;
+		$[54] = t8;
 		$[55] = t20;
 	} else t20 = $[55];
 	return t20;
@@ -2993,7 +3180,7 @@ function AnalyticsButton() {
 	if ($[1] !== openAnalytics) {
 		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 			onClick: openAnalytics,
-			"aria-label": "Analytical mode",
+			"aria-label": "Analytical Mode",
 			className: "rounded p-1 text-orange-600 transition-colors hover:text-orange-400 focus-visible:text-orange-400",
 			children: t0
 		});
@@ -3004,7 +3191,7 @@ function AnalyticsButton() {
 	if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
 		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 			className: "pointer-events-none absolute right-full top-1/2 mr-2 -translate-y-1/2 whitespace-nowrap rounded-md bg-zinc-700 px-2 py-1 text-xs font-medium text-zinc-100 opacity-0 transition-opacity group-hover:opacity-100",
-			children: "Analytical mode"
+			children: "Analytical Mode"
 		});
 		$[3] = t2;
 	} else t2 = $[3];
@@ -3023,24 +3210,27 @@ function AnalyticsButton() {
 //#region src/components/Header.tsx
 function Header() {
 	const $ = (0, import_compiler_runtime.c)(12);
-	const { canGoBack, goBack, openSearch } = useLookup();
-	const t0 = !canGoBack;
-	let t1;
-	if ($[0] !== goBack || $[1] !== t0) {
-		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+	const { canGoBack, goBack, goHome } = useLookup();
+	let t0;
+	if ($[0] !== canGoBack || $[1] !== goBack) {
+		t0 = canGoBack ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
 			variant: "secondary",
 			className: "whitespace-nowrap text-sm",
 			onClick: goBack,
-			disabled: t0,
 			children: "← Back"
+		}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+			variant: "secondary",
+			className: "whitespace-nowrap text-sm",
+			onClick: closeSidebar,
+			children: "✕ Close"
 		});
-		$[0] = goBack;
-		$[1] = t0;
-		$[2] = t1;
-	} else t1 = $[2];
-	let t2;
+		$[0] = canGoBack;
+		$[1] = goBack;
+		$[2] = t0;
+	} else t0 = $[2];
+	let t1;
 	if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
-		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", {
+		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", {
 			className: "flex items-center gap-2 text-lg font-bold",
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
 				src: "icons/icon-48.png",
@@ -3051,48 +3241,48 @@ function Header() {
 				children: "RowdySearch"
 			})]
 		});
-		$[3] = t2;
-	} else t2 = $[3];
-	let t3;
-	if ($[4] !== openSearch) {
-		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+		$[3] = t1;
+	} else t1 = $[3];
+	let t2;
+	if ($[4] !== goHome) {
+		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
 			variant: "secondary",
 			className: "whitespace-nowrap text-sm",
-			onClick: () => openSearch(""),
-			children: "Search"
+			onClick: goHome,
+			children: "Home"
 		});
-		$[4] = openSearch;
-		$[5] = t3;
-	} else t3 = $[5];
-	let t4;
+		$[4] = goHome;
+		$[5] = t2;
+	} else t2 = $[5];
+	let t3;
 	if ($[6] === Symbol.for("react.memo_cache_sentinel")) {
-		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AnalyticsButton, {});
-		$[6] = t4;
-	} else t4 = $[6];
-	let t5;
-	if ($[7] !== t3) {
-		t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AnalyticsButton, {});
+		$[6] = t3;
+	} else t3 = $[6];
+	let t4;
+	if ($[7] !== t2) {
+		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "flex items-center gap-1",
-			children: [t3, t4]
+			children: [t2, t3]
 		});
-		$[7] = t3;
-		$[8] = t5;
-	} else t5 = $[8];
-	let t6;
-	if ($[9] !== t1 || $[10] !== t5) {
-		t6 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
+		$[7] = t2;
+		$[8] = t4;
+	} else t4 = $[8];
+	let t5;
+	if ($[9] !== t0 || $[10] !== t4) {
+		t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
 			className: "flex items-center justify-between gap-2",
 			children: [
+				t0,
 				t1,
-				t2,
-				t5
+				t4
 			]
 		});
-		$[9] = t1;
-		$[10] = t5;
-		$[11] = t6;
-	} else t6 = $[11];
-	return t6;
+		$[9] = t0;
+		$[10] = t4;
+		$[11] = t5;
+	} else t5 = $[11];
+	return t5;
 }
 //#endregion
 //#region src/components/ProfessorPage.tsx
@@ -3149,7 +3339,7 @@ function ProfessorPage(t0) {
 			t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProfessorStats, {
 				rmp: professor.rmp,
 				grades: allGrades,
-				medianLabel: "Median grade (all classes)"
+				medianLabel: "Median Grade (all classes)"
 			});
 			$[17] = allGrades;
 			$[18] = professor.rmp;
@@ -3321,42 +3511,6 @@ function CourseRow(t0) {
 		$[21] = t9;
 	} else t9 = $[21];
 	return t9;
-}
-//#endregion
-//#region src/utils/pageForSearch.ts
-function pageForSearch(query, results, professors) {
-	if (results.length === 0) return null;
-	const [bestMatch] = results;
-	const professor = professors[bestMatch.professor];
-	const course = findCourse(professor, bestMatch.course);
-	const courseWords = [course.code, ...course.offerings.map((offering) => offering.title)].join(" ");
-	const namesProfessor = sharesAWord(query, professor.name);
-	const namesCourse = sharesAWord(query, courseWords);
-	if (namesProfessor && namesCourse) return {
-		type: "class",
-		professorName: professor.name,
-		courseCode: course.code
-	};
-	if (namesProfessor) return {
-		type: "professor",
-		professorName: professor.name
-	};
-	return {
-		type: "course",
-		courseCode: closestCourse(results.filter((match) => match.score === bestMatch.score), professors)
-	};
-}
-function closestCourse(matches, professors) {
-	const courses = /* @__PURE__ */ new Map();
-	for (const match of matches) {
-		const title = findCourse(professors[match.professor], match.course).title;
-		const teachers = (courses.get(match.course)?.teachers ?? 0) + 1;
-		courses.set(match.course, {
-			titleWords: title.split(" ").length,
-			teachers
-		});
-	}
-	return [...courses].sort(([, first], [, second]) => first.titleWords - second.titleWords || second.teachers - first.teachers)[0][0];
 }
 //#endregion
 //#region src/components/SearchPage.tsx
@@ -3538,15 +3692,16 @@ function firstAndLastName(instructor) {
 }
 //#endregion
 //#region src/context/LookupProvider.tsx
+var HOME_PAGE = {
+	type: "search",
+	query: ""
+};
 function LookupProvider(t0) {
 	const $ = (0, import_compiler_runtime.c)(25);
 	const { gradeData, children } = t0;
 	let t1;
 	if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-		t1 = [{
-			type: "search",
-			query: ""
-		}];
+		t1 = [HOME_PAGE];
 		$[0] = t1;
 	} else t1 = $[0];
 	const [pages, setPages] = (0, import_react.useState)(t1);
@@ -3559,7 +3714,7 @@ function LookupProvider(t0) {
 				if (window.location.hash === "") return;
 				const page = pageForSection(JSON.parse(decodeURIComponent(window.location.hash.slice(1))), gradeData.searchIndex);
 				setPages((curr) => [...curr, page]);
-				window.history.replaceState(null, "", window.location.pathname);
+				window.history.replaceState(null, "", window.location.pathname + window.location.search);
 			};
 			openSectionFromAddress();
 			window.addEventListener("hashchange", openSectionFromAddress);
@@ -3599,36 +3754,39 @@ function LookupProvider(t0) {
 	} else t6 = $[6];
 	const goBack = t6;
 	let t7;
-	if ($[7] !== pages) {
-		t7 = pages.at(-1);
-		$[7] = pages;
-		$[8] = t7;
-	} else t7 = $[8];
-	const t8 = pages.length > 1;
+	if ($[7] === Symbol.for("react.memo_cache_sentinel")) {
+		t7 = function goHome() {
+			setPages([HOME_PAGE]);
+		};
+		$[7] = t7;
+	} else t7 = $[7];
+	const goHome = t7;
+	let t8;
+	if ($[8] !== pages) {
+		t8 = pages.at(-1);
+		$[8] = pages;
+		$[9] = t8;
+	} else t8 = $[9];
+	const t9 = pages.length > 1;
 	let t10;
-	let t9;
-	if ($[9] === Symbol.for("react.memo_cache_sentinel")) {
-		t9 = () => setIsAnalyticsOpen(true);
-		t10 = () => setIsAnalyticsOpen(false);
-		$[9] = t10;
-		$[10] = t9;
-	} else {
-		t10 = $[9];
-		t9 = $[10];
-	}
 	let t11;
+	if ($[10] === Symbol.for("react.memo_cache_sentinel")) {
+		t10 = () => setIsAnalyticsOpen(true);
+		t11 = () => setIsAnalyticsOpen(false);
+		$[10] = t10;
+		$[11] = t11;
+	} else {
+		t10 = $[10];
+		t11 = $[11];
+	}
 	let t12;
 	let t13;
 	let t14;
 	let t15;
-	if ($[11] === Symbol.for("react.memo_cache_sentinel")) {
-		t11 = (query) => replaceCurrentPage({
+	if ($[12] === Symbol.for("react.memo_cache_sentinel")) {
+		t12 = (query) => replaceCurrentPage({
 			type: "search",
 			query
-		});
-		t12 = (query_0) => openPage({
-			type: "search",
-			query: query_0
 		});
 		t13 = (professorName) => openPage({
 			type: "professor",
@@ -3643,32 +3801,30 @@ function LookupProvider(t0) {
 			type: "course",
 			courseCode: courseCode_0
 		});
-		$[11] = t11;
 		$[12] = t12;
 		$[13] = t13;
 		$[14] = t14;
 		$[15] = t15;
 	} else {
-		t11 = $[11];
 		t12 = $[12];
 		t13 = $[13];
 		t14 = $[14];
 		t15 = $[15];
 	}
 	let t16;
-	if ($[16] !== gradeData.professors || $[17] !== gradeData.searchIndex || $[18] !== isAnalyticsOpen || $[19] !== t7 || $[20] !== t8) {
+	if ($[16] !== gradeData.professors || $[17] !== gradeData.searchIndex || $[18] !== isAnalyticsOpen || $[19] !== t8 || $[20] !== t9) {
 		t16 = {
-			page: t7,
-			canGoBack: t8,
+			page: t8,
+			canGoBack: t9,
 			isAnalyticsOpen,
-			openAnalytics: t9,
-			closeAnalytics: t10,
+			openAnalytics: t10,
+			closeAnalytics: t11,
 			professors: gradeData.professors,
 			searchIndex: gradeData.searchIndex,
 			goBack,
+			goHome,
 			openPage,
-			updateSearch: t11,
-			openSearch: t12,
+			updateSearch: t12,
 			openProfessor: t13,
 			openClass: t14,
 			openCourse: t15
@@ -3676,8 +3832,8 @@ function LookupProvider(t0) {
 		$[16] = gradeData.professors;
 		$[17] = gradeData.searchIndex;
 		$[18] = isAnalyticsOpen;
-		$[19] = t7;
-		$[20] = t8;
+		$[19] = t8;
+		$[20] = t9;
 		$[21] = t16;
 	} else t16 = $[21];
 	let t17;

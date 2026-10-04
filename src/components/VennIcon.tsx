@@ -7,7 +7,7 @@ type VennIconProps = {
 const RIGHT_CIRCLE = { cx: 31, cy: 16, r: 12.5 };
 const STRIPE_HEIGHTS = [8, 12, 16, 20, 24];
 
-// Analytical mode's icon: two overlapping circles, with stripes where they overlap.
+// Analytical Mode's icon: two overlapping circles, with stripes where they overlap.
 // It's drawn in `currentColor`, so a Tailwind text color like text-orange-500 colors it.
 export function VennIcon({ className }: VennIconProps) {
   // Every icon on the page needs its own ids, or they'd share one mask.

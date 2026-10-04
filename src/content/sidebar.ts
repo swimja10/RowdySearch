@@ -1,9 +1,9 @@
-// The RowdySearch sidebar on top of the registration site, and the "Lookup" tab that opens it.
+// The RowdySearch sidebar on top of a web page, and the "Lookup" tab that opens it.
 //
 // The sidebar lives in an iframe so the site's CSS can't break our Tailwind styles,
 // and our styles can't break the site. Tailwind classes don't exist on these pages,
 // so the tab is styled by hand here.
-import type { FullScreenMessage, Section } from "../page.ts";
+import type { Section, SidebarMessage, ToolbarMessage } from "../page.ts";
 
 const SIDEBAR_URL = chrome.runtime.getURL("dist/index.html");
 const SIDEBAR_WIDTH = "420px";
@@ -13,9 +13,10 @@ const ON_TOP_OF_EVERYTHING = "2147483647";
 const sidebar = createSidebar();
 const lookupTab = createLookupTab();
 
-export function addLookupTab() {
+export function addSidebar() {
   lookupTab.addEventListener("click", toggleSidebar);
   window.addEventListener("message", handleSidebarMessage);
+  chrome.runtime.onMessage.addListener(handleToolbarMessage);
   document.body.append(sidebar, lookupTab);
 }
 
@@ -38,16 +39,28 @@ function setSidebarOpen(isOpen: boolean) {
   lookupTab.textContent = isOpen ? "Close" : "Lookup";
 }
 
-// Analytical mode asks to cover the whole screen, and to shrink back when it closes
-// (see utils/fullScreen.ts). Only messages from our own sidebar count.
-function handleSidebarMessage(event: MessageEvent<FullScreenMessage>) {
-  if (event.source !== sidebar.contentWindow || event.data?.rowdySearch !== "fullScreen") return;
-  setFullScreen(event.data.isFullScreen);
+// The sidebar asks to cover the whole screen for Analytical Mode, to shrink back, or to close
+// (see utils/hostPage.ts). Only messages from our own sidebar count.
+function handleSidebarMessage(event: MessageEvent<SidebarMessage>) {
+  if (event.source !== sidebar.contentWindow) return;
+
+  const message = event.data;
+  if (message?.rowdySearch === "fullScreen") setFullScreen(message.isFullScreen);
+  if (message?.rowdySearch === "close") setSidebarOpen(false);
+}
+
+// Clicking RowdySearch's icon in Chrome's toolbar opens or closes the sidebar (see background.ts).
+function handleToolbarMessage(message: ToolbarMessage, _sender: unknown, sendResponse: (reply: string) => void) {
+  if (message !== "toggleSidebar") return;
+
+  toggleSidebar();
+  // Answering tells the toolbar this page already has the sidebar, so it doesn't add another.
+  sendResponse("done");
 }
 
 function setFullScreen(isFullScreen: boolean) {
   sidebar.style.width = isFullScreen ? "100vw" : SIDEBAR_WIDTH;
-  // Analytical mode draws its own panel, and the page shows through around it while it grows.
+  // Analytical Mode draws its own panel, and the page shows through around it while it grows.
   sidebar.style.boxShadow = isFullScreen ? "none" : SIDEBAR_SHADOW;
   lookupTab.style.display = isFullScreen ? "none" : "block";
 }

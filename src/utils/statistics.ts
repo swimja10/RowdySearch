@@ -42,6 +42,12 @@ export function percentWhoGot(counts: GradeCounts, grades: Grade[]): number | nu
   return (countStudents(counts, grades) / students) * 100;
 }
 
+// How far `value` is above (positive) or below (negative) `average`, in percent.
+// For example, a 2.95 GPA against a 2.57 average is about 15% higher.
+export function percentDifference(value: number, average: number): number {
+  return ((value - average) / average) * 100;
+}
+
 // F is 1 and A+ is 13, so a letter grade can be drawn as the height of a bar.
 export function gradePosition(grade: LetterGrade): number {
   return GRADES_WORST_FIRST.indexOf(grade) + 1;

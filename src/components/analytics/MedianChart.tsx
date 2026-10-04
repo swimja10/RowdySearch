@@ -9,6 +9,7 @@ type MedianChartProps = {
 };
 
 // One bar per series, as tall as its median grade, so medians are easy to compare.
+// Each bar has its grade written on top, so there's no grade axis on the side.
 export function MedianChart({ seriesData }: MedianChartProps) {
   const withGrades = seriesData.filter(series => medianGrade(series.grades) !== null);
   const medians = withGrades.map(series => medianGrade(series.grades) as LetterGrade);
@@ -19,20 +20,18 @@ export function MedianChart({ seriesData }: MedianChartProps) {
     y: medians.map(gradePosition),
     text: medians,
     textposition: "outside",
-    textfont: { color: "#f4f4f5" },
+    textfont: { color: "#f4f4f5", size: 15 },
     marker: { color: withGrades.map(series => series.color) },
-    hovertemplate: "%{x}<br>Median grade %{text}<extra></extra>",
+    hovertemplate: "%{x}<br>Median Grade %{text}<extra></extra>",
   }];
 
   const layout: Partial<Layout> = {
     showlegend: false,
     hovermode: "closest",
-    yaxis: {
-      title: { text: "Median grade" },
-      tickvals: GRADES_WORST_FIRST.map(gradePosition),
-      ticktext: GRADES_WORST_FIRST,
-      range: [0, GRADES_WORST_FIRST.length + 1],
-    },
+    margin: { l: 16, r: 16, t: 32, b: 56 },
+    xaxis: { showgrid: false },
+    // Bar heights still use the F-to-A+ scale (F = 1, A+ = 13), it just isn't drawn.
+    yaxis: { visible: false, range: [0, GRADES_WORST_FIRST.length + 1] },
   };
 
   return <PlotlyChart data={data} layout={layout} className="h-80" />;

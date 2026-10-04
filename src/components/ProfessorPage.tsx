@@ -24,7 +24,7 @@ export function ProfessorPage({ professorName }: ProfessorPageProps) {
         <span className="text-sm text-zinc-400">{professor.department} department</span>
       </div>
 
-      <ProfessorStats rmp={professor.rmp} grades={allGrades} medianLabel="Median grade (all classes)" />
+      <ProfessorStats rmp={professor.rmp} grades={allGrades} medianLabel="Median Grade (all classes)" />
 
       <Section title="Grades in all classes">
         <GradeBars grades={allGrades} />

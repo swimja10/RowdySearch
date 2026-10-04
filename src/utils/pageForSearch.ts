@@ -1,4 +1,4 @@
-import type { Page } from "../page.ts";
+import type { Subject } from "../page.ts";
 import { sharesAWord, type Match } from "../searcher.ts";
 import { findCourse } from "./courses.ts";
 import type { Professor } from "./gradeData.ts";
@@ -7,8 +7,8 @@ import type { Professor } from "./gradeData.ts";
 //   "Sean Beatty"                    -> his professor page
 //   "Beatty MAT 1213"                -> his MAT 1213 class page
 //   "linear algebra" or "MAT 1213"   -> the course page, with everyone who teaches it
-// Returns null when the search found nothing.
-export function pageForSearch(query: string, results: Match[], professors: Record<string, Professor>): Page | null {
+// Analytical Mode uses the same rule to pick what Enter adds. Returns null when nothing matched.
+export function pageForSearch(query: string, results: Match[], professors: Record<string, Professor>): Subject | null {
   if (results.length === 0) return null;
 
   const [bestMatch] = results;
