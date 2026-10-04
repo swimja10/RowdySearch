@@ -17,6 +17,7 @@ export type Series = {
 
 // Everything the charts and the table need to draw one series.
 export type SeriesData = {
+  subject: Subject;
   key: string;
   label: string;
   color: string;
@@ -46,6 +47,7 @@ export function describeSeries({ subject, color }: Series, gradeData: GradeData)
   const professorName = professorNameOf(subject);
 
   return {
+    subject,
     key: subjectKey(subject),
     label: subjectLabel(subject),
     color,

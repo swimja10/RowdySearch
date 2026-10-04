@@ -14,6 +14,10 @@ export function MedianChart({ seriesData }: MedianChartProps) {
   const withGrades = seriesData.filter(series => medianGrade(series.grades) !== null);
   const medians = withGrades.map(series => medianGrade(series.grades) as LetterGrade);
 
+  if (withGrades.length === 0) {
+    return <p className="text-sm text-zinc-500">None of these have grades released yet.</p>;
+  }
+
   const data: Data[] = [{
     type: "bar",
     x: withGrades.map(series => series.label),

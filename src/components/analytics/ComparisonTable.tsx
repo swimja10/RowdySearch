@@ -1,4 +1,5 @@
 import { SeriesName } from "./SeriesName.tsx";
+import type { Subject } from "../../page.ts";
 import { formatGpa, formatOutOfFive, formatShare } from "../../utils/format.ts";
 import { countStudents, LETTER_GRADES, medianGrade } from "../../utils/grades.ts";
 import type { SeriesData } from "../../utils/series.ts";
@@ -8,10 +9,11 @@ const COLUMNS = ["Comparing", "Median", "Avg GPA", "vs. course average", "A's", 
 
 type ComparisonTableProps = {
   seriesData: SeriesData[];
+  onOpen: (subject: Subject) => void;
 };
 
 // Every number side by side: the charts' data as a table, plus a few extra stats.
-export function ComparisonTable({ seriesData }: ComparisonTableProps) {
+export function ComparisonTable({ seriesData, onOpen }: ComparisonTableProps) {
   return (
     <div className="overflow-x-auto rounded-xl bg-zinc-800">
       <table className="w-full text-left text-sm">
@@ -23,7 +25,7 @@ export function ComparisonTable({ seriesData }: ComparisonTableProps) {
           </tr>
         </thead>
         <tbody>
-          {seriesData.map(series => <ComparisonRow key={series.key} series={series} />)}
+          {seriesData.map(series => <ComparisonRow key={series.key} series={series} onOpen={onOpen} />)}
         </tbody>
       </table>
     </div>
@@ -32,15 +34,16 @@ export function ComparisonTable({ seriesData }: ComparisonTableProps) {
 
 type ComparisonRowProps = {
   series: SeriesData;
+  onOpen: (subject: Subject) => void;
 };
 
-function ComparisonRow({ series }: ComparisonRowProps) {
+function ComparisonRow({ series, onOpen }: ComparisonRowProps) {
   const { grades } = series;
   const gpa = averageGpa(grades);
 
   return (
     <tr className="border-t border-zinc-700 tabular-nums">
-      <td className="px-3 py-2"><SeriesName series={series} /></td>
+      <td className="px-3 py-2"><SeriesName series={series} onOpen={onOpen} /></td>
       <td className="px-3 py-2 font-semibold">{medianGrade(grades) ?? "—"}</td>
       <td className="px-3 py-2">{formatGpa(gpa)}</td>
       <td className="whitespace-nowrap px-3 py-2"><CourseComparison gpa={gpa} courseGpa={series.courseGpa} /></td>

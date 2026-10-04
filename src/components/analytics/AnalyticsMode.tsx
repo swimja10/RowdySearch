@@ -17,7 +17,7 @@ import { subjectKey, subjectsToStartWith } from "../../utils/subjects.ts";
 
 // The full screen view for comparing professors and courses with charts.
 export function AnalyticsMode() {
-  const { page, professors, searchIndex, closeAnalytics } = useLookup();
+  const { page, professors, searchIndex, openPage, closeAnalytics } = useLookup();
   const gradeData = { professors, searchIndex };
 
   const [seriesList, setSeriesList] = useState(() => seriesFor(subjectsToStartWith(page, gradeData)));
@@ -34,6 +34,12 @@ export function AnalyticsMode() {
   async function handleClose() {
     await slideOut(panelRef.current!, sidebarWidth);
     closeAnalytics();
+  }
+
+  // Clicking a name: the sidebar switches to that page, then Analytical Mode closes to show it.
+  function openInSidebar(subject: Subject) {
+    openPage(subject);
+    handleClose();
   }
 
   function addSubject(subject: Subject) {
@@ -60,7 +66,12 @@ export function AnalyticsMode() {
 
         <div className="grid gap-6 lg:grid-cols-[20rem_1fr]">
           <aside data-reveal className="flex flex-col gap-6 opacity-0">
-            <ComparingList seriesData={seriesData} onRemove={removeSeries} onClear={() => setSeriesList([])} />
+            <ComparingList
+              seriesData={seriesData}
+              onRemove={removeSeries}
+              onClear={() => setSeriesList([])}
+              onOpen={openInSidebar}
+            />
             <SubjectPicker
               canAddMore={seriesList.length < SERIES_COLORS.length}
               isAdded={subject => isAdded(seriesList, subject)}
@@ -82,10 +93,10 @@ export function AnalyticsMode() {
                   <MedianChart seriesData={seriesData} />
                 </Section>
                 <Section title="Side by side">
-                  <ComparisonTable seriesData={seriesData} />
+                  <ComparisonTable seriesData={seriesData} onOpen={openInSidebar} />
                 </Section>
                 <Section title="What students say">
-                  <ProfessorReviews seriesData={seriesData} />
+                  <ProfessorReviews seriesData={seriesData} onOpen={openInSidebar} />
                 </Section>
               </>
             )}

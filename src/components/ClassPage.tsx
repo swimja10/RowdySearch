@@ -23,7 +23,9 @@ export function ClassPage({ professorName, courseCode }: ClassPageProps) {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col items-start">
-        <h2 className="text-2xl font-bold">{course.code} · {course.title}</h2>
+        <h2 className="text-2xl font-bold">
+          <Button variant="link" onClick={() => openCourse(course.code)}>{course.code}</Button> · {course.title}
+        </h2>
         <span className="text-zinc-400">
           with{" "}
           <Button variant="link" onClick={() => openProfessor(professor.name)}>{professor.name}</Button>

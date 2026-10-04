@@ -251,8 +251,8 @@ function _temp$10(y) {
 //#endregion
 //#region src/components/analytics/SeriesName.tsx
 function SeriesName(t0) {
-	const $ = (0, import_compiler_runtime.c)(5);
-	const { series } = t0;
+	const $ = (0, import_compiler_runtime.c)(11);
+	const { series, onOpen } = t0;
 	let t1;
 	if ($[0] !== series.color) {
 		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
@@ -263,16 +263,34 @@ function SeriesName(t0) {
 		$[1] = t1;
 	} else t1 = $[1];
 	let t2;
-	if ($[2] !== series.label || $[3] !== t1) {
-		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-			className: "flex items-center gap-2",
-			children: [t1, series.label]
-		});
-		$[2] = series.label;
-		$[3] = t1;
+	if ($[2] !== onOpen || $[3] !== series.subject) {
+		t2 = () => onOpen(series.subject);
+		$[2] = onOpen;
+		$[3] = series.subject;
 		$[4] = t2;
 	} else t2 = $[4];
-	return t2;
+	let t3;
+	if ($[5] !== series.label || $[6] !== t2) {
+		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+			variant: "link",
+			onClick: t2,
+			children: series.label
+		});
+		$[5] = series.label;
+		$[6] = t2;
+		$[7] = t3;
+	} else t3 = $[7];
+	let t4;
+	if ($[8] !== t1 || $[9] !== t3) {
+		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+			className: "flex items-center gap-2",
+			children: [t1, t3]
+		});
+		$[8] = t1;
+		$[9] = t3;
+		$[10] = t4;
+	} else t4 = $[10];
+	return t4;
 }
 //#endregion
 //#region src/utils/grades.ts
@@ -717,6 +735,7 @@ function withSubjectAdded(seriesList, subject) {
 function describeSeries({ subject, color }, gradeData) {
 	const professorName = professorNameOf(subject);
 	return {
+		subject,
 		key: subjectKey(subject),
 		label: subjectLabel(subject),
 		color,
@@ -735,8 +754,8 @@ function wholeCourseGpa(courseCode, gradeData) {
 //#endregion
 //#region src/components/analytics/ComparingList.tsx
 function ComparingList(t0) {
-	const $ = (0, import_compiler_runtime.c)(18);
-	const { seriesData, onRemove, onClear } = t0;
+	const $ = (0, import_compiler_runtime.c)(20);
+	const { seriesData, onRemove, onClear, onOpen } = t0;
 	let t1;
 	if ($[0] !== seriesData.length) {
 		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
@@ -774,12 +793,15 @@ function ComparingList(t0) {
 		$[7] = t3;
 	} else t3 = $[7];
 	let t4;
-	if ($[8] !== onRemove || $[9] !== seriesData) {
+	if ($[8] !== onOpen || $[9] !== onRemove || $[10] !== seriesData) {
 		let t5;
-		if ($[11] !== onRemove) {
+		if ($[12] !== onOpen || $[13] !== onRemove) {
 			t5 = (series) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
 				className: "flex items-center justify-between gap-2 rounded-lg bg-zinc-800 px-3 py-2 text-sm",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SeriesName, { series }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SeriesName, {
+					series,
+					onOpen
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
 					variant: "secondary",
 					className: "px-2 text-xs",
 					"aria-label": `Remove ${series.label}`,
@@ -787,33 +809,35 @@ function ComparingList(t0) {
 					children: "✕"
 				})]
 			}, series.key);
-			$[11] = onRemove;
-			$[12] = t5;
-		} else t5 = $[12];
+			$[12] = onOpen;
+			$[13] = onRemove;
+			$[14] = t5;
+		} else t5 = $[14];
 		t4 = seriesData.map(t5);
-		$[8] = onRemove;
-		$[9] = seriesData;
-		$[10] = t4;
-	} else t4 = $[10];
+		$[8] = onOpen;
+		$[9] = onRemove;
+		$[10] = seriesData;
+		$[11] = t4;
+	} else t4 = $[11];
 	let t5;
-	if ($[13] !== t4) {
+	if ($[15] !== t4) {
 		t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
 			className: "flex flex-col gap-1",
 			children: t4
 		});
-		$[13] = t4;
-		$[14] = t5;
-	} else t5 = $[14];
+		$[15] = t4;
+		$[16] = t5;
+	} else t5 = $[16];
 	let t6;
-	if ($[15] !== t3 || $[16] !== t5) {
+	if ($[17] !== t3 || $[18] !== t5) {
 		t6 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "flex flex-col gap-2",
 			children: [t3, t5]
 		});
-		$[15] = t3;
-		$[16] = t5;
-		$[17] = t6;
-	} else t6 = $[17];
+		$[17] = t3;
+		$[18] = t5;
+		$[19] = t6;
+	} else t6 = $[19];
 	return t6;
 }
 //#endregion
@@ -847,8 +871,8 @@ var COLUMNS = [
 	"RMP"
 ];
 function ComparisonTable(t0) {
-	const $ = (0, import_compiler_runtime.c)(5);
-	const { seriesData } = t0;
+	const $ = (0, import_compiler_runtime.c)(8);
+	const { seriesData, onOpen } = t0;
 	let t1;
 	if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
 		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", {
@@ -858,13 +882,23 @@ function ComparisonTable(t0) {
 		$[0] = t1;
 	} else t1 = $[0];
 	let t2;
-	if ($[1] !== seriesData) {
-		t2 = seriesData.map(_temp2$4);
-		$[1] = seriesData;
-		$[2] = t2;
-	} else t2 = $[2];
+	if ($[1] !== onOpen || $[2] !== seriesData) {
+		let t3;
+		if ($[4] !== onOpen) {
+			t3 = (series) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComparisonRow, {
+				series,
+				onOpen
+			}, series.key);
+			$[4] = onOpen;
+			$[5] = t3;
+		} else t3 = $[5];
+		t2 = seriesData.map(t3);
+		$[1] = onOpen;
+		$[2] = seriesData;
+		$[3] = t2;
+	} else t2 = $[3];
 	let t3;
-	if ($[3] !== t2) {
+	if ($[6] !== t2) {
 		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: "overflow-x-auto rounded-xl bg-zinc-800",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", {
@@ -872,13 +906,10 @@ function ComparisonTable(t0) {
 				children: [t1, /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", { children: t2 })]
 			})
 		});
-		$[3] = t2;
-		$[4] = t3;
-	} else t3 = $[4];
+		$[6] = t2;
+		$[7] = t3;
+	} else t3 = $[7];
 	return t3;
-}
-function _temp2$4(series) {
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComparisonRow, { series }, series.key);
 }
 function _temp$9(column) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", {
@@ -887,8 +918,8 @@ function _temp$9(column) {
 	}, column);
 }
 function ComparisonRow(t0) {
-	const $ = (0, import_compiler_runtime.c)(52);
-	const { series } = t0;
+	const $ = (0, import_compiler_runtime.c)(54);
+	const { series, onOpen } = t0;
 	const { grades } = series;
 	let gpa;
 	let t1;
@@ -896,61 +927,66 @@ function ComparisonRow(t0) {
 	let t3;
 	let t4;
 	let t5;
-	if ($[0] !== grades || $[1] !== series) {
+	if ($[0] !== grades || $[1] !== onOpen || $[2] !== series) {
 		gpa = averageGpa(grades);
 		t3 = "border-t border-zinc-700 tabular-nums";
-		if ($[8] !== series) {
+		if ($[9] !== onOpen || $[10] !== series) {
 			t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 				className: "px-3 py-2",
-				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SeriesName, { series })
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SeriesName, {
+					series,
+					onOpen
+				})
 			});
-			$[8] = series;
-			$[9] = t4;
-		} else t4 = $[9];
+			$[9] = onOpen;
+			$[10] = series;
+			$[11] = t4;
+		} else t4 = $[11];
 		let t6;
-		if ($[10] !== grades) {
+		if ($[12] !== grades) {
 			t6 = medianGrade(grades) ?? "—";
-			$[10] = grades;
-			$[11] = t6;
-		} else t6 = $[11];
-		if ($[12] !== t6) {
+			$[12] = grades;
+			$[13] = t6;
+		} else t6 = $[13];
+		if ($[14] !== t6) {
 			t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 				className: "px-3 py-2 font-semibold",
 				children: t6
 			});
-			$[12] = t6;
-			$[13] = t5;
-		} else t5 = $[13];
+			$[14] = t6;
+			$[15] = t5;
+		} else t5 = $[15];
 		t1 = "px-3 py-2";
 		t2 = formatGpa(gpa);
 		$[0] = grades;
-		$[1] = series;
-		$[2] = gpa;
-		$[3] = t1;
-		$[4] = t2;
-		$[5] = t3;
-		$[6] = t4;
-		$[7] = t5;
+		$[1] = onOpen;
+		$[2] = series;
+		$[3] = gpa;
+		$[4] = t1;
+		$[5] = t2;
+		$[6] = t3;
+		$[7] = t4;
+		$[8] = t5;
 	} else {
-		gpa = $[2];
-		t1 = $[3];
-		t2 = $[4];
-		t3 = $[5];
-		t4 = $[6];
-		t5 = $[7];
+		gpa = $[3];
+		t1 = $[4];
+		t2 = $[5];
+		t3 = $[6];
+		t4 = $[7];
+		t5 = $[8];
 	}
 	let t6;
-	if ($[14] !== t1 || $[15] !== t2) {
+	if ($[16] !== t1 || $[17] !== t2) {
 		t6 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: t1,
 			children: t2
 		});
-		$[14] = t1;
-		$[15] = t2;
-		$[16] = t6;
-	} else t6 = $[16];
+		$[16] = t1;
+		$[17] = t2;
+		$[18] = t6;
+	} else t6 = $[18];
 	let t7;
-	if ($[17] !== gpa || $[18] !== series.courseGpa) {
+	if ($[19] !== gpa || $[20] !== series.courseGpa) {
 		t7 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: "whitespace-nowrap px-3 py-2",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CourseComparison, {
@@ -958,88 +994,88 @@ function ComparisonRow(t0) {
 				courseGpa: series.courseGpa
 			})
 		});
-		$[17] = gpa;
-		$[18] = series.courseGpa;
-		$[19] = t7;
-	} else t7 = $[19];
+		$[19] = gpa;
+		$[20] = series.courseGpa;
+		$[21] = t7;
+	} else t7 = $[21];
 	let t8;
-	if ($[20] !== grades) {
+	if ($[22] !== grades) {
 		t8 = formatShare(percentWhoGot(grades, A_GRADES));
-		$[20] = grades;
-		$[21] = t8;
-	} else t8 = $[21];
+		$[22] = grades;
+		$[23] = t8;
+	} else t8 = $[23];
 	let t9;
-	if ($[22] !== t8) {
+	if ($[24] !== t8) {
 		t9 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: "px-3 py-2",
 			children: t8
 		});
-		$[22] = t8;
-		$[23] = t9;
-	} else t9 = $[23];
+		$[24] = t8;
+		$[25] = t9;
+	} else t9 = $[25];
 	let t10;
-	if ($[24] !== grades) {
+	if ($[26] !== grades) {
 		t10 = formatShare(percentWhoGot(grades, D_AND_F_GRADES));
-		$[24] = grades;
-		$[25] = t10;
-	} else t10 = $[25];
+		$[26] = grades;
+		$[27] = t10;
+	} else t10 = $[27];
 	let t11;
-	if ($[26] !== t10) {
+	if ($[28] !== t10) {
 		t11 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: "px-3 py-2",
 			children: t10
 		});
-		$[26] = t10;
-		$[27] = t11;
-	} else t11 = $[27];
+		$[28] = t10;
+		$[29] = t11;
+	} else t11 = $[29];
 	let t12;
-	if ($[28] !== grades) {
+	if ($[30] !== grades) {
 		t12 = formatShare(percentWhoGot(grades, WITHDREW));
-		$[28] = grades;
-		$[29] = t12;
-	} else t12 = $[29];
+		$[30] = grades;
+		$[31] = t12;
+	} else t12 = $[31];
 	let t13;
-	if ($[30] !== t12) {
+	if ($[32] !== t12) {
 		t13 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: "px-3 py-2",
 			children: t12
 		});
-		$[30] = t12;
-		$[31] = t13;
-	} else t13 = $[31];
+		$[32] = t12;
+		$[33] = t13;
+	} else t13 = $[33];
 	let t14;
-	if ($[32] !== grades) {
+	if ($[34] !== grades) {
 		t14 = countStudents(grades, LETTER_GRADES).toLocaleString();
-		$[32] = grades;
-		$[33] = t14;
-	} else t14 = $[33];
+		$[34] = grades;
+		$[35] = t14;
+	} else t14 = $[35];
 	let t15;
-	if ($[34] !== t14) {
+	if ($[36] !== t14) {
 		t15 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: "px-3 py-2",
 			children: t14
 		});
-		$[34] = t14;
-		$[35] = t15;
-	} else t15 = $[35];
+		$[36] = t14;
+		$[37] = t15;
+	} else t15 = $[37];
 	let t16;
-	if ($[36] !== series.professorName || $[37] !== series.rating) {
+	if ($[38] !== series.professorName || $[39] !== series.rating) {
 		t16 = series.professorName === null ? "—" : formatOutOfFive(series.rating);
-		$[36] = series.professorName;
-		$[37] = series.rating;
-		$[38] = t16;
-	} else t16 = $[38];
+		$[38] = series.professorName;
+		$[39] = series.rating;
+		$[40] = t16;
+	} else t16 = $[40];
 	let t17;
-	if ($[39] !== t16) {
+	if ($[41] !== t16) {
 		t17 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: "whitespace-nowrap px-3 py-2",
 			children: t16
 		});
-		$[39] = t16;
-		$[40] = t17;
-	} else t17 = $[40];
+		$[41] = t16;
+		$[42] = t17;
+	} else t17 = $[42];
 	let t18;
-	if ($[41] !== t11 || $[42] !== t13 || $[43] !== t15 || $[44] !== t17 || $[45] !== t3 || $[46] !== t4 || $[47] !== t5 || $[48] !== t6 || $[49] !== t7 || $[50] !== t9) {
+	if ($[43] !== t11 || $[44] !== t13 || $[45] !== t15 || $[46] !== t17 || $[47] !== t3 || $[48] !== t4 || $[49] !== t5 || $[50] !== t6 || $[51] !== t7 || $[52] !== t9) {
 		t18 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", {
 			className: t3,
 			children: [
@@ -1054,18 +1090,18 @@ function ComparisonRow(t0) {
 				t17
 			]
 		});
-		$[41] = t11;
-		$[42] = t13;
-		$[43] = t15;
-		$[44] = t17;
-		$[45] = t3;
-		$[46] = t4;
-		$[47] = t5;
-		$[48] = t6;
-		$[49] = t7;
-		$[50] = t9;
-		$[51] = t18;
-	} else t18 = $[51];
+		$[43] = t11;
+		$[44] = t13;
+		$[45] = t15;
+		$[46] = t17;
+		$[47] = t3;
+		$[48] = t4;
+		$[49] = t5;
+		$[50] = t6;
+		$[51] = t7;
+		$[52] = t9;
+		$[53] = t18;
+	} else t18 = $[53];
 	return t18;
 }
 function CourseComparison(t0) {
@@ -1492,7 +1528,7 @@ function yAxisTitle(inPercent, atOrAbove) {
 //#endregion
 //#region src/components/analytics/MedianChart.tsx
 function MedianChart(t0) {
-	const $ = (0, import_compiler_runtime.c)(24);
+	const $ = (0, import_compiler_runtime.c)(26);
 	const { seriesData } = t0;
 	let t1;
 	let t2;
@@ -1501,22 +1537,38 @@ function MedianChart(t0) {
 	let t5;
 	let t6;
 	let t7;
+	let t8;
 	if ($[0] !== seriesData) {
-		const withGrades = seriesData.filter(_temp$8);
-		const medians = withGrades.map(_temp2$3);
-		t2 = "bar";
-		t3 = withGrades.map(_temp3);
-		t4 = medians.map(gradePosition);
-		t5 = medians;
-		t6 = "outside";
-		if ($[8] === Symbol.for("react.memo_cache_sentinel")) {
-			t7 = {
-				color: "#f4f4f5",
-				size: 15
-			};
-			$[8] = t7;
-		} else t7 = $[8];
-		t1 = withGrades.map(_temp4);
+		t8 = Symbol.for("react.early_return_sentinel");
+		bb0: {
+			const withGrades = seriesData.filter(_temp$8);
+			const medians = withGrades.map(_temp2$3);
+			if (withGrades.length === 0) {
+				let t9;
+				if ($[9] === Symbol.for("react.memo_cache_sentinel")) {
+					t9 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+						className: "text-sm text-zinc-500",
+						children: "None of these have grades released yet."
+					});
+					$[9] = t9;
+				} else t9 = $[9];
+				t8 = t9;
+				break bb0;
+			}
+			t2 = "bar";
+			t3 = withGrades.map(_temp3);
+			t4 = medians.map(gradePosition);
+			t5 = medians;
+			t6 = "outside";
+			if ($[10] === Symbol.for("react.memo_cache_sentinel")) {
+				t7 = {
+					color: "#f4f4f5",
+					size: 15
+				};
+				$[10] = t7;
+			} else t7 = $[10];
+			t1 = withGrades.map(_temp4);
+		}
 		$[0] = seriesData;
 		$[1] = t1;
 		$[2] = t2;
@@ -1525,6 +1577,7 @@ function MedianChart(t0) {
 		$[5] = t5;
 		$[6] = t6;
 		$[7] = t7;
+		$[8] = t8;
 	} else {
 		t1 = $[1];
 		t2 = $[2];
@@ -1533,77 +1586,79 @@ function MedianChart(t0) {
 		t5 = $[5];
 		t6 = $[6];
 		t7 = $[7];
+		t8 = $[8];
 	}
-	let t8;
-	if ($[9] !== t1) {
-		t8 = { color: t1 };
-		$[9] = t1;
-		$[10] = t8;
-	} else t8 = $[10];
+	if (t8 !== Symbol.for("react.early_return_sentinel")) return t8;
 	let t9;
-	if ($[11] !== t2 || $[12] !== t3 || $[13] !== t4 || $[14] !== t5 || $[15] !== t6 || $[16] !== t7 || $[17] !== t8) {
-		t9 = [{
+	if ($[11] !== t1) {
+		t9 = { color: t1 };
+		$[11] = t1;
+		$[12] = t9;
+	} else t9 = $[12];
+	let t10;
+	if ($[13] !== t2 || $[14] !== t3 || $[15] !== t4 || $[16] !== t5 || $[17] !== t6 || $[18] !== t7 || $[19] !== t9) {
+		t10 = [{
 			type: t2,
 			x: t3,
 			y: t4,
 			text: t5,
 			textposition: t6,
 			textfont: t7,
-			marker: t8,
+			marker: t9,
 			hovertemplate: "%{x}<br>Median Grade %{text}<extra></extra>"
 		}];
-		$[11] = t2;
-		$[12] = t3;
-		$[13] = t4;
-		$[14] = t5;
-		$[15] = t6;
-		$[16] = t7;
-		$[17] = t8;
-		$[18] = t9;
-	} else t9 = $[18];
-	const data = t9;
-	let t10;
+		$[13] = t2;
+		$[14] = t3;
+		$[15] = t4;
+		$[16] = t5;
+		$[17] = t6;
+		$[18] = t7;
+		$[19] = t9;
+		$[20] = t10;
+	} else t10 = $[20];
+	const data = t10;
 	let t11;
-	if ($[19] === Symbol.for("react.memo_cache_sentinel")) {
-		t10 = {
+	let t12;
+	if ($[21] === Symbol.for("react.memo_cache_sentinel")) {
+		t11 = {
 			l: 16,
 			r: 16,
 			t: 32,
 			b: 56
 		};
-		t11 = { showgrid: false };
-		$[19] = t10;
-		$[20] = t11;
+		t12 = { showgrid: false };
+		$[21] = t11;
+		$[22] = t12;
 	} else {
-		t10 = $[19];
-		t11 = $[20];
+		t11 = $[21];
+		t12 = $[22];
 	}
-	let t12;
-	if ($[21] === Symbol.for("react.memo_cache_sentinel")) {
-		t12 = {
+	let t13;
+	if ($[23] === Symbol.for("react.memo_cache_sentinel")) {
+		t13 = {
 			showlegend: false,
 			hovermode: "closest",
-			margin: t10,
-			xaxis: t11,
+			margin: t11,
+			xaxis: t12,
 			yaxis: {
 				visible: false,
 				range: [0, GRADES_WORST_FIRST.length + 1]
 			}
 		};
-		$[21] = t12;
-	} else t12 = $[21];
-	const layout = t12;
-	let t13;
-	if ($[22] !== data) {
-		t13 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PlotlyChart, {
+		$[23] = t13;
+	} else t13 = $[23];
+	const layout = t13;
+	let t14;
+	if ($[24] !== data) {
+		t14 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(PlotlyChart, {
 			data,
 			layout,
 			className: "h-80"
 		});
-		$[22] = data;
-		$[23] = t13;
-	} else t13 = $[23];
-	return t13;
+		$[24] = data;
+		$[25] = t14;
+	} else t14 = $[25];
+	return t14;
 }
 function _temp4(series_2) {
 	return series_2.color;
@@ -1671,8 +1726,8 @@ function useLookup() {
 //#endregion
 //#region src/components/analytics/ProfessorReviews.tsx
 function ProfessorReviews(t0) {
-	const $ = (0, import_compiler_runtime.c)(8);
-	const { seriesData } = t0;
+	const $ = (0, import_compiler_runtime.c)(9);
+	const { seriesData, onOpen } = t0;
 	const { professors } = useLookup();
 	let t1;
 	if ($[0] !== seriesData) {
@@ -1699,7 +1754,7 @@ function ProfessorReviews(t0) {
 		return t3;
 	}
 	let t3;
-	if ($[5] !== professorNames || $[6] !== professors) {
+	if ($[5] !== onOpen || $[6] !== professorNames || $[7] !== professors) {
 		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			className: "flex flex-col gap-3",
 			children: professorNames.map((name_0) => {
@@ -1709,20 +1764,23 @@ function ProfessorReviews(t0) {
 					className: "rounded-xl border border-zinc-800 p-3",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("summary", {
 						className: "cursor-pointer font-medium",
-						children: [
-							name_0,
-							" ",
-							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-								className: "text-zinc-400",
-								children: [
-									"· ",
-									formatRmpRating(rmp.rating),
-									" · ",
-									rmp.ratingCount,
-									" ratings"
-								]
-							})
-						]
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+							variant: "link",
+							onClick: () => onOpen({
+								type: "professor",
+								professorName: name_0
+							}),
+							children: name_0
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+							className: "text-zinc-400",
+							children: [
+								" · ",
+								formatRmpRating(rmp.rating),
+								" · ",
+								rmp.ratingCount,
+								" ratings"
+							]
+						})]
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						className: "mt-3",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reviews, { reviews: rmp.reviews })
@@ -1730,10 +1788,11 @@ function ProfessorReviews(t0) {
 				}, name_0);
 			})
 		});
-		$[5] = professorNames;
-		$[6] = professors;
-		$[7] = t3;
-	} else t3 = $[7];
+		$[5] = onOpen;
+		$[6] = professorNames;
+		$[7] = professors;
+		$[8] = t3;
+	} else t3 = $[8];
 	return t3;
 }
 function _temp2$2(name) {
@@ -2028,8 +2087,8 @@ function tellPage(message) {
 //#endregion
 //#region src/components/analytics/AnalyticsMode.tsx
 function AnalyticsMode() {
-	const $ = (0, import_compiler_runtime.c)(45);
-	const { page, professors, searchIndex, closeAnalytics } = useLookup();
+	const $ = (0, import_compiler_runtime.c)(50);
+	const { page, professors, searchIndex, openPage, closeAnalytics } = useLookup();
 	let t0;
 	if ($[0] !== professors || $[1] !== searchIndex) {
 		t0 = {
@@ -2091,96 +2150,109 @@ function AnalyticsMode() {
 	} else t5 = $[15];
 	const handleClose = t5;
 	let t6;
-	if ($[16] === Symbol.for("react.memo_cache_sentinel")) {
-		t6 = function addSubject(subject) {
-			setSeriesList((curr) => withSubjectAdded(curr, subject));
+	if ($[16] !== handleClose || $[17] !== openPage) {
+		t6 = function openInSidebar(subject) {
+			openPage(subject);
+			handleClose();
 		};
-		$[16] = t6;
-	} else t6 = $[16];
-	const addSubject = t6;
+		$[16] = handleClose;
+		$[17] = openPage;
+		$[18] = t6;
+	} else t6 = $[18];
+	const openInSidebar = t6;
 	let t7;
-	if ($[17] === Symbol.for("react.memo_cache_sentinel")) {
-		t7 = function removeSeries(key) {
+	if ($[19] === Symbol.for("react.memo_cache_sentinel")) {
+		t7 = function addSubject(subject_0) {
+			setSeriesList((curr) => withSubjectAdded(curr, subject_0));
+		};
+		$[19] = t7;
+	} else t7 = $[19];
+	const addSubject = t7;
+	let t8;
+	if ($[20] === Symbol.for("react.memo_cache_sentinel")) {
+		t8 = function removeSeries(key) {
 			setSeriesList((curr_0) => curr_0.filter((series_0) => subjectKey(series_0.subject) !== key));
 		};
-		$[17] = t7;
-	} else t7 = $[17];
-	const removeSeries = t7;
-	let t8;
-	if ($[18] !== sidebarWidth) {
-		t8 = { width: sidebarWidth };
-		$[18] = sidebarWidth;
-		$[19] = t8;
-	} else t8 = $[19];
+		$[20] = t8;
+	} else t8 = $[20];
+	const removeSeries = t8;
 	let t9;
-	if ($[20] === Symbol.for("react.memo_cache_sentinel")) {
-		t9 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", {
+	if ($[21] !== sidebarWidth) {
+		t9 = { width: sidebarWidth };
+		$[21] = sidebarWidth;
+		$[22] = t9;
+	} else t9 = $[22];
+	let t10;
+	if ($[23] === Symbol.for("react.memo_cache_sentinel")) {
+		t10 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", {
 			className: "flex items-center gap-3 text-2xl font-bold",
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(VennIcon, { className: "h-8 w-12 text-orange-500" }), "Analytical Mode"]
 		});
-		$[20] = t9;
-	} else t9 = $[20];
-	let t10;
-	if ($[21] !== handleClose) {
-		t10 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
+		$[23] = t10;
+	} else t10 = $[23];
+	let t11;
+	if ($[24] !== handleClose) {
+		t11 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
 			"data-reveal": true,
 			className: "flex items-center justify-between gap-4 opacity-0",
-			children: [t9, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+			children: [t10, /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
 				variant: "secondary",
 				onClick: handleClose,
 				children: "✕ Close"
 			})]
 		});
-		$[21] = handleClose;
-		$[22] = t10;
-	} else t10 = $[22];
-	let t11;
-	if ($[23] === Symbol.for("react.memo_cache_sentinel")) {
-		t11 = () => setSeriesList([]);
-		$[23] = t11;
-	} else t11 = $[23];
+		$[24] = handleClose;
+		$[25] = t11;
+	} else t11 = $[25];
 	let t12;
-	if ($[24] !== seriesData) {
-		t12 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComparingList, {
+	if ($[26] === Symbol.for("react.memo_cache_sentinel")) {
+		t12 = () => setSeriesList([]);
+		$[26] = t12;
+	} else t12 = $[26];
+	let t13;
+	if ($[27] !== openInSidebar || $[28] !== seriesData) {
+		t13 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComparingList, {
 			seriesData,
 			onRemove: removeSeries,
-			onClear: t11
+			onClear: t12,
+			onOpen: openInSidebar
 		});
-		$[24] = seriesData;
-		$[25] = t12;
-	} else t12 = $[25];
-	const t13 = seriesList.length < SERIES_COLORS.length;
-	let t14;
-	if ($[26] !== seriesList) {
-		t14 = (subject_0) => isAdded(seriesList, subject_0);
-		$[26] = seriesList;
-		$[27] = t14;
-	} else t14 = $[27];
+		$[27] = openInSidebar;
+		$[28] = seriesData;
+		$[29] = t13;
+	} else t13 = $[29];
+	const t14 = seriesList.length < SERIES_COLORS.length;
 	let t15;
-	if ($[28] !== t13 || $[29] !== t14) {
-		t15 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SubjectPicker, {
-			canAddMore: t13,
-			isAdded: t14,
+	if ($[30] !== seriesList) {
+		t15 = (subject_1) => isAdded(seriesList, subject_1);
+		$[30] = seriesList;
+		$[31] = t15;
+	} else t15 = $[31];
+	let t16;
+	if ($[32] !== t14 || $[33] !== t15) {
+		t16 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SubjectPicker, {
+			canAddMore: t14,
+			isAdded: t15,
 			onAdd: addSubject
 		});
-		$[28] = t13;
-		$[29] = t14;
-		$[30] = t15;
-	} else t15 = $[30];
-	let t16;
-	if ($[31] !== t12 || $[32] !== t15) {
-		t16 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("aside", {
+		$[32] = t14;
+		$[33] = t15;
+		$[34] = t16;
+	} else t16 = $[34];
+	let t17;
+	if ($[35] !== t13 || $[36] !== t16) {
+		t17 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("aside", {
 			"data-reveal": true,
 			className: "flex flex-col gap-6 opacity-0",
-			children: [t12, t15]
+			children: [t13, t16]
 		});
-		$[31] = t12;
-		$[32] = t15;
-		$[33] = t16;
-	} else t16 = $[33];
-	let t17;
-	if ($[34] !== seriesData) {
-		t17 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("main", {
+		$[35] = t13;
+		$[36] = t16;
+		$[37] = t17;
+	} else t17 = $[37];
+	let t18;
+	if ($[38] !== openInSidebar || $[39] !== seriesData) {
+		t18 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("main", {
 			"data-reveal": true,
 			className: "flex min-w-0 flex-col gap-8 opacity-0",
 			children: seriesData.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
@@ -2197,50 +2269,57 @@ function AnalyticsMode() {
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
 					title: "Side by side",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComparisonTable, { seriesData })
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ComparisonTable, {
+						seriesData,
+						onOpen: openInSidebar
+					})
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
 					title: "What students say",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProfessorReviews, { seriesData })
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProfessorReviews, {
+						seriesData,
+						onOpen: openInSidebar
+					})
 				})
 			] })
 		});
-		$[34] = seriesData;
-		$[35] = t17;
-	} else t17 = $[35];
-	let t18;
-	if ($[36] !== t16 || $[37] !== t17) {
-		t18 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "grid gap-6 lg:grid-cols-[20rem_1fr]",
-			children: [t16, t17]
-		});
-		$[36] = t16;
-		$[37] = t17;
-		$[38] = t18;
-	} else t18 = $[38];
-	let t19;
-	if ($[39] !== t10 || $[40] !== t18) {
-		t19 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "flex flex-col gap-6 p-6",
-			children: [t10, t18]
-		});
-		$[39] = t10;
+		$[38] = openInSidebar;
+		$[39] = seriesData;
 		$[40] = t18;
-		$[41] = t19;
-	} else t19 = $[41];
+	} else t18 = $[40];
+	let t19;
+	if ($[41] !== t17 || $[42] !== t18) {
+		t19 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "grid gap-6 lg:grid-cols-[20rem_1fr]",
+			children: [t17, t18]
+		});
+		$[41] = t17;
+		$[42] = t18;
+		$[43] = t19;
+	} else t19 = $[43];
 	let t20;
-	if ($[42] !== t19 || $[43] !== t8) {
-		t20 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+	if ($[44] !== t11 || $[45] !== t19) {
+		t20 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "flex flex-col gap-6 p-6",
+			children: [t11, t19]
+		});
+		$[44] = t11;
+		$[45] = t19;
+		$[46] = t20;
+	} else t20 = $[46];
+	let t21;
+	if ($[47] !== t20 || $[48] !== t9) {
+		t21 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			ref: panelRef,
 			className: "fixed inset-y-0 right-0 overflow-y-auto bg-zinc-900 text-zinc-100",
-			style: t8,
-			children: t19
+			style: t9,
+			children: t20
 		});
-		$[42] = t19;
-		$[43] = t8;
-		$[44] = t20;
-	} else t20 = $[44];
-	return t20;
+		$[47] = t20;
+		$[48] = t9;
+		$[49] = t21;
+	} else t21 = $[49];
+	return t21;
 }
 function _temp$5() {
 	return window.innerWidth;
@@ -2622,7 +2701,7 @@ function _temp$3(syllabus) {
 //#endregion
 //#region src/components/ClassPage.tsx
 function ClassPage(t0) {
-	const $ = (0, import_compiler_runtime.c)(56);
+	const $ = (0, import_compiler_runtime.c)(62);
 	const { professorName, courseCode } = t0;
 	const { professors, openProfessor, openCourse } = useLookup();
 	const professor = professors[professorName];
@@ -2641,191 +2720,209 @@ function ClassPage(t0) {
 	}
 	const grades = t1;
 	let t2;
-	if ($[4] !== course.code || $[5] !== course.title) {
-		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", {
+	if ($[4] !== course.code || $[5] !== openCourse) {
+		t2 = () => openCourse(course.code);
+		$[4] = course.code;
+		$[5] = openCourse;
+		$[6] = t2;
+	} else t2 = $[6];
+	let t3;
+	if ($[7] !== course.code || $[8] !== t2) {
+		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+			variant: "link",
+			onClick: t2,
+			children: course.code
+		});
+		$[7] = course.code;
+		$[8] = t2;
+		$[9] = t3;
+	} else t3 = $[9];
+	let t4;
+	if ($[10] !== course.title || $[11] !== t3) {
+		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", {
 			className: "text-2xl font-bold",
 			children: [
-				course.code,
+				t3,
 				" · ",
 				course.title
 			]
 		});
-		$[4] = course.code;
-		$[5] = course.title;
-		$[6] = t2;
-	} else t2 = $[6];
-	let t3;
-	if ($[7] !== openProfessor || $[8] !== professor.name) {
-		t3 = () => openProfessor(professor.name);
-		$[7] = openProfessor;
-		$[8] = professor.name;
-		$[9] = t3;
-	} else t3 = $[9];
-	let t4;
-	if ($[10] !== professor.name || $[11] !== t3) {
-		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+		$[10] = course.title;
+		$[11] = t3;
+		$[12] = t4;
+	} else t4 = $[12];
+	let t5;
+	if ($[13] !== openProfessor || $[14] !== professor.name) {
+		t5 = () => openProfessor(professor.name);
+		$[13] = openProfessor;
+		$[14] = professor.name;
+		$[15] = t5;
+	} else t5 = $[15];
+	let t6;
+	if ($[16] !== professor.name || $[17] !== t5) {
+		t6 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 			className: "text-zinc-400",
 			children: [
 				"with",
 				" ",
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
 					variant: "link",
-					onClick: t3,
+					onClick: t5,
 					children: professor.name
 				})
 			]
 		});
-		$[10] = professor.name;
-		$[11] = t3;
-		$[12] = t4;
-	} else t4 = $[12];
-	let t5;
-	if ($[13] !== t2 || $[14] !== t4) {
-		t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "flex flex-col items-start",
-			children: [t2, t4]
-		});
-		$[13] = t2;
-		$[14] = t4;
-		$[15] = t5;
-	} else t5 = $[15];
-	const t6 = `Median Grade in ${course.code}`;
+		$[16] = professor.name;
+		$[17] = t5;
+		$[18] = t6;
+	} else t6 = $[18];
 	let t7;
-	if ($[16] !== grades || $[17] !== professor.rmp || $[18] !== t6) {
-		t7 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProfessorStats, {
+	if ($[19] !== t4 || $[20] !== t6) {
+		t7 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "flex flex-col items-start",
+			children: [t4, t6]
+		});
+		$[19] = t4;
+		$[20] = t6;
+		$[21] = t7;
+	} else t7 = $[21];
+	const t8 = `Median Grade in ${course.code}`;
+	let t9;
+	if ($[22] !== grades || $[23] !== professor.rmp || $[24] !== t8) {
+		t9 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProfessorStats, {
 			rmp: professor.rmp,
 			grades,
-			medianLabel: t6
+			medianLabel: t8
 		});
-		$[16] = grades;
-		$[17] = professor.rmp;
-		$[18] = t6;
-		$[19] = t7;
-	} else t7 = $[19];
-	let t8;
-	if ($[20] !== course) {
-		t8 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+		$[22] = grades;
+		$[23] = professor.rmp;
+		$[24] = t8;
+		$[25] = t9;
+	} else t9 = $[25];
+	let t10;
+	if ($[26] !== course) {
+		t10 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
 			title: "Latest syllabus",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LatestSyllabus, { course })
 		});
-		$[20] = course;
-		$[21] = t8;
-	} else t8 = $[21];
-	const t9 = `Grades in ${course.code}`;
-	let t10;
-	if ($[22] !== grades) {
-		t10 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GradeBars, { grades });
-		$[22] = grades;
-		$[23] = t10;
-	} else t10 = $[23];
-	let t11;
-	if ($[24] !== t10 || $[25] !== t9) {
-		t11 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
-			title: t9,
-			children: t10
-		});
-		$[24] = t10;
-		$[25] = t9;
-		$[26] = t11;
-	} else t11 = $[26];
+		$[26] = course;
+		$[27] = t10;
+	} else t10 = $[27];
+	const t11 = `Grades in ${course.code}`;
 	let t12;
-	if ($[27] !== professor.rmp.reviews) {
-		t12 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+	if ($[28] !== grades) {
+		t12 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GradeBars, { grades });
+		$[28] = grades;
+		$[29] = t12;
+	} else t12 = $[29];
+	let t13;
+	if ($[30] !== t11 || $[31] !== t12) {
+		t13 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+			title: t11,
+			children: t12
+		});
+		$[30] = t11;
+		$[31] = t12;
+		$[32] = t13;
+	} else t13 = $[32];
+	let t14;
+	if ($[33] !== professor.rmp.reviews) {
+		t14 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
 			title: "What students say",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reviews, { reviews: professor.rmp.reviews })
 		});
-		$[27] = professor.rmp.reviews;
-		$[28] = t12;
-	} else t12 = $[28];
-	let t13;
-	if ($[29] !== course.offerings) {
-		t13 = course.offerings.map(_temp$2);
-		$[29] = course.offerings;
-		$[30] = t13;
-	} else t13 = $[30];
-	let t14;
-	if ($[31] !== t13) {
-		t14 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
-			title: "Every semester",
-			children: t13
-		});
-		$[31] = t13;
-		$[32] = t14;
-	} else t14 = $[32];
+		$[33] = professor.rmp.reviews;
+		$[34] = t14;
+	} else t14 = $[34];
 	let t15;
-	if ($[33] !== course.code || $[34] !== openCourse) {
-		t15 = () => openCourse(course.code);
-		$[33] = course.code;
-		$[34] = openCourse;
-		$[35] = t15;
-	} else t15 = $[35];
+	if ($[35] !== course.offerings) {
+		t15 = course.offerings.map(_temp$2);
+		$[35] = course.offerings;
+		$[36] = t15;
+	} else t15 = $[36];
 	let t16;
-	if ($[36] !== course.code || $[37] !== t15) {
-		t16 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
-			variant: "link",
-			onClick: t15,
-			children: ["Compare every professor who teaches ", course.code]
+	if ($[37] !== t15) {
+		t16 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+			title: "Every semester",
+			children: t15
 		});
-		$[36] = course.code;
 		$[37] = t15;
 		$[38] = t16;
 	} else t16 = $[38];
 	let t17;
-	if ($[39] !== openProfessor || $[40] !== professor.name) {
-		t17 = () => openProfessor(professor.name);
-		$[39] = openProfessor;
-		$[40] = professor.name;
+	if ($[39] !== course.code || $[40] !== openCourse) {
+		t17 = () => openCourse(course.code);
+		$[39] = course.code;
+		$[40] = openCourse;
 		$[41] = t17;
 	} else t17 = $[41];
 	let t18;
-	if ($[42] !== professor.name || $[43] !== t17) {
+	if ($[42] !== course.code || $[43] !== t17) {
 		t18 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
 			variant: "link",
 			onClick: t17,
+			children: ["Compare every professor who teaches ", course.code]
+		});
+		$[42] = course.code;
+		$[43] = t17;
+		$[44] = t18;
+	} else t18 = $[44];
+	let t19;
+	if ($[45] !== openProfessor || $[46] !== professor.name) {
+		t19 = () => openProfessor(professor.name);
+		$[45] = openProfessor;
+		$[46] = professor.name;
+		$[47] = t19;
+	} else t19 = $[47];
+	let t20;
+	if ($[48] !== professor.name || $[49] !== t19) {
+		t20 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+			variant: "link",
+			onClick: t19,
 			children: [
 				"See all of ",
 				professor.name,
 				"'s classes"
 			]
 		});
-		$[42] = professor.name;
-		$[43] = t17;
-		$[44] = t18;
-	} else t18 = $[44];
-	let t19;
-	if ($[45] !== t16 || $[46] !== t18) {
-		t19 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		$[48] = professor.name;
+		$[49] = t19;
+		$[50] = t20;
+	} else t20 = $[50];
+	let t21;
+	if ($[51] !== t18 || $[52] !== t20) {
+		t21 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "flex flex-col items-start gap-1",
-			children: [t16, t18]
+			children: [t18, t20]
 		});
-		$[45] = t16;
-		$[46] = t18;
-		$[47] = t19;
-	} else t19 = $[47];
-	let t20;
-	if ($[48] !== t11 || $[49] !== t12 || $[50] !== t14 || $[51] !== t19 || $[52] !== t5 || $[53] !== t7 || $[54] !== t8) {
-		t20 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		$[51] = t18;
+		$[52] = t20;
+		$[53] = t21;
+	} else t21 = $[53];
+	let t22;
+	if ($[54] !== t10 || $[55] !== t13 || $[56] !== t14 || $[57] !== t16 || $[58] !== t21 || $[59] !== t7 || $[60] !== t9) {
+		t22 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "flex flex-col gap-5",
 			children: [
-				t5,
 				t7,
-				t8,
-				t11,
-				t12,
+				t9,
+				t10,
+				t13,
 				t14,
-				t19
+				t16,
+				t21
 			]
 		});
-		$[48] = t11;
-		$[49] = t12;
-		$[50] = t14;
-		$[51] = t19;
-		$[52] = t5;
-		$[53] = t7;
-		$[54] = t8;
-		$[55] = t20;
-	} else t20 = $[55];
-	return t20;
+		$[54] = t10;
+		$[55] = t13;
+		$[56] = t14;
+		$[57] = t16;
+		$[58] = t21;
+		$[59] = t7;
+		$[60] = t9;
+		$[61] = t22;
+	} else t22 = $[61];
+	return t22;
 }
 function _temp$2(offering) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SemesterRow, { offering }, `${offering.semester} ${offering.title}`);
