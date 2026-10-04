@@ -2,8 +2,6 @@
   <img src="public/icons/icon-128.png" alt="RowdySearch logo" width="128" height="128">
 </p>
 
-<h1 align="center">RowdySearch</h1>
-
 # RowdySearch
 
 **Pick the right UTSA professor in one click.** RowdySearch is a Chrome extension that puts grade distributions, Rate My Professors ratings, and the latest syllabus next to every class while you register.
