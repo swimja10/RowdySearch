@@ -59,7 +59,13 @@ No building needed. The built extension is already in `dist/`.
 | Sidebar UI | React, TypeScript, Tailwind CSS, Vite |
 | Charts and motion | Plotly.js, anime.js |
 | Search | Our own typo-tolerant search engine (`src/searcher.ts`) |
-| Data | UTSA grade distributions, Simple Syllabus, and Rate My Professors, gathered with the scrapers in `scrappers/` and combined with Python (`combine_data.py`) |
+| Grade data | Official UTSA grade distributions, obtained straight from the university through a public records request |
+| Syllabi and reviews | Simple Syllabus and Rate My Professors, gathered with the scrapers in `scrappers/` |
+| Data pipeline | Python (`combine_data.py`) merges all three sources into one file |
+
+### Where the grade data comes from
+
+The grade data is not scraped. We filed a public records request with UTSA under the Texas Public Information Act (Texas Government Code, Chapter 552), and the university sent us the grade distributions directly. That means every median, chart, and comparison in RowdySearch is built on the school's own official records.
 
 ## Challenges we ran into
 
@@ -91,6 +97,7 @@ The accomplishment most students will care about is the grade data. You don't ju
 | Presenting data clearly in Plotly | The grade distribution and Median Grade charts |
 | Balancing complexity and simplicity | Deciding what belongs in Analytical Mode and what doesn't |
 | Deploying web scrapers to gather data | The Simple Syllabus and RMP scrapers |
+| Public data is there if you ask for it | Getting official grade distributions from UTSA through a public records request |
 | A homemade algorithm can beat a library | Replacing Fuse.js with our own search |
 
 ## What's next for RowdySearch
@@ -123,8 +130,9 @@ Running a `.ts` file directly with `node` needs Node.js 22.18 or newer. On Node 
 ### Updating the data
 
 1. Run the scrapers in `scrappers/` to get new `professors.json` and `RMP.json`.
-2. Run `python3 combine_data.py` to rebuild `data/cleaned_grade_data.json`.
-3. Reload the extension. (No build needed: the sidebar reads the data file directly.)
+2. For new semesters of grades, file a new public records request with UTSA (through the online portal on [utsa.edu/openrecords](https://www.utsa.edu/openrecords/), by email to PublicInfo@utsa.edu, or by mail to the Office of Legal Affairs) and update `data/grade_data.json` with what they send.
+3. Run `python3 combine_data.py` to rebuild `data/cleaned_grade_data.json`.
+4. Reload the extension. (No build needed: the sidebar reads the data file directly.)
 
 ### How it fits together
 
