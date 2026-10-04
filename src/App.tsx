@@ -1,3 +1,4 @@
+import { AnalyticsMode } from "./components/analytics/AnalyticsMode.tsx";
 import { ClassPage } from "./components/ClassPage.tsx";
 import { CoursePage } from "./components/CoursePage.tsx";
 import { Header } from "./components/Header.tsx";
@@ -11,15 +12,26 @@ export default function App() {
   const gradeData = useGradeData();
 
   if (gradeData === null) {
-    return <h1 className="py-12 text-center text-zinc-500">Loading professors...</h1>;
+    return <h1 className="min-h-screen bg-zinc-900 py-12 text-center text-zinc-500">Loading professors...</h1>;
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4">
-      <LookupProvider gradeData={gradeData}>
-        <Header />
-        <CurrentPage />
-      </LookupProvider>
+    <LookupProvider gradeData={gradeData}>
+      <CurrentScreen />
+    </LookupProvider>
+  );
+}
+
+// Analytical mode covers everything. Otherwise it's the sidebar: the header and the current page.
+function CurrentScreen() {
+  const { isAnalyticsOpen } = useLookup();
+
+  if (isAnalyticsOpen) return <AnalyticsMode />;
+
+  return (
+    <div className="flex min-h-screen flex-col gap-4 bg-zinc-900 p-4">
+      <Header />
+      <CurrentPage />
     </div>
   );
 }

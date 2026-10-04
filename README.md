@@ -10,6 +10,13 @@ A Chrome extension that cuts UTSA professor research from ten minutes to one cli
 - **Lookup tab:** an orange tab on the right edge of Schedule Planner and Register for
   Classes opens the same sidebar.
 
+- **Analytical mode:** the orange Venn diagram in the sidebar's top right corner opens a full
+  screen view for comparing up to 8 professors, whole courses, or one professor's class:
+  a grade distribution chart (F to A+, as percent or students, lines or bars, each grade or
+  "at or above"), a median grade chart, a side-by-side stats table (average GPA, how a class
+  compares with the whole course, A's, D/F, withdrawals, RMP), and everyone's RMP reviews.
+  It starts out comparing whatever page you opened it from.
+
 In the sidebar, type a search and press **Enter**:
 
 | You type | Enter opens |
@@ -52,13 +59,15 @@ node searcher.ts "Darrn Meritz WRC"
 | File | What it does |
 | --- | --- |
 | `manifest.json` | Tells Chrome about the icon, the side panel, and which sites to run on |
-| `dist/` | The built extension that Chrome runs (made by `npm run build`, committed on purpose). `libraries.js` is React and other npm packages; the rest is our code |
+| `dist/` | The built extension that Chrome runs (made by `npm run build`, committed on purpose). `plotly.js` is the chart library and `libraries.js` is React and the other npm packages; the rest is our code |
 | `data/cleaned_grade_data.json` | Every professor's grades, syllabi, and RMP data. The sidebar reads it from here |
 | `src/background.ts` | Opens the side panel when you click the toolbar icon |
 | `src/content/` | Runs on the registration sites: the Lookup tab, and the RowdySearch column (`searchColumn.ts`) with one file per site that reads its table (`schedulePlanner.ts`, `bannerSummary.ts`) |
 | `index.html`, `src/main.tsx`, `src/App.tsx` | The sidebar (React + Tailwind) |
 | `src/context/` | Which page the sidebar is on, plus the Back history |
 | `src/components/` | The search, professor, class, and course pages and their pieces |
+| `src/components/analytics/` | Analytical mode: the full screen panel, its charts (Plotly), table, and picker |
+| `src/utils/subjects.ts`, `series.ts`, `statistics.ts` | What analytical mode compares, the chart colors, and the math (GPA, percentages) |
 | `src/searcher.ts` | Finds professors and courses, even with typos |
 | `src/utils/` | Reads the JSON, groups classes into courses, works out median grades |
 

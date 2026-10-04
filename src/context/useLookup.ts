@@ -8,6 +8,9 @@ export const LookupContext = createContext<null | Context>(null);
 type Context = {
   page: Page;
   canGoBack: boolean;
+  isAnalyticsOpen: boolean;
+  openAnalytics: () => void;
+  closeAnalytics: () => void;
   professors: Record<string, Professor>;
   searchIndex: SearchIndex;
   goBack: () => void;

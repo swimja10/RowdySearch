@@ -12,6 +12,7 @@ type LookupProviderProps = {
 // Remembers every page you opened, so Back works like it does in a browser.
 export function LookupProvider({ gradeData, children }: LookupProviderProps) {
   const [pages, setPages] = useState<Page[]>([{ type: "search", query: "" }]);
+  const [isAnalyticsOpen, setIsAnalyticsOpen] = useState(false);
 
   // A Search button in Schedule Planner's RowdySearch column puts its section after "#".
   useEffect(() => {
@@ -47,6 +48,9 @@ export function LookupProvider({ gradeData, children }: LookupProviderProps) {
       value={{
         page: pages.at(-1)!,
         canGoBack: pages.length > 1,
+        isAnalyticsOpen,
+        openAnalytics: () => setIsAnalyticsOpen(true),
+        closeAnalytics: () => setIsAnalyticsOpen(false),
         professors: gradeData.professors,
         searchIndex: gradeData.searchIndex,
         goBack,

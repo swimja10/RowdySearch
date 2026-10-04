@@ -1,6 +1,7 @@
 import Button from "./Button.tsx";
 import { GradeBars } from "./GradeBars.tsx";
 import { ProfessorStats } from "./ProfessorStats.tsx";
+import { Reviews } from "./Reviews.tsx";
 import { Section } from "./Section.tsx";
 import { SyllabusLinks } from "./SyllabusLinks.tsx";
 import { useLookup } from "../context/useLookup.ts";
@@ -33,6 +34,10 @@ export function ClassPage({ professorName, courseCode }: ClassPageProps) {
 
       <Section title="Latest syllabus">
         <LatestSyllabus course={course} />
+      </Section>
+
+      <Section title="What students say">
+        <Reviews reviews={professor.rmp.reviews} />
       </Section>
 
       <Section title={`Grades in ${course.code}`}>

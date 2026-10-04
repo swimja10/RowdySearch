@@ -1,3 +1,4 @@
+import { AnalyticsButton } from "./AnalyticsButton.tsx";
 import Button from "./Button.tsx";
 import { useLookup } from "../context/useLookup.ts";
 
@@ -11,11 +12,15 @@ export function Header() {
       </Button>
       <h1 className="flex items-center gap-2 text-lg font-bold">
         <img src="icons/icon-48.png" alt="" className="size-6 rounded-md" />
-        RowdySearch
+        {/* In a very narrow side panel, the logo alone leaves room for the buttons. */}
+        <span className="hidden min-[380px]:inline">RowdySearch</span>
       </h1>
-      <Button variant="secondary" className="whitespace-nowrap text-sm" onClick={() => openSearch("")}>
-        Search
-      </Button>
+      <div className="flex items-center gap-1">
+        <Button variant="secondary" className="whitespace-nowrap text-sm" onClick={() => openSearch("")}>
+          Search
+        </Button>
+        <AnalyticsButton />
+      </div>
     </header>
   );
 }

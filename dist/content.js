@@ -42,11 +42,13 @@ async function readSchedulePlannerSection(cellUnder) {
 //#region src/content/sidebar.ts
 var SIDEBAR_URL = chrome.runtime.getURL("dist/index.html");
 var SIDEBAR_WIDTH = "420px";
+var SIDEBAR_SHADOW = "-4px 0 16px rgba(0, 0, 0, 0.4)";
 var ON_TOP_OF_EVERYTHING = "2147483647";
 var sidebar = createSidebar();
 var lookupTab = createLookupTab();
 function addLookupTab() {
 	lookupTab.addEventListener("click", toggleSidebar);
+	window.addEventListener("message", handleSidebarMessage);
 	document.body.append(sidebar, lookupTab);
 }
 function showInSidebar(section) {
@@ -62,6 +64,15 @@ function setSidebarOpen(isOpen) {
 	lookupTab.style.right = isOpen ? SIDEBAR_WIDTH : "0";
 	lookupTab.textContent = isOpen ? "Close" : "Lookup";
 }
+function handleSidebarMessage(event) {
+	if (event.source !== sidebar.contentWindow || event.data?.rowdySearch !== "fullScreen") return;
+	setFullScreen(event.data.isFullScreen);
+}
+function setFullScreen(isFullScreen) {
+	sidebar.style.width = isFullScreen ? "100vw" : SIDEBAR_WIDTH;
+	sidebar.style.boxShadow = isFullScreen ? "none" : SIDEBAR_SHADOW;
+	lookupTab.style.display = isFullScreen ? "none" : "block";
+}
 function createSidebar() {
 	const iframe = document.createElement("iframe");
 	Object.assign(iframe.style, {
@@ -72,7 +83,7 @@ function createSidebar() {
 		width: SIDEBAR_WIDTH,
 		height: "100vh",
 		border: "none",
-		boxShadow: "-4px 0 16px rgba(0, 0, 0, 0.4)",
+		boxShadow: SIDEBAR_SHADOW,
 		zIndex: ON_TOP_OF_EVERYTHING
 	});
 	return iframe;

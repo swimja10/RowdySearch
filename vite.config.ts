@@ -26,9 +26,14 @@ export default defineConfig({
         entryFileNames: '[name].js',
         chunkFileNames: '[name].js',
         assetFileNames: '[name][extname]',
-        // Code from npm packages (React and friends) goes in dist/libraries.js,
-        // so dist/sidebar.js is only our own code.
-        codeSplitting: { groups: [{ name: 'libraries', test: /node_modules/ }] }
+        // Code from npm packages goes in its own files, so dist/sidebar.js is only our own code:
+        // Plotly (the charts) in dist/plotly.js, everything else (React, anime.js...) in dist/libraries.js.
+        codeSplitting: {
+          groups: [
+            { name: 'plotly', test: /plotly/, priority: 2 },
+            { name: 'libraries', test: /node_modules/, priority: 1 }
+          ]
+        }
       }
     }
   },

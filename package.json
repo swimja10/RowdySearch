@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
+    "animejs": "^4.5.0",
     "fuse.js": "^7.5.0",
+    "plotly.js-basic-dist": "^4.1.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "tailwind-merge": "^3.7.0",
@@ -23,6 +25,7 @@
     "@types/babel__core": "^7.20.5",
     "@types/chrome": "^0.3.4",
     "@types/node": "^24.13.3",
+    "@types/plotly.js": "^3.0.14",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",

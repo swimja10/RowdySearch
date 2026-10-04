@@ -1,7 +1,8 @@
 /* Only look for Tailwind classes in src/ (not in the built dist/ files or the data). */
 @import "tailwindcss" source("../src");
 
+/* No background here on purpose: the sidebar and analytical mode paint their own, so while
+   analytical mode grows across the screen, the registration page shows through around it. */
 body {
-  background-color: var(--color-zinc-900);
   color: var(--color-zinc-100);
 }
