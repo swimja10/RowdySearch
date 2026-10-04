@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { Data, Layout } from "plotly.js";
 import { PlotlyChart } from "./PlotlyChart.tsx";
 import { Toggle } from "./Toggle.tsx";
+import { countStudents, LETTER_GRADES } from "../../utils/grades.ts";
 import type { SeriesData } from "../../utils/series.ts";
 import { GRADES_WORST_FIRST, gradeDistribution } from "../../utils/statistics.ts";
 
@@ -16,7 +17,11 @@ export function GradeDistributionChart({ seriesData }: GradeDistributionChartPro
   const [eachGrade, setEachGrade] = useState(true);
   const options = { inPercent, atOrAbove: !eachGrade };
 
-  const data: Data[] = seriesData.map(series => ({
+  // Something with no grades yet would be a flat line at 0, which looks like real data. Leave it off.
+  const withGrades = seriesData.filter(series => countStudents(series.grades, LETTER_GRADES) > 0);
+  const withoutGrades = seriesData.filter(series => !withGrades.includes(series));
+
+  const data: Data[] = withGrades.map(series => ({
     type: asLines ? "scatter" : "bar",
     mode: "lines+markers",
     name: series.label,
@@ -34,6 +39,10 @@ export function GradeDistributionChart({ seriesData }: GradeDistributionChartPro
     yaxis: { title: { text: yAxisTitle(inPercent, !eachGrade) }, ticksuffix: inPercent ? "%" : "", rangemode: "tozero" },
   };
 
+  if (withGrades.length === 0) {
+    return <p className="text-sm text-zinc-500">None of these have grades released yet.</p>;
+  }
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap gap-2">
@@ -44,6 +53,7 @@ export function GradeDistributionChart({ seriesData }: GradeDistributionChartPro
       <PlotlyChart data={data} layout={layout} className="h-96" />
       <span className="text-xs text-zinc-500">
         Out of students who got a letter grade. Withdrawals (W) are in the table below.
+        {withoutGrades.length > 0 && ` Not shown (no grades yet): ${withoutGrades.map(series => series.label).join(", ")}.`}
       </span>
     </div>
   );

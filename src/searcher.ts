@@ -44,6 +44,12 @@ export function sharesEveryWord(query: string, text: string): boolean {
   return wordsOf(query).every((queryWord) => isAnyOf(queryWord, textWords));
 }
 
+// The words of `text` that aren't in `other`, like the name words you didn't type.
+export function wordsMissingFrom(text: string, other: string): string[] {
+  const otherWords = wordsOf(other);
+  return wordsOf(text).filter((word) => !isAnyOf(word, otherWords));
+}
+
 function isAnyOf(queryWord: string, words: string[]): boolean {
   return words.some((word) => isSameWord(queryWord, word));
 }

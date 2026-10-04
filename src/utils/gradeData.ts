@@ -54,6 +54,18 @@ export type ClassOffering = {
 
 export type Syllabus = { section: string; link: string };
 
+// Sections without a named instructor are filed under these names. They aren't real
+// professors (and have no grades), so they're left out of search results and course pages.
+const PLACEHOLDER_NAMES = ["(No instructor listed)", "Unknown"];
+
+export function withoutPlaceholderNames(rawData: RawGradeData): RawGradeData {
+  const realProfessors: RawGradeData = {};
+  for (const [name, rawProfessor] of Object.entries(rawData)) {
+    if (!PLACEHOLDER_NAMES.includes(name)) realProfessors[name] = rawProfessor;
+  }
+  return realProfessors;
+}
+
 export function readProfessors(rawData: RawGradeData): Record<string, Professor> {
   const professors: Record<string, Professor> = {};
   for (const [name, rawProfessor] of Object.entries(rawData)) {

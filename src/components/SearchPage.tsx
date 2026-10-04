@@ -5,9 +5,6 @@ import { search, type Match } from "../searcher.ts";
 import { findCourse } from "../utils/courses.ts";
 import { pageForSearch } from "../utils/pageForSearch.ts";
 
-// No course has more than 38 professors, so a course search always shows all of them.
-const MAX_RESULTS = 50;
-
 type SearchPageProps = {
   query: string;
 };
@@ -62,10 +59,9 @@ function SearchResults({ query, results }: SearchResultsProps) {
   return (
     <div className="flex flex-col gap-2">
       <span className="text-sm text-zinc-400">
-        Press Enter to open the best match
-        {results.length > MAX_RESULTS && ` · showing the best ${MAX_RESULTS} of ${results.length}`}
+        {results.length} {results.length === 1 ? "match" : "matches"} · press Enter to open the best one
       </span>
-      {results.slice(0, MAX_RESULTS).map(match => {
+      {results.map(match => {
         const professor = professors[match.professor];
         const course = findCourse(professor, match.course)!;
         return (

@@ -6,8 +6,6 @@ import { search, type Match } from "../../searcher.ts";
 import { findCourse } from "../../utils/courses.ts";
 import { pageForSearch } from "../../utils/pageForSearch.ts";
 
-const MAX_MATCHES = 6;
-
 type SubjectPickerProps = {
   canAddMore: boolean;
   isAdded: (subject: Subject) => boolean;
@@ -43,15 +41,21 @@ export function SubjectPicker({ canAddMore, isAdded, onAdd }: SubjectPickerProps
       {!canAddMore && (
         <span className="text-xs text-zinc-400">That's 8, the most the charts can show. Remove one to add more.</span>
       )}
-      {results.slice(0, MAX_MATCHES).map(match => (
-        <MatchChoices
-          key={`${match.professor} ${match.course}`}
-          match={match}
-          canAddMore={canAddMore}
-          isAdded={isAdded}
-          onAdd={onAdd}
-        />
-      ))}
+      {results.length > 0 && (
+        <span className="text-xs text-zinc-400">{results.length} {results.length === 1 ? "match" : "matches"}, best first</span>
+      )}
+      {/* Every match, in a list that scrolls by itself so the charts stay in place. */}
+      <div className="flex max-h-[32rem] flex-col gap-2 overflow-y-auto">
+        {results.map(match => (
+          <MatchChoices
+            key={`${match.professor} ${match.course}`}
+            match={match}
+            canAddMore={canAddMore}
+            isAdded={isAdded}
+            onAdd={onAdd}
+          />
+        ))}
+      </div>
     </div>
   );
 }

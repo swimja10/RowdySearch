@@ -429,6 +429,10 @@
     height: calc(var(--spacing) * 96);
   }
 
+  .max-h-\[32rem\] {
+    max-height: 32rem;
+  }
+
   .min-h-screen {
     min-height: 100vh;
   }

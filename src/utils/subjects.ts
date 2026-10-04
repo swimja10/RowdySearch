@@ -1,7 +1,7 @@
 import type { GradeData } from "../hooks/useGradeData.ts";
 import type { Page, Subject } from "../page.ts";
 import { findCourse, gradesOf, teachersOf } from "./courses.ts";
-import type { GradeCounts } from "./grades.ts";
+import { countStudents, type GradeCounts } from "./grades.ts";
 
 // How many of a course's professors to compare when analytical mode opens on that course.
 const PROFESSORS_TO_START_WITH = 3;
@@ -50,6 +50,7 @@ export function gradesForSubject(subject: Subject, { professors, searchIndex }: 
 //   class page     -> that class, the whole course, and the professor's other classes
 //   professor page -> that professor
 //   course page    -> the whole course and the professors who taught it most recently
+//                     (skipping ones who are new to it and have no grades to compare yet)
 export function subjectsToStartWith(page: Page, { professors, searchIndex }: GradeData): Subject[] {
   switch (page.type) {
     case "search":
@@ -63,7 +64,9 @@ export function subjectsToStartWith(page: Page, { professors, searchIndex }: Gra
         { type: "professor", professorName: page.professorName },
       ];
     case "course": {
-      const teachers = teachersOf(page.courseCode, professors, searchIndex).slice(0, PROFESSORS_TO_START_WITH);
+      const teachers = teachersOf(page.courseCode, professors, searchIndex)
+        .filter((teacher) => countStudents(gradesOf(teacher.course.offerings)) > 0)
+        .slice(0, PROFESSORS_TO_START_WITH);
       const classes = teachers.map((teacher): Subject => (
         { type: "class", professorName: teacher.professor.name, courseCode: page.courseCode }
       ));

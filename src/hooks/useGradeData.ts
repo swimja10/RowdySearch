@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { buildSearchIndex, type SearchIndex } from "../searcher.ts";
-import { readProfessors, type Professor, type RawGradeData } from "../utils/gradeData.ts";
+import { readProfessors, withoutPlaceholderNames, type Professor, type RawGradeData } from "../utils/gradeData.ts";
 
 // The sidebar page is dist/index.html, so this points at data/ in the project folder.
 // Reading it from there means the 20 MB file isn't copied into dist/ as well.
@@ -24,7 +24,7 @@ export function useGradeData() {
 
 async function loadGradeData(): Promise<GradeData> {
   const response = await fetch(GRADE_DATA_URL);
-  const rawData: RawGradeData = await response.json();
+  const rawData = withoutPlaceholderNames(await response.json() as RawGradeData);
 
   return {
     professors: readProfessors(rawData),

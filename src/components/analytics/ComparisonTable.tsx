@@ -6,6 +6,8 @@ import type { SeriesData } from "../../utils/series.ts";
 import { A_GRADES, averageGpa, D_AND_F_GRADES, percentDifference, percentWhoGot, WITHDREW } from "../../utils/statistics.ts";
 
 const COLUMNS = ["Comparing", "Median", "Avg GPA", "vs. course average", "A's", "D or F", "Withdrew", "Grades", "RMP"];
+// These short columns read better with the value centered under the title.
+const CENTERED_COLUMNS = ["Median", "Avg GPA"];
 
 type ComparisonTableProps = {
   seriesData: SeriesData[];
@@ -20,7 +22,11 @@ export function ComparisonTable({ seriesData, onOpen }: ComparisonTableProps) {
         <thead className="text-xs uppercase tracking-wide text-zinc-400">
           <tr>
             {COLUMNS.map(column => (
-              <th key={column} className="whitespace-nowrap px-3 py-2 font-semibold">{column}</th>
+              <th
+                key={column}
+                className={`whitespace-nowrap px-3 py-2 font-semibold ${CENTERED_COLUMNS.includes(column) ? "text-center" : ""}`}>
+                {column}
+              </th>
             ))}
           </tr>
         </thead>
@@ -44,8 +50,8 @@ function ComparisonRow({ series, onOpen }: ComparisonRowProps) {
   return (
     <tr className="border-t border-zinc-700 tabular-nums">
       <td className="px-3 py-2"><SeriesName series={series} onOpen={onOpen} /></td>
-      <td className="px-3 py-2 font-semibold">{medianGrade(grades) ?? "—"}</td>
-      <td className="px-3 py-2">{formatGpa(gpa)}</td>
+      <td className="px-3 py-2 text-center font-semibold">{medianGrade(grades) ?? "—"}</td>
+      <td className="px-3 py-2 text-center">{formatGpa(gpa)}</td>
       <td className="whitespace-nowrap px-3 py-2"><CourseComparison gpa={gpa} courseGpa={series.courseGpa} /></td>
       <td className="px-3 py-2">{formatShare(percentWhoGot(grades, A_GRADES))}</td>
       <td className="px-3 py-2">{formatShare(percentWhoGot(grades, D_AND_F_GRADES))}</td>
