@@ -4,39 +4,36 @@
 
 <h1 align="center">RowdySearch</h1>
 
-<p align="center">A Chrome extension that cuts UTSA professor research from ten minutes to one click.</p>
+# RowdySearch
 
-## Install
+**Pick the right UTSA professor in one click.** RowdySearch is a Chrome extension that puts grade distributions, Rate My Professors ratings, and the latest syllabus next to every class while you register.
 
-No building needed. The built extension is already in `dist/`.
-
-1. Clone or download this repo.
-2. Open `chrome://extensions` and turn on **Developer mode** (top right).
-3. Click **Load unpacked** and pick this folder (the one with `manifest.json` in it).
-4. Pin RowdySearch from the puzzle-piece menu so its icon stays in the toolbar.
-
+Built by Jacob Swim and Angelina Lu.
 
 ## Inspiration
 
-Joining a class is like getting into a relationship. You are going to be with them for months, and whether those months will be good or bad is up to you and the professor. So, the last thing you want is to be stuck with a professor that you hate. That is why you go on and do research on the professor by looking them up on Rate My Professors and then Simple Syllabus. 
+Joining a class is like getting into a relationship. You are going to be with that professor for months, and the last thing you want is to be stuck with one you hate. So before registering, you look them up on Rate My Professors, then on Simple Syllabus, then you go hunting for grade data.
 
-It is all very boring and tedious work. It takes me like 10 minutes to do one professor! This problem caused me to create Rowdy Search. Rowdy Search turns a 10-minute process into milliseconds! It is as simple as clicking a button. Also, the most important thing Rowdy Search has is grade distribution data. So now you have real grade data to make judgements on the professor you choose.
+It is boring, tedious work, and it takes about 10 minutes per professor. RowdySearch turns those 10 minutes into one click. It also adds the piece that matters most and is hardest to find: real grade distribution data, so you are judging a professor on what students actually earned instead of on a handful of reviews.
 
 ## What it does
 
-- **Search buttons:** a **RowdySearch** column gives every class a **Search** button that opens
-  that professor's class: median grade, Rate My Professors rating, and the last syllabus.
-  It's added to Schedule Planner's section tables and Shopping Cart, and to the Summary
-  table in Banner's Register for Classes.
-- **Toolbar icon:** click the RowdySearch icon to open or close the sidebar on any website.
-  It's the same sidebar everywhere (it just can't open on Chrome's own `chrome://` pages).
-- **Lookup tab:** an orange tab on the right edge of the page also opens and closes it.
-- **Analytical Mode:** the orange Venn diagram in the sidebar's top right corner opens a full
-  screen view for comparing up to 8 professors, whole courses, or one professor's class:
-  a grade distribution chart (F to A+, as percent or students, lines or bars, each grade or
-  "at or above"), a Median Grade chart, a side-by-side table (average GPA, % above or below
-  the course average, A's, D/F, withdrawals, RMP), and everyone's RMP reviews.
-  It starts out comparing whatever page you opened it from.
+| Feature | What you get |
+| --- | --- |
+| **Search buttons** | A **RowdySearch** column gives every class a **Search** button that opens that professor's class: median grade, Rate My Professors rating, and the latest syllabus. It appears in Schedule Planner's section tables and Shopping Cart, and in the Summary table of Banner's Register for Classes. |
+| **Sidebar anywhere** | Click the toolbar icon, or the orange Lookup tab on the right edge of the page, to open or close the sidebar on any website. (It can't open on Chrome's own `chrome://` pages.) |
+| **Analytical Mode** | The orange Venn diagram in the sidebar's top right corner opens a full screen view for comparing up to 8 professors, whole courses, or one professor's class. It starts out comparing whatever page you opened it from. |
+
+Analytical Mode shows four things side by side:
+
+| View | Details |
+| --- | --- |
+| Grade distribution chart | F to A+, as percent or students, lines or bars, each grade or "at or above" |
+| Median Grade chart | Every subject you are comparing on one chart |
+| Comparison table | Average GPA, % above or below the course average, A's, D/F, withdrawals, RMP |
+| Reviews | Everyone's RMP reviews in one place |
+
+### Searching
 
 In the sidebar or in Analytical Mode, type a search and press **Enter**:
 
@@ -46,53 +43,76 @@ In the sidebar or in Analytical Mode, type a search and press **Enter**:
 | `Beatty MAT 1213` | His MAT 1213 page: median grade, latest syllabus, every semester |
 | `linear algebra` or `MAT 1213` | The course page: every professor who teaches it, side by side |
 
+## Try it
+
+No building needed. The built extension is already in `dist/`.
+
+1. Clone or download this repo.
+2. Open `chrome://extensions` and turn on **Developer mode** (top right).
+3. Click **Load unpacked** and pick this folder (the one with `manifest.json` in it).
+4. Pin RowdySearch from the puzzle-piece menu so its icon stays in the toolbar.
+5. Open Schedule Planner and click any **Search** button, or click the toolbar icon on any site.
+
 ## How we built it
 
-**Built with:** React, TypeScript, Tailwind CSS, Vite, Plotly.js, anime.js, and Chrome's
-extension APIs (Manifest V3). The data comes from UTSA grade distributions, Simple Syllabus,
-and Rate My Professors, gathered with the scrapers in `scrappers/` and combined with Python
-(`combine_data.py`).
+| Layer | Tools |
+| --- | --- |
+| Extension | Chrome extension APIs (Manifest V3) |
+| Sidebar UI | React, TypeScript, Tailwind CSS, Vite |
+| Charts and motion | Plotly.js, anime.js |
+| Search | Our own typo-tolerant search engine (`src/searcher.ts`) |
+| Data | UTSA grade distributions, Simple Syllabus, and Rate My Professors, gathered with the scrapers in `scrappers/` and combined with Python (`combine_data.py`) |
 
 ## Challenges we ran into
 
-A challenge we ran into was Fuse.js being slow on our data, and professors' names changing. Life happens and people change their names or surnames. So we built our own search engine that tolerates one wrong word in a query and is faster than Fuse.js for this data set.
+We started with Fuse.js for search and hit two problems: it was slow on our data, and it struggled when a professor's name had changed. Life happens, and people change their names or surnames. So we built our own search engine, one that tolerates a whole wrong word in a query and is faster than Fuse.js on this data set.
 
-Our approach is a process of elimination that runs the cheapest checks first. Ahead of time, we build an index of every unique word in the data set and which professor-course entries contain it. At search time we split the query into unique words and compare each one against the index. Exact matches pass immediately. Otherwise a word gets a typo budget based on its length: none for short words and course numbers, one for medium words, two for long ones. If two words differ in length by more than the budget, we reject the pair without doing any more work. For example, "smth" and "hi" are thrown out on length alone. Only the remaining pairs get an edit distance check, and "smth" and "smith" pass with a distance of 1.
+The approach is a process of elimination that runs the cheapest checks first.
 
-An entry stays in the results if it matches all but one of the query words, which is how a professor is still found after a surname change. Finally we rank the survivors by similarity, 1 - edit distance / max(len_1, len_2). For "smth" and "smith" that is 1 - 1/5 = 0.8. We do this for every query word and take the average, so 0.8 and 1 give (0.8 + 1) / 2 = 0.9. The entries with the highest score are shown first.
+1. **Index ahead of time.** We build an index of every unique word in the data set and which professor-course entries contain it.
+2. **Split the query.** At search time the query becomes a set of unique words, each compared against the index.
+3. **Exact matches pass immediately.**
+4. **Everything else gets a typo budget** based on word length: none for short words and course numbers, one for medium words, two for long ones.
+5. **Reject on length first.** If two words differ in length by more than the budget, the pair is thrown out with no further work. "smth" and "hi" are rejected on length alone.
+6. **Edit distance only for the survivors.** "smth" and "smith" pass with a distance of 1.
+7. **Allow one missing word.** An entry stays in the results if it matches all but one of the query words, which is how a professor is still found after a surname change.
+8. **Rank by similarity.** Each query word scores $1 - \frac{\text{edit distance}}{\max(\text{len}_1, \text{len}_2)}$, and the entry's score is the average across the query words.
+
+Worked example: "smth" against "smith" scores $1 - \frac{1}{5} = 0.8$. If the other query word matches exactly, it scores $1$, and the entry's score is $\frac{0.8 + 1}{2} = 0.9$. The highest scores are shown first.
 
 ## Accomplishments that we're proud of
 
-The biggest accomplishment is the search engine, as we went into detail on how it works. That is something the team is proud of. However, the accomplishment most people care about is the median grade data. We are proud to be able to create a program that allows you to better understand who your professors are as quickly as possible. The comparison data is also powerful. You don't just see the median grade, but you can also see how the professor's median grade compares to others and the course in general. This allows students to determine whether the professor is hard or the course is. Rowdy Search is software that the team genuinely believe everyone should use.
+The search engine is the piece we are proudest of technically: a homemade algorithm that beat a well-known library on our own data.
+
+The accomplishment most students will care about is the grade data. You don't just see a professor's median grade; you see how it compares to other professors and to the course as a whole. That answers the question every student actually has: is this professor hard, or is the course hard? We believe RowdySearch is something every UTSA student should be using at registration time.
 
 ## What we learned
 
-- Better show data in Plotly.
-- Balancing complexity and simplicity in analytical mode.
-- Better deploy web scrapers to get data.
-- Sometimes a homemade algorithm might be better than a library's.
+| Lesson | Where it came from |
+| --- | --- |
+| Presenting data clearly in Plotly | The grade distribution and Median Grade charts |
+| Balancing complexity and simplicity | Deciding what belongs in Analytical Mode and what doesn't |
+| Deploying web scrapers to gather data | The Simple Syllabus and RMP scrapers |
+| A homemade algorithm can beat a library | Replacing Fuse.js with our own search |
 
 ## What's next for RowdySearch
 
-AI integration could be next, where you send your transcript and the AI will find courses you should select based on your degree.
+AI integration: upload your transcript, and RowdySearch recommends which courses to take next based on your degree plan, with the best professor for each.
 
-## Team
+---
 
-Jacob Swim, Angelina Lu
+## For developers
 
-## Working on the code
+### Working on the code
 
 ```bash
 npm install
 npm run build
 ```
 
-`npm run build` updates `dist/`. **Commit `dist/` along with your code changes**, since
-that's what everyone else's Chrome runs. Then press the reload button on the extension's
-card in `chrome://extensions`, and reload any open Schedule Planner tabs.
+`npm run build` updates `dist/`. **Commit `dist/` along with your code changes**, since that's what everyone else's Chrome runs. Then press the reload button on the extension's card in `chrome://extensions`, and reload any open Schedule Planner tabs.
 
-`npm run dev` opens the sidebar as a normal web page with hot reload. The Schedule Planner
-column and the Lookup tab only appear once the extension is loaded in Chrome.
+`npm run dev` opens the sidebar as a normal web page with hot reload. The Schedule Planner column and the Lookup tab only appear once the extension is loaded in Chrome.
 
 Try the searcher in the terminal:
 
@@ -100,7 +120,15 @@ Try the searcher in the terminal:
 node searcher.ts "Darrn Meritz WRC"
 ```
 
-## How it fits together
+Running a `.ts` file directly with `node` needs Node.js 22.18 or newer. On Node 22.6 through 22.17, add the flag: `node --experimental-strip-types searcher.ts "Darrn Meritz WRC"`.
+
+### Updating the data
+
+1. Run the scrapers in `scrappers/` to get new `professors.json` and `RMP.json`.
+2. Run `python3 combine_data.py` to rebuild `data/cleaned_grade_data.json`.
+3. Reload the extension. (No build needed: the sidebar reads the data file directly.)
+
+### How it fits together
 
 | File | What it does |
 | --- | --- |
@@ -117,13 +145,10 @@ node searcher.ts "Darrn Meritz WRC"
 | `src/searcher.ts` | Finds professors and courses, even with typos |
 | `src/utils/` | Reads the JSON, groups classes into courses, works out median grades |
 
-## Updating the data
+### Repo structure
 
-1. Run the scrapers in `scrappers/` to get new `professors.json` and `RMP.json`.
-2. Run `python3 combine_data.py` to rebuild `data/cleaned_grade_data.json`.
-3. Reload the extension. (No build needed: the sidebar reads the data file directly.)
-
-## Repo structure
+<details>
+<summary>Full file tree</summary>
 
 ```
 RowdyLookup
@@ -226,3 +251,5 @@ RowdyLookup
         ├── statistics.ts
         └── subjects.ts
 ```
+
+</details>
