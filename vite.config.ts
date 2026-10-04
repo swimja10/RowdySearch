@@ -14,13 +14,22 @@ export default defineConfig({
     tailwindcss()
   ],
   build: {
+    // dist/ is committed to git, so keep the built code readable instead of squashing it onto one line.
+    minify: false,
     rolldownOptions: {
       // index.html is the sidebar, content/ runs on the registration sites,
       // and background.ts opens the side panel from the toolbar icon.
       input: { sidebar: 'index.html', content: 'src/content/index.ts', background: 'src/background.ts' },
-      // Plain file names (no hash like sidebar-C70xHswh.css): manifest.json looks for
-      // content.js and background.js by name, and dist/ is committed to git.
-      output: { entryFileNames: '[name].js', assetFileNames: '[name][extname]' }
+      output: {
+        // Plain file names (no hash like sidebar-C70xHswh.css): manifest.json looks for
+        // content.js and background.js by name, and it keeps git diffs of dist/ clean.
+        entryFileNames: '[name].js',
+        chunkFileNames: '[name].js',
+        assetFileNames: '[name][extname]',
+        // Code from npm packages (React and friends) goes in dist/libraries.js,
+        // so dist/sidebar.js is only our own code.
+        codeSplitting: { groups: [{ name: 'libraries', test: /node_modules/ }] }
+      }
     }
   },
 })

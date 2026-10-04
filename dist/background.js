@@ -1,1 +1,3 @@
-chrome.sidePanel.setPanelBehavior({openPanelOnActionClick:!0});
+//#region src/background.ts
+chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
+//#endregion

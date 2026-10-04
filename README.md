@@ -2,9 +2,10 @@
 
 A Chrome extension that cuts UTSA professor research from ten minutes to one click.
 
-- **Schedule Planner:** a **RowdySearch** column after "Parts of Term" gives every section a
-  **Search** button that opens that professor's class: median grade, Rate My Professors
-  rating, and the last syllabus.
+- **Search buttons:** a **RowdySearch** column gives every class a **Search** button that opens
+  that professor's class: median grade, Rate My Professors rating, and the last syllabus.
+  It's added to Schedule Planner's section tables and Shopping Cart, and to the Summary
+  table in Banner's Register for Classes.
 - **Toolbar icon:** click the RowdySearch icon on any website to open the sidebar.
 - **Lookup tab:** an orange tab on the right edge of Schedule Planner and Register for
   Classes opens the same sidebar.
@@ -51,10 +52,10 @@ node searcher.ts "Darrn Meritz WRC"
 | File | What it does |
 | --- | --- |
 | `manifest.json` | Tells Chrome about the icon, the side panel, and which sites to run on |
-| `dist/` | The built extension that Chrome runs (made by `npm run build`, committed on purpose) |
+| `dist/` | The built extension that Chrome runs (made by `npm run build`, committed on purpose). `libraries.js` is React and other npm packages; the rest is our code |
 | `data/cleaned_grade_data.json` | Every professor's grades, syllabi, and RMP data. The sidebar reads it from here |
 | `src/background.ts` | Opens the side panel when you click the toolbar icon |
-| `src/content/` | Runs on the registration sites: the RowdySearch column and the Lookup tab |
+| `src/content/` | Runs on the registration sites: the Lookup tab, and the RowdySearch column (`searchColumn.ts`) with one file per site that reads its table (`schedulePlanner.ts`, `bannerSummary.ts`) |
 | `index.html`, `src/main.tsx`, `src/App.tsx` | The sidebar (React + Tailwind) |
 | `src/context/` | Which page the sidebar is on, plus the Back history |
 | `src/components/` | The search, professor, class, and course pages and their pieces |
