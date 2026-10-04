@@ -1,6 +1,16 @@
-# RowdySearch
+<p align="center">
+  <img src="public/icons/icon-128.png" alt="RowdySearch logo" width="128" height="128">
+</p>
 
-A Chrome extension that cuts UTSA professor research from ten minutes to one click.
+<h1 align="center">RowdySearch</h1>
+
+<p align="center">A Chrome extension that cuts UTSA professor research from ten minutes to one click.</p>
+
+## Inspiration
+
+_Write what inspired RowdySearch here._
+
+## What it does
 
 - **Search buttons:** a **RowdySearch** column gives every class a **Search** button that opens
   that professor's class: median grade, Rate My Professors rating, and the last syllabus.
@@ -23,6 +33,35 @@ In the sidebar or in Analytical Mode, type a search and press **Enter**:
 | `Sean Beatty` | His professor page: RMP stats, reviews, median grade across every class |
 | `Beatty MAT 1213` | His MAT 1213 page: median grade, latest syllabus, every semester |
 | `linear algebra` or `MAT 1213` | The course page: every professor who teaches it, side by side |
+
+## How we built it
+
+**Built with:** React, TypeScript, Tailwind CSS, Vite, Plotly.js, anime.js, and Chrome's
+extension APIs (Manifest V3). The data comes from UTSA grade distributions, Simple Syllabus,
+and Rate My Professors, gathered with the scrapers in `scrappers/` and combined with Python
+(`combine_data.py`).
+
+_Write more about how you built it here._
+
+## Challenges we ran into
+
+_Write the challenges you ran into here._
+
+## Accomplishments that we're proud of
+
+_Write what you're proud of here._
+
+## What we learned
+
+_Write what you learned here._
+
+## What's next for RowdySearch
+
+_Write what's next here._
+
+## Team
+
+_Write your team members here._
 
 ## Install
 
@@ -75,3 +114,107 @@ node searcher.ts "Darrn Meritz WRC"
 1. Run the scrapers in `scrappers/` to get new `professors.json` and `RMP.json`.
 2. Run `python3 combine_data.py` to rebuild `data/cleaned_grade_data.json`.
 3. Reload the extension. (No build needed: the sidebar reads the data file directly.)
+
+## Repo structure
+
+```
+RowdyLookup
+├── README.md
+├── .gitignore
+├── .oxlintrc.json
+├── manifest.json
+├── package.json
+├── package-lock.json
+├── index.html
+├── vite.config.ts
+├── tsconfig.json
+├── tsconfig.app.json
+├── tsconfig.node.json
+├── searcher.ts
+├── combine_data.py
+├── data   (grades, syllabi, and RMP data)
+│   ├── cleaned_grade_data.json
+│   ├── grade_data.json
+│   ├── professors.json
+│   └── RMP.json
+├── dist   (built extension, committed on purpose)
+│   ├── background.js
+│   ├── content.js
+│   ├── index.html
+│   ├── libraries.js
+│   ├── plotly.js
+│   ├── rolldown-runtime.js
+│   ├── sidebar.css
+│   ├── sidebar.js
+│   └── icons
+│       ├── icon-128.png
+│       ├── icon-16.png
+│       ├── icon-32.png
+│       └── icon-48.png
+├── public
+│   └── icons
+│       ├── icon-128.png
+│       ├── icon-16.png
+│       ├── icon-32.png
+│       └── icon-48.png
+├── scrappers   (browser-console scrapers)
+│   ├── rmp_scrapper.js
+│   └── simple_syllabus_console.js
+└── src
+    ├── App.tsx
+    ├── background.ts
+    ├── index.css
+    ├── main.tsx
+    ├── page.ts
+    ├── plotly-basic.d.ts
+    ├── searcher.ts
+    ├── components
+    │   ├── AnalyticsButton.tsx
+    │   ├── Button.tsx
+    │   ├── ClassCard.tsx
+    │   ├── ClassPage.tsx
+    │   ├── CoursePage.tsx
+    │   ├── ExternalLink.tsx
+    │   ├── GradeBars.tsx
+    │   ├── Header.tsx
+    │   ├── ProfessorPage.tsx
+    │   ├── ProfessorStats.tsx
+    │   ├── Reviews.tsx
+    │   ├── SearchPage.tsx
+    │   ├── Section.tsx
+    │   ├── SyllabusLinks.tsx
+    │   ├── VennIcon.tsx
+    │   └── analytics   (Analytical Mode)
+    │       ├── AnalyticsMode.tsx
+    │       ├── ComparingList.tsx
+    │       ├── ComparisonTable.tsx
+    │       ├── GradeDistributionChart.tsx
+    │       ├── MedianChart.tsx
+    │       ├── PlotlyChart.tsx
+    │       ├── ProfessorReviews.tsx
+    │       ├── SeriesName.tsx
+    │       ├── SubjectPicker.tsx
+    │       └── Toggle.tsx
+    ├── content   (runs on the web page)
+    │   ├── bannerSummary.ts
+    │   ├── index.ts
+    │   ├── schedulePlanner.ts
+    │   ├── searchColumn.ts
+    │   └── sidebar.ts
+    ├── context
+    │   ├── LookupProvider.tsx
+    │   └── useLookup.ts
+    ├── hooks
+    │   └── useGradeData.ts
+    └── utils
+        ├── courses.ts
+        ├── format.ts
+        ├── gradeData.ts
+        ├── grades.ts
+        ├── hostPage.ts
+        ├── pageForSearch.ts
+        ├── pageForSection.ts
+        ├── series.ts
+        ├── statistics.ts
+        └── subjects.ts
+```
