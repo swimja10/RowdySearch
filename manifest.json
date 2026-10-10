@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "RowdySearch",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "See Rate My Professors ratings, median grades, and syllabi for UTSA professors while you register.",
   "icons": {
     "16": "dist/icons/icon-16.png",
@@ -12,7 +12,10 @@
   "action": {
     "default_title": "Open RowdySearch"
   },
-  "permissions": ["activeTab", "scripting"],
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
   "background": {
     "service_worker": "dist/background.js",
     "type": "module"
@@ -23,13 +26,19 @@
         "https://utsa.collegescheduler.com/*",
         "https://*.utsa.edu/StudentRegistrationSsb/*"
       ],
-      "js": ["dist/content.js"]
+      "js": [
+        "dist/content.js"
+      ]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["dist/index.html"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "dist/index.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ]
 }
