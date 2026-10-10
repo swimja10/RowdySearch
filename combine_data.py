@@ -26,7 +26,12 @@ GRADES = [
     "IF",
 ]
 NOT_A_CLASS = {"Department", "RMP"}
-CLASS_KEY = re.compile(r"(?P<course>.+?) - .+ \((?P<semester>\w+ \d{4})\)")
+SEASONS = ["Spring", "Summer", "Fall"]
+# Renumbered courses are found automatically: same subject and same title, where
+# one number stops and the other starts within a year. List a pair here only when
+# the title changed too, which the automatic rule cannot see.
+RETITLED = {"CS 1714": "CS 2713"}
+CLASS_KEY = re.compile(r"(?P<course>.+?) - (?P<title>.+) \((?P<semester>\w+ \d{4})\)")
 NO_RATING = {
     "Professor rating": None,
     "Difficulty level": None,
@@ -41,6 +46,11 @@ def main():
     grades = load("grade_data.json")
     syllabi = load("professors.json")
     ratings = load("RMP.json")
+    renumbered = renumbered_courses(grades, syllabi)
+    for old, new in sorted(renumbered.items()):
+        print(f"{old} -> {new}")
+    grades = renumber(grades, renumbered)
+    syllabi = renumber(syllabi, renumbered)
     save(combine(grades, syllabi, ratings), "cleaned_grade_data.json")
 
 
@@ -52,6 +62,79 @@ def load(file_name):
 def save(professors, file_name):
     with open(DATA_DIR / file_name, "w", encoding="utf-8") as file:
         json.dump(professors, file, indent=2, ensure_ascii=False)
+
+
+def renumbered_courses(grades, syllabi):
+    terms, same_title = {}, {}
+    for entry in [*grades.values(), *syllabi.values()]:
+        for class_key, _ in classes_of(entry):
+            match = CLASS_KEY.fullmatch(class_key)
+            courses = split_courses(match["course"])
+            for course in courses:
+                terms.setdefault(course, set()).add(term_number(match["semester"]))
+            if len(courses) == 1:
+                subject = courses[0].rsplit(" ", 1)[0]
+                title = re.sub(
+                    r"[^a-z0-9]", "", match["title"].lower().replace("&", "and")
+                )
+                same_title.setdefault((subject, title), set()).add(courses[0])
+
+    renumbered = {}
+    for courses in same_title.values():
+        in_order = sorted(courses, key=lambda course: min(terms[course]))
+        handovers = list(zip(in_order, in_order[1:]))
+        if handovers and all(
+            is_handover(terms[old], terms[new], old, new) for old, new in handovers
+        ):
+            renumbered.update({old: in_order[-1] for old in in_order[:-1]})
+    return {**renumbered, **RETITLED}
+
+
+def is_handover(old_terms, new_terms, old, new):
+    gap = min(new_terms) - max(old_terms)
+    return 0 < gap <= len(SEASONS) and is_graduate(old) == is_graduate(new)
+
+
+def is_graduate(course):
+    return course.rsplit(" ", 1)[1] >= "5"
+
+
+def term_number(semester):
+    season, year = semester.split()
+    return int(year) * len(SEASONS) + SEASONS.index(season)
+
+
+def split_courses(course):
+    subjects, numbers = course.rsplit(" ", 1)
+    return [
+        f"{subject} {number}"
+        for subject, number in zip(subjects.split("/"), numbers.split("/"))
+    ]
+
+
+def renumber(professors, renumbered):
+    return {
+        name: renumber_classes(name, entry, renumbered)
+        for name, entry in professors.items()
+    }
+
+
+def renumber_classes(name, entry, renumbered):
+    result = {}
+    for key, value in entry.items():
+        new_key = key if key in NOT_A_CLASS else current_class_key(key, renumbered)
+        if new_key in result or (new_key != key and new_key in entry):
+            raise ValueError(f"{name}: {key!r} collides with {new_key!r}")
+        result[new_key] = value
+    return result
+
+
+def current_class_key(class_key, renumbered):
+    course = course_of(class_key)
+    current = [renumbered.get(old, old).rsplit(" ", 1) for old in split_courses(course)]
+    subjects = "/".join(subject for subject, _ in current)
+    numbers = "/".join(number for _, number in current)
+    return f"{subjects} {numbers}{class_key[len(course) :]}"
 
 
 def combine(grades, syllabi, ratings):

@@ -23854,7 +23854,7 @@
   },
   "Ali Hikmet Dogru": {
     "Department": "CS",
-    "CS 1714 - Computer Programming II (Fall 2022)": {
+    "CS 2713 - Computer Programming II (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "0A1",
@@ -23904,7 +23904,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 1714 - Computer Programming II (Spring 2023)": {
+    "CS 2713 - Computer Programming II (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "0B2",
@@ -23954,7 +23954,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 1714 - Computer Programming II (Fall 2023)": {
+    "CS 2713 - Computer Programming II (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "0A1",
@@ -24004,7 +24004,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 1714 - Computer Programming II (Spring 2024)": {
+    "CS 2713 - Computer Programming II (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "0B2",
@@ -71344,7 +71344,7 @@
   },
   "Arturo Montoya": {
     "Department": "CE",
-    "CE 5023 - Finite Element Methods (Spring 2023)": {
+    "CE 5193 - Finite Element Methods (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "001"
@@ -71392,7 +71392,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CE 5023 - Finite Element Methods (Fall 2023)": {
+    "CE 5193 - Finite Element Methods (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "001"
@@ -80684,7 +80684,7 @@
       "IW": null,
       "IF": null
     },
-    "CHE 5922 - Research and Teaching Practice and Ethics (Fall 2024)": {
+    "CHE 5921 - Research and Teaching Practice and Ethics (Fall 2024)": {
       "Semester": "Fall 2024",
       "Sections": [
         "001"
@@ -109955,7 +109955,7 @@
       "IW": 0,
       "IF": 0
     },
-    "NDRB 4813 - Brain and Behavior (Spring 2024)": {
+    "NDRB 3613 - Brain and Behavior (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "001"
@@ -110007,7 +110007,7 @@
       "IW": 0,
       "IF": 0
     },
-    "NDRB 4813 - Brain and Behavior (Summer 2024)": {
+    "NDRB 3613 - Brain and Behavior (Summer 2024)": {
       "Semester": "Summer 2024",
       "Sections": [
         "01T"
@@ -136416,7 +136416,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Spring 2024)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "004"
@@ -187980,7 +187980,7 @@
       "IW": 0,
       "IF": 0
     },
-    "PSY 6973 - Sp Topics-Doc Research (Summer 2023)": {
+    "PSY 6373 - Sp Topics-Doc Research (Summer 2023)": {
       "Semester": "Summer 2023",
       "Sections": [
         "01T"
@@ -217268,7 +217268,7 @@
   },
   "Duy Nguyen Vu Hoang": {
     "Department": "MAT",
-    "MAT 2214 - Calculus III (Fall 2022)": {
+    "MAT 2213 - Calculus III (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "003"
@@ -222509,7 +222509,7 @@
       "IW": 0,
       "IF": 0
     },
-    "POL 2703 - Quantitative Methods (Fall 2023)": {
+    "POL 3803 - Quantitative Methods (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "001"
@@ -246862,7 +246862,7 @@
       "IW": 1,
       "IF": 0
     },
-    "CME 4264 - Plant Design (Spring 2023)": {
+    "CME 4263 - Plant Design (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "001"
@@ -250144,7 +250144,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Fall 2022)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "001"
@@ -250192,7 +250192,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Spring 2023)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "002"
@@ -250264,7 +250264,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Summer 2023)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Summer 2023)": {
       "Semester": "Summer 2023",
       "Sections": [
         "01T"
@@ -250366,7 +250366,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Summer 2024)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Summer 2024)": {
       "Semester": "Summer 2024",
       "Sections": [
         "01T"
@@ -253114,7 +253114,7 @@
   },
   "Farzad Hashemi": {
     "Department": "ARC",
-    "ARC 5733 - Adv Bldg Tech & Sustainability (Fall 2023)": {
+    "ARC 5724 - Adv Bldg Tech & Sustainability (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "901"
@@ -253186,7 +253186,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ARC 5733 - Adv Bldg Tech & Sustainability (Fall 2024)": {
+    "ARC 5724 - Adv Bldg Tech & Sustainability (Fall 2024)": {
       "Semester": "Fall 2024",
       "Sections": [
         "901"
@@ -253258,7 +253258,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ARC 5733 - Adv Bldg Tech & Sustainability (Spring 2025)": {
+    "ARC 5724 - Adv Bldg Tech & Sustainability (Spring 2025)": {
       "Semester": "Spring 2025",
       "Sections": [
         "902"
@@ -255151,7 +255151,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 1714 - Computer Programming II (Spring 2024)": {
+    "CS 2713 - Computer Programming II (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "0F6"
@@ -273249,7 +273249,7 @@
       "IW": 0,
       "IF": 0
     },
-    "MAT 2214 - Calculus III (Spring 2023)": {
+    "MAT 2213 - Calculus III (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "001",
@@ -273304,7 +273304,7 @@
       "IW": 0,
       "IF": 0
     },
-    "MAT 2214 - Calculus III (Fall 2023)": {
+    "MAT 2213 - Calculus III (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "004"
@@ -273356,7 +273356,7 @@
       "IW": 0,
       "IF": 0
     },
-    "MAT 2214 - Calculus III (Spring 2024)": {
+    "MAT 2213 - Calculus III (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "001",
@@ -274075,7 +274075,7 @@
   },
   "Garrett Elliott": {
     "Department": "MSC",
-    "MSC 3013 - Train Mgmt Warfighting Funct (Fall 2022)": {
+    "MSC 3014 - Train Mgmt Warfighting Funct (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "001",
@@ -274148,7 +274148,7 @@
       "IW": 0,
       "IF": 0
     },
-    "MSC 3023 - App Leadership Small Unit Oper (Spring 2023)": {
+    "MSC 3024 - App Leadership Small Unit Oper (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "001",
@@ -289978,7 +289978,7 @@
       "IW": 0,
       "IF": 0
     },
-    "MAT 2214 - Calculus III (Fall 2022)": {
+    "MAT 2213 - Calculus III (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "001",
@@ -290028,7 +290028,7 @@
       "IW": 0,
       "IF": 0
     },
-    "MAT 2214 - Calculus III (Spring 2023)": {
+    "MAT 2213 - Calculus III (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "003"
@@ -290100,7 +290100,7 @@
       "IW": 0,
       "IF": 0
     },
-    "MAT 2214 - Calculus III (Fall 2023)": {
+    "MAT 2213 - Calculus III (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "001",
@@ -290153,7 +290153,7 @@
       "IW": 0,
       "IF": 0
     },
-    "MAT 2214 - Calculus III (Spring 2024)": {
+    "MAT 2213 - Calculus III (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "003"
@@ -370644,7 +370644,7 @@
       "IW": 0,
       "IF": 0
     },
-    "POL 2703 - Scope and Methods (Fall 2023)": {
+    "POL 3803 - Scope and Methods (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "002"
@@ -370693,7 +370693,7 @@
       "IW": 0,
       "IF": 0
     },
-    "POL 2703 - Scope and Methods (Spring 2024)": {
+    "POL 3803 - Scope and Methods (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "001",
@@ -399344,7 +399344,7 @@
       "IW": null,
       "IF": null
     },
-    "NDT 5957 - Adv Dietetics Practicum II (Spring 2024)": {
+    "NDT 5956 - Adv Dietetics Practicum II (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "001"
@@ -402556,7 +402556,7 @@
       "IW": 0,
       "IF": 0
     },
-    "SOC 3463 - Sociology of Sport and Leisure (Summer 2023)": {
+    "SOC 2113 - Sociology of Sport and Leisure (Summer 2023)": {
       "Semester": "Summer 2023",
       "Sections": [
         "01F"
@@ -402605,7 +402605,7 @@
       "IW": 0,
       "IF": 0
     },
-    "SOC 3463 - Sociology of Sport and Leisure (Fall 2023)": {
+    "SOC 2113 - Sociology of Sport and Leisure (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "001"
@@ -402709,7 +402709,7 @@
       "IW": 0,
       "IF": 0
     },
-    "SOC 3463 - Sociology of Sport and Leisure (Summer 2024)": {
+    "SOC 2113 - Sociology of Sport and Leisure (Summer 2024)": {
       "Semester": "Summer 2024",
       "Sections": [
         "01F"
@@ -402871,7 +402871,7 @@
       "IW": 0,
       "IF": 0
     },
-    "SOC 3463 - Sociology of Sport and Leisure (Summer 2025)": {
+    "SOC 2113 - Sociology of Sport and Leisure (Summer 2025)": {
       "Semester": "Summer 2025",
       "Sections": [
         "01F"
@@ -402925,7 +402925,7 @@
       "IW": 0,
       "IF": 0
     },
-    "SOC 3463 - Sociology of Sport and Leisure (Fall 2025)": {
+    "SOC 2113 - Sociology of Sport and Leisure (Fall 2025)": {
       "Semester": "Fall 2025",
       "Sections": [
         "001"
@@ -403057,7 +403057,7 @@
       "IW": 0,
       "IF": 0
     },
-    "SOC 3463 - Sociology of Sport and Leisure (Summer 2026)": {
+    "SOC 2113 - Sociology of Sport and Leisure (Summer 2026)": {
       "Semester": "Summer 2026",
       "Sections": [
         "01F"
@@ -412634,7 +412634,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 2124 - Data Structures (Summer 2024)": {
+    "CS 2123 - Data Structures (Summer 2024)": {
       "Semester": "Summer 2024",
       "Sections": [
         "B1T"
@@ -433686,7 +433686,7 @@
   },
   "Jonathan Sherette": {
     "Department": "CS",
-    "CS 2124 - Data Structures (Fall 2022)": {
+    "CS 2123 - Data Structures (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "0A1",
@@ -433783,7 +433783,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 2124 - Data Structures (Spring 2023)": {
+    "CS 2123 - Data Structures (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "0A1",
@@ -433856,7 +433856,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 2124 - Data Structures (Fall 2023)": {
+    "CS 2123 - Data Structures (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "0A1",
@@ -433906,7 +433906,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 2124 - Data Structures (Spring 2024)": {
+    "CS 2123 - Data Structures (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "0A1",
@@ -439635,7 +439635,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ME 2173 - Numerical Methods (Summer 2023)": {
+    "ME 3173 - Numerical Methods (Summer 2023)": {
       "Semester": "Summer 2023",
       "Sections": [
         "0C1"
@@ -439733,7 +439733,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ME 2173 - Numerical Methods (Spring 2024)": {
+    "ME 3173 - Numerical Methods (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "0C1"
@@ -439805,7 +439805,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ME 2173 - Numerical Methods (Summer 2024)": {
+    "ME 3173 - Numerical Methods (Summer 2024)": {
       "Semester": "Summer 2024",
       "Sections": [
         "0CT"
@@ -466329,7 +466329,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CI 5003 - Theory of Curr & Instruction (Fall 2022)": {
+    "CI 6003 - Theory of Curr & Instruction (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "001"
@@ -485747,7 +485747,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Fall 2022)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "003"
@@ -490467,7 +490467,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 1714 - Computer Programming II (Spring 2024)": {
+    "CS 2713 - Computer Programming II (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "0E5"
@@ -507699,7 +507699,7 @@
       "IW": 0,
       "IF": 0
     },
-    "NDT 3203 - Intro to Nutri & Diet Careers (Fall 2022)": {
+    "NDT 2202 - Intro to Nutri & Diet Careers (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "001"
@@ -507915,7 +507915,7 @@
       "IW": 0,
       "IF": 0
     },
-    "NDT 3203 - Intro to Nutri & Diet Careers (Fall 2023)": {
+    "NDT 2202 - Intro to Nutri & Diet Careers (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "001"
@@ -508041,7 +508041,7 @@
       "IW": 0,
       "IF": 0
     },
-    "NDT 5957 - Adv Dietetics Practicum II (Spring 2024)": {
+    "NDT 5956 - Adv Dietetics Practicum II (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "001"
@@ -508141,7 +508141,7 @@
       "IW": 0,
       "IF": 0
     },
-    "NDT 3203 - Intro to Nutri & Diet Careers (Fall 2024)": {
+    "NDT 2202 - Intro to Nutri & Diet Careers (Fall 2024)": {
       "Semester": "Fall 2024",
       "Sections": [
         "001"
@@ -508401,7 +508401,7 @@
       "IW": 0,
       "IF": 0
     },
-    "NDT 3203 - Intro to Nutri & Diet Careers (Fall 2025)": {
+    "NDT 2202 - Intro to Nutri & Diet Careers (Fall 2025)": {
       "Semester": "Fall 2025",
       "Sections": [
         "001"
@@ -530619,7 +530619,7 @@
       "IW": 0,
       "IF": 0
     },
-    "NDT 5957 - Adv Dietetics Practicum II (Spring 2023)": {
+    "NDT 5956 - Adv Dietetics Practicum II (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "001"
@@ -587754,7 +587754,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ARC 5733 - Adv Bldg Tech & Sustainability (Spring 2023)": {
+    "ARC 5724 - Adv Bldg Tech & Sustainability (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "001"
@@ -587898,7 +587898,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ARC 5733 - Adv Bldg Tech & Sustainability (Spring 2024)": {
+    "ARC 5724 - Adv Bldg Tech & Sustainability (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "901"
@@ -589207,7 +589207,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Fall 2022)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "002"
@@ -589279,7 +589279,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Spring 2023)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "001"
@@ -589353,7 +589353,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Fall 2023)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "001"
@@ -589451,7 +589451,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Spring 2024)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "001"
@@ -598445,7 +598445,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 1714 - Computer Programming II (Spring 2023)": {
+    "CS 2713 - Computer Programming II (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "0E5"
@@ -630030,7 +630030,7 @@
       "IW": 0,
       "IF": 0
     },
-    "POL 2703 - Quantitative Methods (Fall 2022)": {
+    "POL 3803 - Quantitative Methods (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "001"
@@ -630126,7 +630126,7 @@
       "IW": 0,
       "IF": 0
     },
-    "POL 2703 - Scope and Methods (Spring 2023)": {
+    "POL 3803 - Scope and Methods (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "001"
@@ -645295,7 +645295,7 @@
   },
   "Murtaza Ahmed Siddiqi": {
     "Department": "CS",
-    "CS 2124 - Data Structures (Spring 2023)": {
+    "CS 2123 - Data Structures (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "0C3",
@@ -645368,7 +645368,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 2124 - Data Structures (Summer 2023)": {
+    "CS 2123 - Data Structures (Summer 2023)": {
       "Semester": "Summer 2023",
       "Sections": [
         "A1T"
@@ -645392,7 +645392,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 2124 - Data Structures (Fall 2023)": {
+    "CS 2123 - Data Structures (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "0C1",
@@ -645476,7 +645476,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 2124 - Data Structures (Spring 2024)": {
+    "CS 2123 - Data Structures (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "0C3",
@@ -645538,7 +645538,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 2124 - Data Structures (Summer 2024)": {
+    "CS 2123 - Data Structures (Summer 2024)": {
       "Semester": "Summer 2024",
       "Sections": [
         "A1T"
@@ -656106,7 +656106,7 @@
   },
   "Nehal Abu-Lail": {
     "Department": "BME",
-    "CME 3303 - Transport Phenomena I (Fall 2022)": {
+    "CME 2303 - Transport Phenomena I (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "001"
@@ -656250,7 +656250,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CME 3303 - Transport Phenomena I (Fall 2023)": {
+    "CME 2303 - Transport Phenomena I (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "001"
@@ -665913,7 +665913,7 @@
       "IW": 0,
       "IF": 0
     },
-    "NDRB 4813 - Brain and Behavior (Fall 2023)": {
+    "NDRB 3613 - Brain and Behavior (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "001"
@@ -673600,7 +673600,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CME 4264 - Plant Design (Spring 2024)": {
+    "CME 4263 - Plant Design (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "001"
@@ -673760,7 +673760,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CME 4264 - Plant Design (Spring 2025)": {
+    "CME 4263 - Plant Design (Spring 2025)": {
       "Semester": "Spring 2025",
       "Sections": [
         "001"
@@ -691496,7 +691496,7 @@
       "IW": 0,
       "IF": 0
     },
-    "EE 3463 - Microcomputer Systems I (Fall 2022)": {
+    "EE 2583 - Microcomputer Systems I (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "0B1"
@@ -691569,7 +691569,7 @@
       "IW": 0,
       "IF": 0
     },
-    "EE 3463 - Microcomputer Systems I (Spring 2023)": {
+    "EE 2583 - Microcomputer Systems I (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "0A1"
@@ -691666,7 +691666,7 @@
       "IW": 0,
       "IF": 0
     },
-    "EE 3463 - Microcomputer Systems I (Fall 2023)": {
+    "EE 2583 - Microcomputer Systems I (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "0B1"
@@ -691763,7 +691763,7 @@
       "IW": 0,
       "IF": 0
     },
-    "EE 3463 - Microcomputer Systems I (Spring 2024)": {
+    "EE 2583 - Microcomputer Systems I (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "0A1"
@@ -713353,7 +713353,7 @@
   },
   "Ramin Sahba": {
     "Department": "CS",
-    "CS 1714 - Computer Programming II (Fall 2022)": {
+    "CS 2713 - Computer Programming II (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "0C1"
@@ -713426,7 +713426,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 1714 - Computer Programming II (Spring 2023)": {
+    "CS 2713 - Computer Programming II (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "0A1",
@@ -713523,7 +713523,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 1714 - Computer Programming II (Summer 2023)": {
+    "CS 2713 - Computer Programming II (Summer 2023)": {
       "Semester": "Summer 2023",
       "Sections": [
         "A1T"
@@ -735529,7 +735529,7 @@
   },
   "Richard Lewis": {
     "Department": "SOC",
-    "SOC 3463 - Sociology of Sport and Leisure (Fall 2025)": {
+    "SOC 2113 - Sociology of Sport and Leisure (Fall 2025)": {
       "Semester": "Fall 2025",
       "Sections": [
         "001"
@@ -744620,7 +744620,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ME 2173 - Numerical Methods (Fall 2022)": {
+    "ME 3173 - Numerical Methods (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "0C1",
@@ -744886,7 +744886,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ME 2173 - Numerical Methods (Fall 2023)": {
+    "ME 3173 - Numerical Methods (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "0C1",
@@ -749860,7 +749860,7 @@
   },
   "Robert Tillyer": {
     "Department": "HCP",
-    "PAD 6953 - Independent Study (Summer 2023)": {
+    "PAD 6951 - Independent Study (Summer 2023)": {
       "Semester": "Summer 2023",
       "Sections": [
         "93T"
@@ -753605,7 +753605,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 3424 - Systems Programming (Spring 2023)": {
+    "CS 3423 - Systems Programming (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "0B2"
@@ -753725,7 +753725,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 3424 - Systems Programming (Fall 2023)": {
+    "CS 3423 - Systems Programming (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "0C1"
@@ -753773,7 +753773,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 3424 - Systems Programming (Spring 2024)": {
+    "CS 3423 - Systems Programming (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "0D4"
@@ -761015,7 +761015,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ILT 7953 - Independent Study (Fall 2023)": {
+    "ILT 7951 - Independent Study (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "001"
@@ -768244,7 +768244,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Spring 2023)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "004"
@@ -768364,7 +768364,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Fall 2023)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "003"
@@ -769188,7 +769188,7 @@
   },
   "Sam Silvestro": {
     "Department": "CS",
-    "CS 3424 - Systems Programming (Fall 2022)": {
+    "CS 3423 - Systems Programming (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "0A1",
@@ -769265,7 +769265,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 3424 - Systems Programming (Spring 2023)": {
+    "CS 3423 - Systems Programming (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "0A1",
@@ -769291,7 +769291,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 3424 - Systems Programming (Summer 2023)": {
+    "CS 3423 - Systems Programming (Summer 2023)": {
       "Semester": "Summer 2023",
       "Sections": [
         "A1T"
@@ -769365,7 +769365,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 3424 - Systems Programming (Fall 2023)": {
+    "CS 3423 - Systems Programming (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "0A1",
@@ -769414,7 +769414,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 3424 - Systems Programming (Spring 2024)": {
+    "CS 3423 - Systems Programming (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "0A1",
@@ -769470,7 +769470,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 3424 - Systems Programming (Summer 2024)": {
+    "CS 3423 - Systems Programming (Summer 2024)": {
       "Semester": "Summer 2024",
       "Sections": [
         "A1T"
@@ -771526,7 +771526,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 1714 - Computer Programming II (Fall 2023)": {
+    "CS 2713 - Computer Programming II (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "0B1",
@@ -771576,7 +771576,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 1714 - Computer Programming II (Spring 2024)": {
+    "CS 2713 - Computer Programming II (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "0A1",
@@ -771649,7 +771649,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 1714 - Computer Programming II (Summer 2024)": {
+    "CS 2713 - Computer Programming II (Summer 2024)": {
       "Semester": "Summer 2024",
       "Sections": [
         "A1T"
@@ -774597,7 +774597,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CSM 6951 - Independent Study (Spring 2025)": {
+    "CSM 6953 - Independent Study (Spring 2025)": {
       "Semester": "Spring 2025",
       "Sections": [
         "ONL"
@@ -775796,7 +775796,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Fall 2023)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "004"
@@ -775868,7 +775868,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Spring 2024)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "002"
@@ -775916,7 +775916,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Summer 2024)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Summer 2024)": {
       "Semester": "Summer 2024",
       "Sections": [
         "02T"
@@ -808651,7 +808651,7 @@
   },
   "Stanley Jointer": {
     "Department": "CS",
-    "CS 1714 - Computer Programming II (Fall 2022)": {
+    "CS 2713 - Computer Programming II (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "0B1"
@@ -808675,7 +808675,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 2124 - Data Structures (Fall 2022)": {
+    "CS 2123 - Data Structures (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "0C1",
@@ -808741,7 +808741,7 @@
   },
   "Stanton McHardy": {
     "Department": "CHE",
-    "CHE 5922 - Rsrch & Teach Pract & Ethics (Fall 2022)": {
+    "CHE 5921 - Rsrch & Teach Pract & Ethics (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "001"
@@ -838600,7 +838600,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CS 6253 - Parallel Algorithms (Spring 2023)": {
+    "CS 6273 - Parallel Algorithms (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "001"
@@ -857712,7 +857712,7 @@
       "IW": 0,
       "IF": 0
     },
-    "PSY 6973 - ST: Intelligence and Cognitive (Fall 2022)": {
+    "PSY 6373 - ST: Intelligence and Cognitive (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "001"
@@ -865820,7 +865820,7 @@
   },
   "Timothy Ball": {
     "Department": "MSC",
-    "MSC 4013 - The Army Officer (Fall 2022)": {
+    "MSC 4014 - The Army Officer (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "001",
@@ -865893,7 +865893,7 @@
       "IW": 0,
       "IF": 0
     },
-    "MSC 4023 - Company Grade Leadership (Spring 2023)": {
+    "MSC 4024 - Company Grade Leadership (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "001",
@@ -871122,7 +871122,7 @@
       "IW": 0,
       "IF": 0
     },
-    "MAT 2214 - Calculus III (Spring 2023)": {
+    "MAT 2213 - Calculus III (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "004"
@@ -893395,7 +893395,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CHE 3214 - Analytical Chemistry (Fall 2022)": {
+    "CHE 2214 - Analytical Chemistry (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "0A1"
@@ -893491,7 +893491,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CHE 3214 - Analytical Chemistry (Spring 2023)": {
+    "CHE 2214 - Analytical Chemistry (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "0A1"
@@ -893660,7 +893660,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CHE 3214 - Analytical Chemistry (Fall 2023)": {
+    "CHE 2214 - Analytical Chemistry (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "0A1"
@@ -893780,7 +893780,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CHE 3214 - Analytical Chemistry (Spring 2024)": {
+    "CHE 2214 - Analytical Chemistry (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "0A1"
@@ -896483,7 +896483,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Spring 2023)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "003"
@@ -896607,7 +896607,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Fall 2023)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Fall 2023)": {
       "Semester": "Fall 2023",
       "Sections": [
         "002"
@@ -896679,7 +896679,7 @@
       "IW": 0,
       "IF": 0
     },
-    "KIN 4933 - Practicum-Kinesiology Research (Spring 2024)": {
+    "KIN 4923 - Practicum-Kinesiology Research (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "003"
@@ -926252,7 +926252,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ILT 7953 - Independent Study (Spring 2024)": {
+    "ILT 7951 - Independent Study (Spring 2024)": {
       "Semester": "Spring 2024",
       "Sections": [
         "001"
@@ -926300,7 +926300,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ILT 7953 - Independent Study (Summer 2024)": {
+    "ILT 7951 - Independent Study (Summer 2024)": {
       "Semester": "Summer 2024",
       "Sections": [
         "01E"
@@ -939158,7 +939158,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CI 5013 - Curricula, Instruct/Assessment (Fall 2022)": {
+    "CI 6013 - Curricula, Instruct/Assessment (Fall 2022)": {
       "Semester": "Fall 2022",
       "Sections": [
         "001"
@@ -939302,7 +939302,7 @@
       "IW": 0,
       "IF": 0
     },
-    "CI 5003 - Theory of Curr & Instruction (Spring 2023)": {
+    "CI 6003 - Theory of Curr & Instruction (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "001"
@@ -939969,7 +939969,7 @@
       "IW": 0,
       "IF": 0
     },
-    "ME 2173 - Numerical Methods (Spring 2023)": {
+    "ME 3173 - Numerical Methods (Spring 2023)": {
       "Semester": "Spring 2023",
       "Sections": [
         "0C2"
