@@ -2,9 +2,7 @@
   <img src="public/icons/icon-128.png" alt="RowdySearch logo" width="128" height="128">
 </p>
 
-<img width="1280" height="800" alt="r2" src="https://github.com/user-attachments/assets/e85ce7fa-e019-4b11-ae3b-d87b2c6b74e3" />
-
-<img width="403" height="488" alt="r3" src="https://github.com/user-attachments/assets/518d1b1d-fb6c-4091-b673-d9ec74ab6d75" />
+<img width="1280" height="800" alt="r2" src="https://github.com/user-attachments/assets/e85ce7fa-e019-4b11-ae3b-d87b2c6b74e3" /> <img width="403" height="488" alt="r3" src="https://github.com/user-attachments/assets/518d1b1d-fb6c-4091-b673-d9ec74ab6d75" />
 
 
 
