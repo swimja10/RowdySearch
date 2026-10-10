@@ -2,11 +2,27 @@
   <img src="public/icons/icon-128.png" alt="RowdySearch logo" width="128" height="128">
 </p>
 
+<img width="1280" height="800" alt="r2" src="https://github.com/user-attachments/assets/e85ce7fa-e019-4b11-ae3b-d87b2c6b74e3" />
+
+<img width="403" height="488" alt="r3" src="https://github.com/user-attachments/assets/518d1b1d-fb6c-4091-b673-d9ec74ab6d75" />
+
+
+
 # RowdySearch
 
 **Pick the right UTSA professor in one click.** RowdySearch is a Chrome extension that puts grade distributions, Rate My Professors ratings, and the latest syllabus next to every class while you register.
 
 Built by Jacob Swim and Angelina Lu.
+
+## Try it
+
+No building needed. The built extension is already in `dist/`.
+
+1. Clone or download this repo.
+2. Open `chrome://extensions` and turn on **Developer mode** (top right).
+3. Click **Load unpacked** and pick this folder (the one with `manifest.json` in it).
+4. Pin RowdySearch from the puzzle-piece menu so its icon stays in the toolbar.
+5. Open Schedule Planner and click any **Search** button, or click the toolbar icon on any site.
 
 ## Inspiration
 
@@ -40,16 +56,6 @@ In the sidebar or in Analytical Mode, type a search and press **Enter**:
 | `Sean Beatty` | His professor page: RMP stats, reviews, median grade across every class |
 | `Beatty MAT 1213` | His MAT 1213 page: median grade, latest syllabus, every semester |
 | `linear algebra` or `MAT 1213` | The course page: every professor who teaches it, side by side |
-
-## Try it
-
-No building needed. The built extension is already in `dist/`.
-
-1. Clone or download this repo.
-2. Open `chrome://extensions` and turn on **Developer mode** (top right).
-3. Click **Load unpacked** and pick this folder (the one with `manifest.json` in it).
-4. Pin RowdySearch from the puzzle-piece menu so its icon stays in the toolbar.
-5. Open Schedule Planner and click any **Search** button, or click the toolbar icon on any site.
 
 ## How we built it
 
