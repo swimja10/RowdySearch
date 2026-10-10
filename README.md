@@ -2,10 +2,6 @@
   <img src="public/icons/icon-128.png" alt="RowdySearch logo" width="128" height="128">
 </p>
 
-<img width="1280" height="800" alt="r2" src="https://github.com/user-attachments/assets/e85ce7fa-e019-4b11-ae3b-d87b2c6b74e3" /> <img width="403" height="488" alt="r3" src="https://github.com/user-attachments/assets/518d1b1d-fb6c-4091-b673-d9ec74ab6d75" />
-
-
-
 # RowdySearch
 
 **Pick the right UTSA professor in one click.** RowdySearch is a Chrome extension that puts grade distributions, Rate My Professors ratings, and the latest syllabus next to every class while you register.
@@ -21,6 +17,9 @@ No building needed. The built extension is already in `dist/`.
 3. Click **Load unpacked** and pick this folder (the one with `manifest.json` in it).
 4. Pin RowdySearch from the puzzle-piece menu so its icon stays in the toolbar.
 5. Open Schedule Planner and click any **Search** button, or click the toolbar icon on any site.
+
+## Images
+<img width="1280" height="800" alt="r2" src="https://github.com/user-attachments/assets/e85ce7fa-e019-4b11-ae3b-d87b2c6b74e3" /> <img width="403" height="488" alt="r3" src="https://github.com/user-attachments/assets/518d1b1d-fb6c-4091-b673-d9ec74ab6d75" />
 
 ## Inspiration
 
