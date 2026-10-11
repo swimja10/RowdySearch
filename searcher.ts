@@ -1,4 +1,4 @@
-// Try the searcher from the terminal:  node searcher.ts "Darrn Meritz WRC" Hello
+// Try the searcher from the terminal:  node searcher.ts "Darrn Meritz WRC" 
 import { readFileSync } from "node:fs";
 import { buildSearchIndex, search } from "./src/searcher.ts";
 
