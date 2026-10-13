@@ -8,7 +8,10 @@
 
 Built by Jacob Swim and Angelina Lu.
 
-## Try it
+## Download the Chrome Extension
+RowdySearch: https://chromewebstore.google.com/detail/geiimkdngembhenfhcnbmlfgbclheoek?utm_source=item-share-cb
+
+## Try it (If you want to download this repo)
 
 No building needed. The built extension is already in `dist/`.
 
