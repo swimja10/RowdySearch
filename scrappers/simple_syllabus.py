@@ -5,11 +5,8 @@ import time
 
 
 def write_to_json(
-    professor_id, cnr, section, professor_name, course_name, term, syllabus_code
+    data, professor_id, cnr, section, professor_name, course_name, term, syllabus_code
 ):
-
-    with open("simple_syllabus_data.json", "r") as f:
-        data = json.load(f)
 
     if professor_id not in data:
         data[professor_id] = {"name": professor_name, "courses": {}}
@@ -26,13 +23,10 @@ def write_to_json(
     if new_section not in sections:
         sections.append(new_section)
 
-    with open("simple_syllabus_data.json", "w") as f:
-        json.dump(data, f, indent=4)
 
+def get_course_info(api_page, data):
 
-def get_course_info(data):
-
-    for item in data["items"]:
+    for item in api_page["items"]:
         title = item["title"].split()
         if len(title) < 3:
             print(f"Skipped odd title: {item['title']}")
@@ -47,7 +41,9 @@ def get_course_info(data):
         for editor in item["editors"]:
             professor_id = editor["entity_id"]
             professor_name = editor["full_name"]
+
             write_to_json(
+                data,
                 professor_id,
                 cnr,
                 section,
@@ -58,7 +54,7 @@ def get_course_info(data):
             )
 
 
-def collect_data(status):
+def collect_data(status, data):
 
     page = 0
     end = 1
@@ -69,24 +65,29 @@ def collect_data(status):
         response = requests.get(
             f"https://utsa.simplesyllabus.com/api2/doc-library-search?page={page}&term_statuses%5B%5D={status}"
         )
-        data = response.json()
+        api_page = response.json()
 
-        total = data["pagination"]["total"]
-        page_size = data["pagination"]["page_size"]
+        total = api_page["pagination"]["total"]
+        page_size = api_page["pagination"]["page_size"]
         end = math.ceil(total / page_size)
 
-        get_course_info(data)
+        get_course_info(api_page, data)
         print(f"{status} page {page} of {end}")
         page += 1
 
 
+def save(data, path):
+    with open(path, "w") as f:
+        json.dump(data, f, indent=4)
+
+
 def simple_syllabus():
+    data = {}
 
-    with open("simple_syllabus_data.json", "w") as f:
-        json.dump({}, f)
-
-    collect_data("current")
-    collect_data("historic")
+    collect_data("current", data)
+    collect_data("historic", data)
+    save(data, "simple_syllabus_data.json")
 
 
-simple_syllabus()
+if __name__ == "__main__":
+    simple_syllabus()

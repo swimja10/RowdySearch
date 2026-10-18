@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 *.local
 venv/
+.venv/
 
 # dist/ is NOT ignored on purpose: it's the built extension, so anyone who clones
 # the repo can "Load unpacked" this folder in Chrome without building it first.
