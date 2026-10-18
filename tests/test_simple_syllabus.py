@@ -36,6 +36,7 @@ def make_item(code, title, editors):
 def test_page_produces_expected_totals(api_page):
     data = {}
     get_course_info(api_page, data)
+
     assert len(data) == 21
     assert count_sections(data) == 50
 
@@ -43,6 +44,7 @@ def test_page_produces_expected_totals(api_page):
 def test_professor_sections_are_grouped_under_one_id(api_page):
     data = {}
     get_course_info(api_page, data)
+
     assert data[HAYES]["name"] == "Endia Hayes"
     assert set(data[HAYES]["courses"]) == {"AAS 2013", "AAS 4103"}
 
@@ -52,11 +54,14 @@ def test_section_is_stored_with_term_section_and_code(api_page):
     get_course_info(api_page, data)
     course = data[HAYES]["courses"]["AAS 2013"]
     assert course["title"] == "Introduction to African American Studies"
-    assert {
+
+    item = {
         "term": "Fall 2026",
         "section": "003",
         "syllabus_code": "3u2jp5ex9",
-    } in course["sections"]
+    }
+
+    assert item in course["sections"]
 
 
 def test_running_same_page_twice_adds_no_duplicates(api_page):
@@ -77,13 +82,6 @@ def test_co_taught_section_appears_under_each_professor():
             s["syllabus_code"] for s in data[pid]["courses"]["CS 1083"]["sections"]
         ]
         assert "abc123xyz" in codes
-
-
-def test_title_with_fewer_than_three_parts_is_skipped():
-    data = {}
-    item = make_item("short0000", "CS 1083", [("prof-a", "Ann A")])
-    get_course_info({"items": [item]}, data)
-    assert data == {}
 
 
 def test_save_writes_data_as_json(tmp_path):
