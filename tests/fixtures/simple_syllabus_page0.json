@@ -1,0 +1,1267 @@
+{
+  "sys": {
+    "success": true,
+    "feedback": [],
+    "request_id": 1792279877,
+    "site_signature": ""
+  },
+  "pagination": {
+    "total": 3766,
+    "returned": 50,
+    "page": 0,
+    "page_size": 50
+  },
+  "info": [],
+  "items": [
+    {
+      "code": "3u2jp5ex9",
+      "title": "AAS 2013 003",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "e0f17f4d-bd9a-4307-9e20-2216797e902a",
+          "full_name": "Endia Hayes",
+          "last_name": "Hayes",
+          "first_name": "Endia",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "c1e66b65-8f1c-4e62-b735-59310925ede0",
+      "following": false,
+      "sub_title": "Introduction to African American Studies",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "nd64ss2zr",
+      "title": "AAS 2113 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "96f353dd-dfb0-4922-81ee-97c7aa662763",
+          "full_name": "Daniele Dixon",
+          "last_name": "Dixon",
+          "first_name": "Daniele",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "c8350999-d421-40e3-ad22-a144decace78",
+      "following": false,
+      "sub_title": "African American Culture, Leadership and Social Issues",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "8l648zqho",
+      "title": "AAS 3033 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "da7892be-5f95-4c2c-a597-70745b47129b",
+          "full_name": "Marc Perry",
+          "last_name": "Perry",
+          "first_name": "Marc",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "e876f016-1e1e-4faa-af6b-c948a4ca85d9",
+      "following": false,
+      "sub_title": "African American Film",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "sxcfh4tsx",
+      "title": "AAS 4023 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "144cd1aa-2b5c-4c27-9f8e-abb118206853",
+          "full_name": "Sylvia Mendoza",
+          "last_name": "Mendoza",
+          "first_name": "Sylvia",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "fd1859e0-f87d-42eb-a898-350696f68c44",
+      "following": false,
+      "sub_title": "Black and Brown Youth Resistance",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "kzsc5v187",
+      "title": "AAS 4103 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "e0f17f4d-bd9a-4307-9e20-2216797e902a",
+          "full_name": "Endia Hayes",
+          "last_name": "Hayes",
+          "first_name": "Endia",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "fa679b23-699a-4dd5-b64a-a6ae39fbd0c4",
+      "following": false,
+      "sub_title": "Writing Black Lives",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "dblxt2cfo",
+      "title": "AAS 4913 901",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "da7892be-5f95-4c2c-a597-70745b47129b",
+          "full_name": "Marc Perry",
+          "last_name": "Perry",
+          "first_name": "Marc",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "8a4f3e95-0e60-4d66-b245-f9d67f348721",
+      "following": false,
+      "sub_title": "Independent Study",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "db6f83xy6",
+      "title": "ACC 2003 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "eab3984a-2c42-4008-8020-3f57bddc9377",
+          "full_name": "Stacy Conrad",
+          "last_name": "Conrad",
+          "first_name": "Stacy",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "39040100-2b8b-4f8b-b962-901796573d8c",
+      "following": false,
+      "sub_title": "Foundations of Accounting",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "vfyt352b5",
+      "title": "ACC 2013 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "62548483-de00-4286-b65d-1e4480765bbd",
+          "full_name": "Linda Vaello",
+          "last_name": "Vaello",
+          "first_name": "Linda",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "08a151d7-23cd-4f71-97d6-201d577b092f",
+      "following": false,
+      "sub_title": "Principles of Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "8d4eydmt7",
+      "title": "ACC 2013 002",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "eab3984a-2c42-4008-8020-3f57bddc9377",
+          "full_name": "Stacy Conrad",
+          "last_name": "Conrad",
+          "first_name": "Stacy",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "08f41426-abb3-4735-8ef6-cf9b1de35d06",
+      "following": false,
+      "sub_title": "Principles of Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "jkaisjfh9",
+      "title": "ACC 2013 003",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "62548483-de00-4286-b65d-1e4480765bbd",
+          "full_name": "Linda Vaello",
+          "last_name": "Vaello",
+          "first_name": "Linda",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "c55abe8d-1d6d-412f-9438-5ac43df13231",
+      "following": false,
+      "sub_title": "Principles of Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "klk8tkith",
+      "title": "ACC 2013 004",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "54ef5bb9-84e4-491b-ab05-424a05419a3c",
+          "full_name": "Lashaude James",
+          "last_name": "James",
+          "first_name": "Lashaude",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "841ec337-4a29-4cb9-8c36-3029ca04e579",
+      "following": false,
+      "sub_title": "Principles of Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "ifdyz1kfa",
+      "title": "ACC 2013 005",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "eab3984a-2c42-4008-8020-3f57bddc9377",
+          "full_name": "Stacy Conrad",
+          "last_name": "Conrad",
+          "first_name": "Stacy",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "e3f1400a-5c57-4a08-b2c1-7c408b694b7d",
+      "following": false,
+      "sub_title": "Principles of Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "kugi4atuv",
+      "title": "ACC 2013 006",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "f84b529a-89cf-481a-a5bc-6546284d9d4c",
+          "full_name": "James Kruse",
+          "last_name": "Kruse",
+          "first_name": "James",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "97edb732-bbdb-4f9d-9265-0b42f1b5d334",
+      "following": false,
+      "sub_title": "Principles of Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "uuquyzacy",
+      "title": "ACC 2013 007",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "f84b529a-89cf-481a-a5bc-6546284d9d4c",
+          "full_name": "James Kruse",
+          "last_name": "Kruse",
+          "first_name": "James",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "8c8d0b82-9ec8-433d-b7ca-d976d31ed099",
+      "following": false,
+      "sub_title": "Principles of Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "g48i8srah",
+      "title": "ACC 2013 008",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "62548483-de00-4286-b65d-1e4480765bbd",
+          "full_name": "Linda Vaello",
+          "last_name": "Vaello",
+          "first_name": "Linda",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "3e2d6cec-6088-4d5e-9954-5308d7c8db45",
+      "following": false,
+      "sub_title": "Principles of Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "houw5n82s",
+      "title": "ACC 2013 009",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "b8af0bdc-8c09-4843-99db-4b05ebeb3e74",
+          "full_name": "Bob Frey",
+          "last_name": "Frey",
+          "first_name": "Bob",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "e1bbdf7e-21d0-411a-8c52-2c3ebedf064c",
+      "following": false,
+      "sub_title": "Principles of Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "u65u56v0n",
+      "title": "ACC 2013 010",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "beb3ceeb-af5d-4581-ae22-21166ebb2a01",
+          "full_name": "Thomas Jackson",
+          "last_name": "Jackson",
+          "first_name": "Thomas",
+          "has_headshot": true
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "4d01048c-e6ec-455c-8f37-2a42b6ead60f",
+      "following": false,
+      "sub_title": "Principles of Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "s42iha8y7",
+      "title": "ACC 2013 ON1",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "62548483-de00-4286-b65d-1e4480765bbd",
+          "full_name": "Linda Vaello",
+          "last_name": "Vaello",
+          "first_name": "Linda",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "1e458877-b5da-4566-9ef5-376ac0bbf324",
+      "following": false,
+      "sub_title": "Principles of Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "0esnmp1bo",
+      "title": "ACC 2033 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "2beb49a6-5c40-47a8-9f5b-129dbd3e2b45",
+          "full_name": "Dennis Lopez",
+          "last_name": "Lopez",
+          "first_name": "Dennis",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "5da2cd85-65f4-4347-aab4-159c2cbea2f6",
+      "following": false,
+      "sub_title": "Principles of Accounting II",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "or2d8pi9b",
+      "title": "ACC 2033 003",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "31dfa1fb-6427-4ab5-b145-fc64e6f2336e",
+          "full_name": "Judy Trevino",
+          "last_name": "Trevino",
+          "first_name": "Judy",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "027c8ed3-7a99-4713-b1df-a3e54a2808ec",
+      "following": false,
+      "sub_title": "Principles of Accounting II",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "wq2lgi5ac",
+      "title": "ACC 2033 004",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "2beb49a6-5c40-47a8-9f5b-129dbd3e2b45",
+          "full_name": "Dennis Lopez",
+          "last_name": "Lopez",
+          "first_name": "Dennis",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "d3f1247b-c831-4717-a82d-f52b6d365b30",
+      "following": false,
+      "sub_title": "Principles of Accounting II",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "oh6vyfc2i",
+      "title": "ACC 2033 005",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "2beb49a6-5c40-47a8-9f5b-129dbd3e2b45",
+          "full_name": "Dennis Lopez",
+          "last_name": "Lopez",
+          "first_name": "Dennis",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "43eac07e-dab6-467c-af59-8e06db51db00",
+      "following": false,
+      "sub_title": "Principles of Accounting II",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "qd24euczu",
+      "title": "ACC 2033 006",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "2c10ad33-7a30-4450-aba4-23c20d79e9cb",
+          "full_name": "Zhongxia Ye",
+          "last_name": "Ye",
+          "first_name": "Zhongxia",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "0ff59ce1-94ff-4980-be41-c96678b50d37",
+      "following": false,
+      "sub_title": "Principles of Accounting II",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "kvqnp4zyk",
+      "title": "ACC 2033 007",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "1da19772-cd21-4b37-9393-6fa39efbda45",
+          "full_name": "Nicholas Granado",
+          "last_name": "Granado",
+          "first_name": "Nicholas",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "ecd7f2ec-8640-414f-8f54-032d8ea7531f",
+      "following": false,
+      "sub_title": "Principles of Accounting II",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "guohajy85",
+      "title": "ACC 2033 ON1",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "62548483-de00-4286-b65d-1e4480765bbd",
+          "full_name": "Linda Vaello",
+          "last_name": "Vaello",
+          "first_name": "Linda",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "6a374049-f16a-4a55-b718-acac9400c00c",
+      "following": false,
+      "sub_title": "Principles of Accounting II",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "53p88qqe1",
+      "title": "ACC 3023 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "04780b67-4b58-47f4-8429-412d4985027d",
+          "full_name": "Patrick Lee",
+          "last_name": "Lee",
+          "first_name": "Patrick",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "a071f777-10f7-4057-b1c0-2c303c10e743",
+      "following": false,
+      "sub_title": "Intermediate Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "8hjk86w4c",
+      "title": "ACC 3023 002",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "04780b67-4b58-47f4-8429-412d4985027d",
+          "full_name": "Patrick Lee",
+          "last_name": "Lee",
+          "first_name": "Patrick",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "4208ab7a-871d-4b20-b045-189dee7375c4",
+      "following": false,
+      "sub_title": "Intermediate Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "6ehlkh2wf",
+      "title": "ACC 3023 003",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "04780b67-4b58-47f4-8429-412d4985027d",
+          "full_name": "Patrick Lee",
+          "last_name": "Lee",
+          "first_name": "Patrick",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "fe7f4a60-ff57-43ce-bb4a-b651774762ef",
+      "following": false,
+      "sub_title": "Intermediate Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "pfsojq93h",
+      "title": "ACC 3033 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "62548483-de00-4286-b65d-1e4480765bbd",
+          "full_name": "Linda Vaello",
+          "last_name": "Vaello",
+          "first_name": "Linda",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "11b5149f-1949-4a54-985e-a1c000980d22",
+      "following": false,
+      "sub_title": "Intermediate Accounting II",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "8ml9j0qyn",
+      "title": "ACC 3033 002",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "62548483-de00-4286-b65d-1e4480765bbd",
+          "full_name": "Linda Vaello",
+          "last_name": "Vaello",
+          "first_name": "Linda",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "bf4c8c52-162a-47d5-a897-af7e63aa94cc",
+      "following": false,
+      "sub_title": "Intermediate Accounting II",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "jgtdwormr",
+      "title": "ACC 3043 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "0ad782a4-3214-4c7f-be91-26cdff450f57",
+          "full_name": "Hunter Aku",
+          "last_name": "Aku",
+          "first_name": "Hunter",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "1e6c69d2-5b5e-4a27-b4bf-4076cad2fef4",
+      "following": false,
+      "sub_title": "Federal Income Taxation",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "x5sex75zy",
+      "title": "ACC 3043 002",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "0ad782a4-3214-4c7f-be91-26cdff450f57",
+          "full_name": "Hunter Aku",
+          "last_name": "Aku",
+          "first_name": "Hunter",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "f5c8fe9d-1e97-4492-8cb8-520c4755a8d6",
+      "following": false,
+      "sub_title": "Federal Income Taxation",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "b5c64dpqk",
+      "title": "ACC 3043 003",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "0ad782a4-3214-4c7f-be91-26cdff450f57",
+          "full_name": "Hunter Aku",
+          "last_name": "Aku",
+          "first_name": "Hunter",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "7cb6690a-0dd4-4e09-8dc5-4b18fa39135c",
+      "following": false,
+      "sub_title": "Federal Income Taxation",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "y81jc67xq",
+      "title": "ACC 3053 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "f0eec87a-35f2-4e82-96da-b578af8a9b83",
+          "full_name": "Jimmie Cox",
+          "last_name": "Cox",
+          "first_name": "Jimmie",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "f24b9714-1942-4065-bac3-289816b31e1e",
+      "following": false,
+      "sub_title": "Intermediate Accounting for Finance Majors",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "yxgbub3oq",
+      "title": "ACC 3053 002",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "f0eec87a-35f2-4e82-96da-b578af8a9b83",
+          "full_name": "Jimmie Cox",
+          "last_name": "Cox",
+          "first_name": "Jimmie",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "b2a545ea-c6c4-4458-93ea-44df46c2061e",
+      "following": false,
+      "sub_title": "Intermediate Accounting for Finance Majors",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "ac4vxq5wi",
+      "title": "ACC 3071 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "04780b67-4b58-47f4-8429-412d4985027d",
+          "full_name": "Patrick Lee",
+          "last_name": "Lee",
+          "first_name": "Patrick",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "76ae0bd2-b30e-4705-a4e4-c3101a765826",
+      "following": false,
+      "sub_title": "Professional Issues and Topics in Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "vnenqe2jl",
+      "title": "ACC 3071 002",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "04780b67-4b58-47f4-8429-412d4985027d",
+          "full_name": "Patrick Lee",
+          "last_name": "Lee",
+          "first_name": "Patrick",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "a46c1583-a25d-4935-961d-6d1599268531",
+      "following": false,
+      "sub_title": "Professional Issues and Topics in Accounting I",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "l1rxw8d0p",
+      "title": "ACC 3081 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "04780b67-4b58-47f4-8429-412d4985027d",
+          "full_name": "Patrick Lee",
+          "last_name": "Lee",
+          "first_name": "Patrick",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "9ea4475e-b62f-4771-b687-2c054969bb8b",
+      "following": false,
+      "sub_title": "Professional Issues and Topics in Accounting II",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "5zd766b9r",
+      "title": "ACC 3081 002",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "04780b67-4b58-47f4-8429-412d4985027d",
+          "full_name": "Patrick Lee",
+          "last_name": "Lee",
+          "first_name": "Patrick",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "ea0d94db-2399-4880-8452-ab93f9e933a7",
+      "following": false,
+      "sub_title": "Professional Issues and Topics in Accounting II",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "nwdy3i3u1",
+      "title": "ACC 3113 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "898db675-b49f-4355-b1ae-d6d21f480933",
+          "full_name": "Chanyuan Parker",
+          "last_name": "Parker",
+          "first_name": "Chanyuan",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "27dde188-a681-47f0-b3d1-b97053f34b34",
+      "following": false,
+      "sub_title": "Accounting Information Systems",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "tiy3tubr6",
+      "title": "ACC 3113 002",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "898db675-b49f-4355-b1ae-d6d21f480933",
+          "full_name": "Chanyuan Parker",
+          "last_name": "Parker",
+          "first_name": "Chanyuan",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "1655342a-017b-4af8-bfaf-38c2f0a8c2c4",
+      "following": false,
+      "sub_title": "Accounting Information Systems",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "ccntkflw4",
+      "title": "ACC 3113 003",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "898db675-b49f-4355-b1ae-d6d21f480933",
+          "full_name": "Chanyuan Parker",
+          "last_name": "Parker",
+          "first_name": "Chanyuan",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "dcf1437f-5ad7-4662-a5ea-cc8a9ab1dd3f",
+      "following": false,
+      "sub_title": "Accounting Information Systems",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "zjvexf0nv",
+      "title": "ACC 3123 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "b897e9f3-3f07-47e3-b46c-4ba7ae8a3667",
+          "full_name": "Harrison Liu",
+          "last_name": "Liu",
+          "first_name": "Harrison",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "f59661a0-c219-4598-bbb9-7d156e8bf423",
+      "following": false,
+      "sub_title": "Cost Analysis",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "odzkwwhh4",
+      "title": "ACC 3123 002",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "25e9fa9b-eba7-48ad-b1f5-b43c9ec40d61",
+          "full_name": "Jennifer Yin",
+          "last_name": "Yin",
+          "first_name": "Jennifer",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "f77fe41c-9070-49dd-ada9-8aed3998f778",
+      "following": false,
+      "sub_title": "Cost Analysis",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "7mjpte4v4",
+      "title": "ACC 3163 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "dc5389cf-54a5-4e44-af5c-4504a0eccba2",
+          "full_name": "Juan Mao",
+          "last_name": "Mao",
+          "first_name": "Juan",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "4d016013-3abf-4cb8-a921-93b3d2e3bc36",
+      "following": false,
+      "sub_title": "Quantitative Analysis for Accountants",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "cxl5gf1fz",
+      "title": "ACC 3163 002",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "dc5389cf-54a5-4e44-af5c-4504a0eccba2",
+          "full_name": "Juan Mao",
+          "last_name": "Mao",
+          "first_name": "Juan",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "d1783fc5-e16c-4ca4-bd8e-6bdce7fba8fa",
+      "following": false,
+      "sub_title": "Quantitative Analysis for Accountants",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "kv06s7w4i",
+      "title": "ACC 4013 002",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "f84b529a-89cf-481a-a5bc-6546284d9d4c",
+          "full_name": "James Kruse",
+          "last_name": "Kruse",
+          "first_name": "James",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "4de4038d-cf3f-4d50-bf51-a6088b202736",
+      "following": false,
+      "sub_title": "Principles of Auditing",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "uhth82epf",
+      "title": "ACC 4013 003",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "f84b529a-89cf-481a-a5bc-6546284d9d4c",
+          "full_name": "James Kruse",
+          "last_name": "Kruse",
+          "first_name": "James",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "cc22a717-099e-4d7c-81f3-fe456dc2dc14",
+      "following": false,
+      "sub_title": "Principles of Auditing",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "n3v6r62et",
+      "title": "ACC 4091 001",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "04780b67-4b58-47f4-8429-412d4985027d",
+          "full_name": "Patrick Lee",
+          "last_name": "Lee",
+          "first_name": "Patrick",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "8ef9a14f-c83a-4f54-a552-04616902f626",
+      "following": false,
+      "sub_title": "Professional Issues and Topics in Accounting III",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    },
+    {
+      "code": "6ki2ihepj",
+      "title": "ACC 4091 002",
+      "total": 3766,
+      "editors": [
+        {
+          "entity_id": "04780b67-4b58-47f4-8429-412d4985027d",
+          "full_name": "Patrick Lee",
+          "last_name": "Lee",
+          "first_name": "Patrick",
+          "has_headshot": false
+        }
+      ],
+      "term_id": "c7847e92-1dff-41e6-84b5-62bca962a701",
+      "entity_id": "73479086-0d96-48ba-9bf0-045a5bf2c407",
+      "following": false,
+      "sub_title": "Professional Issues and Topics in Accounting III",
+      "term_name": "Fall 2026",
+      "is_student": false,
+      "visibility": "general_public",
+      "entity_type": "section",
+      "family_name": "syllabus",
+      "has_upload_thumbnail": false,
+      "has_published_uploads": false
+    }
+  ]
+}

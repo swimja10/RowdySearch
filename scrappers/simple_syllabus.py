@@ -2,6 +2,9 @@ import requests
 import math
 import json
 import time
+from pathlib import Path
+
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
 
 def write_to_json(
@@ -77,7 +80,7 @@ def collect_data(status, data):
 
 
 def save(data, path):
-    with open(path, "w") as f:
+    with open(DATA_DIR / path, "w") as f:
         json.dump(data, f, indent=4)
 
 
