@@ -2899,6 +2899,81 @@
             }
         }
     },
+    "70860e46-d09c-4ec9-9d21-7484381b27ca": {
+        "name": "Juliet Wiersema",
+        "courses": {
+            "AHC 4423": {
+                "title": "Mesoamerica",
+                "sections": [
+                    {
+                        "term": "Fall 2026",
+                        "section": "001",
+                        "syllabus_code": "gm00q4fx1"
+                    },
+                    {
+                        "term": "Summer 2024",
+                        "section": "03F",
+                        "syllabus_code": "wxy8euyhw"
+                    }
+                ]
+            },
+            "AHC 5843": {
+                "title": "Mapping Latin America",
+                "sections": [
+                    {
+                        "term": "Fall 2026",
+                        "section": "001",
+                        "syllabus_code": "u5nbp58p7"
+                    }
+                ]
+            },
+            "AHC 1113": {
+                "title": "Art History: Prehistory-1350",
+                "sections": [
+                    {
+                        "term": "Spring 2025",
+                        "section": "002",
+                        "syllabus_code": "yg5121m2r"
+                    }
+                ]
+            },
+            "AHC 4333": {
+                "title": "Art of the Andes",
+                "sections": [
+                    {
+                        "term": "Spring 2025",
+                        "section": "002",
+                        "syllabus_code": "2i8rc5fcz"
+                    },
+                    {
+                        "term": "Spring 2024",
+                        "section": "002",
+                        "syllabus_code": "bs4nw5m27"
+                    }
+                ]
+            },
+            "AHC/AHC 4333/4353": {
+                "title": "Mining and Mapping; Mining and Mapping",
+                "sections": [
+                    {
+                        "term": "Fall 2024",
+                        "section": "910/910",
+                        "syllabus_code": "0u245wd4e"
+                    }
+                ]
+            },
+            "AHC 5813": {
+                "title": "TAH: Directed Research",
+                "sections": [
+                    {
+                        "term": "Fall 2023",
+                        "section": "904",
+                        "syllabus_code": "3459dnnud"
+                    }
+                ]
+            }
+        }
+    },
     "a460c403-c329-434c-9116-7a933a204a43": {
         "name": "Teresa Eckmann",
         "courses": {
@@ -3024,76 +3099,6 @@
                         "term": "Fall 2025",
                         "section": "001",
                         "syllabus_code": "dy4z8wwzm"
-                    }
-                ]
-            }
-        }
-    },
-    "70860e46-d09c-4ec9-9d21-7484381b27ca": {
-        "name": "Juliet Wiersema",
-        "courses": {
-            "AHC 5843": {
-                "title": "Mapping Latin America",
-                "sections": [
-                    {
-                        "term": "Fall 2026",
-                        "section": "001",
-                        "syllabus_code": "u5nbp58p7"
-                    }
-                ]
-            },
-            "AHC 1113": {
-                "title": "Art History: Prehistory-1350",
-                "sections": [
-                    {
-                        "term": "Spring 2025",
-                        "section": "002",
-                        "syllabus_code": "yg5121m2r"
-                    }
-                ]
-            },
-            "AHC 4333": {
-                "title": "Art of the Andes",
-                "sections": [
-                    {
-                        "term": "Spring 2025",
-                        "section": "002",
-                        "syllabus_code": "2i8rc5fcz"
-                    },
-                    {
-                        "term": "Spring 2024",
-                        "section": "002",
-                        "syllabus_code": "bs4nw5m27"
-                    }
-                ]
-            },
-            "AHC/AHC 4333/4353": {
-                "title": "Mining and Mapping; Mining and Mapping",
-                "sections": [
-                    {
-                        "term": "Fall 2024",
-                        "section": "910/910",
-                        "syllabus_code": "0u245wd4e"
-                    }
-                ]
-            },
-            "AHC 4423": {
-                "title": "Arts of Ancient Mesoamerica",
-                "sections": [
-                    {
-                        "term": "Summer 2024",
-                        "section": "03F",
-                        "syllabus_code": "wxy8euyhw"
-                    }
-                ]
-            },
-            "AHC 5813": {
-                "title": "TAH: Directed Research",
-                "sections": [
-                    {
-                        "term": "Fall 2023",
-                        "section": "904",
-                        "syllabus_code": "3459dnnud"
                     }
                 ]
             }

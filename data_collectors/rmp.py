@@ -4,7 +4,9 @@ import requests
 
 from pathlib import Path
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw_data"
+RAW_DIR.mkdir(parents=True, exist_ok=True)
+
 URL = "https://www.ratemyprofessors.com/graphql"
 UTSA_ID = "U2Nob29sLTE1MTY="
 
@@ -115,7 +117,7 @@ def create_professor(data):
 
 
 def save(data, path):
-    with open(DATA_DIR / path, "w") as f:
+    with open(RAW_DIR / path, "w") as f:
         json.dump(data, f, indent=4)
 
 

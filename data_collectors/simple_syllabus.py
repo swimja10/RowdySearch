@@ -4,7 +4,8 @@ import json
 import time
 from pathlib import Path
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw_data"
+RAW_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def write_to_json(
@@ -80,7 +81,7 @@ def collect_data(status, data):
 
 
 def save(data, path):
-    with open(DATA_DIR / path, "w") as f:
+    with open(RAW_DIR / path, "w") as f:
         json.dump(data, f, indent=4)
 
 

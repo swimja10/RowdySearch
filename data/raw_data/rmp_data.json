@@ -1,4 +1,18 @@
 {
+    "VGVhY2hlci0yMjY4MTQx": {
+        "name": "Kevin Martin",
+        "department": "Business",
+        "avgRating": 4.7,
+        "avgDifficulty": 2.4,
+        "wouldTakeAgainPercent": 90.625,
+        "recentReviews": [
+            "I definitely recommend taking his course, Kmart is one of the best professors I've taken so far.  He likes to move fast pace throughout his lectures but makes them entertaining with his stories he likes to share. He is easy to talk to and is very accessible outside of class, literally the only way to fail would be to not participate in class at all",
+            "Used life experience and situations to teach material instead of structured lecture. Different kind of teaching but still very effective. ",
+            "Great professor for project management certification. Would take him again. ",
+            "KMart is a caring professor who makes project management easy with humor and real-world stories. What sets him apart is that he doesn't just teach for the exam, he genuinely invests in his students' growth. He's always available and shares great book recommendations to guide your journey. You'll leave inspired and well-prepared. Highly recommend!",
+            "Very funny, knowledgeable; AWESOME!!"
+        ]
+    },
     "VGVhY2hlci0zMTYxMjEx": {
         "name": "Juan Rincon Tabres",
         "department": "Engineering",
@@ -677,20 +691,6 @@
             "do not take. you have been told. don't say you were not warned.",
             "The course uses zyBooks and is fairly easy if you stay on track. There is some coding, but the book explains it well. It's self-paced, so you can move through it on your own schedule.",
             "This course used Zybooks which is a lot to read but I love it for the coding practice. It was an asynchronous class for a grad certificate not a degree course. Lots of homework and weekly discussion posts, but that helped make the class feel engaging. He was a generous grader, his philosophy is learn by doing, not cram for tests, love that."
-        ]
-    },
-    "VGVhY2hlci0yMjY4MTQx": {
-        "name": "Kevin Martin",
-        "department": "Business",
-        "avgRating": 4.7,
-        "avgDifficulty": 2.4,
-        "wouldTakeAgainPercent": 90.625,
-        "recentReviews": [
-            "I definitely recommend taking his course, Kmart is one of the best professors I've taken so far.  He likes to move fast pace throughout his lectures but makes them entertaining with his stories he likes to share. He is easy to talk to and is very accessible outside of class, literally the only way to fail would be to not participate in class at all",
-            "Used life experience and situations to teach material instead of structured lecture. Different kind of teaching but still very effective. ",
-            "Great professor for project management certification. Would take him again. ",
-            "KMart is a caring professor who makes project management easy with humor and real-world stories. What sets him apart is that he doesn't just teach for the exam, he genuinely invests in his students' growth. He's always available and shares great book recommendations to guide your journey. You'll leave inspired and well-prepared. Highly recommend!",
-            "Very funny, knowledgeable; AWESOME!!"
         ]
     },
     "VGVhY2hlci0zMDkxNTI5": {
@@ -6862,16 +6862,6 @@
             "Came into applications programming with only coding skills coming from previous courses but Professor KC is very thoughtful and caring. Doesn't immediately give you all the answers but is always there if you have questions. Lectures are hands on and recorded for your convenience. Overall, just a great professor and class."
         ]
     },
-    "VGVhY2hlci0zMTQ4NDYw": {
-        "name": "Monica Barbay",
-        "department": "Writing",
-        "avgRating": null,
-        "avgDifficulty": null,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            "She makes lectures interesting and is always availabe to give feedback on your work, also very understanding. She explains very well and you can tell she knows about the subject. Activities are easy, so you do need to go to class or you will go down one letter grade after 3 unjustified absences"
-        ]
-    },
     "VGVhY2hlci0zMTA0MzYz": {
         "name": "Kassady Thomas",
         "department": "Law",
@@ -6880,6 +6870,16 @@
         "wouldTakeAgainPercent": 100,
         "recentReviews": [
             "Easy class if you're ready to read/work. The only grades are 4 case brief essays and 1 test. The briefs are easy as long as you read the cases and guidelines thoroughly. However, the cases are LONG 30-50(ish) pages each and since they're federal documents, they can be hard to understand. "
+        ]
+    },
+    "VGVhY2hlci0zMTQ4NDYw": {
+        "name": "Monica Barbay",
+        "department": "Writing",
+        "avgRating": null,
+        "avgDifficulty": null,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            "She makes lectures interesting and is always availabe to give feedback on your work, also very understanding. She explains very well and you can tell she knows about the subject. Activities are easy, so you do need to go to class or you will go down one letter grade after 3 unjustified absences"
         ]
     },
     "VGVhY2hlci0zMTIyNjQ5": {
@@ -10086,6 +10086,18 @@
             "Dr. Veach is a very knowledgeable professor with a big background in microbiology. I'm glad I took this class, as ES majors aren't given much other bio and microbio exposure. The exams can be a little tricky but you just need to study hard. Also, she is pretty strict on attendance and only lets you miss one class without an excuse."
         ]
     },
+    "VGVhY2hlci0yNjY2OTA0": {
+        "name": "Tiffany Farias-Sokoloski",
+        "department": "Education",
+        "avgRating": 5,
+        "avgDifficulty": 1.7,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            "She is a really nice and passionate professor who makes lectures easy but informative. It is graded by very few things, but she thankfully offers time to work on it during class time. I would recommend!  ",
+            "Sokoloski was a great professor. She really does care about her students. You do NOT need the text book at all.",
+            "Dr.Fairas is an amazing professor and really shows she cares about her students. Her lectures are so informative and really stick with you. The homework is light, and really easy to follow with her rubrics. "
+        ]
+    },
     "VGVhY2hlci0yNzY5MDIx": {
         "name": "Ramirez Rica",
         "department": "Early Childhood Education",
@@ -11542,16 +11554,6 @@
             "Had to reach out to him 3 times before he actually responded. Watch out for this professor and specifically if this course is taken ONLINE. There is assignments taken that are MANDATORY IN person if you cant make it to those, you LOSE out on those points. He has some work arounds for those who cannot go in person, but beware of his response time..."
         ]
     },
-    "VGVhY2hlci0zMDc5MjI1": {
-        "name": "Marian Mae Cedeno",
-        "department": "Economics",
-        "avgRating": 5,
-        "avgDifficulty": 2,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            "She does chapter reviews which were really helpful on the tests. Lectures were interesting and entertaing. Answered every question I had about anything. Easy to participate. Tests were low stress. Only downside I would say are the Inquisitives. "
-        ]
-    },
     "VGVhY2hlci0zMDUwNjUw": {
         "name": "Jacquelyne Read",
         "department": "Chemistry",
@@ -11560,6 +11562,16 @@
         "wouldTakeAgainPercent": 100,
         "recentReviews": [
             "Dr. Read made Organic Chemistry II engaging and clear. She explained complex reactions with patience and humor, turning difficult topics into interesting lessons. Her passion for teaching and dedication to helping students truly made the class enjoyable and rewarding."
+        ]
+    },
+    "VGVhY2hlci0zMDc5MjI1": {
+        "name": "Marian Mae Cedeno",
+        "department": "Economics",
+        "avgRating": 5,
+        "avgDifficulty": 2,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            "She does chapter reviews which were really helpful on the tests. Lectures were interesting and entertaing. Answered every question I had about anything. Easy to participate. Tests were low stress. Only downside I would say are the Inquisitives. "
         ]
     },
     "VGVhY2hlci0zMDg2Nzg3": {
@@ -15900,18 +15912,6 @@
             "The laziest professor you could have. Teaches nothing and gives assignments with no feedback. AVOID!!!"
         ]
     },
-    "VGVhY2hlci0yMzcyMTIy": {
-        "name": "Joseph Bohac",
-        "department": "Business",
-        "avgRating": 5,
-        "avgDifficulty": 1,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            "If you need BLaw, take his course! Super easy, exams are open notes relevant to the lectures and textbook. Professor Bohac was very understanding and accommodated students. Great professor, id take him again if I could. ",
-            "Very easy professor with extensive industry experience and knowledge. The grade consists of 5 online open book, open note tests that are very easy. The lectures are mandatory due to new UTSA policies, but there are no lectures the week of the test. Overall, the class is very easy and his lectures are interesting. Attendance is mandatory though.",
-            "Attendance is not mandatory. There are only 4 exams and a final. The final is not mandatory if you are satisfied with the grade you currently have. Pretty easy A. His lectures have nothing to do with what is on the exams. He will provide an 'outline' of what will be on the exam. Just study that and you'll pass."
-        ]
-    },
     "VGVhY2hlci0yNzM0NDQ4": {
         "name": "Zhongxiu Yang",
         "department": "Computer Science",
@@ -15922,6 +15922,18 @@
             "I took CS2233 with Mr. Yang but he was very lenient and understanding with grades/deadlines. He was easily accessible outside of class and was always informative and updated us frequently with HW deadlines and exam reminders on Canvas. His lectures were informative and easy to understand, and he has a very good understanding of what he's teaching.",
             "He was fine, just didn't learn as much tho. ",
             "Prof Yang is a very fair professor, grading is lenient and assignments are walked through in class. Hard to understand sometimes but don't be afraid to email/ask for help after class. "
+        ]
+    },
+    "VGVhY2hlci0yMzcyMTIy": {
+        "name": "Joseph Bohac",
+        "department": "Business",
+        "avgRating": 5,
+        "avgDifficulty": 1,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            "If you need BLaw, take his course! Super easy, exams are open notes relevant to the lectures and textbook. Professor Bohac was very understanding and accommodated students. Great professor, id take him again if I could. ",
+            "Very easy professor with extensive industry experience and knowledge. The grade consists of 5 online open book, open note tests that are very easy. The lectures are mandatory due to new UTSA policies, but there are no lectures the week of the test. Overall, the class is very easy and his lectures are interesting. Attendance is mandatory though.",
+            "Attendance is not mandatory. There are only 4 exams and a final. The final is not mandatory if you are satisfied with the grade you currently have. Pretty easy A. His lectures have nothing to do with what is on the exams. He will provide an 'outline' of what will be on the exam. Just study that and you'll pass."
         ]
     },
     "VGVhY2hlci0yMTczMjM2": {
@@ -17812,19 +17824,6 @@
             "I enjoyed this Professor and this class. However, hes a tough grader. Each class was mandatory and there was a participation grade."
         ]
     },
-    "VGVhY2hlci0xMjE5Nzcz": {
-        "name": "Richard Sibbernsen",
-        "department": "Management",
-        "avgRating": 5,
-        "avgDifficulty": 1.3,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            "This professor is amazing! He provides a PDF of all the knowledge and information needed for the class. There were only 3 papers but he provided all the information needed to complete them. You can get credit for attending weekly lectures. Overall, 10/10",
-            "This class was so easy! Consisted of 3 papers over 5 weeks. I loved that all of the information we utilized was based on real life experience. I can honestly say that I learned a lot of useful information on how to be a successful leader in this class. Highly recommend! Would take him again for another business class.",
-            "Honestly an excellent professor. An actual leader with experience in what he's teaching. Coursework was fairly light, a few papers with class once a week. Responds quickly to emails and was understanding",
-            "Saturday class, was simple, not alot of work associated to his class. Lectures are great, 20 min presentation. The exams are essay questions and MC. Would greatly recommend this instructor."
-        ]
-    },
     "VGVhY2hlci0yNjg1MzE1": {
         "name": "Laurie Lewis",
         "department": "Management",
@@ -17836,6 +17835,19 @@
             "(MGT 3123) Four discussions, one paper, and one final project. No exams or quizzes. VERY picky on how you write. Does not give substantial feedback to improve. We found out our grades at the end of the semester. If you ask for clarification on instructions, she directs you to read the instructions. The content was not difficult.",
             "gotta buy the book :/ \nthis class was pretty easy. weekly discussion posts, no tests, only two major assignments. final project is suppperrr time consuming so i'd start it as soon as she posts the instructions. she makes discussions posts where you can ask questions about certain assignments, answers pretty fast over email too. def take it. ",
             "her lectures are long but not too bad, this can be a very helpful class in a social aspect. overall this class is easy, yeah take it"
+        ]
+    },
+    "VGVhY2hlci0xMjE5Nzcz": {
+        "name": "Richard Sibbernsen",
+        "department": "Management",
+        "avgRating": 5,
+        "avgDifficulty": 1.3,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            "This professor is amazing! He provides a PDF of all the knowledge and information needed for the class. There were only 3 papers but he provided all the information needed to complete them. You can get credit for attending weekly lectures. Overall, 10/10",
+            "This class was so easy! Consisted of 3 papers over 5 weeks. I loved that all of the information we utilized was based on real life experience. I can honestly say that I learned a lot of useful information on how to be a successful leader in this class. Highly recommend! Would take him again for another business class.",
+            "Honestly an excellent professor. An actual leader with experience in what he's teaching. Coursework was fairly light, a few papers with class once a week. Responds quickly to emails and was understanding",
+            "Saturday class, was simple, not alot of work associated to his class. Lectures are great, 20 min presentation. The exams are essay questions and MC. Would greatly recommend this instructor."
         ]
     },
     "VGVhY2hlci0yNjU3NjM1": {
@@ -37993,20 +38005,6 @@
             "No Comments"
         ]
     },
-    "VGVhY2hlci02NzU3MTc=": {
-        "name": "Neal Cox",
-        "department": "Art History",
-        "avgRating": 4.1,
-        "avgDifficulty": 2.8,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            "Neal is a great teacher.  it was my first time learning about photoshop and i had fun learning about it and enjoyed the projects.  Pretty easy class and if you need help just go to him and he'll help be glad to help you.",
-            "was not helpful at all",
-            "He's KICKASS!!!",
-            "This semester's Bookarts was by far my favorite class at UTSA. If you have a slight interest in the subject, Neal will show you what you need to know to get started. He is patient and funny, if just a bit quiet.",
-            "good teacher,"
-        ]
-    },
     "VGVhY2hlci0xMjE0NzU2": {
         "name": "Maureen King",
         "department": "Writing",
@@ -38019,6 +38017,20 @@
             "Wonderful class has been my favorite class at UTSA thus far.",
             "Dr. King is very reasonable and is concerned of the well-being of her students. There are journal entires due for readings that are discussed during class, and 4 papers. The papers required some effort, but the journals are easy.  Great sense of humor and cares about her students!",
             "She is a new teacher from University of San Francisco, and didn't seem to have all her bearings yet. There are a lot of readings in the Conversations book that you have to write journals about, and roughly 4 papers to write. The papers were mainly soft deadlines, so there's not much to worry about in the class."
+        ]
+    },
+    "VGVhY2hlci02NzU3MTc=": {
+        "name": "Neal Cox",
+        "department": "Art History",
+        "avgRating": 4.1,
+        "avgDifficulty": 2.8,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            "Neal is a great teacher.  it was my first time learning about photoshop and i had fun learning about it and enjoyed the projects.  Pretty easy class and if you need help just go to him and he'll help be glad to help you.",
+            "was not helpful at all",
+            "He's KICKASS!!!",
+            "This semester's Bookarts was by far my favorite class at UTSA. If you have a slight interest in the subject, Neal will show you what you need to know to get started. He is patient and funny, if just a bit quiet.",
+            "good teacher,"
         ]
     },
     "VGVhY2hlci01MjMyMDI=": {
@@ -38112,18 +38124,6 @@
             "Immunology is a very difficult subject regardless of the professor teaching it.  Dr. Teale's lectures and supplemental notes made this class more understandable and engaging.  She puts many clinical application problems on her exams which tends to trip people up.  She grades using 3 midterms + 1 comprehensive final, equal weighted.  DOES NOT CURVE."
         ]
     },
-    "VGVhY2hlci0xMzM1ODIy": {
-        "name": "Victoria Jones",
-        "department": "Marketing",
-        "avgRating": 3.2,
-        "avgDifficulty": 3,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            "I had her for international marketing last semester. There were 2 exams, cases, and a group project. The group project was the hardest out of everything else that we had to do. The cases were super simple. The tests are actually research papers; be detailed and concise or she will take off points big time on the papers. Overall easy class, got an A",
-            "I would say Professor Jones is a good professor, however the exams are essay questions, those have to be answered very concise and straigt to the point. there must be a training from the begining of the class. overal the class was  middle to hard but fun. I got an A.",
-            "She is a really nice lady(but blunt) and loves to talk! all of the material SEEMS easy, till you get your grade back. all mid-terms are 2 200 word essays on a particular countries culture. if u get 1-2 marks, its a C. if you write nothing wrong, but its &quot;not enough&quot; its a B. the highest grade so far is a 91, and that's only on one paper."
-        ]
-    },
     "VGVhY2hlci03NTEx": {
         "name": "George Jell",
         "department": "Architecture",
@@ -38134,6 +38134,18 @@
             "stays in studio only for 30min out of a 4 hour class, he does not give good design advice. very boring and repeats everything in ES about 3-5 times. avoid him if you can",
             "students &quot;don't give a ****&quot;",
             "No Comments"
+        ]
+    },
+    "VGVhY2hlci0xMzM1ODIy": {
+        "name": "Victoria Jones",
+        "department": "Marketing",
+        "avgRating": 3.2,
+        "avgDifficulty": 3,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            "I had her for international marketing last semester. There were 2 exams, cases, and a group project. The group project was the hardest out of everything else that we had to do. The cases were super simple. The tests are actually research papers; be detailed and concise or she will take off points big time on the papers. Overall easy class, got an A",
+            "I would say Professor Jones is a good professor, however the exams are essay questions, those have to be answered very concise and straigt to the point. there must be a training from the begining of the class. overal the class was  middle to hard but fun. I got an A.",
+            "She is a really nice lady(but blunt) and loves to talk! all of the material SEEMS easy, till you get your grade back. all mid-terms are 2 200 word essays on a particular countries culture. if u get 1-2 marks, its a C. if you write nothing wrong, but its &quot;not enough&quot; its a B. the highest grade so far is a 91, and that's only on one paper."
         ]
     },
     "VGVhY2hlci0xMDQ1NDcx": {
@@ -42916,16 +42928,6 @@
             "Dr. Wozniak is an amazing Professor! There are iclicker question that count as a participation grade and if you get them right counts are extra credit! No book required, test are straight from the power points. "
         ]
     },
-    "VGVhY2hlci0yMDA1NTgz": {
-        "name": "Logan Manning",
-        "department": "Education",
-        "avgRating": 4.5,
-        "avgDifficulty": 2,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            "She is one of two favorite professors in my graduate studies.  She involves innovative ideas for participation.  If you expect to just take notes and not participate, then this isn't the class for you. She makes you want to attend class and care about the subject. "
-        ]
-    },
     "VGVhY2hlci0yMDA1OTA1": {
         "name": "Monica Salis Reyes",
         "department": "Education",
@@ -42936,14 +42938,14 @@
             "Had weekly long readings and filling in a chart over it (required) but her lectures were amazing and everyone contributed. Had a midterm but could use the chart and the final was an 8 page essay. Extra credit was given. Very nice and emails you back quickly. You will learn a lot in this class and it is not hard. Attendance is a must!"
         ]
     },
-    "VGVhY2hlci0xOTU2NzM5": {
-        "name": "Carla Flink",
-        "department": "Public Administration",
-        "avgRating": 1,
-        "avgDifficulty": 3,
+    "VGVhY2hlci0yMDA1NTgz": {
+        "name": "Logan Manning",
+        "department": "Education",
+        "avgRating": 4.5,
+        "avgDifficulty": 2,
         "wouldTakeAgainPercent": null,
         "recentReviews": [
-            "Terrible professor; did not teach at all."
+            "She is one of two favorite professors in my graduate studies.  She involves innovative ideas for participation.  If you expect to just take notes and not participate, then this isn't the class for you. She makes you want to attend class and care about the subject. "
         ]
     },
     "VGVhY2hlci0xOTk0ODAx": {
@@ -42956,14 +42958,14 @@
             "69 questions on test and half are questions with a paragraph explanation that is needed of a full blown summary. For example create a barometer with these materials...  fml DROP!"
         ]
     },
-    "VGVhY2hlci0xOTc2OTMz": {
-        "name": "Juan Gonzalez",
-        "department": "Statistics",
-        "avgRating": 1.5,
-        "avgDifficulty": 4,
+    "VGVhY2hlci0xOTU2NzM5": {
+        "name": "Carla Flink",
+        "department": "Public Administration",
+        "avgRating": 1,
+        "avgDifficulty": 3,
         "wouldTakeAgainPercent": null,
         "recentReviews": [
-            "Threatening class, but manageable if your not working... Get ready to read the book, but he does help understand the material so read before class. Thick accent"
+            "Terrible professor; did not teach at all."
         ]
     },
     "VGVhY2hlci0xOTg4OTUy": {
@@ -42974,6 +42976,16 @@
         "wouldTakeAgainPercent": null,
         "recentReviews": [
             "Awful Instructor, always late, does not know how to teach, the fact that she is a TEACHER is amazing.  Do not take.  Class is pretty much mandatory because she has so many pop quizzes.  The entire class is taught from powerpoint slides that she herself did not even make, when she doesn't know how to explain a slide she just skips over it entirely. "
+        ]
+    },
+    "VGVhY2hlci0xOTc2OTMz": {
+        "name": "Juan Gonzalez",
+        "department": "Statistics",
+        "avgRating": 1.5,
+        "avgDifficulty": 4,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            "Threatening class, but manageable if your not working... Get ready to read the book, but he does help understand the material so read before class. Thick accent"
         ]
     },
     "VGVhY2hlci0xOTU2NzQx": {
