@@ -28,32 +28,75 @@ def click_next_button(page: Page):
     page.locator(NEXT_BTN).click()
 
 
-def get_professor_info(page: Page):
+def get_evaluation_data(data):
+    if "." not in data:
+        return None
+
+    return data.split()[0]
+
+
+def write_to_json(
+    data,
+    professor_name,
+    semester,
+    course_ID,
+    section,
+    course_name,
+    instructor_evaluation,
+    course_evaluation,
+):
+    if professor_name not in data:
+        data[professor_name] = {"courses": {}}
+
+
+def get_professor_info(page: Page, data):
     page.wait_for_load_state("networkidle")
+
+    if page.get_by_text("No results returned for search:"):
+        return
 
     rows = page.locator(TABLE_ROW).all()
 
     for row in rows:
-        professor_name = page.locator(PROFESSOR_NAME).inner_text()
-        professor_name = page.locator(PROFESSOR_NAME).inner_text()
-        professor_name = page.locator(PROFESSOR_NAME).inner_text()
-        professor_name = page.locator(PROFESSOR_NAME).inner_text()
-        professor_name = page.locator(PROFESSOR_NAME).inner_text()
-        professor_name = page.locator(PROFESSOR_NAME).inner_text()
+        professor_name = row.locator(PROFESSOR_NAME).inner_text()
+        semester = row.locator(SEMESTER).inner_text()
+        course_info = row.locator(COURSE_ID).inner_text().split(".")
+        course_ID = course_info[0]
+        section = course_info[1]
+        course_name = row.locator(COURSE_NAME).inner_text()
+        instructor_evaluation = get_evaluation_data(
+            row.locator(INSTRUCTOR_EVALUATION).inner_text()
+        )
+        course_evaluation = get_evaluation_data(
+            row.locator(COURSE_EVALUATION).inner_text()
+        )
+        write_to_json(
+            data,
+            professor_name,
+            semester,
+            course_ID,
+            section,
+            course_name,
+            instructor_evaluation,
+            course_evaluation,
+        )
+
+
+def collect_data(page: Page, data):
+    click_faculty(page)
+    search_faculty(page, "Heaps, John")
+    get_professor_info(page, data)
 
 
 def bluebook(playwright: Playwright):
+    data = {}
+
     chromium = playwright.chromium
     browser = chromium.launch(headless=False)
     page = browser.new_page()
     page.goto("https://bluebook.utsa.edu/")
 
-    click_faculty(page)
-    search_faculty(page, "Heaps, John")
-    time.sleep(2)
-    get_professor_info(page)
-    click_next_button(page)
-    time.sleep(5)
+    collect_data(page, data)
     browser.close()
 
 

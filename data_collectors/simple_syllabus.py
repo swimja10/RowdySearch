@@ -9,7 +9,14 @@ RAW_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def write_to_json(
-    data, professor_id, cnr, section, professor_name, course_name, term, syllabus_code
+    data,
+    professor_id,
+    course_ID,
+    section,
+    professor_name,
+    course_name,
+    term,
+    syllabus_code,
 ):
 
     if professor_id not in data:
@@ -17,10 +24,10 @@ def write_to_json(
 
     courses = data[professor_id]["courses"]
 
-    if cnr not in courses:
-        courses[cnr] = {"title": course_name, "sections": []}
+    if course_ID not in courses:
+        courses[course_ID] = {"title": course_name, "sections": []}
 
-    sections = courses[cnr]["sections"]
+    sections = courses[course_ID]["sections"]
 
     new_section = {"term": term, "section": section, "syllabus_code": syllabus_code}
 
@@ -36,7 +43,7 @@ def get_course_info(api_page, data):
             print(f"Skipped odd title: {item['title']}")
             continue
 
-        cnr = f"{title[0]} {title[1]}"
+        course_ID = f"{title[0]} {title[1]}"
         section = title[2]
         course_name = item["sub_title"]
         term = item["term_name"]
@@ -49,7 +56,7 @@ def get_course_info(api_page, data):
             write_to_json(
                 data,
                 professor_id,
-                cnr,
+                course_ID,
                 section,
                 professor_name,
                 course_name,
