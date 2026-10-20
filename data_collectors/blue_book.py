@@ -1,9 +1,18 @@
+# Finish getting professor data so you can create the JSON
 from playwright.sync_api import sync_playwright, Playwright, Page
 import time
 
 FACULTY_BOX = "#ctl00_MainContentSearchQuery_searchCriteriaEntry_FacultyTitleTxtBox"
 SEARCH_BTN = "#ctl00_MainContentSearchQuery_searchCriteriaEntry_SearchBtn"
-NEXT_BTN = 
+NEXT_BTN = "#ctl00_MainContent_mainContent1_PagerImgBtn_NextTOP"
+INFO_TABLE = "#ctl00_MainContent_mainContent1_MainContentAccordion"
+SEMESTER = '[style="width: 60px;"]'
+COURSE_ID = '[style="width: 85px;"]'
+COURSE_NAME = '[style="width: 180px;"]'
+INSTRUCTOR_EVALUATION = '[style="width: 120px;"]'
+COURSE_EVALUATION = '[style="width: 115px; vertical-align: middle"]'
+TABLE_ROW = ".infoTable"
+PROFESSOR_NAME = '[style="width: 130px;"]'
 
 
 def click_faculty(page: Page):
@@ -13,10 +22,27 @@ def click_faculty(page: Page):
 def search_faculty(page: Page, name: str):
     page.locator(FACULTY_BOX).fill(name)
     page.keyboard.press("Enter")
-    page.wait_for_load_state("load")
 
 
-def run(playwright: Playwright):
+def click_next_button(page: Page):
+    page.locator(NEXT_BTN).click()
+
+
+def get_professor_info(page: Page):
+    page.wait_for_load_state("networkidle")
+
+    rows = page.locator(TABLE_ROW).all()
+
+    for row in rows:
+        professor_name = page.locator(PROFESSOR_NAME).inner_text()
+        professor_name = page.locator(PROFESSOR_NAME).inner_text()
+        professor_name = page.locator(PROFESSOR_NAME).inner_text()
+        professor_name = page.locator(PROFESSOR_NAME).inner_text()
+        professor_name = page.locator(PROFESSOR_NAME).inner_text()
+        professor_name = page.locator(PROFESSOR_NAME).inner_text()
+
+
+def bluebook(playwright: Playwright):
     chromium = playwright.chromium
     browser = chromium.launch(headless=False)
     page = browser.new_page()
@@ -24,11 +50,12 @@ def run(playwright: Playwright):
 
     click_faculty(page)
     search_faculty(page, "Heaps, John")
-    search_faculty(page, "Fatma, Arlsan")
+    time.sleep(2)
+    get_professor_info(page)
+    click_next_button(page)
     time.sleep(5)
-    # other actions...
     browser.close()
 
 
 with sync_playwright() as playwright:
-    run(playwright)
+    bluebook(playwright)
