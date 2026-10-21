@@ -73,6 +73,7 @@ def process_info(df, term, professors):
 
 
 def grade_distribution():
+    start = time.perf_counter()
     professors = {}
 
     files = sorted(
@@ -91,6 +92,9 @@ def grade_distribution():
         print(f"Term: {term} is completed!")
 
     save(professors, "grade_distribution_data.json")
+
+    print("Grade distribution is done!")
+    print(f"Took {time.perf_counter() - start:.1f}s\n")
 
 
 if __name__ == "__main__":

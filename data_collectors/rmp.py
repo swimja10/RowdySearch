@@ -92,10 +92,12 @@ def collect_professors(count=50, delay=0.2):
     professors = {}
     cursor = ""
     has_next_page = True
+    page = 0
 
     while has_next_page:
         time.sleep(delay)
         teachers = fetch_page(cursor, count)
+        page += 1
 
         for edge in teachers["edges"]:
             node = edge["node"]
@@ -105,7 +107,9 @@ def collect_professors(count=50, delay=0.2):
 
         cursor = teachers["pageInfo"]["endCursor"]
         has_next_page = teachers["pageInfo"]["hasNextPage"]
-        print(f"{len(professors)} of {teachers['resultCount']}")
+
+        if page % 10 == 0 or not has_next_page:
+            print(f"page {page} | {len(professors)} kept of {teachers['resultCount']}")
 
     return professors
 
@@ -113,7 +117,8 @@ def collect_professors(count=50, delay=0.2):
 def rmp():
     start = time.perf_counter()
     save(collect_professors(), "rmp_data.json")
-    print(f"Took {time.perf_counter() - start:.1f}s")
+    print("RMP is done!")
+    print(f"Took {time.perf_counter() - start:.1f}s\n")
 
 
 if __name__ == "__main__":

@@ -31,8 +31,8 @@
     "VGVhY2hlci01MDc1Nzcw": {
         "name": "Joseph  Ruesch",
         "department": "Chemistry",
-        "avgRating": null,
-        "avgDifficulty": null,
+        "avgRating": 1,
+        "avgDifficulty": 5,
         "wouldTakeAgainPercent": 0,
         "recentReviews": [
             {
@@ -13437,35 +13437,6 @@
             }
         ]
     },
-    "VGVhY2hlci0xOTA0NjIw": {
-        "name": "John Santos",
-        "department": "Honors",
-        "avgRating": 3.1,
-        "avgDifficulty": 2.4,
-        "wouldTakeAgainPercent": 25,
-        "recentReviews": [
-            {
-                "course": "HON3233",
-                "comment": "This was a seminar-style class so participation was key. Make sure to watch weekly movies or readings."
-            },
-            {
-                "course": "ENG4973",
-                "comment": "Took him for Film Theory, had no clue what he was talking about half of the time. He is well read but he is not a good teacher. Nothing was clearly communicated, he said something wasn't going to be graded then at the end of semester said it was going to be graded. He did not have a syllabus or modules uploaded so everything was confusing."
-            },
-            {
-                "course": "HON3233",
-                "comment": "Professor Santos is knowledgeable in his field and has a passion for his work. He encourages critical thinking and values active conversations with his students. However, if you're only there for the credit, it may be difficult to engage with the discussions. I recommend finding a personal interest in the topics to avoid being bored."
-            },
-            {
-                "course": "HON3233",
-                "comment": "Santos is an easy A, so long as you do the work assigned. His papers are essentially completion grades and he'll pass you if you participate in class. He likes students that share their thoughts. He gives vague assignment prompts, but basically any interpretation of the prompt is good so long as it gets done."
-            },
-            {
-                "course": "ENG4973",
-                "comment": "Santos loves to hear new ideas and students' thoughts on the readings. Never a wrong answer. Weekly reflections, 3-5 page midterm, 15-20 min presentation, 15-20 page final. It's easier than anticipated; we could use our personal stories for our final. He cares a lot and if you make the effort to meet with him, you won't have a problem."
-            }
-        ]
-    },
     "VGVhY2hlci0zMTM2NTUx": {
         "name": "Samantha DeLeon",
         "department": "English",
@@ -13492,6 +13463,35 @@
             {
                 "course": "ENG-2413",
                 "comment": "Professor DeLeon was a great professor, always willing to help, provide feedback and was very understanding when it came to outside circumstances. Every assignment was spaced out and was easy to follow, and was based on your own interests and what you wanted to research. Would definitely recommend this course to anyone needing the credit!"
+            }
+        ]
+    },
+    "VGVhY2hlci0xOTA0NjIw": {
+        "name": "John Santos",
+        "department": "Honors",
+        "avgRating": 3.1,
+        "avgDifficulty": 2.4,
+        "wouldTakeAgainPercent": 25,
+        "recentReviews": [
+            {
+                "course": "HON3233",
+                "comment": "This was a seminar-style class so participation was key. Make sure to watch weekly movies or readings."
+            },
+            {
+                "course": "ENG4973",
+                "comment": "Took him for Film Theory, had no clue what he was talking about half of the time. He is well read but he is not a good teacher. Nothing was clearly communicated, he said something wasn't going to be graded then at the end of semester said it was going to be graded. He did not have a syllabus or modules uploaded so everything was confusing."
+            },
+            {
+                "course": "HON3233",
+                "comment": "Professor Santos is knowledgeable in his field and has a passion for his work. He encourages critical thinking and values active conversations with his students. However, if you're only there for the credit, it may be difficult to engage with the discussions. I recommend finding a personal interest in the topics to avoid being bored."
+            },
+            {
+                "course": "HON3233",
+                "comment": "Santos is an easy A, so long as you do the work assigned. His papers are essentially completion grades and he'll pass you if you participate in class. He likes students that share their thoughts. He gives vague assignment prompts, but basically any interpretation of the prompt is good so long as it gets done."
+            },
+            {
+                "course": "ENG4973",
+                "comment": "Santos loves to hear new ideas and students' thoughts on the readings. Never a wrong answer. Weekly reflections, 3-5 page midterm, 15-20 min presentation, 15-20 page final. It's easier than anticipated; we could use our personal stories for our final. He cares a lot and if you make the effort to meet with him, you won't have a problem."
             }
         ]
     },
@@ -20280,27 +20280,6 @@
             }
         ]
     },
-    "VGVhY2hlci0yNzUxMzE0": {
-        "name": "Allison Veach",
-        "department": "Biology",
-        "avgRating": 3,
-        "avgDifficulty": 3.7,
-        "wouldTakeAgainPercent": 66.6667,
-        "recentReviews": [
-            {
-                "course": "ES3103",
-                "comment": "Study the slides!! Not really accessible outside of class so best if you talk to her after or before class! She has somewhat of a bias towards students. Also some of the comments here got deleted so (keep that in mind)"
-            },
-            {
-                "course": "ES3103",
-                "comment": "this class was a lot harder than I was expecting &#128557; Absolutely you have to show up to class every time and study really hard for the exams. They are moderately difficult but they're weighted heavily so you can blow your grade if you don't do well. Couple of homework but mostly lectures, exams, and group pres. Grad students got the same exam as UG."
-            },
-            {
-                "course": "ES3103",
-                "comment": "Dr. Veach is a very knowledgeable professor with a big background in microbiology. I'm glad I took this class, as ES majors aren't given much other bio and microbio exposure. The exams can be a little tricky but you just need to study hard. Also, she is pretty strict on attendance and only lets you miss one class without an excuse."
-            }
-        ]
-    },
     "VGVhY2hlci0yNjY2OTA0": {
         "name": "Tiffany Farias-Sokoloski",
         "department": "Education",
@@ -20319,6 +20298,27 @@
             {
                 "course": "EED-3303",
                 "comment": "Dr.Fairas is an amazing professor and really shows she cares about her students. Her lectures are so informative and really stick with you. The homework is light, and really easy to follow with her rubrics."
+            }
+        ]
+    },
+    "VGVhY2hlci0yNzUxMzE0": {
+        "name": "Allison Veach",
+        "department": "Biology",
+        "avgRating": 3,
+        "avgDifficulty": 3.7,
+        "wouldTakeAgainPercent": 66.6667,
+        "recentReviews": [
+            {
+                "course": "ES3103",
+                "comment": "Study the slides!! Not really accessible outside of class so best if you talk to her after or before class! She has somewhat of a bias towards students. Also some of the comments here got deleted so (keep that in mind)"
+            },
+            {
+                "course": "ES3103",
+                "comment": "this class was a lot harder than I was expecting &#128557; Absolutely you have to show up to class every time and study really hard for the exams. They are moderately difficult but they're weighted heavily so you can blow your grade if you don't do well. Couple of homework but mostly lectures, exams, and group pres. Grad students got the same exam as UG."
+            },
+            {
+                "course": "ES3103",
+                "comment": "Dr. Veach is a very knowledgeable professor with a big background in microbiology. I'm glad I took this class, as ES majors aren't given much other bio and microbio exposure. The exams can be a little tricky but you just need to study hard. Also, she is pretty strict on attendance and only lets you miss one class without an excuse."
             }
         ]
     },
@@ -23203,19 +23203,6 @@
             }
         ]
     },
-    "VGVhY2hlci0zMDUwNjUw": {
-        "name": "Jacquelyne Read",
-        "department": "Chemistry",
-        "avgRating": 5,
-        "avgDifficulty": 2,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            {
-                "course": "3643",
-                "comment": "Dr. Read made Organic Chemistry II engaging and clear. She explained complex reactions with patience and humor, turning difficult topics into interesting lessons. Her passion for teaching and dedication to helping students truly made the class enjoyable and rewarding."
-            }
-        ]
-    },
     "VGVhY2hlci0zMDc5MjI1": {
         "name": "Marian Mae Cedeno",
         "department": "Economics",
@@ -23226,6 +23213,19 @@
             {
                 "course": "ECO2023",
                 "comment": "She does chapter reviews which were really helpful on the tests. Lectures were interesting and entertaing. Answered every question I had about anything. Easy to participate. Tests were low stress. Only downside I would say are the Inquisitives."
+            }
+        ]
+    },
+    "VGVhY2hlci0zMDUwNjUw": {
+        "name": "Jacquelyne Read",
+        "department": "Chemistry",
+        "avgRating": 5,
+        "avgDifficulty": 2,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            {
+                "course": "3643",
+                "comment": "Dr. Read made Organic Chemistry II engaging and clear. She explained complex reactions with patience and humor, turning difficult topics into interesting lessons. Her passion for teaching and dedication to helping students truly made the class enjoyable and rewarding."
             }
         ]
     },
@@ -26826,35 +26826,6 @@
             }
         ]
     },
-    "VGVhY2hlci0zMDQ3MDE0": {
-        "name": "Ivan Toledo",
-        "department": "Mathematics",
-        "avgRating": 5,
-        "avgDifficulty": 2.7,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            {
-                "course": "MAT1093",
-                "comment": "Great professor, very organized lectures, and a fair grader. He prepares students for tests and homework well, offers test corrections, and gives partial credit on exams. Very good at explaining concepts and examples-- as someone who's not very good with math I did great in his class and never felt lost or left behind."
-            },
-            {
-                "course": "MAT1093",
-                "comment": "Very good teacher. He replies to emails super fast and he gives very good lectures. Attendance is not mandatory but I recommend you to attend. He is NOT a tough grader plus he gives opportunities to move your grade up. The class is easy as long as you don't get behind. I'd say he's a top-tier option if you're unsure on who to pick."
-            },
-            {
-                "course": "MAT1093",
-                "comment": "Dr. Toledo was an excellent professor, well-organized, and provided lecture notes. He was receptive to student questions both in and out of class. He responded to emails promptly. Completing exam reviews and doing test corrections increases your exam scores. Attendance was optional."
-            },
-            {
-                "course": "MAT1093",
-                "comment": "Toledo was awesome this semester. Offers test corrections to save grade, easy assignments that help with understanding, very quick responses to emails even on weekends, flexible. Lecture isn't mandatory but helpful to attend. Super awesome professor and would def take his class again."
-            },
-            {
-                "course": "MAT1093",
-                "comment": "He's awesome! Just pay attention in class and you'll be good. Do all the homeworks, allows test corrections which saved my grade. I would 100% take him again!"
-            }
-        ]
-    },
     "VGVhY2hlci0yNTg1Mjkw": {
         "name": "Casey Straud",
         "department": "Psychology",
@@ -26881,6 +26852,35 @@
             {
                 "course": "PSY3543",
                 "comment": "Great professor and really wants his students to pass and learn. Gave no tests only weekly quizzes that were really easy. Only 1 test which is the final and is 100 questions but gives you plenty of time to finish it and it's really easy. TAKE HIM FOR AN EASY A! Plus it's a great subject to learn about."
+            }
+        ]
+    },
+    "VGVhY2hlci0zMDQ3MDE0": {
+        "name": "Ivan Toledo",
+        "department": "Mathematics",
+        "avgRating": 5,
+        "avgDifficulty": 2.7,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            {
+                "course": "MAT1093",
+                "comment": "Great professor, very organized lectures, and a fair grader. He prepares students for tests and homework well, offers test corrections, and gives partial credit on exams. Very good at explaining concepts and examples-- as someone who's not very good with math I did great in his class and never felt lost or left behind."
+            },
+            {
+                "course": "MAT1093",
+                "comment": "Very good teacher. He replies to emails super fast and he gives very good lectures. Attendance is not mandatory but I recommend you to attend. He is NOT a tough grader plus he gives opportunities to move your grade up. The class is easy as long as you don't get behind. I'd say he's a top-tier option if you're unsure on who to pick."
+            },
+            {
+                "course": "MAT1093",
+                "comment": "Dr. Toledo was an excellent professor, well-organized, and provided lecture notes. He was receptive to student questions both in and out of class. He responded to emails promptly. Completing exam reviews and doing test corrections increases your exam scores. Attendance was optional."
+            },
+            {
+                "course": "MAT1093",
+                "comment": "Toledo was awesome this semester. Offers test corrections to save grade, easy assignments that help with understanding, very quick responses to emails even on weekends, flexible. Lecture isn't mandatory but helpful to attend. Super awesome professor and would def take his class again."
+            },
+            {
+                "course": "MAT1093",
+                "comment": "He's awesome! Just pay attention in class and you'll be good. Do all the homeworks, allows test corrections which saved my grade. I would 100% take him again!"
             }
         ]
     },
@@ -35346,31 +35346,6 @@
             }
         ]
     },
-    "VGVhY2hlci0xMjE5Nzcz": {
-        "name": "Richard Sibbernsen",
-        "department": "Management",
-        "avgRating": 5,
-        "avgDifficulty": 1.3,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            {
-                "course": "MGT4413",
-                "comment": "This professor is amazing! He provides a PDF of all the knowledge and information needed for the class. There were only 3 papers but he provided all the information needed to complete them. You can get credit for attending weekly lectures. Overall, 10/10"
-            },
-            {
-                "course": "MGT4413",
-                "comment": "This class was so easy! Consisted of 3 papers over 5 weeks. I loved that all of the information we utilized was based on real life experience. I can honestly say that I learned a lot of useful information on how to be a successful leader in this class. Highly recommend! Would take him again for another business class."
-            },
-            {
-                "course": "MGT4413",
-                "comment": "Honestly an excellent professor. An actual leader with experience in what he's teaching. Coursework was fairly light, a few papers with class once a week. Responds quickly to emails and was understanding"
-            },
-            {
-                "course": "MGT3613",
-                "comment": "Saturday class, was simple, not alot of work associated to his class. Lectures are great, 20 min presentation. The exams are essay questions and MC. Would greatly recommend this instructor."
-            }
-        ]
-    },
     "VGVhY2hlci0yNjg1MzE1": {
         "name": "Laurie Lewis",
         "department": "Management",
@@ -35393,6 +35368,31 @@
             {
                 "course": "CSH1213",
                 "comment": "her lectures are long but not too bad, this can be a very helpful class in a social aspect. overall this class is easy, yeah take it"
+            }
+        ]
+    },
+    "VGVhY2hlci0xMjE5Nzcz": {
+        "name": "Richard Sibbernsen",
+        "department": "Management",
+        "avgRating": 5,
+        "avgDifficulty": 1.3,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            {
+                "course": "MGT4413",
+                "comment": "This professor is amazing! He provides a PDF of all the knowledge and information needed for the class. There were only 3 papers but he provided all the information needed to complete them. You can get credit for attending weekly lectures. Overall, 10/10"
+            },
+            {
+                "course": "MGT4413",
+                "comment": "This class was so easy! Consisted of 3 papers over 5 weeks. I loved that all of the information we utilized was based on real life experience. I can honestly say that I learned a lot of useful information on how to be a successful leader in this class. Highly recommend! Would take him again for another business class."
+            },
+            {
+                "course": "MGT4413",
+                "comment": "Honestly an excellent professor. An actual leader with experience in what he's teaching. Coursework was fairly light, a few papers with class once a week. Responds quickly to emails and was understanding"
+            },
+            {
+                "course": "MGT3613",
+                "comment": "Saturday class, was simple, not alot of work associated to his class. Lectures are great, 20 min presentation. The exams are essay questions and MC. Would greatly recommend this instructor."
             }
         ]
     },
@@ -73646,35 +73646,6 @@
             }
         ]
     },
-    "VGVhY2hlci04NTE5MzU=": {
-        "name": "Maria De La Luz Inclan",
-        "department": "Political Science",
-        "avgRating": 3.1,
-        "avgDifficulty": 3.6,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            {
-                "course": "POL3783",
-                "comment": "Overall alright professor, knows her stuff. basically just goes over the readings in class, quizzes daily over readings that are pretty in depth. Alot of reading for the class. Open book tests. Don't like having to buy 3 books then also having to take tons of readings from the internet as well. You get used to it though. Overall not bad"
-            },
-            {
-                "course": "POL3453",
-                "comment": "She is very helpful with any questions you may have! She uses outside resources alot, ie: the library, jstore, etc. You MUST MUST MUST go to class! There is adaily quiz over the reading, which are not easy, but the quizzes make up 20% of your final grade. The tests are short answer but come right from the review. Hard but rewarding."
-            },
-            {
-                "course": "POL2633",
-                "comment": "Good professor, she is actually quite brilliant and well versed in the political affairs of all nations. She does have an accent but her syntax and word usage is perfect. She gives a review sheet before the test detailing all the information you need to know and all ppt are online.  overall a great professor"
-            },
-            {
-                "course": "POL2163",
-                "comment": "Not a bad professor but a bad lecturer.  She claims you have to read but you dont so dont buy the books.  Take good notes and attend class but dont expect it to be easy.  However she is helpful."
-            },
-            {
-                "course": "POL2633",
-                "comment": "Nice woman, but a terrible prof. all she does is talk about Mexico and she does not seem to have a very good grasp of the English language she is always saying things wrong. Very muddled presentation of the material. I would NOT take her again even though I got an A in her class."
-            }
-        ]
-    },
     "VGVhY2hlci05ODU3NDA=": {
         "name": "Dennis Acevedo",
         "department": "Accounting",
@@ -73701,6 +73672,35 @@
             {
                 "course": "ACCTACCT",
                 "comment": "He is a very thorough professor. He has an accent that at times can be hard to understand. Attendance isnt mandatory but he will occasionally give extra credit. Overall, pretty good teacher"
+            }
+        ]
+    },
+    "VGVhY2hlci04NTE5MzU=": {
+        "name": "Maria De La Luz Inclan",
+        "department": "Political Science",
+        "avgRating": 3.1,
+        "avgDifficulty": 3.6,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "POL3783",
+                "comment": "Overall alright professor, knows her stuff. basically just goes over the readings in class, quizzes daily over readings that are pretty in depth. Alot of reading for the class. Open book tests. Don't like having to buy 3 books then also having to take tons of readings from the internet as well. You get used to it though. Overall not bad"
+            },
+            {
+                "course": "POL3453",
+                "comment": "She is very helpful with any questions you may have! She uses outside resources alot, ie: the library, jstore, etc. You MUST MUST MUST go to class! There is adaily quiz over the reading, which are not easy, but the quizzes make up 20% of your final grade. The tests are short answer but come right from the review. Hard but rewarding."
+            },
+            {
+                "course": "POL2633",
+                "comment": "Good professor, she is actually quite brilliant and well versed in the political affairs of all nations. She does have an accent but her syntax and word usage is perfect. She gives a review sheet before the test detailing all the information you need to know and all ppt are online.  overall a great professor"
+            },
+            {
+                "course": "POL2163",
+                "comment": "Not a bad professor but a bad lecturer.  She claims you have to read but you dont so dont buy the books.  Take good notes and attend class but dont expect it to be easy.  However she is helpful."
+            },
+            {
+                "course": "POL2633",
+                "comment": "Nice woman, but a terrible prof. all she does is talk about Mexico and she does not seem to have a very good grasp of the English language she is always saying things wrong. Very muddled presentation of the material. I would NOT take her again even though I got an A in her class."
             }
         ]
     },
@@ -74242,19 +74242,6 @@
             }
         ]
     },
-    "VGVhY2hlci0xMDY4NzU1": {
-        "name": "Brett Winters",
-        "department": "Architecture",
-        "avgRating": 4,
-        "avgDifficulty": 1,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            {
-                "course": "ARCH903",
-                "comment": "easy professor...do your drawings and get an A simple...\r only thing is that he does talk a lot at the beginning of class\r other than that easy prof.."
-            }
-        ]
-    },
     "VGVhY2hlci0xMjkwMzIw": {
         "name": "Joseph Starkey",
         "department": "Statistics",
@@ -74265,6 +74252,19 @@
             {
                 "course": "STA1053",
                 "comment": "Great professor! I hate stats and managed an A in his class. Honestly, anyone who said he is a hard prof to take has the IQ of a brick. That being said - he does not tolerate cheating or people playing dumb. If you have to take stats, take Starkey!"
+            }
+        ]
+    },
+    "VGVhY2hlci0xMDY4NzU1": {
+        "name": "Brett Winters",
+        "department": "Architecture",
+        "avgRating": 4,
+        "avgDifficulty": 1,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "ARCH903",
+                "comment": "easy professor...do your drawings and get an A simple...\r only thing is that he does talk a lot at the beginning of class\r other than that easy prof.."
             }
         ]
     },
@@ -75620,35 +75620,6 @@
             }
         ]
     },
-    "VGVhY2hlci0yNDUxNzM=": {
-        "name": "Robert Milk",
-        "department": "Languages",
-        "avgRating": 4.5,
-        "avgDifficulty": 3.3,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            {
-                "course": "BBL3053",
-                "comment": "This class was tough because you had to write a lot of papers and the midterm and final were hard but the writings and tests were based on the readings so if you keep up with that then you should be good. Also if you are late on a paper he gives you time. Overall a really good teacher and very understanding."
-            },
-            {
-                "course": "BBL3013",
-                "comment": "Excellent. Dr. Milk is the type of professor one learns from. He is very helpful, interested that you learn the material, and expects you to do your part. You walk out of his classes with new knowledge. Not the professor for slackers."
-            },
-            {
-                "course": "BBL3053",
-                "comment": "Dr. Milk is an amazing professor and his teaching style is the best I have ever seen a UTSA! The Guru of Bilingual studies!"
-            },
-            {
-                "course": "BBL3053",
-                "comment": "dr milk is an amazing teacher. the class is VERY demanding, tons of reading. his tests are mostly essays, so you must knw ur stuff. he is worth the hard wrk. would def recommend him."
-            },
-            {
-                "course": "BBL3053",
-                "comment": "Dr. Milk is great!  He expects his students to do assigned readings and attend class regularly.  There is a midterm, a comprehensive final, and a major research paper.  I received an A in the class and didn't stress too much.  Ask questions, pay attention and READ.  You will enjoy the class for the most part."
-            }
-        ]
-    },
     "VGVhY2hlci0xNTc0Mzg5": {
         "name": "Michael Williams",
         "department": "Finance",
@@ -75675,6 +75646,35 @@
             {
                 "course": "FIN3014",
                 "comment": "Cool guy....not one complaint about him. He knows how college is and makes some jokes, he tries his hardest to make this subject fun. Take him!"
+            }
+        ]
+    },
+    "VGVhY2hlci0yNDUxNzM=": {
+        "name": "Robert Milk",
+        "department": "Languages",
+        "avgRating": 4.5,
+        "avgDifficulty": 3.3,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "BBL3053",
+                "comment": "This class was tough because you had to write a lot of papers and the midterm and final were hard but the writings and tests were based on the readings so if you keep up with that then you should be good. Also if you are late on a paper he gives you time. Overall a really good teacher and very understanding."
+            },
+            {
+                "course": "BBL3013",
+                "comment": "Excellent. Dr. Milk is the type of professor one learns from. He is very helpful, interested that you learn the material, and expects you to do your part. You walk out of his classes with new knowledge. Not the professor for slackers."
+            },
+            {
+                "course": "BBL3053",
+                "comment": "Dr. Milk is an amazing professor and his teaching style is the best I have ever seen a UTSA! The Guru of Bilingual studies!"
+            },
+            {
+                "course": "BBL3053",
+                "comment": "dr milk is an amazing teacher. the class is VERY demanding, tons of reading. his tests are mostly essays, so you must knw ur stuff. he is worth the hard wrk. would def recommend him."
+            },
+            {
+                "course": "BBL3053",
+                "comment": "Dr. Milk is great!  He expects his students to do assigned readings and attend class regularly.  There is a midterm, a comprehensive final, and a major research paper.  I received an A in the class and didn't stress too much.  Ask questions, pay attention and READ.  You will enjoy the class for the most part."
             }
         ]
     },
@@ -83043,19 +83043,6 @@
             }
         ]
     },
-    "VGVhY2hlci0yMDA1OTA1": {
-        "name": "Monica Salis Reyes",
-        "department": "Education",
-        "avgRating": 5,
-        "avgDifficulty": 3,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            {
-                "course": "EDU2103",
-                "comment": "Had weekly long readings and filling in a chart over it (required) but her lectures were amazing and everyone contributed. Had a midterm but could use the chart and the final was an 8 page essay. Extra credit was given. Very nice and emails you back quickly. You will learn a lot in this class and it is not hard. Attendance is a must!"
-            }
-        ]
-    },
     "VGVhY2hlci0yMDA1NTgz": {
         "name": "Logan Manning",
         "department": "Education",
@@ -83069,16 +83056,16 @@
             }
         ]
     },
-    "VGVhY2hlci0xOTk0ODAx": {
-        "name": "Emmanuel Michaelides",
-        "department": "Science",
-        "avgRating": 1.5,
-        "avgDifficulty": 5,
+    "VGVhY2hlci0yMDA1OTA1": {
+        "name": "Monica Salis Reyes",
+        "department": "Education",
+        "avgRating": 5,
+        "avgDifficulty": 3,
         "wouldTakeAgainPercent": null,
         "recentReviews": [
             {
-                "course": "2413",
-                "comment": "69 questions on test and half are questions with a paragraph explanation that is needed of a full blown summary. For example create a barometer with these materials...  fml DROP!"
+                "course": "EDU2103",
+                "comment": "Had weekly long readings and filling in a chart over it (required) but her lectures were amazing and everyone contributed. Had a midterm but could use the chart and the final was an 8 page essay. Extra credit was given. Very nice and emails you back quickly. You will learn a lot in this class and it is not hard. Attendance is a must!"
             }
         ]
     },
@@ -83092,6 +83079,19 @@
             {
                 "course": "PAD5323",
                 "comment": "Terrible professor; did not teach at all."
+            }
+        ]
+    },
+    "VGVhY2hlci0xOTk0ODAx": {
+        "name": "Emmanuel Michaelides",
+        "department": "Science",
+        "avgRating": 1.5,
+        "avgDifficulty": 5,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "2413",
+                "comment": "69 questions on test and half are questions with a paragraph explanation that is needed of a full blown summary. For example create a barometer with these materials...  fml DROP!"
             }
         ]
     },
@@ -83118,6 +83118,19 @@
             {
                 "course": "STA1053",
                 "comment": "Awful Instructor, always late, does not know how to teach, the fact that she is a TEACHER is amazing.  Do not take.  Class is pretty much mandatory because she has so many pop quizzes.  The entire class is taught from powerpoint slides that she herself did not even make, when she doesn't know how to explain a slide she just skips over it entirely."
+            }
+        ]
+    },
+    "VGVhY2hlci0xOTc2OTMz": {
+        "name": "Juan Gonzalez",
+        "department": "Statistics",
+        "avgRating": 1.5,
+        "avgDifficulty": 4,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "STATSII",
+                "comment": "Threatening class, but manageable if your not working... Get ready to read the book, but he does help understand the material so read before class. Thick accent"
             }
         ]
     }

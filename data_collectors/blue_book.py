@@ -1,15 +1,14 @@
-from playwright.sync_api import sync_playwright, Page
 import json
-from pathlib import Path
 import time
+from concurrent.futures import ProcessPoolExecutor
 
-RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw_data"
-RAW_DIR.mkdir(parents=True, exist_ok=True)
+from playwright.sync_api import sync_playwright, Page, Error as PlaywrightError
+
+from data_collectors.common_format import save, RAW_DIR
 
 FACULTY_BOX = "#ctl00_MainContentSearchQuery_searchCriteriaEntry_FacultyTitleTxtBox"
 NEXT_BTN = "#ctl00_MainContent_mainContent1_PagerImgBtn_NextTOP"
 PAST_COURSES = "#ctl00_MainContent_mainContent1_CourseTermSelectRBL_2"
-
 
 CURRENT_PAGE = "#ctl00_MainContent_mainContent1_CurrentPage"
 LAST_PAGE = "#ctl00_MainContent_mainContent1_TotalPages"
@@ -108,11 +107,6 @@ def write_to_json(
         sections.append(newSection)
 
 
-def save(data, path):
-    with open(RAW_DIR / path, "w") as f:
-        json.dump(data, f, indent=4)
-
-
 def get_professor_info(page: Page, data):
 
     rows = page.locator(TABLE_ROW).all()
@@ -158,40 +152,86 @@ def scrape_professor(page, data, professor):
         click_next_button(page)
 
 
-def bluebook():
-    data = {}
+def open_bluebook(browser):
+    page = browser.new_page()
+    page.route("**/*", block_extras)
+    page.goto("https://bluebook.utsa.edu/")
+    click_faculty(page)
+    return page
 
-    with open(RAW_DIR / "grade_distribution_data.json") as f:
-        professor_list = json.load(f).keys()
+
+def scrape_data_chunk(worker_id, professors):
+    data = {}
+    failed = []
+    start = time.perf_counter()
 
     with sync_playwright() as playwright:
-        chromium = playwright.chromium
-        browser = chromium.launch()
-        page = browser.new_page()
-        page.route("**/*", block_extras)
-        page.goto("https://bluebook.utsa.edu/")
-        click_faculty(page)
-        total = len(professor_list)
-        start = time.perf_counter()
+        browser = playwright.chromium.launch()
+        page = open_bluebook(browser)
 
-        for i, professor in enumerate(professor_list, start=1):
-            scrape_professor(page, data, professor)
-
-            if i % 50 == 0:
-                elapsed = time.perf_counter() - start
-                per_professor = elapsed / i
-                remaining = per_professor * (total - i)
+        for i, professor in enumerate(professors, start=1):
+            try:
+                scrape_professor(page, data, professor)
+            except PlaywrightError as error:
                 print(
-                    f"{i} of {total} searched | {len(data)} with evaluations | "
-                    f"{elapsed / 60:.1f} min elapsed | {per_professor:.1f} s/professor | "
-                    f"~{remaining / 60:.0f} min left"
+                    f"[worker {worker_id}] {professor} failed ({type(error).__name__}), retrying once"
                 )
-                save(data, "bluebook.json")
+                page.close()
+                page = open_bluebook(browser)
+                try:
+                    scrape_professor(page, data, professor)
+                except PlaywrightError:
+                    failed.append(professor)
+
+            if i % 25 == 0:
+                per_professor = (time.perf_counter() - start) / i
+                remaining = per_professor * (len(professors) - i) / 60
+                print(
+                    f"[worker {worker_id}] {i} of {len(professors)} | {per_professor:.1f} s/professor | ~{remaining:.0f} min left"
+                )
 
         browser.close()
 
-    print("Bluebook collection is complete!")
+    return data, failed
+
+
+def merge(total_data, chunk_data):
+    for name, professor in chunk_data.items():
+        for course_id, course in professor["courses"].items():
+            for s in course["sections"]:
+                write_to_json(
+                    total_data,
+                    name,
+                    s["term"],
+                    course_id,
+                    s["section"],
+                    course["title"],
+                    s["instructorEvaluation"],
+                    s["courseEvaluation"],
+                )
+
+
+def bluebook(workers=4, professor_limit=None):
+    with open(RAW_DIR / "grade_distribution_data.json") as f:
+        professor_list = list(json.load(f).keys())[:professor_limit]
+
+    data_chunks = [professor_list[i::workers] for i in range(workers)]
+    data = {}
+    failed = []
+    start = time.perf_counter()
+
+    with ProcessPoolExecutor(max_workers=workers) as pool:
+        for chunk_data, chunk_failed in pool.map(
+            scrape_data_chunk, range(1, workers + 1), data_chunks
+        ):
+            merge(data, chunk_data)
+            failed += chunk_failed
+
     save(data, "bluebook.json")
+    print("Bluebook is finally done!")
+    print(
+        f"Done: {len(data)} professors | failed: {failed} | took {(time.perf_counter() - start) / 60:.1f} min"
+    )
 
 
 if __name__ == "__main__":

@@ -74,7 +74,9 @@ def collect_data(status, data, workers=4):
         results = pool.map(lambda page: get_page(status, page), range(1, pages))
         for page, api_page in enumerate(results, start=2):
             get_course_info(api_page, data)
-            print(f"{status} page {page} of {pages}")
+            
+            if page % 50 == 0 or page == pages:
+                print(f"{status} page {page} of {pages}")
 
 
 def simple_syllabus():
@@ -85,7 +87,8 @@ def simple_syllabus():
     collect_data("historic", data)
 
     save(data, "simple_syllabus_data.json")
-    print(f"Took {time.perf_counter() - start:.1f}s")
+    print("Simple syllabus is done!")
+    print(f"Took {time.perf_counter() - start:.1f}s\n")
 
 
 if __name__ == "__main__":
