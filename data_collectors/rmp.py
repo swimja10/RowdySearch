@@ -1,11 +1,8 @@
-import json
 import time
+
 import requests
 
-from pathlib import Path
-
-RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw_data"
-RAW_DIR.mkdir(parents=True, exist_ok=True)
+from data_collectors.common_format import save
 
 URL = "https://www.ratemyprofessors.com/graphql"
 UTSA_ID = "U2Nob29sLTE1MTY="
@@ -17,17 +14,16 @@ query TeacherSearchPaginationQuery($count: Int!, $cursor: String, $query: Teache
       edges {
         node {
           id
-          legacyId
           firstName
           lastName
           department
           avgRating
           avgDifficulty
-          numRatings
           wouldTakeAgainPercent
           ratings(first: 5) {
             edges {
               node {
+                class
                 comment
               }
             }
@@ -44,10 +40,13 @@ query TeacherSearchPaginationQuery($count: Int!, $cursor: String, $query: Teache
 }
 """
 
-HEADERS = {
-    "Content-Type": "application/json",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
-}
+SESSION = requests.Session()
+SESSION.headers.update(
+    {
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    }
+)
 
 
 def fetch_page(cursor, count):
@@ -59,18 +58,43 @@ def fetch_page(cursor, count):
             "query": {"text": "", "schoolID": UTSA_ID, "fallback": True},
         },
     }
-    response = requests.post(URL, json=body, headers=HEADERS)
+    response = SESSION.post(URL, json=body, timeout=30)
     response.raise_for_status()
     return response.json()["data"]["search"]["teachers"]
 
 
-def collect_professors(count=50):
+def create_professor(data):
+    reviews = []
+    for edge in data["ratings"]["edges"]:
+        node = edge["node"]
+        comment = (node["comment"] or "").strip()
+        if comment:
+            reviews.append({"course": node["class"], "comment": comment})
+
+    rating = data["avgRating"]
+    difficulty = data["avgDifficulty"]
+    take_again = data["wouldTakeAgainPercent"]
+
+    if rating == 0 and difficulty == 0 and take_again == -1 and not reviews:
+        return None
+
+    return {
+        "name": f"{data['firstName']} {data['lastName']}",
+        "department": data["department"],
+        "avgRating": None if rating == 0 else rating,
+        "avgDifficulty": None if difficulty == 0 else difficulty,
+        "wouldTakeAgainPercent": None if take_again == -1 else take_again,
+        "recentReviews": reviews,
+    }
+
+
+def collect_professors(count=50, delay=0.2):
     professors = {}
     cursor = ""
     has_next_page = True
 
     while has_next_page:
-        time.sleep(0.5)
+        time.sleep(delay)
         teachers = fetch_page(cursor, count)
 
         for edge in teachers["edges"]:
@@ -81,51 +105,15 @@ def collect_professors(count=50):
 
         cursor = teachers["pageInfo"]["endCursor"]
         has_next_page = teachers["pageInfo"]["hasNextPage"]
-
         print(f"{len(professors)} of {teachers['resultCount']}")
 
     return professors
 
 
-def create_professor(data):
-
-    reviews = [edge["node"]["comment"] for edge in data["ratings"]["edges"]]
-    rating = data["avgRating"]
-    difficulty = data["avgDifficulty"]
-    take_again = data["wouldTakeAgainPercent"]
-
-    if rating == 0 and difficulty == 0 and take_again == -1 and not reviews:
-        return None
-
-    if take_again == -1:
-        take_again = None
-
-    if rating == 0:
-        rating = None
-
-    if difficulty == 0:
-        difficulty = None
-
-    return {
-        "name": f"{data['firstName']} {data['lastName']}",
-        "department": data["department"],
-        "avgRating": rating,
-        "avgDifficulty": difficulty,
-        "wouldTakeAgainPercent": take_again,
-        "recentReviews": reviews,
-    }
-
-
-def save(data, path):
-    with open(RAW_DIR / path, "w") as f:
-        json.dump(data, f, indent=4)
-
-
 def rmp():
-
-    professors = collect_professors(50)
-
-    save(professors, "rmp_data.json")
+    start = time.perf_counter()
+    save(collect_professors(), "rmp_data.json")
+    print(f"Took {time.perf_counter() - start:.1f}s")
 
 
 if __name__ == "__main__":
