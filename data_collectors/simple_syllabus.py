@@ -1,103 +1,91 @@
-import requests
 import math
-import json
 import time
-from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 
-RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw_data"
-RAW_DIR.mkdir(parents=True, exist_ok=True)
+import requests
+
+from data_collectors.common_format import save
+
+URL = "https://utsa.simplesyllabus.com/api2/doc-library-search"
 
 
-def write_to_json(
-    data,
-    professor_id,
-    course_ID,
-    section,
-    professor_name,
-    course_name,
-    term,
-    syllabus_code,
-):
+def get_page(status, page, attempts=5):
+    for attempt in range(1, attempts + 1):
+        try:
+            response = requests.get(
+                URL,
+                params={"page": page, "term_statuses[]": status},
+                timeout=30,
+            )
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as error:
+            if attempt == attempts:
+                raise
+            wait = 2**attempt
+            print(
+                f"{status} page {page + 1} failed ({type(error).__name__}), retrying in {wait}s"
+            )
+            time.sleep(wait)
 
-    if professor_id not in data:
-        data[professor_id] = {"name": professor_name, "courses": {}}
 
-    courses = data[professor_id]["courses"]
-
-    if course_ID not in courses:
-        courses[course_ID] = {"title": course_name, "sections": []}
-
-    sections = courses[course_ID]["sections"]
-
-    new_section = {"term": term, "section": section, "syllabus_code": syllabus_code}
-
-    if new_section not in sections:
-        sections.append(new_section)
+def add_section(data, professor_id, professor_name, course_id, title, section_info):
+    professor = data.setdefault(professor_id, {"name": professor_name, "courses": {}})
+    course = professor["courses"].setdefault(
+        course_id, {"title": title, "sections": []}
+    )
+    if section_info not in course["sections"]:
+        course["sections"].append(section_info)
 
 
 def get_course_info(api_page, data):
-
     for item in api_page["items"]:
         title = item["title"].split()
         if len(title) < 3:
             print(f"Skipped odd title: {item['title']}")
             continue
 
-        course_ID = f"{title[0]} {title[1]}"
-        section = title[2]
-        course_name = item["sub_title"]
-        term = item["term_name"]
-        syllabus_code = item["code"]
+        course_id = f"{title[0]} {title[1]}"
+        section_info = {
+            "term": item["term_name"],
+            "section": title[2],
+            "syllabusCode": item["code"],
+        }
 
         for editor in item["editors"]:
-            professor_id = editor["entity_id"]
-            professor_name = editor["full_name"]
-
-            write_to_json(
+            add_section(
                 data,
-                professor_id,
-                course_ID,
-                section,
-                professor_name,
-                course_name,
-                term,
-                syllabus_code,
+                editor["entity_id"],
+                editor["full_name"],
+                course_id,
+                item["sub_title"],
+                section_info,
             )
 
 
-def collect_data(status, data):
+def collect_data(status, data, workers=4):
+    first = get_page(status, 0)
+    pagination = first["pagination"]
+    pages = math.ceil(pagination["total"] / pagination["page_size"])
+    get_course_info(first, data)
+    print(f"{status} page 1 of {pages}")
 
-    page = 0
-    end = 1
-
-    while page < end:
-        time.sleep(0.5)
-
-        response = requests.get(
-            f"https://utsa.simplesyllabus.com/api2/doc-library-search?page={page}&term_statuses%5B%5D={status}"
-        )
-        api_page = response.json()
-
-        total = api_page["pagination"]["total"]
-        page_size = api_page["pagination"]["page_size"]
-        end = math.ceil(total / page_size)
-
-        get_course_info(api_page, data)
-        print(f"{status} page {page} of {end}")
-        page += 1
-
-
-def save(data, path):
-    with open(RAW_DIR / path, "w") as f:
-        json.dump(data, f, indent=4)
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        results = pool.map(lambda page: get_page(status, page), range(1, pages))
+        for page, api_page in enumerate(results, start=2):
+            get_course_info(api_page, data)
+            print(f"{status} page {page} of {pages}")
 
 
 def simple_syllabus():
     data = {}
+    start = time.perf_counter()
 
     collect_data("current", data)
     collect_data("historic", data)
+
     save(data, "simple_syllabus_data.json")
+    print(f"Took {time.perf_counter() - start:.1f}s")
 
 
 if __name__ == "__main__":
