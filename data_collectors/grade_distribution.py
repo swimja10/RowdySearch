@@ -1,10 +1,9 @@
-import pandas as pd
-import glob
+import time
 from pathlib import Path
-import json
+import pandas as pd
+from data_collectors.common_format import save, term_key
+import warnings
 
-RAW_DIR = Path(__file__).resolve().parent.parent / "data" / "raw_data"
-RAW_DIR.mkdir(parents=True, exist_ok=True)
 GRADE_DIR = Path(__file__).resolve().parent.parent / "grade_data"
 
 GRADES = {
@@ -27,36 +26,37 @@ GRADES = {
     "IF",
 }
 
+warnings.filterwarnings(
+    "ignore",
+    message="Workbook contains no default style",
+    category=UserWarning,
+    module="openpyxl",
+)
 
-def add_section(professors, professor_name, cnr, section_info):
-    if professor_name not in professors:
-        professors[professor_name] = {"courses": {}}
 
-    courses = professors[professor_name]["courses"]
+def term_from_path(file_path):
+    return " ".join(file_path.stem.split("_")[-2:])
 
-    if cnr not in courses:
-        courses[cnr] = {"sections": []}
 
-    courses[cnr]["sections"].append(section_info)
+def add_section(professors, professor_name, course_id, title, section_info):
+    courses = professors.setdefault(professor_name, {"courses": {}})["courses"]
+    course = courses.setdefault(course_id, {"title": title, "sections": []})
+    course["title"] = title
+    course["sections"].append(section_info)
 
 
 def process_info(df, term, professors):
-    course_name = None
-    cnr = None
-    section = None
-    professor_name = None
+    course_id = section = title = professor_name = None
     grades = {}
 
-    for _, row in df.iterrows():
-        label = row[0]
-
+    for label, value, name, professor in df.itertuples(index=False, name=None):
         if label == "SUB/CRS":
-            cnr = row[1]
+            course_id = value
         elif label == "SEC":
-            section = row[1]
+            section = value
         elif label == "CRN":
-            course_name = row[2]
-            professor_name = row[3]
+            title = name
+            professor_name = professor
             grades = {}
         elif label == "TOTALS by Subj/Crse":
             if not isinstance(professor_name, str):
@@ -64,43 +64,36 @@ def process_info(df, term, professors):
             section_info = {
                 "term": term,
                 "section": section,
-                "course_name": course_name,
-                "total_students": int(row[1]),
+                "totalStudents": int(value),
                 "grades": grades,
             }
-            add_section(professors, professor_name, cnr, section_info)
+            add_section(professors, professor_name, course_id, title, section_info)
         elif label in GRADES:
-            grades[label] = int(row[1])
+            grades[label] = int(value)
 
 
 def grade_distribution():
     professors = {}
 
-    files = sorted(GRADE_DIR.glob("Grade_Distribution_*.csv"))
+    files = sorted(
+        GRADE_DIR.glob("Grade_Distribution_*.csv"),
+        key=lambda path: term_key(term_from_path(path)),
+    )
     if not files:
         raise FileNotFoundError(f"No grade files found in {GRADE_DIR}")
 
     for file_path in files:
         df = pd.read_excel(
-            file_path,
-            header=None,
-            engine="openpyxl",
-            sheet_name="Sheet1",
-            usecols=[0, 1, 2, 3],
+            file_path, header=None, engine="openpyxl", usecols=[0, 1, 2, 3]
         )
-        term = " ".join(file_path.stem.split("_")[-2:])
-
+        term = term_from_path(file_path)
         process_info(df, term, professors)
-
         print(f"Term: {term} is completed!")
 
     save(professors, "grade_distribution_data.json")
 
 
-def save(data, path):
-    with open(RAW_DIR / path, "w") as f:
-        json.dump(data, f, indent=4)
-
-
 if __name__ == "__main__":
+    start = time.perf_counter()
     grade_distribution()
+    print(f"Took {time.perf_counter() - start:.1f}s")

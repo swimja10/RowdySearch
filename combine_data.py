@@ -1,11 +1,10 @@
-"""Combines grade_data.json, professors.json and RMP.json into cleaned_grade_data.json."""
-
 import json
 import re
 import unicodedata
 from pathlib import Path
 
-DATA_DIR = Path(__file__).resolve().parent / "data"
+DATA_DIR = Path(__file__).resolve().parent / "raw_data"
+
 GRADES = [
     "A+",
     "A",
@@ -25,6 +24,7 @@ GRADES = [
     "IW",
     "IF",
 ]
+
 NOT_A_CLASS = {"Department", "RMP"}
 SEASONS = ["Spring", "Summer", "Fall"]
 # Renumbered courses are found automatically: same subject and same title, where
