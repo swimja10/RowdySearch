@@ -45,6 +45,19 @@
             }
         ]
     },
+    "VGVhY2hlci01MDc0MDQ3": {
+        "name": " Sevan  Alwan",
+        "department": "Biology",
+        "avgRating": null,
+        "avgDifficulty": null,
+        "wouldTakeAgainPercent": 0,
+        "recentReviews": [
+            {
+                "course": "BIO-1203",
+                "comment": "If you're not a biology major this class will be a nightmare and a bore for you. Quizzes that have 10+ questions only have a 5-10 minute time limit so be cautious. Since no tests are dropped you must memorize the post-lecture content, which can be up to 70-100 questions per lecture, if you want to pass."
+            }
+        ]
+    },
     "VGVhY2hlci00NTc4OTY=": {
         "name": "Susan Thomas",
         "department": "Chemistry",
@@ -31698,27 +31711,6 @@
             }
         ]
     },
-    "VGVhY2hlci0yNzM0NDQ4": {
-        "name": "Zhongxiu Yang",
-        "department": "Computer Science",
-        "avgRating": 4.7,
-        "avgDifficulty": 2.7,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            {
-                "course": "CS3343",
-                "comment": "I took CS2233 with Mr. Yang but he was very lenient and understanding with grades/deadlines. He was easily accessible outside of class and was always informative and updated us frequently with HW deadlines and exam reminders on Canvas. His lectures were informative and easy to understand, and he has a very good understanding of what he's teaching."
-            },
-            {
-                "course": "CS3343",
-                "comment": "He was fine, just didn't learn as much tho."
-            },
-            {
-                "course": "CS3343",
-                "comment": "Prof Yang is a very fair professor, grading is lenient and assignments are walked through in class. Hard to understand sometimes but don't be afraid to email/ask for help after class."
-            }
-        ]
-    },
     "VGVhY2hlci0yMzcyMTIy": {
         "name": "Joseph Bohac",
         "department": "Business",
@@ -31737,6 +31729,27 @@
             {
                 "course": "BLW3033",
                 "comment": "Attendance is not mandatory. There are only 4 exams and a final. The final is not mandatory if you are satisfied with the grade you currently have. Pretty easy A. His lectures have nothing to do with what is on the exams. He will provide an 'outline' of what will be on the exam. Just study that and you'll pass."
+            }
+        ]
+    },
+    "VGVhY2hlci0yNzM0NDQ4": {
+        "name": "Zhongxiu Yang",
+        "department": "Computer Science",
+        "avgRating": 4.7,
+        "avgDifficulty": 2.7,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            {
+                "course": "CS3343",
+                "comment": "I took CS2233 with Mr. Yang but he was very lenient and understanding with grades/deadlines. He was easily accessible outside of class and was always informative and updated us frequently with HW deadlines and exam reminders on Canvas. His lectures were informative and easy to understand, and he has a very good understanding of what he's teaching."
+            },
+            {
+                "course": "CS3343",
+                "comment": "He was fine, just didn't learn as much tho."
+            },
+            {
+                "course": "CS3343",
+                "comment": "Prof Yang is a very fair professor, grading is lenient and assignments are walked through in class. Hard to understand sometimes but don't be afraid to email/ask for help after class."
             }
         ]
     },
@@ -35346,31 +35359,6 @@
             }
         ]
     },
-    "VGVhY2hlci0yNjg1MzE1": {
-        "name": "Laurie Lewis",
-        "department": "Management",
-        "avgRating": 4,
-        "avgDifficulty": 2.8,
-        "wouldTakeAgainPercent": 75,
-        "recentReviews": [
-            {
-                "course": "MGT3123",
-                "comment": "I took Professor Lewis during the summer so the class was more condensed. Be prepared to read a lot each week, participate in discussion posts, and write a couple papers as well. The summer term goes by fast, but as long as you write down due dates and do your work, it's perfectly fine."
-            },
-            {
-                "course": "COM-3893",
-                "comment": "(MGT 3123) Four discussions, one paper, and one final project. No exams or quizzes. VERY picky on how you write. Does not give substantial feedback to improve. We found out our grades at the end of the semester. If you ask for clarification on instructions, she directs you to read the instructions. The content was not difficult."
-            },
-            {
-                "course": "COM-3893",
-                "comment": "gotta buy the book :/ \nthis class was pretty easy. weekly discussion posts, no tests, only two major assignments. final project is suppperrr time consuming so i'd start it as soon as she posts the instructions. she makes discussions posts where you can ask questions about certain assignments, answers pretty fast over email too. def take it."
-            },
-            {
-                "course": "CSH1213",
-                "comment": "her lectures are long but not too bad, this can be a very helpful class in a social aspect. overall this class is easy, yeah take it"
-            }
-        ]
-    },
     "VGVhY2hlci0xMjE5Nzcz": {
         "name": "Richard Sibbernsen",
         "department": "Management",
@@ -35393,6 +35381,31 @@
             {
                 "course": "MGT3613",
                 "comment": "Saturday class, was simple, not alot of work associated to his class. Lectures are great, 20 min presentation. The exams are essay questions and MC. Would greatly recommend this instructor."
+            }
+        ]
+    },
+    "VGVhY2hlci0yNjg1MzE1": {
+        "name": "Laurie Lewis",
+        "department": "Management",
+        "avgRating": 4,
+        "avgDifficulty": 2.8,
+        "wouldTakeAgainPercent": 75,
+        "recentReviews": [
+            {
+                "course": "MGT3123",
+                "comment": "I took Professor Lewis during the summer so the class was more condensed. Be prepared to read a lot each week, participate in discussion posts, and write a couple papers as well. The summer term goes by fast, but as long as you write down due dates and do your work, it's perfectly fine."
+            },
+            {
+                "course": "COM-3893",
+                "comment": "(MGT 3123) Four discussions, one paper, and one final project. No exams or quizzes. VERY picky on how you write. Does not give substantial feedback to improve. We found out our grades at the end of the semester. If you ask for clarification on instructions, she directs you to read the instructions. The content was not difficult."
+            },
+            {
+                "course": "COM-3893",
+                "comment": "gotta buy the book :/ \nthis class was pretty easy. weekly discussion posts, no tests, only two major assignments. final project is suppperrr time consuming so i'd start it as soon as she posts the instructions. she makes discussions posts where you can ask questions about certain assignments, answers pretty fast over email too. def take it."
+            },
+            {
+                "course": "CSH1213",
+                "comment": "her lectures are long but not too bad, this can be a very helpful class in a social aspect. overall this class is easy, yeah take it"
             }
         ]
     },
@@ -55590,35 +55603,6 @@
             }
         ]
     },
-    "VGVhY2hlci0xNzk0MTc3": {
-        "name": "Laural Logan-Fain",
-        "department": "Education",
-        "avgRating": 4.1,
-        "avgDifficulty": 2.6,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            {
-                "course": "EDU5003",
-                "comment": "This was my first Grad School class. Since I had been out of school for a while, I was nervous about taking a research class. I did not think I would enjoy it. Dr. Logan-Fain taught the class in a way that made it interesting. I left the class with a new desire to do more research. She help me get past any nervousness I had about Grad school."
-            },
-            {
-                "course": "RESEARCH5023",
-                "comment": "Dr. Logan-Fain makes scary research fun and relevant. I was nervous about taking her class, but she breaks it down so that the content is not less intimidating. Lots of group work and good discussions. She takes times to get to know us as individuals and challenges us to think!"
-            },
-            {
-                "course": "EDU5003",
-                "comment": "I enjoyed Dr. Logan-Fain as a professor and person. Course was informative and involved class discussions, group work & in class presentations. She consistently provided encouragement & constructive criticism. She was a class act who presented herself as a professional, yet compassionate person who could easily relate to the life of the student."
-            },
-            {
-                "course": "RESEARCHMETHOD",
-                "comment": "Love Dr. Logan! Great class, very hands on, great application. Would take another class with her for sure."
-            },
-            {
-                "course": "EDU5523",
-                "comment": "Excellent teacher who provides a lot of hands-on activities that relate to what is taught. We had to apply what we learned and not just learn a bunch of fact."
-            }
-        ]
-    },
     "VGVhY2hlci0yMDQ5MTM3": {
         "name": "Siwing Tsoi",
         "department": "Philosophy",
@@ -55645,6 +55629,35 @@
             {
                 "course": "PHI3213",
                 "comment": "You will read 15-20 pages before class take a one question quiz before and after class. That is your grade for the day. 100,50 or 0. You will break into group discussion for 40mins. You will talk with your group about how no one understands the reading. Then spend 10 mins of Tsoi telling people they are wrong with no explanation or lecture. Repeat."
+            }
+        ]
+    },
+    "VGVhY2hlci0xNzk0MTc3": {
+        "name": "Laural Logan-Fain",
+        "department": "Education",
+        "avgRating": 4.1,
+        "avgDifficulty": 2.6,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            {
+                "course": "EDU5003",
+                "comment": "This was my first Grad School class. Since I had been out of school for a while, I was nervous about taking a research class. I did not think I would enjoy it. Dr. Logan-Fain taught the class in a way that made it interesting. I left the class with a new desire to do more research. She help me get past any nervousness I had about Grad school."
+            },
+            {
+                "course": "RESEARCH5023",
+                "comment": "Dr. Logan-Fain makes scary research fun and relevant. I was nervous about taking her class, but she breaks it down so that the content is not less intimidating. Lots of group work and good discussions. She takes times to get to know us as individuals and challenges us to think!"
+            },
+            {
+                "course": "EDU5003",
+                "comment": "I enjoyed Dr. Logan-Fain as a professor and person. Course was informative and involved class discussions, group work & in class presentations. She consistently provided encouragement & constructive criticism. She was a class act who presented herself as a professional, yet compassionate person who could easily relate to the life of the student."
+            },
+            {
+                "course": "RESEARCHMETHOD",
+                "comment": "Love Dr. Logan! Great class, very hands on, great application. Would take another class with her for sure."
+            },
+            {
+                "course": "EDU5523",
+                "comment": "Excellent teacher who provides a lot of hands-on activities that relate to what is taught. We had to apply what we learned and not just learn a bunch of fact."
             }
         ]
     },
@@ -59213,35 +59226,6 @@
             }
         ]
     },
-    "VGVhY2hlci0xNzA2MDY2": {
-        "name": "Jennifer Espronceda",
-        "department": "Policy Studies",
-        "avgRating": 3.3,
-        "avgDifficulty": 2,
-        "wouldTakeAgainPercent": 33.3333,
-        "recentReviews": [
-            {
-                "course": "LGS4013",
-                "comment": "Expects the class to constantly give answers. She taught like a law school. I could not learn this way. I think she should be giving notes and a lecture, not the students. Her handwriting is also unreadable so its hard to take notes. I did not use the book much but it was used for outlines for study guides. She did give great outside resources."
-            },
-            {
-                "course": "LGS4123",
-                "comment": "Prof Esp is somewhat rude and not very approachable. I am not sure why she discourages students from going to law school, maybe less competition in the future? Her exams are difficult, and she doesn't explain the material well. She gets somewhat annoyed when students ask questions. I am an A student but her classes have definitely been difficut."
-            },
-            {
-                "course": "LGS4123",
-                "comment": "Prof Espronceda (attorney) is not good about seeing students outside of class during her office hours, she doesn't like when students ask questions, yet she doesn't do a good job at explaining things. Her exams are REALLY difficult, and she constantly reminds students that going to law school is not a good choice. I took her for two classes: A & B-"
-            },
-            {
-                "course": "4223",
-                "comment": "I have taken her for two classes so far and have done very well in her class. Class is mandatory but it really benefits you in the end. Professor Espronceda really cares about her students and wants them to succeed. We did use the book most of the time. Study her outlines and you will do fine on the exams, which are short essay mostly."
-            },
-            {
-                "course": "LGS4123",
-                "comment": "Took this course in the SLSPA and she curves the grades a pretty good amount. I learned a lot about reasoning, but she only spent a week on philosophy. She was not super available and did not always explain work clearly. Easy A but a lot of classmates were worried about their grade all semester because her grading is not always clear."
-            }
-        ]
-    },
     "VGVhY2hlci0xMjUzNDUx": {
         "name": "Erin Reat",
         "department": "Criminal Justice",
@@ -59268,6 +59252,35 @@
             {
                 "course": "CRJ3233",
                 "comment": "Great instructor. Some material was a bit complicated but he made it easier to understand. Labs were fairly simple. There was no study guide for any exams, but he gave good hints during lecture so I recommend attending class. Final exam was the trickiest but it's not impossible. Study the pp slides well & you'll do great."
+            }
+        ]
+    },
+    "VGVhY2hlci0xNzA2MDY2": {
+        "name": "Jennifer Espronceda",
+        "department": "Policy Studies",
+        "avgRating": 3.3,
+        "avgDifficulty": 2,
+        "wouldTakeAgainPercent": 33.3333,
+        "recentReviews": [
+            {
+                "course": "LGS4013",
+                "comment": "Expects the class to constantly give answers. She taught like a law school. I could not learn this way. I think she should be giving notes and a lecture, not the students. Her handwriting is also unreadable so its hard to take notes. I did not use the book much but it was used for outlines for study guides. She did give great outside resources."
+            },
+            {
+                "course": "LGS4123",
+                "comment": "Prof Esp is somewhat rude and not very approachable. I am not sure why she discourages students from going to law school, maybe less competition in the future? Her exams are difficult, and she doesn't explain the material well. She gets somewhat annoyed when students ask questions. I am an A student but her classes have definitely been difficut."
+            },
+            {
+                "course": "LGS4123",
+                "comment": "Prof Espronceda (attorney) is not good about seeing students outside of class during her office hours, she doesn't like when students ask questions, yet she doesn't do a good job at explaining things. Her exams are REALLY difficult, and she constantly reminds students that going to law school is not a good choice. I took her for two classes: A & B-"
+            },
+            {
+                "course": "4223",
+                "comment": "I have taken her for two classes so far and have done very well in her class. Class is mandatory but it really benefits you in the end. Professor Espronceda really cares about her students and wants them to succeed. We did use the book most of the time. Study her outlines and you will do fine on the exams, which are short essay mostly."
+            },
+            {
+                "course": "LGS4123",
+                "comment": "Took this course in the SLSPA and she curves the grades a pretty good amount. I learned a lot about reasoning, but she only spent a week on philosophy. She was not super available and did not always explain work clearly. Easy A but a lot of classmates were worried about their grade all semester because her grading is not always clear."
             }
         ]
     },
@@ -73878,35 +73891,6 @@
             }
         ]
     },
-    "VGVhY2hlci02NzU3MTc=": {
-        "name": "Neal Cox",
-        "department": "Art History",
-        "avgRating": 4.1,
-        "avgDifficulty": 2.8,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            {
-                "course": "ART2313",
-                "comment": "Neal is a great teacher.  it was my first time learning about photoshop and i had fun learning about it and enjoyed the projects.  Pretty easy class and if you need help just go to him and he'll help be glad to help you."
-            },
-            {
-                "course": "ART2413",
-                "comment": "was not helpful at all"
-            },
-            {
-                "course": "DRAWING1",
-                "comment": "He's KICKASS!!!"
-            },
-            {
-                "course": "ART4433",
-                "comment": "This semester's Bookarts was by far my favorite class at UTSA. If you have a slight interest in the subject, Neal will show you what you need to know to get started. He is patient and funny, if just a bit quiet."
-            },
-            {
-                "course": "ART",
-                "comment": "good teacher,"
-            }
-        ]
-    },
     "VGVhY2hlci0xMjE0NzU2": {
         "name": "Maureen King",
         "department": "Writing",
@@ -73936,32 +73920,32 @@
             }
         ]
     },
-    "VGVhY2hlci0xMDU1OTk5": {
-        "name": "Chad Hammett",
-        "department": "Writing",
-        "avgRating": 4.5,
-        "avgDifficulty": 2.2,
+    "VGVhY2hlci02NzU3MTc=": {
+        "name": "Neal Cox",
+        "department": "Art History",
+        "avgRating": 4.1,
+        "avgDifficulty": 2.8,
         "wouldTakeAgainPercent": null,
         "recentReviews": [
             {
-                "course": "WRC1013",
-                "comment": "I love her to death. She's so interesting."
+                "course": "ART2313",
+                "comment": "Neal is a great teacher.  it was my first time learning about photoshop and i had fun learning about it and enjoyed the projects.  Pretty easy class and if you need help just go to him and he'll help be glad to help you."
             },
             {
-                "course": "WRC1013",
-                "comment": "greattttttttttt professor"
+                "course": "ART2413",
+                "comment": "was not helpful at all"
             },
             {
-                "course": "WRC1013",
-                "comment": "This professor is really easy. His expectations aren't that high.  He is pretty straight foward and is available when you need him...im planning on taking him again for comp 2"
+                "course": "DRAWING1",
+                "comment": "He's KICKASS!!!"
             },
             {
-                "course": "WRC1013",
-                "comment": "Good teacher, keep class involved and not boring. I would recommend this class. Not much hw except for reading and then only a few essay and one research paper"
+                "course": "ART4433",
+                "comment": "This semester's Bookarts was by far my favorite class at UTSA. If you have a slight interest in the subject, Neal will show you what you need to know to get started. He is patient and funny, if just a bit quiet."
             },
             {
-                "course": "WRC1013",
-                "comment": "He is a good professor. Not hard at all. All you have to do is read what he assigns and make sure you don't make careless mistakes. He grades easy, not too critical. And he explains what he wants you to write about clearly, so there is never too much confusion."
+                "course": "ART",
+                "comment": "good teacher,"
             }
         ]
     },
@@ -73991,6 +73975,35 @@
             {
                 "course": "PHILOSOPHY",
                 "comment": "Prof Theisen is animated and enthusiastic.  She is also completely into her own political agenda- liberal, socialist, simplistic, and self-congratulatory."
+            }
+        ]
+    },
+    "VGVhY2hlci0xMDU1OTk5": {
+        "name": "Chad Hammett",
+        "department": "Writing",
+        "avgRating": 4.5,
+        "avgDifficulty": 2.2,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "WRC1013",
+                "comment": "I love her to death. She's so interesting."
+            },
+            {
+                "course": "WRC1013",
+                "comment": "greattttttttttt professor"
+            },
+            {
+                "course": "WRC1013",
+                "comment": "This professor is really easy. His expectations aren't that high.  He is pretty straight foward and is available when you need him...im planning on taking him again for comp 2"
+            },
+            {
+                "course": "WRC1013",
+                "comment": "Good teacher, keep class involved and not boring. I would recommend this class. Not much hw except for reading and then only a few essay and one research paper"
+            },
+            {
+                "course": "WRC1013",
+                "comment": "He is a good professor. Not hard at all. All you have to do is read what he assigns and make sure you don't make careless mistakes. He grades easy, not too critical. And he explains what he wants you to write about clearly, so there is never too much confusion."
             }
         ]
     },
@@ -74153,27 +74166,6 @@
             }
         ]
     },
-    "VGVhY2hlci0zOTgyODI=": {
-        "name": "Stej Sanchez",
-        "department": "Mathematics",
-        "avgRating": 3.5,
-        "avgDifficulty": 3,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            {
-                "course": "MTC0103",
-                "comment": "No Comments"
-            },
-            {
-                "course": "MAT0113",
-                "comment": "Cool teacher, and made the work seem simple, but when it came test time, the content was difficult. I suggest going to his office hours if you want to make a good grade and/or pass. I also earned my C in his class."
-            },
-            {
-                "course": "MATH",
-                "comment": "I EARNED MY C IN HIS CLASS!!!!"
-            }
-        ]
-    },
     "VGVhY2hlci0xMDQ1NDcx": {
         "name": "Leonard McClure",
         "department": "Film",
@@ -74192,6 +74184,27 @@
             {
                 "course": "MESS3333",
                 "comment": "Is very experienced and knows a lot about film. Nice Guy! However, extremely scatterbrained...and Multiple problems with Avid Editing system (not his fault)...Critical grader..."
+            }
+        ]
+    },
+    "VGVhY2hlci0zOTgyODI=": {
+        "name": "Stej Sanchez",
+        "department": "Mathematics",
+        "avgRating": 3.5,
+        "avgDifficulty": 3,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "MTC0103",
+                "comment": "No Comments"
+            },
+            {
+                "course": "MAT0113",
+                "comment": "Cool teacher, and made the work seem simple, but when it came test time, the content was difficult. I suggest going to his office hours if you want to make a good grade and/or pass. I also earned my C in his class."
+            },
+            {
+                "course": "MATH",
+                "comment": "I EARNED MY C IN HIS CLASS!!!!"
             }
         ]
     },
@@ -75620,35 +75633,6 @@
             }
         ]
     },
-    "VGVhY2hlci0xNTc0Mzg5": {
-        "name": "Michael Williams",
-        "department": "Finance",
-        "avgRating": 4.6,
-        "avgDifficulty": 2.7,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            {
-                "course": "FIN3023",
-                "comment": "I was fortunate enough to take Corporate Finance with Professor Williams, and I can easily say that it was my favorite course at UTSA. The material we covered has helped me succeed in every other finance course I have taken. He is a great professor that truly cares about the success of his students. Very helpful, and knowledgeable. A must take."
-            },
-            {
-                "course": "FIN3014",
-                "comment": "finance is hard, but if you go to class and pay attention, it'll be a breeze. study the formula sheets for each exam. he's happy to answer any of your questions, you just need to ask them. he makes an effort to make his classes enjoyable. he's just really cool. i'm so glad i had him as a teacher. TAKE HIM!!!"
-            },
-            {
-                "course": "FIN3014",
-                "comment": "Cool guy, good lecturing skills. I wish more professors were like him in the accounting dept, the ones now are all have their panties wrinkled. A professor like him makes me wanna change my major to finance."
-            },
-            {
-                "course": "FIN3014",
-                "comment": "Great guy, test had formula sheets. does myfinance lab with 5 attempts to get a hundred which equals one test grade. Subject is difficult but it is very possible to get at least a B just by doing the homework(myfinancelab)."
-            },
-            {
-                "course": "FIN3014",
-                "comment": "Cool guy....not one complaint about him. He knows how college is and makes some jokes, he tries his hardest to make this subject fun. Take him!"
-            }
-        ]
-    },
     "VGVhY2hlci0yNDUxNzM=": {
         "name": "Robert Milk",
         "department": "Languages",
@@ -75675,6 +75659,35 @@
             {
                 "course": "BBL3053",
                 "comment": "Dr. Milk is great!  He expects his students to do assigned readings and attend class regularly.  There is a midterm, a comprehensive final, and a major research paper.  I received an A in the class and didn't stress too much.  Ask questions, pay attention and READ.  You will enjoy the class for the most part."
+            }
+        ]
+    },
+    "VGVhY2hlci0xNTc0Mzg5": {
+        "name": "Michael Williams",
+        "department": "Finance",
+        "avgRating": 4.6,
+        "avgDifficulty": 2.7,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "FIN3023",
+                "comment": "I was fortunate enough to take Corporate Finance with Professor Williams, and I can easily say that it was my favorite course at UTSA. The material we covered has helped me succeed in every other finance course I have taken. He is a great professor that truly cares about the success of his students. Very helpful, and knowledgeable. A must take."
+            },
+            {
+                "course": "FIN3014",
+                "comment": "finance is hard, but if you go to class and pay attention, it'll be a breeze. study the formula sheets for each exam. he's happy to answer any of your questions, you just need to ask them. he makes an effort to make his classes enjoyable. he's just really cool. i'm so glad i had him as a teacher. TAKE HIM!!!"
+            },
+            {
+                "course": "FIN3014",
+                "comment": "Cool guy, good lecturing skills. I wish more professors were like him in the accounting dept, the ones now are all have their panties wrinkled. A professor like him makes me wanna change my major to finance."
+            },
+            {
+                "course": "FIN3014",
+                "comment": "Great guy, test had formula sheets. does myfinance lab with 5 attempts to get a hundred which equals one test grade. Subject is difficult but it is very possible to get at least a B just by doing the homework(myfinancelab)."
+            },
+            {
+                "course": "FIN3014",
+                "comment": "Cool guy....not one complaint about him. He knows how college is and makes some jokes, he tries his hardest to make this subject fun. Take him!"
             }
         ]
     },
@@ -83043,19 +83056,6 @@
             }
         ]
     },
-    "VGVhY2hlci0yMDA1NTgz": {
-        "name": "Logan Manning",
-        "department": "Education",
-        "avgRating": 4.5,
-        "avgDifficulty": 2,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            {
-                "course": "CANDI5843",
-                "comment": "She is one of two favorite professors in my graduate studies.  She involves innovative ideas for participation.  If you expect to just take notes and not participate, then this isn't the class for you. She makes you want to attend class and care about the subject."
-            }
-        ]
-    },
     "VGVhY2hlci0yMDA1OTA1": {
         "name": "Monica Salis Reyes",
         "department": "Education",
@@ -83069,16 +83069,16 @@
             }
         ]
     },
-    "VGVhY2hlci0xOTU2NzM5": {
-        "name": "Carla Flink",
-        "department": "Public Administration",
-        "avgRating": 1,
-        "avgDifficulty": 3,
+    "VGVhY2hlci0yMDA1NTgz": {
+        "name": "Logan Manning",
+        "department": "Education",
+        "avgRating": 4.5,
+        "avgDifficulty": 2,
         "wouldTakeAgainPercent": null,
         "recentReviews": [
             {
-                "course": "PAD5323",
-                "comment": "Terrible professor; did not teach at all."
+                "course": "CANDI5843",
+                "comment": "She is one of two favorite professors in my graduate studies.  She involves innovative ideas for participation.  If you expect to just take notes and not participate, then this isn't the class for you. She makes you want to attend class and care about the subject."
             }
         ]
     },
@@ -83095,16 +83095,29 @@
             }
         ]
     },
-    "VGVhY2hlci0xOTU2NzQx": {
-        "name": "Kandyce Fernandez",
+    "VGVhY2hlci0xOTU2NzM5": {
+        "name": "Carla Flink",
         "department": "Public Administration",
-        "avgRating": 5,
+        "avgRating": 1,
         "avgDifficulty": 3,
         "wouldTakeAgainPercent": null,
         "recentReviews": [
             {
-                "course": "PAD5333901",
-                "comment": "Dr. Fernandez makes a tough class interesting.  She is highly intelligent will have you knowing what your are doing by the end of the semester.  Makes me want to be an evaluator for a few years. Additionally, Dr. Fernandez cracks a funny and all the scholars think she is nice and professional.  I worked hard for my A."
+                "course": "PAD5323",
+                "comment": "Terrible professor; did not teach at all."
+            }
+        ]
+    },
+    "VGVhY2hlci0xOTc2OTMz": {
+        "name": "Juan Gonzalez",
+        "department": "Statistics",
+        "avgRating": 1.5,
+        "avgDifficulty": 4,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "STATSII",
+                "comment": "Threatening class, but manageable if your not working... Get ready to read the book, but he does help understand the material so read before class. Thick accent"
             }
         ]
     },
@@ -83121,16 +83134,16 @@
             }
         ]
     },
-    "VGVhY2hlci0xOTc2OTMz": {
-        "name": "Juan Gonzalez",
-        "department": "Statistics",
-        "avgRating": 1.5,
-        "avgDifficulty": 4,
+    "VGVhY2hlci0xOTU2NzQx": {
+        "name": "Kandyce Fernandez",
+        "department": "Public Administration",
+        "avgRating": 5,
+        "avgDifficulty": 3,
         "wouldTakeAgainPercent": null,
         "recentReviews": [
             {
-                "course": "STATSII",
-                "comment": "Threatening class, but manageable if your not working... Get ready to read the book, but he does help understand the material so read before class. Thick accent"
+                "course": "PAD5333901",
+                "comment": "Dr. Fernandez makes a tough class interesting.  She is highly intelligent will have you knowing what your are doing by the end of the semester.  Makes me want to be an evaluator for a few years. Additionally, Dr. Fernandez cracks a funny and all the scholars think she is nice and professional.  I worked hard for my A."
             }
         ]
     }

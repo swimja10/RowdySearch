@@ -62074,6 +62074,12 @@
                     },
                     {
                         "term": "Spring 2024",
+                        "section": "0A1",
+                        "instructorEvaluation": 4.0,
+                        "courseEvaluation": 3.7
+                    },
+                    {
+                        "term": "Spring 2024",
                         "section": "0AA",
                         "instructorEvaluation": null,
                         "courseEvaluation": null
@@ -62083,12 +62089,6 @@
                         "section": "0AB",
                         "instructorEvaluation": null,
                         "courseEvaluation": null
-                    },
-                    {
-                        "term": "Spring 2024",
-                        "section": "0A1",
-                        "instructorEvaluation": 4.0,
-                        "courseEvaluation": 3.7
                     },
                     {
                         "term": "Fall 2023",
@@ -62132,13 +62132,13 @@
                 "sections": [
                     {
                         "term": "Spring 2024",
-                        "section": "0CB",
+                        "section": "0CC",
                         "instructorEvaluation": null,
                         "courseEvaluation": null
                     },
                     {
                         "term": "Spring 2024",
-                        "section": "0CC",
+                        "section": "0CB",
                         "instructorEvaluation": null,
                         "courseEvaluation": null
                     },
@@ -112366,12 +112366,6 @@
                     },
                     {
                         "term": "Spring 2024",
-                        "section": "0DA",
-                        "instructorEvaluation": null,
-                        "courseEvaluation": null
-                    },
-                    {
-                        "term": "Spring 2024",
                         "section": "0DB",
                         "instructorEvaluation": null,
                         "courseEvaluation": null
@@ -112379,6 +112373,12 @@
                     {
                         "term": "Spring 2024",
                         "section": "0DC",
+                        "instructorEvaluation": null,
+                        "courseEvaluation": null
+                    },
+                    {
+                        "term": "Spring 2024",
+                        "section": "0DA",
                         "instructorEvaluation": null,
                         "courseEvaluation": null
                     },
@@ -176268,12 +176268,6 @@
                         "courseEvaluation": 4.5
                     },
                     {
-                        "term": "Spring 2024",
-                        "section": "018",
-                        "instructorEvaluation": 4.2,
-                        "courseEvaluation": 4.2
-                    },
-                    {
                         "term": "Fall 2024",
                         "section": "032",
                         "instructorEvaluation": 4.5,
@@ -176368,6 +176362,12 @@
                         "section": "017",
                         "instructorEvaluation": 4.9,
                         "courseEvaluation": 4.8
+                    },
+                    {
+                        "term": "Spring 2024",
+                        "section": "018",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.2
                     },
                     {
                         "term": "Spring 2024",
@@ -181202,12 +181202,6 @@
                     },
                     {
                         "term": "Fall 2025",
-                        "section": "005",
-                        "instructorEvaluation": 3.8,
-                        "courseEvaluation": 4.3
-                    },
-                    {
-                        "term": "Fall 2025",
                         "section": "002",
                         "instructorEvaluation": 4.3,
                         "courseEvaluation": 4.6
@@ -181238,15 +181232,9 @@
                     },
                     {
                         "term": "Fall 2025",
-                        "section": "015",
-                        "instructorEvaluation": 4.1,
-                        "courseEvaluation": 4.6
-                    },
-                    {
-                        "term": "Fall 2025",
-                        "section": "016",
-                        "instructorEvaluation": 4.4,
-                        "courseEvaluation": 4.4
+                        "section": "005",
+                        "instructorEvaluation": 3.8,
+                        "courseEvaluation": 4.3
                     },
                     {
                         "term": "Fall 2025",
@@ -181277,6 +181265,18 @@
                         "section": "014",
                         "instructorEvaluation": 4.3,
                         "courseEvaluation": 4.3
+                    },
+                    {
+                        "term": "Fall 2025",
+                        "section": "016",
+                        "instructorEvaluation": 4.4,
+                        "courseEvaluation": 4.4
+                    },
+                    {
+                        "term": "Fall 2025",
+                        "section": "015",
+                        "instructorEvaluation": 4.1,
+                        "courseEvaluation": 4.6
                     },
                     {
                         "term": "Summer 2025",
@@ -181328,21 +181328,21 @@
                     },
                     {
                         "term": "Spring 2025",
-                        "section": "011",
-                        "instructorEvaluation": 4.1,
+                        "section": "004",
+                        "instructorEvaluation": 3.8,
+                        "courseEvaluation": 4.4
+                    },
+                    {
+                        "term": "Spring 2025",
+                        "section": "005",
+                        "instructorEvaluation": 3.4,
                         "courseEvaluation": 4.3
                     },
                     {
                         "term": "Spring 2025",
-                        "section": "007",
-                        "instructorEvaluation": 4.1,
-                        "courseEvaluation": 4.2
-                    },
-                    {
-                        "term": "Spring 2025",
-                        "section": "015",
-                        "instructorEvaluation": 4.1,
-                        "courseEvaluation": 4.3
+                        "section": "006",
+                        "instructorEvaluation": 4.0,
+                        "courseEvaluation": 4.7
                     },
                     {
                         "term": "Spring 2025",
@@ -181364,15 +181364,15 @@
                     },
                     {
                         "term": "Spring 2025",
-                        "section": "008",
-                        "instructorEvaluation": 4.0,
-                        "courseEvaluation": 4.0
-                    },
-                    {
-                        "term": "Spring 2025",
                         "section": "014",
                         "instructorEvaluation": 4.4,
                         "courseEvaluation": 4.5
+                    },
+                    {
+                        "term": "Spring 2025",
+                        "section": "008",
+                        "instructorEvaluation": 4.0,
+                        "courseEvaluation": 4.0
                     },
                     {
                         "term": "Spring 2025",
@@ -181388,21 +181388,21 @@
                     },
                     {
                         "term": "Fall 2024",
-                        "section": "006",
-                        "instructorEvaluation": 3.9,
-                        "courseEvaluation": 4.7
-                    },
-                    {
-                        "term": "Fall 2024",
-                        "section": "007",
-                        "instructorEvaluation": 4.5,
-                        "courseEvaluation": 4.6
-                    },
-                    {
-                        "term": "Fall 2024",
-                        "section": "008",
-                        "instructorEvaluation": 4.0,
+                        "section": "005",
+                        "instructorEvaluation": 3.6,
                         "courseEvaluation": 4.3
+                    },
+                    {
+                        "term": "Fall 2024",
+                        "section": "002",
+                        "instructorEvaluation": 3.9,
+                        "courseEvaluation": 4.8
+                    },
+                    {
+                        "term": "Fall 2024",
+                        "section": "003",
+                        "instructorEvaluation": 3.4,
+                        "courseEvaluation": 3.5
                     },
                     {
                         "term": "Fall 2024",
@@ -181421,6 +181421,24 @@
                         "section": "013",
                         "instructorEvaluation": 4.3,
                         "courseEvaluation": 4.4
+                    },
+                    {
+                        "term": "Fall 2024",
+                        "section": "006",
+                        "instructorEvaluation": 3.9,
+                        "courseEvaluation": 4.7
+                    },
+                    {
+                        "term": "Fall 2024",
+                        "section": "007",
+                        "instructorEvaluation": 4.5,
+                        "courseEvaluation": 4.6
+                    },
+                    {
+                        "term": "Fall 2024",
+                        "section": "008",
+                        "instructorEvaluation": 4.0,
+                        "courseEvaluation": 4.3
                     },
                     {
                         "term": "Fall 2024",
@@ -181484,6 +181502,24 @@
                     },
                     {
                         "term": "Spring 2024",
+                        "section": "001",
+                        "instructorEvaluation": 4.6,
+                        "courseEvaluation": 4.9
+                    },
+                    {
+                        "term": "Spring 2024",
+                        "section": "002",
+                        "instructorEvaluation": 3.9,
+                        "courseEvaluation": 4.4
+                    },
+                    {
+                        "term": "Spring 2024",
+                        "section": "003",
+                        "instructorEvaluation": 3.8,
+                        "courseEvaluation": 4.3
+                    },
+                    {
+                        "term": "Spring 2024",
                         "section": "009",
                         "instructorEvaluation": 4.5,
                         "courseEvaluation": 4.5
@@ -181492,6 +181528,24 @@
                         "term": "Spring 2024",
                         "section": "014",
                         "instructorEvaluation": 4.3,
+                        "courseEvaluation": 4.3
+                    },
+                    {
+                        "term": "Spring 2024",
+                        "section": "011",
+                        "instructorEvaluation": 4.1,
+                        "courseEvaluation": 4.3
+                    },
+                    {
+                        "term": "Spring 2024",
+                        "section": "015",
+                        "instructorEvaluation": 3.8,
+                        "courseEvaluation": 3.9
+                    },
+                    {
+                        "term": "Spring 2024",
+                        "section": "013",
+                        "instructorEvaluation": 4.1,
                         "courseEvaluation": 4.3
                     },
                     {
@@ -181514,18 +181568,6 @@
                     },
                     {
                         "term": "Spring 2024",
-                        "section": "013",
-                        "instructorEvaluation": 4.1,
-                        "courseEvaluation": 4.3
-                    },
-                    {
-                        "term": "Spring 2024",
-                        "section": "015",
-                        "instructorEvaluation": 3.8,
-                        "courseEvaluation": 3.9
-                    },
-                    {
-                        "term": "Spring 2024",
                         "section": "004",
                         "instructorEvaluation": 3.8,
                         "courseEvaluation": 4.8
@@ -181541,30 +181583,6 @@
                         "section": "006",
                         "instructorEvaluation": 3.7,
                         "courseEvaluation": 4.6
-                    },
-                    {
-                        "term": "Spring 2024",
-                        "section": "001",
-                        "instructorEvaluation": 4.6,
-                        "courseEvaluation": 4.9
-                    },
-                    {
-                        "term": "Spring 2024",
-                        "section": "002",
-                        "instructorEvaluation": 3.9,
-                        "courseEvaluation": 4.4
-                    },
-                    {
-                        "term": "Spring 2024",
-                        "section": "003",
-                        "instructorEvaluation": 3.8,
-                        "courseEvaluation": 4.3
-                    },
-                    {
-                        "term": "Spring 2024",
-                        "section": "011",
-                        "instructorEvaluation": 4.1,
-                        "courseEvaluation": 4.3
                     },
                     {
                         "term": "Fall 2023",
@@ -181649,6 +181667,36 @@
                         "section": "013",
                         "instructorEvaluation": 3.9,
                         "courseEvaluation": 4.1
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "001",
+                        "instructorEvaluation": 3.9,
+                        "courseEvaluation": 4.5
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "002",
+                        "instructorEvaluation": 3.9,
+                        "courseEvaluation": 4.0
+                    },
+                    {
+                        "term": "Spring 2025",
+                        "section": "011",
+                        "instructorEvaluation": 4.1,
+                        "courseEvaluation": 4.3
+                    },
+                    {
+                        "term": "Spring 2025",
+                        "section": "007",
+                        "instructorEvaluation": 4.1,
+                        "courseEvaluation": 4.2
+                    },
+                    {
+                        "term": "Spring 2025",
+                        "section": "015",
+                        "instructorEvaluation": 4.1,
+                        "courseEvaluation": 4.3
                     }
                 ]
             },
@@ -181660,6 +181708,12 @@
                         "section": "05S",
                         "instructorEvaluation": 4.3,
                         "courseEvaluation": 4.4
+                    },
+                    {
+                        "term": "Summer 2026",
+                        "section": "01S",
+                        "instructorEvaluation": 4.4,
+                        "courseEvaluation": 4.5
                     },
                     {
                         "term": "Summer 2026",
@@ -181678,12 +181732,6 @@
                         "section": "04S",
                         "instructorEvaluation": 4.1,
                         "courseEvaluation": 4.2
-                    },
-                    {
-                        "term": "Summer 2026",
-                        "section": "01S",
-                        "instructorEvaluation": 4.4,
-                        "courseEvaluation": 4.5
                     },
                     {
                         "term": "Spring 2026",
@@ -181795,24 +181843,6 @@
                     },
                     {
                         "term": "Fall 2025",
-                        "section": "008",
-                        "instructorEvaluation": 4.4,
-                        "courseEvaluation": 4.5
-                    },
-                    {
-                        "term": "Fall 2025",
-                        "section": "004",
-                        "instructorEvaluation": 3.4,
-                        "courseEvaluation": 4.0
-                    },
-                    {
-                        "term": "Fall 2025",
-                        "section": "005",
-                        "instructorEvaluation": 4.2,
-                        "courseEvaluation": 4.3
-                    },
-                    {
-                        "term": "Fall 2025",
                         "section": "001",
                         "instructorEvaluation": 3.3,
                         "courseEvaluation": 4.2
@@ -181828,6 +181858,24 @@
                         "section": "003",
                         "instructorEvaluation": 4.2,
                         "courseEvaluation": 4.4
+                    },
+                    {
+                        "term": "Fall 2025",
+                        "section": "004",
+                        "instructorEvaluation": 3.4,
+                        "courseEvaluation": 4.0
+                    },
+                    {
+                        "term": "Fall 2025",
+                        "section": "005",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.3
+                    },
+                    {
+                        "term": "Fall 2025",
+                        "section": "008",
+                        "instructorEvaluation": 4.4,
+                        "courseEvaluation": 4.5
                     },
                     {
                         "term": "Summer 2025",
@@ -181945,6 +181993,12 @@
                     },
                     {
                         "term": "Summer 2024",
+                        "section": "06S",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.1
+                    },
+                    {
+                        "term": "Summer 2024",
                         "section": "01S",
                         "instructorEvaluation": 4.7,
                         "courseEvaluation": 4.7
@@ -181974,9 +182028,9 @@
                         "courseEvaluation": 3.5
                     },
                     {
-                        "term": "Summer 2024",
-                        "section": "06S",
-                        "instructorEvaluation": 4.2,
+                        "term": "Spring 2024",
+                        "section": "005",
+                        "instructorEvaluation": 3.9,
                         "courseEvaluation": 4.1
                     },
                     {
@@ -181999,21 +182053,9 @@
                     },
                     {
                         "term": "Spring 2024",
-                        "section": "010",
-                        "instructorEvaluation": 4.1,
-                        "courseEvaluation": 4.0
-                    },
-                    {
-                        "term": "Spring 2024",
-                        "section": "009",
-                        "instructorEvaluation": 4.1,
+                        "section": "004",
+                        "instructorEvaluation": 3.0,
                         "courseEvaluation": 4.2
-                    },
-                    {
-                        "term": "Spring 2024",
-                        "section": "011",
-                        "instructorEvaluation": 4.0,
-                        "courseEvaluation": 4.1
                     },
                     {
                         "term": "Spring 2024",
@@ -182035,15 +182077,21 @@
                     },
                     {
                         "term": "Spring 2024",
-                        "section": "005",
-                        "instructorEvaluation": 3.9,
-                        "courseEvaluation": 4.1
+                        "section": "010",
+                        "instructorEvaluation": 4.1,
+                        "courseEvaluation": 4.0
                     },
                     {
                         "term": "Spring 2024",
-                        "section": "004",
-                        "instructorEvaluation": 3.0,
+                        "section": "009",
+                        "instructorEvaluation": 4.1,
                         "courseEvaluation": 4.2
+                    },
+                    {
+                        "term": "Spring 2024",
+                        "section": "011",
+                        "instructorEvaluation": 4.0,
+                        "courseEvaluation": 4.1
                     },
                     {
                         "term": "Fall 2023",
@@ -182088,12 +182136,6 @@
                 "sections": [
                     {
                         "term": "Summer 2026",
-                        "section": "04E",
-                        "instructorEvaluation": 3.5,
-                        "courseEvaluation": 3.7
-                    },
-                    {
-                        "term": "Summer 2026",
                         "section": "01E",
                         "instructorEvaluation": 5.0,
                         "courseEvaluation": 5.0
@@ -182103,6 +182145,12 @@
                         "section": "05E",
                         "instructorEvaluation": 4.3,
                         "courseEvaluation": 4.2
+                    },
+                    {
+                        "term": "Summer 2026",
+                        "section": "04E",
+                        "instructorEvaluation": 3.5,
+                        "courseEvaluation": 3.7
                     },
                     {
                         "term": "Spring 2026",
@@ -182115,6 +182163,42 @@
                         "section": "011",
                         "instructorEvaluation": 3.9,
                         "courseEvaluation": 4.8
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "018",
+                        "instructorEvaluation": 4.4,
+                        "courseEvaluation": 4.6
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "019",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.5
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "020",
+                        "instructorEvaluation": 4.3,
+                        "courseEvaluation": 4.4
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "021",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.6
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "022",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.5
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "023",
+                        "instructorEvaluation": 3.7,
+                        "courseEvaluation": 4.4
                     },
                     {
                         "term": "Spring 2026",
@@ -182145,42 +182229,6 @@
                         "section": "005",
                         "instructorEvaluation": 3.6,
                         "courseEvaluation": 4.6
-                    },
-                    {
-                        "term": "Spring 2026",
-                        "section": "006",
-                        "instructorEvaluation": 4.1,
-                        "courseEvaluation": 4.6
-                    },
-                    {
-                        "term": "Spring 2026",
-                        "section": "007",
-                        "instructorEvaluation": 4.5,
-                        "courseEvaluation": 4.8
-                    },
-                    {
-                        "term": "Spring 2026",
-                        "section": "008",
-                        "instructorEvaluation": 4.1,
-                        "courseEvaluation": 4.8
-                    },
-                    {
-                        "term": "Spring 2026",
-                        "section": "009",
-                        "instructorEvaluation": 3.9,
-                        "courseEvaluation": 4.2
-                    },
-                    {
-                        "term": "Spring 2026",
-                        "section": "010",
-                        "instructorEvaluation": 4.1,
-                        "courseEvaluation": 4.6
-                    },
-                    {
-                        "term": "Spring 2026",
-                        "section": "016",
-                        "instructorEvaluation": 4.1,
-                        "courseEvaluation": 4.2
                     },
                     {
                         "term": "Spring 2026",
@@ -182322,6 +182370,18 @@
                     },
                     {
                         "term": "Spring 2025",
+                        "section": "012",
+                        "instructorEvaluation": 4.3,
+                        "courseEvaluation": 4.1
+                    },
+                    {
+                        "term": "Spring 2025",
+                        "section": "011",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.2
+                    },
+                    {
+                        "term": "Spring 2025",
                         "section": "001",
                         "instructorEvaluation": 3.6,
                         "courseEvaluation": 4.0
@@ -182343,18 +182403,6 @@
                         "section": "004",
                         "instructorEvaluation": 4.3,
                         "courseEvaluation": 4.7
-                    },
-                    {
-                        "term": "Spring 2025",
-                        "section": "005",
-                        "instructorEvaluation": 4.2,
-                        "courseEvaluation": 4.6
-                    },
-                    {
-                        "term": "Spring 2025",
-                        "section": "006",
-                        "instructorEvaluation": 3.9,
-                        "courseEvaluation": 4.1
                     },
                     {
                         "term": "Spring 2025",
@@ -182385,6 +182433,24 @@
                         "section": "016",
                         "instructorEvaluation": 4.5,
                         "courseEvaluation": 4.4
+                    },
+                    {
+                        "term": "Spring 2025",
+                        "section": "013",
+                        "instructorEvaluation": 4.3,
+                        "courseEvaluation": 4.2
+                    },
+                    {
+                        "term": "Spring 2025",
+                        "section": "015",
+                        "instructorEvaluation": 3.8,
+                        "courseEvaluation": 3.8
+                    },
+                    {
+                        "term": "Spring 2025",
+                        "section": "014",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.0
                     },
                     {
                         "term": "Fall 2024",
@@ -182478,21 +182544,39 @@
                     },
                     {
                         "term": "Summer 2024",
-                        "section": "04F",
-                        "instructorEvaluation": 4.5,
-                        "courseEvaluation": 4.6
-                    },
-                    {
-                        "term": "Summer 2024",
                         "section": "01F",
                         "instructorEvaluation": 3.6,
                         "courseEvaluation": 5.0
                     },
                     {
                         "term": "Summer 2024",
+                        "section": "02F",
+                        "instructorEvaluation": null,
+                        "courseEvaluation": null
+                    },
+                    {
+                        "term": "Summer 2024",
                         "section": "03F",
                         "instructorEvaluation": 3.9,
                         "courseEvaluation": 4.1
+                    },
+                    {
+                        "term": "Spring 2024",
+                        "section": "013",
+                        "instructorEvaluation": 4.5,
+                        "courseEvaluation": 4.5
+                    },
+                    {
+                        "term": "Spring 2024",
+                        "section": "015",
+                        "instructorEvaluation": 4.1,
+                        "courseEvaluation": 4.3
+                    },
+                    {
+                        "term": "Spring 2024",
+                        "section": "014",
+                        "instructorEvaluation": 3.9,
+                        "courseEvaluation": 4.5
                     },
                     {
                         "term": "Spring 2024",
@@ -182643,6 +182727,60 @@
                         "section": "011",
                         "instructorEvaluation": 4.1,
                         "courseEvaluation": 4.2
+                    },
+                    {
+                        "term": "Summer 2024",
+                        "section": "04F",
+                        "instructorEvaluation": 4.5,
+                        "courseEvaluation": 4.6
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "006",
+                        "instructorEvaluation": 4.1,
+                        "courseEvaluation": 4.6
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "007",
+                        "instructorEvaluation": 4.5,
+                        "courseEvaluation": 4.8
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "008",
+                        "instructorEvaluation": 4.1,
+                        "courseEvaluation": 4.8
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "009",
+                        "instructorEvaluation": 3.9,
+                        "courseEvaluation": 4.2
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "010",
+                        "instructorEvaluation": 4.1,
+                        "courseEvaluation": 4.6
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "016",
+                        "instructorEvaluation": 4.1,
+                        "courseEvaluation": 4.2
+                    },
+                    {
+                        "term": "Spring 2025",
+                        "section": "005",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.6
+                    },
+                    {
+                        "term": "Spring 2025",
+                        "section": "006",
+                        "instructorEvaluation": 3.9,
+                        "courseEvaluation": 4.1
                     }
                 ]
             },
@@ -182681,9 +182819,27 @@
                     },
                     {
                         "term": "Spring 2026",
-                        "section": "012",
-                        "instructorEvaluation": 4.3,
-                        "courseEvaluation": 4.3
+                        "section": "014",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.5
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "015",
+                        "instructorEvaluation": 4.5,
+                        "courseEvaluation": 4.6
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "017",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.2
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "018",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.1
                     },
                     {
                         "term": "Spring 2026",
@@ -182717,6 +182873,18 @@
                     },
                     {
                         "term": "Spring 2026",
+                        "section": "012",
+                        "instructorEvaluation": 4.3,
+                        "courseEvaluation": 4.3
+                    },
+                    {
+                        "term": "Spring 2026",
+                        "section": "001",
+                        "instructorEvaluation": 3.3,
+                        "courseEvaluation": 3.1
+                    },
+                    {
+                        "term": "Spring 2026",
                         "section": "003",
                         "instructorEvaluation": 3.8,
                         "courseEvaluation": 4.5
@@ -182741,27 +182909,9 @@
                     },
                     {
                         "term": "Spring 2026",
-                        "section": "014",
-                        "instructorEvaluation": 4.2,
-                        "courseEvaluation": 4.5
-                    },
-                    {
-                        "term": "Spring 2026",
-                        "section": "015",
-                        "instructorEvaluation": 4.5,
-                        "courseEvaluation": 4.6
-                    },
-                    {
-                        "term": "Spring 2026",
-                        "section": "017",
-                        "instructorEvaluation": 4.2,
-                        "courseEvaluation": 4.2
-                    },
-                    {
-                        "term": "Spring 2026",
-                        "section": "018",
-                        "instructorEvaluation": 4.2,
-                        "courseEvaluation": 4.1
+                        "section": "002",
+                        "instructorEvaluation": 3.9,
+                        "courseEvaluation": 3.7
                     },
                     {
                         "term": "Fall 2025",
@@ -182855,6 +183005,18 @@
                     },
                     {
                         "term": "Spring 2025",
+                        "section": "001",
+                        "instructorEvaluation": 3.8,
+                        "courseEvaluation": 4.5
+                    },
+                    {
+                        "term": "Spring 2025",
+                        "section": "002",
+                        "instructorEvaluation": 4.8,
+                        "courseEvaluation": 4.9
+                    },
+                    {
+                        "term": "Spring 2025",
                         "section": "003",
                         "instructorEvaluation": 3.7,
                         "courseEvaluation": 4.5
@@ -182872,18 +183034,6 @@
                         "courseEvaluation": 4.3
                     },
                     {
-                        "term": "Spring 2025",
-                        "section": "001",
-                        "instructorEvaluation": 3.8,
-                        "courseEvaluation": 4.5
-                    },
-                    {
-                        "term": "Spring 2025",
-                        "section": "002",
-                        "instructorEvaluation": 4.8,
-                        "courseEvaluation": 4.9
-                    },
-                    {
                         "term": "Fall 2024",
                         "section": "007",
                         "instructorEvaluation": 4.0,
@@ -182894,24 +183044,6 @@
                         "section": "008",
                         "instructorEvaluation": 4.3,
                         "courseEvaluation": 4.2
-                    },
-                    {
-                        "term": "Fall 2024",
-                        "section": "009",
-                        "instructorEvaluation": 4.2,
-                        "courseEvaluation": 4.2
-                    },
-                    {
-                        "term": "Fall 2024",
-                        "section": "010",
-                        "instructorEvaluation": 4.3,
-                        "courseEvaluation": 4.3
-                    },
-                    {
-                        "term": "Fall 2024",
-                        "section": "011",
-                        "instructorEvaluation": 4.3,
-                        "courseEvaluation": 4.5
                     },
                     {
                         "term": "Fall 2024",
@@ -182948,6 +183080,24 @@
                         "section": "005",
                         "instructorEvaluation": 3.5,
                         "courseEvaluation": 3.3
+                    },
+                    {
+                        "term": "Fall 2024",
+                        "section": "009",
+                        "instructorEvaluation": 4.2,
+                        "courseEvaluation": 4.2
+                    },
+                    {
+                        "term": "Fall 2024",
+                        "section": "010",
+                        "instructorEvaluation": 4.3,
+                        "courseEvaluation": 4.3
+                    },
+                    {
+                        "term": "Fall 2024",
+                        "section": "011",
+                        "instructorEvaluation": 4.3,
+                        "courseEvaluation": 4.5
                     },
                     {
                         "term": "Summer 2024",
