@@ -1,72 +1,83 @@
-import { GRADES, emptyGradeCounts, type Grade, type GradeCounts } from "./grades.ts";
+import { GRADES, addGrades, emptyGradeCounts, type Grade, type GradeCounts } from "./grades.ts";
+import { rmpLink, syllabusLink } from "./links.ts";
+import { semesterRank } from "./semesters.ts";
+import { average } from "./statistics.ts";
 
-// "MAT 1213 - Calculus I (Fall 2025)" -> course "MAT 1213", title "Calculus I", semester "Fall 2025"
-export const CLASS_KEY = /^(.+?) - (.+) \((\w+ \d{4})\)$/;
+// The shape of data/professors.json, exactly as combine_data.py writes it.
+export type RawData = Record<string, RawProfessor>;
 
-// The shape of data/cleaned_grade_data.json, exactly as combine_data.py writes it.
-export type RawGradeData = Record<string, RawProfessor>;
-
-export type RawProfessor = {
-  Department: string;
-  RMP: RawRmp;
-  [classKey: string]: RawClass | RawRmp | string;
+type RawProfessor = {
+  courses: Record<string, RawCourse>; // "MAT 1213" -> that course
+  rmp: RawRmpProfile[]; // usually one, none when they aren't on RMP, two when RMP has a duplicate
 };
 
-type RawClass = {
-  Semester: string;
-  Sections: string[];
-  Syllabus: Record<string, string>;
-} & Record<Grade, number | null>;
+type RawCourse = {
+  courseName: string; // its name in the newest semester they taught it
+  semesters: Record<string, RawSection[]>; // "Fall 2025" -> the sections they taught that semester
+};
 
-type RawRmp = {
-  "Professor rating": number | null;
-  "Difficulty level": number | null;
-  "Number of ratings": number | null;
-  "Would take again %": number | null;
-  Link: string | null;
-  "5 reviews": Record<string, string | null>;
+type RawSection = {
+  section: string;
+  title: string; // what this section was listed as: an older name, or its topic in a topics course
+  syllabusCode: string | null;
+  grades: Partial<Record<Grade, number>> | null; // grades nobody got are left out
+  instructorEvaluation: number | null; // Bluebook, out of 5
+  courseEvaluation: number | null; // Bluebook, out of 5
+};
+
+type RawRmpProfile = {
+  rmpId: number;
+  department: string;
+  avgRating: number;
+  avgDifficulty: number;
+  wouldTakeAgainPercent: number | null;
+  recentReviews: Review[];
 };
 
 // The easier-to-use shape the sidebar works with.
 export type Professor = {
   name: string;
-  department: string;
+  department: string | null; // from Rate My Professors, so null when they aren't on it
   rmp: Rmp;
-  classes: ClassOffering[];
+  courses: Course[]; // the course they taught most recently first
 };
 
-export type Rmp = {
-  rating: number | null;
-  difficulty: number | null;
-  ratingCount: number;
-  wouldTakeAgainPercent: number | null;
-  link: string | null;
-  reviews: string[];
+// Every semester a professor taught one course, newest semester first.
+export type Course = {
+  code: string;
+  title: string; // its name the last time this professor taught it
+  offerings: ClassOffering[];
 };
 
 export type ClassOffering = {
-  courseCode: string;
-  title: string;
   semester: string;
+  titles: string[]; // what its sections were listed as, usually just the course's name
   syllabi: Syllabus[];
-  grades: GradeCounts;
+  evaluations: Evaluation[]; // one for each section Bluebook has results for
+  grades: GradeCounts; // every section's grades added up
 };
 
 export type Syllabus = { section: string; link: string };
 
-// Sections without a named instructor are filed under these names. They aren't real
-// professors (and have no grades), so they're left out of search results and course pages.
-const PLACEHOLDER_NAMES = ["(No instructor listed)", "Unknown"];
+// One section's results on Bluebook, UTSA's end-of-semester course evaluations. Each is out of 5.
+export type Evaluation = { instructor: number; course: number };
 
-export function withoutPlaceholderNames(rawData: RawGradeData): RawGradeData {
-  const realProfessors: RawGradeData = {};
-  for (const [name, rawProfessor] of Object.entries(rawData)) {
-    if (!PLACEHOLDER_NAMES.includes(name)) realProfessors[name] = rawProfessor;
-  }
-  return realProfessors;
-}
+export type Rmp = {
+  rating: number | null;
+  difficulty: number | null;
+  wouldTakeAgainPercent: number | null;
+  profiles: RmpProfile[];
+  reviews: Review[];
+};
 
-export function readProfessors(rawData: RawGradeData): Record<string, Professor> {
+export type RmpProfile = { department: string; link: string };
+
+export type Review = {
+  course: string; // the way RMP writes it, like "MAT1213"
+  comment: string;
+};
+
+export function readProfessors(rawData: RawData): Record<string, Professor> {
   const professors: Record<string, Professor> = {};
   for (const [name, rawProfessor] of Object.entries(rawData)) {
     professors[name] = readProfessor(name, rawProfessor);
@@ -75,47 +86,66 @@ export function readProfessors(rawData: RawGradeData): Record<string, Professor>
 }
 
 function readProfessor(name: string, rawProfessor: RawProfessor): Professor {
+  const courses = Object.entries(rawProfessor.courses).map(([code, rawCourse]) => readCourse(code, rawCourse));
+
   return {
     name,
-    department: rawProfessor.Department,
-    rmp: readRmp(rawProfessor.RMP),
-    classes: readClasses(rawProfessor),
+    department: rawProfessor.rmp[0]?.department ?? null,
+    rmp: readRmp(rawProfessor.rmp),
+    courses: courses.sort((first, second) => lastTaughtRank(second) - lastTaughtRank(first)),
   };
 }
 
-function readRmp(rawRmp: RawRmp): Rmp {
+function readCourse(code: string, rawCourse: RawCourse): Course {
+  const offerings = Object.entries(rawCourse.semesters).map(([semester, sections]) => readOffering(semester, sections));
+
   return {
-    rating: rawRmp["Professor rating"],
-    difficulty: rawRmp["Difficulty level"],
-    ratingCount: rawRmp["Number of ratings"] ?? 0,
-    wouldTakeAgainPercent: rawRmp["Would take again %"],
-    link: rawRmp.Link,
-    reviews: Object.values(rawRmp["5 reviews"]).filter((review) => review !== null),
+    code,
+    title: rawCourse.courseName,
+    offerings: offerings.sort((first, second) => semesterRank(second.semester) - semesterRank(first.semester)),
   };
 }
 
-function readClasses(rawProfessor: RawProfessor): ClassOffering[] {
-  const classes: ClassOffering[] = [];
-  for (const [classKey, rawClass] of Object.entries(rawProfessor)) {
-    if (CLASS_KEY.test(classKey)) classes.push(readClass(classKey, rawClass as RawClass));
-  }
-  return classes;
+function lastTaughtRank(course: Course): number {
+  return semesterRank(course.offerings[0].semester);
 }
 
-function readClass(classKey: string, rawClass: RawClass): ClassOffering {
-  const [, courseCode, title, semester] = classKey.match(CLASS_KEY)!;
+function readOffering(semester: string, sections: RawSection[]): ClassOffering {
   return {
-    courseCode,
-    title,
     semester,
-    syllabi: Object.entries(rawClass.Syllabus).map(([section, link]) => ({ section, link })),
-    grades: readGradeCounts(rawClass),
+    titles: [...new Set(sections.map((section) => section.title))],
+    syllabi: sections.flatMap(readSyllabus),
+    evaluations: sections.flatMap(readEvaluation),
+    grades: addGrades(sections.map(readGradeCounts)),
   };
 }
 
-// Classes that only have a syllabus (no grades yet) count as zero students.
-function readGradeCounts(rawClass: RawClass): GradeCounts {
+function readSyllabus({ section, syllabusCode }: RawSection): Syllabus[] {
+  return syllabusCode === null ? [] : [{ section, link: syllabusLink(syllabusCode) }];
+}
+
+function readEvaluation({ instructorEvaluation, courseEvaluation }: RawSection): Evaluation[] {
+  if (instructorEvaluation === null || courseEvaluation === null) return [];
+  return [{ instructor: instructorEvaluation, course: courseEvaluation }];
+}
+
+// Sections that only have a syllabus (no grades yet) count as zero students.
+function readGradeCounts(section: RawSection): GradeCounts {
   const counts = emptyGradeCounts();
-  for (const grade of GRADES) counts[grade] = rawClass[grade] ?? 0;
+  for (const grade of GRADES) counts[grade] = section.grades?.[grade] ?? 0;
   return counts;
+}
+
+// A professor with two RMP profiles gets both profiles' reviews and the average of their numbers.
+// RMP doesn't say how many ratings each profile has, so they count the same.
+function readRmp(profiles: RawRmpProfile[]): Rmp {
+  const wouldTakeAgainPercents = profiles.map((profile) => profile.wouldTakeAgainPercent).filter((percent) => percent !== null);
+
+  return {
+    rating: average(profiles.map((profile) => profile.avgRating)),
+    difficulty: average(profiles.map((profile) => profile.avgDifficulty)),
+    wouldTakeAgainPercent: average(wouldTakeAgainPercents),
+    profiles: profiles.map((profile) => ({ department: profile.department, link: rmpLink(profile.rmpId) })),
+    reviews: profiles.flatMap((profile) => profile.recentReviews),
+  };
 }

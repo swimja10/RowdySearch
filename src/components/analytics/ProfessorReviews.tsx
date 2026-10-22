@@ -2,7 +2,7 @@ import Button from "../Button.tsx";
 import { Reviews } from "../Reviews.tsx";
 import { useLookup } from "../../context/useLookup.ts";
 import type { Subject } from "../../page.ts";
-import { formatRmpRating } from "../../utils/format.ts";
+import { formatRating } from "../../utils/format.ts";
 import type { SeriesData } from "../../utils/series.ts";
 
 type ProfessorReviewsProps = {
@@ -28,7 +28,7 @@ export function ProfessorReviews({ seriesData, onOpen }: ProfessorReviewsProps) 
           <details key={name} open className="rounded-xl border border-zinc-800 p-3">
             <summary className="cursor-pointer font-medium">
               <Button variant="link" onClick={() => onOpen({ type: "professor", professorName: name })}>{name}</Button>
-              <span className="text-zinc-400"> · {formatRmpRating(rmp.rating)} · {rmp.ratingCount} ratings</span>
+              <span className="text-zinc-400"> · {formatRating("RMP", rmp.rating)}</span>
             </summary>
             <div className="mt-3">
               <Reviews reviews={rmp.reviews} />

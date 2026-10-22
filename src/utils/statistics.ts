@@ -24,6 +24,12 @@ type DistributionOptions = {
   atOrAbove: boolean; // students who got that grade or better, instead of exactly that grade
 };
 
+// The plain average of some numbers, or null when there aren't any.
+export function average(values: number[]): number | null {
+  if (values.length === 0) return null;
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
 // Average grade points of everyone who got a letter grade, or null when nobody has yet.
 export function averageGpa(counts: GradeCounts): number | null {
   const students = countStudents(counts, LETTER_GRADES);

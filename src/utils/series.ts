@@ -1,8 +1,9 @@
 import type { GradeData } from "../hooks/useGradeData.ts";
 import type { Subject } from "../page.ts";
+import { bluebookOf, gradesOf, type Bluebook } from "./courses.ts";
 import type { GradeCounts } from "./grades.ts";
 import { averageGpa } from "./statistics.ts";
-import { gradesForSubject, professorNameOf, subjectKey, subjectLabel } from "./subjects.ts";
+import { offeringsForSubject, professorNameOf, subjectKey, subjectLabel } from "./subjects.ts";
 
 // Chart colors, checked with a colorblind-safety palette validator against the sidebar's
 // dark background. Neighbors in this order are easy to tell apart, so keep the order.
@@ -22,6 +23,7 @@ export type SeriesData = {
   label: string;
   color: string;
   grades: GradeCounts;
+  bluebook: Bluebook;
   professorName: string | null;
   rating: number | null;
   courseGpa: number | null; // for one professor's class: the whole course's average GPA
@@ -45,13 +47,15 @@ export function withSubjectAdded(seriesList: Series[], subject: Subject): Series
 
 export function describeSeries({ subject, color }: Series, gradeData: GradeData): SeriesData {
   const professorName = professorNameOf(subject);
+  const offerings = offeringsForSubject(subject, gradeData);
 
   return {
     subject,
     key: subjectKey(subject),
     label: subjectLabel(subject),
     color,
-    grades: gradesForSubject(subject, gradeData),
+    grades: gradesOf(offerings),
+    bluebook: bluebookOf(offerings),
     professorName,
     rating: professorName === null ? null : gradeData.professors[professorName].rmp.rating,
     courseGpa: subject.type === "class" ? wholeCourseGpa(subject.courseCode, gradeData) : null,
@@ -59,5 +63,5 @@ export function describeSeries({ subject, color }: Series, gradeData: GradeData)
 }
 
 function wholeCourseGpa(courseCode: string, gradeData: GradeData): number | null {
-  return averageGpa(gradesForSubject({ type: "course", courseCode }, gradeData));
+  return averageGpa(gradesOf(offeringsForSubject({ type: "course", courseCode }, gradeData)));
 }

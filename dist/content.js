@@ -1,3 +1,21 @@
+//#region src/content/bannerSearchResults.ts
+var BANNER_RESULTS_COLUMNS = [
+	"Subj",
+	"Crse",
+	"Instructor"
+];
+var BANNER_RESULTS_BUTTON_COLUMN = "Linked Sections";
+async function readBannerResultsSection(cellUnder) {
+	return {
+		instructor: primaryInstructor(cellUnder("Instructor")),
+		courseCode: `${cellUnder("Subj").textContent.trim()} ${cellUnder("Crse").textContent.trim()}`
+	};
+}
+function primaryInstructor(instructorCell) {
+	const names = [...instructorCell.querySelectorAll("a")];
+	return (names.find((name) => name.nextSibling?.textContent?.includes("Primary")) ?? names[0])?.textContent?.trim() ?? "";
+}
+//#endregion
 //#region src/content/bannerSummary.ts
 var BANNER_SUMMARY_COLUMNS = [
 	"Title",
@@ -44,13 +62,14 @@ var SIDEBAR_URL = chrome.runtime.getURL("dist/index.html");
 var SIDEBAR_WIDTH = "420px";
 var SIDEBAR_SHADOW = "-4px 0 16px rgba(0, 0, 0, 0.4)";
 var ON_TOP_OF_EVERYTHING = "2147483647";
+var TAB_TITLE = "RowdySearch";
 var sidebar = createSidebar();
-var lookupTab = createLookupTab();
+var sidebarTab = createSidebarTab();
 function addSidebar() {
-	lookupTab.addEventListener("click", toggleSidebar);
+	sidebarTab.addEventListener("click", toggleSidebar);
 	window.addEventListener("message", handleSidebarMessage);
 	chrome.runtime.onMessage.addListener(handleToolbarMessage);
-	document.body.append(sidebar, lookupTab);
+	document.body.append(sidebar, sidebarTab);
 }
 function showInSidebar(section) {
 	sidebar.src = `${SIDEBAR_URL}#${encodeURIComponent(JSON.stringify(section))}`;
@@ -62,8 +81,8 @@ function toggleSidebar() {
 }
 function setSidebarOpen(isOpen) {
 	sidebar.style.display = isOpen ? "block" : "none";
-	lookupTab.style.right = isOpen ? SIDEBAR_WIDTH : "0";
-	lookupTab.textContent = isOpen ? "Close" : "Lookup";
+	sidebarTab.style.right = isOpen ? SIDEBAR_WIDTH : "0";
+	sidebarTab.textContent = isOpen ? "Close" : TAB_TITLE;
 }
 function handleSidebarMessage(event) {
 	if (event.source !== sidebar.contentWindow) return;
@@ -79,10 +98,11 @@ function handleToolbarMessage(message, _sender, sendResponse) {
 function setFullScreen(isFullScreen) {
 	sidebar.style.width = isFullScreen ? "100vw" : SIDEBAR_WIDTH;
 	sidebar.style.boxShadow = isFullScreen ? "none" : SIDEBAR_SHADOW;
-	lookupTab.style.display = isFullScreen ? "none" : "block";
+	sidebarTab.style.display = isFullScreen ? "none" : "block";
 }
 function createSidebar() {
 	const iframe = document.createElement("iframe");
+	iframe.allow = "clipboard-write; web-share";
 	Object.assign(iframe.style, {
 		display: "none",
 		position: "fixed",
@@ -96,9 +116,9 @@ function createSidebar() {
 	});
 	return iframe;
 }
-function createLookupTab() {
+function createSidebarTab() {
 	const button = document.createElement("button");
-	button.textContent = "Lookup";
+	button.textContent = TAB_TITLE;
 	Object.assign(button.style, {
 		position: "fixed",
 		top: "50%",
@@ -120,6 +140,7 @@ function createLookupTab() {
 //#endregion
 //#region src/content/searchColumn.ts
 var COLUMN_TITLE = "RowdySearch";
+var BUTTON_MARK = "data-rowdysearch";
 var SITE_NAVY = "#0c2340";
 function tablesWithColumns(neededTitles) {
 	return [...document.querySelectorAll("table")].filter((table) => {
@@ -127,26 +148,50 @@ function tablesWithColumns(neededTitles) {
 		return neededTitles.every((title) => titles.includes(title));
 	});
 }
-function addSearchColumn(table, readSection) {
+function addSearchButtons(table, { readSection, takeOverColumn }) {
+	if (takeOverColumn === void 0) addColumn(table, readSection);
+	else fillColumn(table, takeOverColumn, readSection);
+}
+function addColumn(table, readSection) {
 	const headerRow = table.tHead.rows[0];
-	const titles = columnTitles(table);
+	const titles = columnTitles(table).filter((title) => title !== COLUMN_TITLE);
 	const styleColumn = titles.findLastIndex((title) => title !== "");
 	if (headerRow.cells.length === titles.length) headerRow.append(cellLike(headerRow.cells[styleColumn], COLUMN_TITLE));
-	for (const body of table.tBodies) for (const row of body.rows) if (row.cells.length === titles.length) addSearchButton(row, titles, styleColumn, readSection);
-	else stretchAcrossTable(row, titles.length + 1);
+	for (const body of table.tBodies) for (const row of body.rows) if (row.cells.length === titles.length) {
+		const cell = cellLike(row.cells[styleColumn], "");
+		cell.append(searchButton(row, titles, readSection));
+		row.append(cell);
+	} else stretchAcrossTable(row, titles.length + 1);
+}
+function fillColumn(table, takenTitle, readSection) {
+	const titles = columnTitles(table);
+	const column = titles.findIndex((title) => title === takenTitle || title === COLUMN_TITLE);
+	if (column === -1) return;
+	retitle(table.tHead.rows[0].cells[column], takenTitle, COLUMN_TITLE);
+	for (const body of table.tBodies) for (const row of body.rows) {
+		const cell = row.cells[column];
+		if (row.cells.length === titles.length && !cell.querySelector(`[${BUTTON_MARK}]`)) cell.prepend(searchButton(row, titles, readSection));
+	}
 }
 function columnTitles(table) {
 	const headerRow = table.tHead?.rows[0];
 	if (!headerRow) return [];
-	return [...headerRow.cells].map((cell) => cell.textContent.trim()).filter((title) => title !== COLUMN_TITLE);
+	return [...headerRow.cells].map((cell) => cell.textContent.trim());
 }
-function addSearchButton(row, titles, styleColumn, readSection) {
+function searchButton(row, titles, readSection) {
 	const cellUnder = (columnTitle) => row.cells[titles.indexOf(columnTitle)];
 	const button = createSearchButton();
 	button.addEventListener("click", async () => showInSidebar(await readSection(cellUnder)));
-	const cell = cellLike(row.cells[styleColumn], "");
-	cell.append(button);
-	row.append(cell);
+	return button;
+}
+function retitle(headerCell, from, to) {
+	const texts = document.createTreeWalker(headerCell, NodeFilter.SHOW_TEXT);
+	while (texts.nextNode()) {
+		const text = texts.currentNode;
+		if (text.textContent.trim() !== from) continue;
+		text.textContent = to;
+		if (text.parentElement?.title === from) text.parentElement.title = to;
+	}
 }
 function stretchAcrossTable(row, columnCount) {
 	let columnsCovered = 0;
@@ -164,6 +209,7 @@ function createSearchButton() {
 	const button = document.createElement("button");
 	button.type = "button";
 	button.textContent = "Search";
+	button.setAttribute(BUTTON_MARK, "");
 	Object.assign(button.style, {
 		padding: "4px 12px",
 		border: "none",
@@ -177,20 +223,28 @@ function createSearchButton() {
 }
 //#endregion
 //#region src/content/index.ts
-var SEARCHABLE_TABLES = [{
-	columns: SCHEDULE_PLANNER_COLUMNS,
-	readSection: readSchedulePlannerSection
-}, {
-	columns: BANNER_SUMMARY_COLUMNS,
-	readSection: readBannerSection
-}];
+var SEARCHABLE_TABLES = [
+	{
+		columns: SCHEDULE_PLANNER_COLUMNS,
+		readSection: readSchedulePlannerSection
+	},
+	{
+		columns: BANNER_SUMMARY_COLUMNS,
+		readSection: readBannerSection
+	},
+	{
+		columns: BANNER_RESULTS_COLUMNS,
+		readSection: readBannerResultsSection,
+		takeOverColumn: BANNER_RESULTS_BUTTON_COLUMN
+	}
+];
 addSidebar();
-addSearchColumns();
-new MutationObserver(addSearchColumns).observe(document.body, {
+addAllSearchButtons();
+new MutationObserver(addAllSearchButtons).observe(document.body, {
 	childList: true,
 	subtree: true
 });
-function addSearchColumns() {
-	for (const { columns, readSection } of SEARCHABLE_TABLES) for (const table of tablesWithColumns(columns)) addSearchColumn(table, readSection);
+function addAllSearchButtons() {
+	for (const searchableTable of SEARCHABLE_TABLES) for (const table of tablesWithColumns(searchableTable.columns)) addSearchButtons(table, searchableTable);
 }
 //#endregion

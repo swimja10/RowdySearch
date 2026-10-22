@@ -86,6 +86,13 @@ def taught_numbers(professor):
     return {course.split()[-1] for course in professor["courses"]}
 
 
+# The course's name in the newest semester it was taught. Courses get renamed: CS 2713 was
+# "Computer Programming II" back when its sections were CS 1714.
+def newest_title(semesters):
+    newest_sections = list(semesters.values())[-1]
+    return newest_sections[0]["title"]
+
+
 class Combiner:
     def __init__(self):
         self.professors = {}  # display name -> {"courses": {...}, "rmp": [...]}
@@ -108,11 +115,10 @@ class Combiner:
         key = (course, term, section)
         if key not in self.sections:
             courses = self.professors[professor]["courses"]
-            semesters = courses.setdefault(
-                course, {"courseName": title, "semesters": {}}
-            )["semesters"]
+            semesters = courses.setdefault(course, {"semesters": {}})["semesters"]
             entry = {
                 "section": section,
+                "title": title,  # Topics courses (like ARC 3433) have a different one per section.
                 "syllabusCode": None,
                 "grades": None,
                 "instructorEvaluation": None,
@@ -217,11 +223,14 @@ class Combiner:
 
     def sorted_output(self):
         for professor in self.professors.values():
-            for course in professor["courses"].values():
-                semesters = course["semesters"]
-                course["semesters"] = {
-                    term: sorted(semesters[term], key=lambda s: s["section"])
-                    for term in sorted(semesters, key=term_key)
+            for code, course in professor["courses"].items():
+                semesters = {
+                    term: sorted(course["semesters"][term], key=lambda s: s["section"])
+                    for term in sorted(course["semesters"], key=term_key)
+                }
+                professor["courses"][code] = {
+                    "courseName": newest_title(semesters),
+                    "semesters": semesters,
                 }
         return self.professors
 

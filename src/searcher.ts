@@ -1,13 +1,13 @@
-import { CLASS_KEY, type RawGradeData, type RawProfessor } from "./utils/gradeData.ts";
+import type { Professor } from "./utils/gradeData.ts";
 
 const ALLOWED_WRONG_WORDS = 1;
 
-type Entry = { professor: string; course: string; classes: string[]; words: string[] };
-export type Match = { professor: string; course: string; classes: string[]; score: number };
+type Entry = { professor: string; course: string; words: string[] };
+export type Match = { professor: string; course: string; score: number };
 export type SearchIndex = Map<string, Entry[]>;
 
-export function buildSearchIndex(data: RawGradeData): SearchIndex {
-  return indexByWord(buildEntries(data));
+export function buildSearchIndex(professors: Record<string, Professor>): SearchIndex {
+  return indexByWord(buildEntries(professors));
 }
 
 export function search(index: SearchIndex, query: string): Match[] {
@@ -26,7 +26,6 @@ export function search(index: SearchIndex, query: string): Match[] {
     .map(([entry]) => ({
       professor: entry.professor,
       course: entry.course,
-      classes: entry.classes,
       score: closeness(queryWords, entry.words),
     }))
     .sort((first, second) => second.score - first.score);
@@ -54,31 +53,25 @@ function isAnyOf(queryWord: string, words: string[]): boolean {
   return words.some((word) => isSameWord(queryWord, word));
 }
 
-function buildEntries(professors: RawGradeData): Entry[] {
+// One entry for each course a professor has taught, found by their name, the course code, or any title
+// its sections have had (older names, and each topic in a topics course).
+function buildEntries(professors: Record<string, Professor>): Entry[] {
   const built: Entry[] = [];
-  for (const [professor, info] of Object.entries(professors)) {
-    for (const [course, classes] of classesByCourse(info)) {
-      const titles = classes.map((classKey) => classKey.match(CLASS_KEY)![2]);
-      const words = wordsOf([professor, course, ...titles].join(" "));
-      built.push({ professor, course, classes, words: [...new Set(words)] });
+  for (const professor of Object.values(professors)) {
+    for (const course of professor.courses) {
+      const titles = course.offerings.flatMap((offering) => offering.titles);
+      const words = wordsOf([professor.name, course.code, ...titles].join(" "));
+      built.push({ professor: professor.name, course: course.code, words: [...new Set(words)] });
     }
   }
   return built;
 }
 
-function classesByCourse(info: RawProfessor): Map<string, string[]> {
-  const grouped = new Map<string, string[]>();
-  for (const classKey of Object.keys(info)) {
-    const course = classKey.match(CLASS_KEY)?.[1];
-    if (!course) continue;
-    grouped.set(course, [...(grouped.get(course) ?? []), classKey]);
-  }
-  return grouped;
-}
-
 function wordsOf(text: string): string[] {
   const plain = text.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase();
-  return plain.match(/[a-z0-9]+/g) ?? [];
+  // A course code typed without its space ("MAT1213") is the same two words as "MAT 1213".
+  const spacedOut = plain.replace(/([a-z])(\d)/g, "$1 $2");
+  return spacedOut.match(/[a-z0-9]+/g) ?? [];
 }
 
 function indexByWord(allEntries: Entry[]): SearchIndex {

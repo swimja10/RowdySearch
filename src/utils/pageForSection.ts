@@ -1,7 +1,7 @@
 import type { Page, Section } from "../page.ts";
 import { search, sharesEveryWord, type SearchIndex } from "../searcher.ts";
 
-// Which page a Schedule Planner Search button opens:
+// Which page a registration table's Search button opens:
 //   the professor's class page, if they've taught this course before
 //   their professor page, if they haven't
 //   the course page with everyone who teaches it, if the instructor isn't in our data ("Staff")

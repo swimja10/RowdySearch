@@ -18,8 +18,8 @@ export type SidebarMessage =
 // What clicking RowdySearch's icon in Chrome's toolbar (background.ts) tells the page.
 export type ToolbarMessage = "toggleSidebar";
 
-// One row of Schedule Planner's section table, sent to the sidebar by its Search button.
+// One row of a registration site's class table, sent to the sidebar by its Search button.
 export type Section = {
-  instructor: string; // "Beatty, Sean Padraic", the way Schedule Planner shows it
+  instructor: string; // "Beatty, Sean Padraic", the way the registration sites show it
   courseCode: string; // "MAT 1213"
 };

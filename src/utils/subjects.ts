@@ -1,7 +1,8 @@
 import type { GradeData } from "../hooks/useGradeData.ts";
 import type { Page, Subject } from "../page.ts";
-import { findCourse, gradesOf, teachersOf } from "./courses.ts";
-import { countStudents, type GradeCounts } from "./grades.ts";
+import { allOfferings, findCourse, gradesOf, teachersOf } from "./courses.ts";
+import type { ClassOffering } from "./gradeData.ts";
+import { countStudents } from "./grades.ts";
 
 // How many of a course's professors to compare when analytical mode opens on that course.
 const PROFESSORS_TO_START_WITH = 3;
@@ -30,16 +31,15 @@ export function professorNameOf(subject: Subject): string | null {
   return subject.type === "course" ? null : subject.professorName;
 }
 
-export function gradesForSubject(subject: Subject, { professors, searchIndex }: GradeData): GradeCounts {
+// Every semester of every class a subject covers, for working out its grades and Bluebook ratings.
+export function offeringsForSubject(subject: Subject, { professors, searchIndex }: GradeData): ClassOffering[] {
   switch (subject.type) {
     case "professor":
-      return gradesOf(professors[subject.professorName].classes);
-    case "course": {
-      const teachers = teachersOf(subject.courseCode, professors, searchIndex);
-      return gradesOf(teachers.flatMap((teacher) => teacher.course.offerings));
-    }
+      return allOfferings(professors[subject.professorName]);
+    case "course":
+      return teachersOf(subject.courseCode, professors, searchIndex).flatMap((teacher) => teacher.course.offerings);
     case "class":
-      return gradesOf(findCourse(professors[subject.professorName], subject.courseCode)?.offerings ?? []);
+      return findCourse(professors[subject.professorName], subject.courseCode)?.offerings ?? [];
 
     default:
       throw new Error(`Invalid subject: ${subject satisfies never}`);

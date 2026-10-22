@@ -4,7 +4,7 @@
 
 # RowdySearch
 
-**Pick the right UTSA professor in one click.** RowdySearch is a Chrome extension that puts grade distributions, Rate My Professors ratings, and the latest syllabus next to every class while you register.
+**Pick the right UTSA professor in one click.** RowdySearch is a Chrome extension that puts grade distributions, Bluebook course evaluations, Rate My Professors ratings, and the latest syllabus next to every class while you register.
 
 Built by Jacob Swim and Angelina Lu.
 
@@ -19,7 +19,7 @@ No building needed. The built extension is already in `dist/`.
 2. Open `chrome://extensions` and turn on **Developer mode** (top right).
 3. Click **Load unpacked** and pick this folder (the one with `manifest.json` in it).
 4. Pin RowdySearch from the puzzle-piece menu so its icon stays in the toolbar.
-5. Open Schedule Planner and click any **Search** button, or click the toolbar icon on any site.
+5. Open Schedule Planner or Banner's class search and click any **Search** button, or click the toolbar icon on any site.
 
 ## Images
 <img width="1280" height="800" alt="r2" src="https://github.com/user-attachments/assets/e85ce7fa-e019-4b11-ae3b-d87b2c6b74e3" /> <img width="403" height="488" alt="r3" src="https://github.com/user-attachments/assets/518d1b1d-fb6c-4091-b673-d9ec74ab6d75" />
@@ -34,9 +34,11 @@ It is boring, tedious work, and it takes about 10 minutes per professor. RowdySe
 
 | Feature | What you get |
 | --- | --- |
-| **Search buttons** | A **RowdySearch** column gives every class a **Search** button that opens that professor's class: median grade, Rate My Professors rating, and the latest syllabus. It appears in Schedule Planner's section tables and Shopping Cart, and in the Summary table of Banner's Register for Classes. |
-| **Sidebar anywhere** | Click the toolbar icon, or the orange Lookup tab on the right edge of the page, to open or close the sidebar on any website. (It can't open on Chrome's own `chrome://` pages.) |
+| **Search buttons** | A **RowdySearch** column gives every class a **Search** button that opens that professor's class: median grade, Bluebook and Rate My Professors ratings, and the latest syllabus. It appears in Schedule Planner's section tables and Shopping Cart; in Banner's class search results (Browse Classes, and Register for Classes' Find Classes tab), in place of the mostly empty Linked Sections column (courses with a lab keep their View Linked button under Search); and in the Summary table of Register for Classes. |
+| **Bluebook ratings** | UTSA's own end-of-semester course evaluations: the instructor and course ratings (out of 5), averaged over every section, on every professor, class, and course page and in Analytical Mode. |
+| **Sidebar anywhere** | Click the toolbar icon, or the orange RowdySearch tab on the right edge of the page, to open or close the sidebar on any website. (It can't open on Chrome's own `chrome://` pages.) |
 | **Analytical Mode** | The orange Venn diagram in the sidebar's top right corner opens a full screen view for comparing up to 8 professors, whole courses, or one professor's class. It starts out comparing whatever page you opened it from. |
+| **Share and review** | The sidebar's home page shares RowdySearch to GroupMe, X, Reddit, Instagram, email, and more (the › arrow shows the rest), copies its link, and links straight to its reviews on the Chrome Web Store. |
 
 Analytical Mode shows four things side by side:
 
@@ -44,7 +46,7 @@ Analytical Mode shows four things side by side:
 | --- | --- |
 | Grade distribution chart | F to A+, as percent or students, lines or bars, each grade or "at or above" |
 | Median Grade chart | Every subject you are comparing on one chart |
-| Comparison table | Average GPA, % above or below the course average, A's, D/F, withdrawals, RMP |
+| Comparison table | Average GPA, % above or below the course average, A's, D/F, withdrawals, Bluebook, RMP |
 | Reviews | Everyone's RMP reviews in one place |
 
 ### Searching
@@ -53,9 +55,9 @@ In the sidebar or in Analytical Mode, type a search and press **Enter**:
 
 | You type | Enter opens |
 | --- | --- |
-| `Sean Beatty` | His professor page: RMP stats, reviews, median grade across every class |
+| `Sean Beatty` | His professor page: Bluebook and RMP stats, reviews, median grade across every class |
 | `Beatty MAT 1213` | His MAT 1213 page: median grade, latest syllabus, every semester |
-| `linear algebra` or `MAT 1213` | The course page: every professor who teaches it, side by side |
+| `linear algebra`, `MAT 1213`, or `MAT1213` | The course page: every professor who teaches it, side by side |
 
 ## How we built it
 
@@ -66,8 +68,8 @@ In the sidebar or in Analytical Mode, type a search and press **Enter**:
 | Charts and motion | Plotly.js, anime.js |
 | Search | Our own typo-tolerant search engine (`src/searcher.ts`) |
 | Grade data | Official UTSA grade distributions, obtained straight from the university through a public records request |
-| Syllabi and reviews | Simple Syllabus and Rate My Professors, gathered with the scrapers in `scrappers/` |
-| Data pipeline | Python (`combine_data.py`) merges all three sources into one file |
+| Syllabi, evaluations, and reviews | Simple Syllabus, Bluebook, and Rate My Professors, gathered with the collectors in `data_collectors/` |
+| Data pipeline | Python (`combine_data.py`) merges all four sources into one file |
 
 ### Where the grade data comes from
 
@@ -123,7 +125,7 @@ npm run build
 
 `npm run build` updates `dist/`. **Commit `dist/` along with your code changes**, since that's what everyone else's Chrome runs. Then press the reload button on the extension's card in `chrome://extensions`, and reload any open Schedule Planner tabs.
 
-`npm run dev` opens the sidebar as a normal web page with hot reload. The Schedule Planner column and the Lookup tab only appear once the extension is loaded in Chrome.
+`npm run dev` opens the sidebar as a normal web page with hot reload. The RowdySearch columns and tab only appear once the extension is loaded in Chrome.
 
 Try the searcher in the terminal:
 
@@ -135,9 +137,9 @@ Running a `.ts` file directly with `node` needs Node.js 22.18 or newer. On Node 
 
 ### Updating the data
 
-1. Run the scrapers in `scrappers/` to get new `professors.json` and `RMP.json`.
-2. For new semesters of grades, file a new public records request with UTSA (through the online portal on [utsa.edu/openrecords](https://www.utsa.edu/openrecords/), by email to PublicInfo@utsa.edu, or by mail to the Office of Legal Affairs) and update `data/grade_data.json` with what they send.
-3. Run `python3 combine_data.py` to rebuild `data/cleaned_grade_data.json`.
+1. For new semesters of grades, file a new public records request with UTSA (through the online portal on [utsa.edu/openrecords](https://www.utsa.edu/openrecords/), by email to PublicInfo@utsa.edu, or by mail to the Office of Legal Affairs) and add the spreadsheets they send to `grade_data/`.
+2. Run `python3 run_collectors.py` to collect grades, Rate My Professors, Simple Syllabus, and Bluebook into `data/raw_data/` (about 45 minutes).
+3. Run `python3 combine_data.py` to rebuild `data/professors.json`.
 4. Reload the extension. (No build needed: the sidebar reads the data file directly.)
 
 ### How it fits together
@@ -146,16 +148,16 @@ Running a `.ts` file directly with `node` needs Node.js 22.18 or newer. On Node 
 | --- | --- |
 | `manifest.json` | Tells Chrome about the icon, its permissions, and which sites get the sidebar on their own |
 | `dist/` | The built extension that Chrome runs (made by `npm run build`, committed on purpose). `plotly.js` is the chart library and `libraries.js` is React and the other npm packages; the rest is our code |
-| `data/cleaned_grade_data.json` | Every professor's grades, syllabi, and RMP data. The sidebar reads it from here |
+| `data/professors.json` | Every professor's grades, syllabi, Bluebook evaluations, and RMP data. The sidebar reads it from here |
 | `src/background.ts` | Opens or closes the sidebar on the current page when you click the toolbar icon |
-| `src/content/` | Runs on the page: the sidebar and its Lookup tab, and the RowdySearch column (`searchColumn.ts`) with one file per site that reads its table (`schedulePlanner.ts`, `bannerSummary.ts`) |
+| `src/content/` | Runs on the page: the sidebar and its RowdySearch tab, and the RowdySearch column (`searchColumn.ts`) with one file per table that reads it (`schedulePlanner.ts`, `bannerSearchResults.ts`, `bannerSummary.ts`) |
 | `index.html`, `src/main.tsx`, `src/App.tsx` | The sidebar (React + Tailwind) |
 | `src/context/` | Which page the sidebar is on, plus the Back history |
-| `src/components/` | The search, professor, class, and course pages and their pieces |
+| `src/components/` | The search, professor, class, and course pages and their pieces. `home/` is the home page: example searches, sharing, and reviews |
 | `src/components/analytics/` | Analytical Mode: the full screen panel, its charts (Plotly), table, and picker |
 | `src/utils/subjects.ts`, `series.ts`, `statistics.ts` | What Analytical Mode compares, the chart colors, and the math (GPA, percentages) |
 | `src/searcher.ts` | Finds professors and courses, even with typos |
-| `src/utils/` | Reads the JSON, groups classes into courses, works out median grades |
+| `src/utils/` | Reads the JSON, works out median grades and Bluebook averages, and builds every outside link (`links.ts`) |
 
 ### Repo structure
 
@@ -176,12 +178,23 @@ RowdyLookup
 ├── tsconfig.app.json
 ├── tsconfig.node.json
 ├── searcher.ts
-├── combine_data.py
-├── data   (grades, syllabi, and RMP data)
-│   ├── cleaned_grade_data.json
-│   ├── grade_data.json
-│   ├── professors.json
-│   └── RMP.json
+├── requirements.txt
+├── run_collectors.py   (runs every data collector)
+├── combine_data.py   (merges what they collected into data/professors.json)
+├── data
+│   ├── professors.json   (what the sidebar reads)
+│   └── raw_data   (what each collector saved)
+│       ├── bluebook_data.json
+│       ├── grade_distribution_data.json
+│       ├── rmp_data.json
+│       └── simple_syllabus_data.json
+├── data_collectors
+│   ├── blue_book.py
+│   ├── common_format.py
+│   ├── grade_distribution.py
+│   ├── rmp.py
+│   └── simple_syllabus.py
+├── grade_data   (UTSA's grade distribution spreadsheets)
 ├── dist   (built extension, committed on purpose)
 │   ├── background.js
 │   ├── content.js
@@ -202,9 +215,8 @@ RowdyLookup
 │       ├── icon-16.png
 │       ├── icon-32.png
 │       └── icon-48.png
-├── scrappers   (browser-console scrapers)
-│   ├── rmp_scrapper.js
-│   └── simple_syllabus_console.js
+├── tests
+│   └── test_simple_syllabus.py
 └── src
     ├── App.tsx
     ├── background.ts
@@ -229,6 +241,11 @@ RowdyLookup
     │   ├── Section.tsx
     │   ├── SyllabusLinks.tsx
     │   ├── VennIcon.tsx
+    │   ├── home   (the home page)
+    │   │   ├── Home.tsx
+    │   │   ├── ReviewCard.tsx
+    │   │   ├── ShareCard.tsx
+    │   │   └── shareTargets.ts
     │   └── analytics   (Analytical Mode)
     │       ├── AnalyticsMode.tsx
     │       ├── ComparingList.tsx
@@ -241,6 +258,7 @@ RowdyLookup
     │       ├── SubjectPicker.tsx
     │       └── Toggle.tsx
     ├── content   (runs on the web page)
+    │   ├── bannerSearchResults.ts
     │   ├── bannerSummary.ts
     │   ├── index.ts
     │   ├── schedulePlanner.ts
@@ -252,13 +270,16 @@ RowdyLookup
     ├── hooks
     │   └── useGradeData.ts
     └── utils
+        ├── clipboard.ts
         ├── courses.ts
         ├── format.ts
         ├── gradeData.ts
         ├── grades.ts
         ├── hostPage.ts
+        ├── links.ts
         ├── pageForSearch.ts
         ├── pageForSection.ts
+        ├── semesters.ts
         ├── series.ts
         ├── statistics.ts
         └── subjects.ts

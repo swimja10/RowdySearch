@@ -1,9 +1,9 @@
 import Button from "./Button.tsx";
 import { useLookup } from "../context/useLookup.ts";
-import { gradesOf, type Course } from "../utils/courses.ts";
-import { formatRmpRating } from "../utils/format.ts";
+import { bluebookOf, gradesOf } from "../utils/courses.ts";
+import { formatRating } from "../utils/format.ts";
 import { medianGrade } from "../utils/grades.ts";
-import type { Professor } from "../utils/gradeData.ts";
+import type { Course, Professor } from "../utils/gradeData.ts";
 
 type ClassCardProps = {
   professor: Professor;
@@ -28,7 +28,8 @@ export function ClassCard({ professor, course, detail }: ClassCardProps) {
       </div>
       <div className="flex shrink-0 flex-col items-end text-sm">
         <span>Median {median ?? "—"}</span>
-        <span className="text-zinc-400">{formatRmpRating(professor.rmp.rating)}</span>
+        <span className="text-zinc-400">{formatRating("Bluebook", bluebookOf(course.offerings).instructor)}</span>
+        <span className="text-zinc-400">{formatRating("RMP", professor.rmp.rating)}</span>
       </div>
     </div>
   );

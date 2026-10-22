@@ -5,9 +5,10 @@ import { Reviews } from "./Reviews.tsx";
 import { Section } from "./Section.tsx";
 import { SyllabusLinks } from "./SyllabusLinks.tsx";
 import { useLookup } from "../context/useLookup.ts";
-import { findCourse, gradesOf, type Course } from "../utils/courses.ts";
+import { bluebookOf, findCourse, gradesOf } from "../utils/courses.ts";
+import { formatRating } from "../utils/format.ts";
 import { medianGrade } from "../utils/grades.ts";
-import type { ClassOffering } from "../utils/gradeData.ts";
+import type { ClassOffering, Course, Review } from "../utils/gradeData.ts";
 
 type ClassPageProps = {
   professorName: string;
@@ -18,7 +19,6 @@ export function ClassPage({ professorName, courseCode }: ClassPageProps) {
   const { professors, openProfessor, openCourse } = useLookup();
   const professor = professors[professorName];
   const course = findCourse(professor, courseCode)!;
-  const grades = gradesOf(course.offerings);
 
   return (
     <div className="flex flex-col gap-5">
@@ -32,23 +32,23 @@ export function ClassPage({ professorName, courseCode }: ClassPageProps) {
         </span>
       </div>
 
-      <ProfessorStats rmp={professor.rmp} grades={grades} medianLabel={`Median Grade in ${course.code}`} />
+      <ProfessorStats rmp={professor.rmp} offerings={course.offerings} medianLabel={`Median Grade in ${course.code}`} />
 
       <Section title="Latest syllabus">
         <LatestSyllabus course={course} />
       </Section>
 
       <Section title={`Grades in ${course.code}`}>
-        <GradeBars grades={grades} />
+        <GradeBars grades={gradesOf(course.offerings)} />
       </Section>
 
       <Section title="What students say">
-        <Reviews reviews={professor.rmp.reviews} />
+        <Reviews reviews={thisCourseFirst(professor.rmp.reviews, course.code)} />
       </Section>
 
       <Section title="Every semester">
         {course.offerings.map(offering => (
-          <SemesterRow key={`${offering.semester} ${offering.title}`} offering={offering} />
+          <SemesterRow key={offering.semester} offering={offering} courseTitle={course.title} />
         ))}
       </Section>
 
@@ -62,6 +62,14 @@ export function ClassPage({ professorName, courseCode }: ClassPageProps) {
       </div>
     </div>
   );
+}
+
+// Reviews of this course before reviews of the professor's other courses. RMP keeps the course
+// the way the student typed it ("ACC2013", or just "2013"), so only the course number is compared.
+function thisCourseFirst(reviews: Review[], courseCode: string): Review[] {
+  const courseNumber = courseCode.split(" ")[1];
+  const isThisCourse = (review: Review) => review.course.match(/\d{4}/)?.[0] === courseNumber;
+  return [...reviews].sort((first, second) => Number(isThisCourse(second)) - Number(isThisCourse(first)));
 }
 
 type LatestSyllabusProps = {
@@ -85,16 +93,26 @@ function LatestSyllabus({ course }: LatestSyllabusProps) {
 
 type SemesterRowProps = {
   offering: ClassOffering;
+  courseTitle: string;
 };
 
-function SemesterRow({ offering }: SemesterRowProps) {
+// A semester the class was listed under another name (an older one, or another topic) says so.
+function SemesterRow({ offering, courseTitle }: SemesterRowProps) {
   const median = medianGrade(offering.grades);
+  const bluebook = bluebookOf([offering]);
+  const otherTitles = offering.titles.filter(title => title !== courseTitle);
 
   return (
     <div className="flex flex-col gap-1 rounded-xl bg-zinc-800 p-3">
-      <div className="flex items-center justify-between gap-3">
-        <span className="font-medium">{offering.semester}</span>
-        <span className="text-sm">{median === null ? "No grades yet" : `Median ${median}`}</span>
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex flex-col">
+          <span className="font-medium">{offering.semester}</span>
+          {otherTitles.length > 0 && <span className="text-sm text-zinc-400">{otherTitles.join(" · ")}</span>}
+        </div>
+        <div className="flex flex-col items-end text-sm">
+          <span>{median === null ? "No grades yet" : `Median ${median}`}</span>
+          {bluebook.sectionCount > 0 && <span className="text-zinc-400">{formatRating("Bluebook", bluebook.instructor)}</span>}
+        </div>
       </div>
       <SyllabusLinks syllabi={offering.syllabi} />
     </div>

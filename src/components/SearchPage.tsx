@@ -1,5 +1,6 @@
 import { type SubmitEvent } from "react";
 import { ClassCard } from "./ClassCard.tsx";
+import { Home } from "./home/Home.tsx";
 import { useLookup } from "../context/useLookup.ts";
 import { search, type Match } from "../searcher.ts";
 import { findCourse } from "../utils/courses.ts";
@@ -31,7 +32,7 @@ export function SearchPage({ query }: SearchPageProps) {
           placeholder="Professor, class, or subject"
         />
       </form>
-      <SearchResults query={query} results={results} />
+      {query.trim() === "" ? <Home /> : <SearchResults query={query} results={results} />}
     </div>
   );
 }
@@ -43,14 +44,6 @@ type SearchResultsProps = {
 
 function SearchResults({ query, results }: SearchResultsProps) {
   const { professors } = useLookup();
-
-  if (query.trim() === "") {
-    return (
-      <p className="py-12 text-center text-zinc-500">
-        Type a professor, a class, or a subject like "linear algebra", then press Enter.
-      </p>
-    );
-  }
 
   if (results.length === 0) {
     return <p className="py-12 text-center text-zinc-500">No matches for "{query}".</p>;

@@ -1,5 +1,7 @@
+import type { Review } from "../utils/gradeData.ts";
+
 type ReviewsProps = {
-  reviews: string[];
+  reviews: Review[];
 };
 
 export function Reviews({ reviews }: ReviewsProps) {
@@ -10,8 +12,9 @@ export function Reviews({ reviews }: ReviewsProps) {
   return (
     <ul className="flex flex-col gap-2">
       {reviews.map((review, index) => (
-        <li key={index} className="rounded-xl bg-zinc-800 p-3 text-sm text-zinc-300">
-          “{review}”
+        <li key={index} className="flex flex-col gap-1 rounded-xl bg-zinc-800 p-3 text-sm text-zinc-300">
+          {review.course !== "" && <span className="text-xs font-medium text-zinc-500">{review.course}</span>}
+          <span>“{review.comment}”</span>
         </li>
       ))}
     </ul>

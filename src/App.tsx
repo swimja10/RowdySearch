@@ -1,6 +1,7 @@
 import { AnalyticsMode } from "./components/analytics/AnalyticsMode.tsx";
 import { ClassPage } from "./components/ClassPage.tsx";
 import { CoursePage } from "./components/CoursePage.tsx";
+import { Footer } from "./components/Footer.tsx";
 import { Header } from "./components/Header.tsx";
 import { ProfessorPage } from "./components/ProfessorPage.tsx";
 import { SearchPage } from "./components/SearchPage.tsx";
@@ -22,7 +23,7 @@ export default function App() {
   );
 }
 
-// Analytical Mode covers everything. Otherwise it's the sidebar: the header and the current page.
+// Analytical Mode covers everything. Otherwise it's the sidebar: the header, the current page, and the footer.
 function CurrentScreen() {
   const { isAnalyticsOpen } = useLookup();
 
@@ -32,6 +33,7 @@ function CurrentScreen() {
     <div className="flex min-h-screen flex-col gap-4 bg-zinc-900 p-4">
       <Header />
       <CurrentPage />
+      <Footer />
     </div>
   );
 }

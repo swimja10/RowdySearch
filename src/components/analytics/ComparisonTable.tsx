@@ -1,3 +1,4 @@
+import { twMerge } from "tailwind-merge";
 import { SeriesName } from "./SeriesName.tsx";
 import type { Subject } from "../../page.ts";
 import { formatGpa, formatOutOfFive, formatShare } from "../../utils/format.ts";
@@ -5,9 +6,11 @@ import { countStudents, LETTER_GRADES, medianGrade } from "../../utils/grades.ts
 import type { SeriesData } from "../../utils/series.ts";
 import { A_GRADES, averageGpa, D_AND_F_GRADES, percentDifference, percentWhoGot, WITHDREW } from "../../utils/statistics.ts";
 
-const COLUMNS = ["Comparing", "Median", "Avg GPA", "vs. course average", "A's", "D or F", "Withdrew", "Grades", "RMP"];
+const COLUMNS = ["Comparing", "Median", "Avg GPA", "vs. course average", "A's", "D or F", "Withdrew", "Grades", "Bluebook instructor", "Bluebook course", "RMP"];
 // These short columns read better with the value centered under the title.
 const CENTERED_COLUMNS = ["Median", "Avg GPA"];
+// These long titles take two lines, which leaves room for the names in the first column.
+const TWO_LINE_COLUMNS = ["vs. course average", "Bluebook instructor", "Bluebook course"];
 
 type ComparisonTableProps = {
   seriesData: SeriesData[];
@@ -22,11 +25,7 @@ export function ComparisonTable({ seriesData, onOpen }: ComparisonTableProps) {
         <thead className="text-xs uppercase tracking-wide text-zinc-400">
           <tr>
             {COLUMNS.map(column => (
-              <th
-                key={column}
-                className={`whitespace-nowrap px-3 py-2 font-semibold ${CENTERED_COLUMNS.includes(column) ? "text-center" : ""}`}>
-                {column}
-              </th>
+              <th key={column} className={headerStyle(column)}>{column}</th>
             ))}
           </tr>
         </thead>
@@ -35,6 +34,14 @@ export function ComparisonTable({ seriesData, onOpen }: ComparisonTableProps) {
         </tbody>
       </table>
     </div>
+  );
+}
+
+function headerStyle(column: string) {
+  return twMerge(
+    "whitespace-nowrap px-3 py-2 font-semibold",
+    CENTERED_COLUMNS.includes(column) && "text-center",
+    TWO_LINE_COLUMNS.includes(column) && "w-24 whitespace-normal",
   );
 }
 
@@ -49,7 +56,7 @@ function ComparisonRow({ series, onOpen }: ComparisonRowProps) {
 
   return (
     <tr className="border-t border-zinc-700 tabular-nums">
-      <td className="px-3 py-2"><SeriesName series={series} onOpen={onOpen} /></td>
+      <td className="min-w-44 px-3 py-2"><SeriesName series={series} onOpen={onOpen} /></td>
       <td className="px-3 py-2 text-center font-semibold">{medianGrade(grades) ?? "—"}</td>
       <td className="px-3 py-2 text-center">{formatGpa(gpa)}</td>
       <td className="whitespace-nowrap px-3 py-2"><CourseComparison gpa={gpa} courseGpa={series.courseGpa} /></td>
@@ -57,6 +64,8 @@ function ComparisonRow({ series, onOpen }: ComparisonRowProps) {
       <td className="px-3 py-2">{formatShare(percentWhoGot(grades, D_AND_F_GRADES))}</td>
       <td className="px-3 py-2">{formatShare(percentWhoGot(grades, WITHDREW))}</td>
       <td className="px-3 py-2">{countStudents(grades, LETTER_GRADES).toLocaleString()}</td>
+      <td className="whitespace-nowrap px-3 py-2">{formatOutOfFive(series.bluebook.instructor)}</td>
+      <td className="whitespace-nowrap px-3 py-2">{formatOutOfFive(series.bluebook.course)}</td>
       <td className="whitespace-nowrap px-3 py-2">{series.professorName === null ? "—" : formatOutOfFive(series.rating)}</td>
     </tr>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, stagger, utils } from "animejs";
 import Button from "../Button.tsx";
+import { Footer } from "../Footer.tsx";
 import { Section } from "../Section.tsx";
 import { VennIcon } from "../VennIcon.tsx";
 import { ComparingList } from "./ComparingList.tsx";
@@ -55,7 +56,7 @@ export function AnalyticsMode() {
       ref={panelRef}
       className="fixed inset-y-0 right-0 overflow-y-auto bg-zinc-900 text-zinc-100"
       style={{ width: sidebarWidth }}>
-      <div className="flex flex-col gap-6 p-6">
+      <div className="flex min-h-full flex-col gap-6 p-6">
         <header data-reveal className="flex items-center justify-between gap-4 opacity-0">
           <h1 className="flex items-center gap-3 text-2xl font-bold">
             <VennIcon className="h-8 w-12 text-orange-500" />
@@ -101,6 +102,10 @@ export function AnalyticsMode() {
               </>
             )}
           </main>
+        </div>
+
+        <div data-reveal className="mt-auto opacity-0">
+          <Footer />
         </div>
       </div>
     </div>

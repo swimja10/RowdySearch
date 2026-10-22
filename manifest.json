@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "RowdySearch",
   "version": "2.0.0",
-  "description": "See Rate My Professors ratings, median grades, and syllabi for UTSA professors while you register.",
+  "description": "See grade distributions, Bluebook evaluations, Rate My Professors ratings, and syllabi for UTSA professors while you register.",
   "icons": {
     "16": "dist/icons/icon-16.png",
     "32": "dist/icons/icon-32.png",

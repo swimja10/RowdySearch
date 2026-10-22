@@ -6,7 +6,7 @@ import type { Professor } from "./gradeData.ts";
 // Where pressing Enter takes you, based on what the search names:
 //   "Sean Beatty"                    -> his professor page
 //   "Beatty MAT 1213"                -> his MAT 1213 class page
-//   "linear algebra" or "MAT 1213"   -> the course page, with everyone who teaches it
+//   "linear algebra" or "MAT1213"    -> the course page, with everyone who teaches it
 // Analytical Mode uses the same rule to pick what Enter adds. Returns null when nothing matched.
 export function pageForSearch(query: string, results: Match[], professors: Record<string, Professor>): Subject | null {
   if (results.length === 0) return null;
@@ -21,7 +21,7 @@ export function pageForSearch(query: string, results: Match[], professors: Recor
   const bestMatch = closestName(bestMatches, query);
   const professor = professors[bestMatch.professor];
   const course = findCourse(professor, bestMatch.course)!;
-  const courseWords = [course.code, ...course.offerings.map((offering) => offering.title)].join(" ");
+  const courseWords = [course.code, ...course.offerings.flatMap((offering) => offering.titles)].join(" ");
 
   const namesProfessor = sharesAWord(query, professor.name);
   // Words that are part of the name don't count toward the course too ("Chen" isn't "Chem").
