@@ -1,303 +1,262 @@
+import base64
 import json
 import re
+import time
 import unicodedata
+from collections import Counter
 from pathlib import Path
 
-DATA_DIR = Path(__file__).resolve().parent / "raw_data"
+from data_collectors.common_format import RAW_DIR, term_key
 
-GRADES = [
-    "A+",
-    "A",
-    "A-",
-    "B+",
-    "B",
-    "B-",
-    "C+",
-    "C",
-    "C-",
-    "D+",
-    "D",
-    "D-",
-    "F",
-    "W",
-    "IN",
-    "IW",
-    "IF",
-]
+DATA_DIR = Path(__file__).resolve().parent / "data"
 
-NOT_A_CLASS = {"Department", "RMP"}
-SEASONS = ["Spring", "Summer", "Fall"]
-# Renumbered courses are found automatically: same subject and same title, where
-# one number stops and the other starts within a year. List a pair here only when
-# the title changed too, which the automatic rule cannot see.
-RETITLED = {"CS 1714": "CS 2713"}
-CLASS_KEY = re.compile(r"(?P<course>.+?) - (?P<title>.+) \((?P<semester>\w+ \d{4})\)")
-NO_RATING = {
-    "Professor rating": None,
-    "Difficulty level": None,
-    "Number of ratings": None,
-    "Would take again %": None,
-    "Link": None,
-    "5 reviews": {f"Review {number}": None for number in range(1, 6)},
-}
+RENUMBERED = {"CS 1714": "CS 2713"}
 
-
-def main():
-    grades = load("grade_data.json")
-    syllabi = load("professors.json")
-    ratings = load("RMP.json")
-    renumbered = renumbered_courses(grades, syllabi)
-    for old, new in sorted(renumbered.items()):
-        print(f"{old} -> {new}")
-    grades = renumber(grades, renumbered)
-    syllabi = renumber(syllabi, renumbered)
-    save(combine(grades, syllabi, ratings), "cleaned_grade_data.json")
+TITLES = {"dr", "phd", "edd"}
+NAME_SUFFIXES = {"jr", "sr", "ii", "iii", "iv"}  # Only for display not for matching.
 
 
 def load(file_name):
-    with open(DATA_DIR / file_name, encoding="utf-8") as file:
+    with open(RAW_DIR / file_name, encoding="utf-8") as file:
         return json.load(file)
 
 
-def save(professors, file_name):
-    with open(DATA_DIR / file_name, "w", encoding="utf-8") as file:
-        json.dump(professors, file, indent=2, ensure_ascii=False)
+def split_name(name):
+    words = [
+        word for word in name.split() if word.replace(".", "").lower() not in TITLES
+    ]
+    name = " ".join(words)
+    if "," in name:
+        last, first = name.split(",", 1)
+    else:
+        first, _, last = name.partition(" ")
+    return first.strip(), last.strip()
 
 
-def renumbered_courses(grades, syllabi):
-    terms, same_title = {}, {}
-    for entry in [*grades.values(), *syllabi.values()]:
-        for class_key, _ in classes_of(entry):
-            match = CLASS_KEY.fullmatch(class_key)
-            courses = split_courses(match["course"])
-            for course in courses:
-                terms.setdefault(course, set()).add(term_number(match["semester"]))
-            if len(courses) == 1:
-                subject = courses[0].rsplit(" ", 1)[0]
-                title = re.sub(
-                    r"[^a-z0-9]", "", match["title"].lower().replace("&", "and")
-                )
-                same_title.setdefault((subject, title), set()).add(courses[0])
-
-    renumbered = {}
-    for courses in same_title.values():
-        in_order = sorted(courses, key=lambda course: min(terms[course]))
-        handovers = list(zip(in_order, in_order[1:]))
-        if handovers and all(
-            is_handover(terms[old], terms[new], old, new) for old, new in handovers
-        ):
-            renumbered.update({old: in_order[-1] for old in in_order[:-1]})
-    return {**renumbered, **RETITLED}
+def display_name(name):
+    first, last = split_name(name)
+    return f"{first} {last}"
 
 
-def is_handover(old_terms, new_terms, old, new):
-    gap = min(new_terms) - max(old_terms)
-    return 0 < gap <= len(SEASONS) and is_graduate(old) == is_graduate(new)
+def match_key(name):
+    plain = (
+        unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode().lower()
+    )
+    first, last = split_name(plain)
+    surname = [
+        word for word in last.split() if word.replace(".", "") not in NAME_SUFFIXES
+    ]
+    if not first or not surname:
+        return None
+    return first.split()[0], surname[-1]
 
 
-def is_graduate(course):
-    return course.rsplit(" ", 1)[1] >= "5"
+def course_id(course):
+    return RENUMBERED.get(course, course)
 
 
-def term_number(semester):
-    season, year = semester.split()
-    return int(year) * len(SEASONS) + SEASONS.index(season)
-
-
-def split_courses(course):
-    subjects, numbers = course.rsplit(" ", 1)
+def split_cross_listed(course, section):
+    subjects, numbers = course.split(" ", 1)
+    subjects, numbers, sections = (
+        subjects.split("/"),
+        numbers.split("/"),
+        section.split("/"),
+    )
+    if not len(subjects) == len(numbers) == len(sections):
+        return [(course, section)]
     return [
-        f"{subject} {number}"
-        for subject, number in zip(subjects.split("/"), numbers.split("/"))
+        (f"{subject} {number}", sec)
+        for subject, number, sec in zip(subjects, numbers, sections)
     ]
 
 
-def renumber(professors, renumbered):
+def rmp_id(base64_id):
+    return int(base64.b64decode(base64_id).decode().split("-")[1])
+
+
+def reviewed_numbers(profile):
     return {
-        name: renumber_classes(name, entry, renumbered)
-        for name, entry in professors.items()
+        number
+        for review in profile["recentReviews"]
+        for number in re.findall(r"\d{4}", review["course"])
     }
 
 
-def renumber_classes(name, entry, renumbered):
-    result = {}
-    for key, value in entry.items():
-        new_key = key if key in NOT_A_CLASS else current_class_key(key, renumbered)
-        if new_key in result or (new_key != key and new_key in entry):
-            raise ValueError(f"{name}: {key!r} collides with {new_key!r}")
-        result[new_key] = value
-    return result
+def taught_numbers(professor):
+    return {course.split()[-1] for course in professor["courses"]}
 
 
-def current_class_key(class_key, renumbered):
-    course = course_of(class_key)
-    current = [renumbered.get(old, old).rsplit(" ", 1) for old in split_courses(course)]
-    subjects = "/".join(subject for subject, _ in current)
-    numbers = "/".join(number for _, number in current)
-    return f"{subjects} {numbers}{class_key[len(course) :]}"
+class Combiner:
+    def __init__(self):
+        self.professors = {}  # display name -> {"courses": {...}, "rmp": [...]}
+        self.names = {}  # match key -> [display names]
+        self.sections = {}  # (course, term, section) -> section dict
+        self.owners = {}  # (course, term, section) -> display name
+
+    def add_professor(self, name):
+        display = display_name(name)
+        if display not in self.professors:
+            self.professors[display] = {"courses": {}, "rmp": []}
+            self.names.setdefault(match_key(name), []).append(display)
+        return display
+
+    def find_professor(self, name):
+        matches = self.names.get(match_key(name))
+        return matches[0] if matches else self.add_professor(name)
+
+    def add_section(self, professor, course, title, term, section):
+        key = (course, term, section)
+        if key not in self.sections:
+            courses = self.professors[professor]["courses"]
+            semesters = courses.setdefault(
+                course, {"courseName": title, "semesters": {}}
+            )["semesters"]
+            entry = {
+                "section": section,
+                "syllabusCode": None,
+                "grades": None,
+                "instructorEvaluation": None,
+                "courseEvaluation": None,
+            }
+            semesters.setdefault(term, []).append(entry)
+            self.sections[key] = entry
+            self.owners[key] = professor
+        return self.sections[key]
+
+    def add_grades(self, grades):
+        for name, info in grades.items():
+            professor = self.add_professor(name)
+            for raw_course, course in info["courses"].items():
+                for s in course["sections"]:
+                    entry = self.add_section(
+                        professor,
+                        course_id(raw_course),
+                        course["title"],
+                        s["term"],
+                        s["section"],
+                    )
+                    entry["grades"] = s["grades"]
+
+    def add_bluebook(self, bluebook):
+        for name, info in bluebook.items():
+            for raw_course, course in info["courses"].items():
+                for s in course["sections"]:
+                    course_code = course_id(raw_course)
+                    key = (course_code, s["term"], s["section"])
+                    if key in self.sections:
+                        entry = self.sections[key]
+                    else:
+                        professor = self.find_professor(name)
+                        entry = self.add_section(
+                            professor,
+                            course_code,
+                            course["title"],
+                            s["term"],
+                            s["section"],
+                        )
+                    entry["instructorEvaluation"] = s["instructorEvaluation"]
+                    entry["courseEvaluation"] = s["courseEvaluation"]
+
+    def add_syllabi(self, syllabi, graded_terms):
+        for info in syllabi.values():
+            rows = []
+            for raw_course, course in info["courses"].items():
+                for s in course["sections"]:
+                    for one_course, one_section in split_cross_listed(
+                        raw_course, s["section"]
+                    ):
+                        key = (course_id(one_course), s["term"], one_section)
+                        rows.append((key, course["title"], s["syllabusCode"]))
+
+            known = Counter(
+                self.owners[key] for key, _, _ in rows if key in self.owners
+            )
+            professor = known.most_common(1)[0][0] if known else None
+
+            for key, title, code in rows:
+                if key in self.sections:
+                    entry = self.sections[key]
+                elif key[1] in graded_terms:
+                    continue
+                else:
+                    professor = professor or self.find_professor(info["name"])
+                    entry = self.add_section(professor, key[0], title, key[1], key[2])
+                if entry["syllabusCode"] is None:
+                    entry["syllabusCode"] = code
+
+    def add_rmp(self, ratings):
+        for base64_id, profile in ratings.items():
+            candidates = self.names.get(match_key(profile["name"]), [])
+            if len(candidates) > 1:
+                candidates = [
+                    p
+                    for p in candidates
+                    if reviewed_numbers(profile) & taught_numbers(self.professors[p])
+                ]
+            for professor in candidates:
+                self.professors[professor]["rmp"].append(
+                    {
+                        "rmpId": rmp_id(base64_id),
+                        "department": profile["department"],
+                        "avgRating": profile["avgRating"],
+                        "avgDifficulty": profile["avgDifficulty"],
+                        "wouldTakeAgainPercent": profile["wouldTakeAgainPercent"],
+                        "recentReviews": profile["recentReviews"],
+                    }
+                )
+
+        for professor in self.professors.values():
+            if len(professor["rmp"]) > 1:
+                taught = [
+                    p
+                    for p in professor["rmp"]
+                    if reviewed_numbers(p) & taught_numbers(professor)
+                ]
+                if taught:
+                    professor["rmp"] = taught
+
+    def sorted_output(self):
+        for professor in self.professors.values():
+            for course in professor["courses"].values():
+                semesters = course["semesters"]
+                course["semesters"] = {
+                    term: sorted(semesters[term], key=lambda s: s["section"])
+                    for term in sorted(semesters, key=term_key)
+                }
+        return self.professors
 
 
-def combine(grades, syllabi, ratings):
-    professors = {name: graded_professor(entry) for name, entry in grades.items()}
-    known_names = {name: [name] for name in grades}
-    instructors = instructors_by_section(grades)
+def combine_data():
+    start = time.perf_counter()
 
-    for syllabus_name, entry in syllabi.items():
-        name = registrar_name(syllabus_name, entry, grades, syllabi, instructors)
-        known_names.setdefault(name, []).append(syllabus_name)
-        professor = professors.setdefault(name, {"Department": entry["Department"]})
-        for class_key, syllabus_class in classes_of(entry):
-            add_syllabus_class(professor, class_key, syllabus_class)
+    grades = load("grade_distribution_data.json")
+    graded_terms = {
+        s["term"]
+        for info in grades.values()
+        for c in info["courses"].values()
+        for s in c["sections"]
+    }
 
-    spare_ratings = index_spare_ratings(ratings, known_names)
-    for name, professor in professors.items():
-        professor["RMP"] = best_rating(known_names[name], ratings, spare_ratings)
-    return dict(sorted(professors.items()))
+    combiner = Combiner()
+    combiner.add_grades(grades)
+    combiner.add_bluebook(load("bluebook.json"))
+    combiner.add_syllabi(load("simple_syllabus_data.json"), graded_terms)
+    combiner.add_rmp(load("rmp_data.json"))
+    data = combiner.sorted_output()
 
+    with open(DATA_DIR / "professors.json", "w", encoding="utf-8") as file:
+        json.dump(data, file, separators=(",", ":"), ensure_ascii=False)
 
-def graded_professor(entry):
-    professor = {"Department": entry["Department"]}
-    for class_key, graded_class in classes_of(entry):
-        professor[class_key] = {
-            "Semester": graded_class["Semester"],
-            "Sections": list(graded_class["Sections"]),
-            "Syllabus": {},
-            **{grade: graded_class[grade] for grade in GRADES},
-        }
-    return professor
-
-
-def classes_of(entry):
-    return [(key, value) for key, value in entry.items() if key not in NOT_A_CLASS]
-
-
-def instructors_by_section(grades):
-    instructors = {}
-    for name, entry in grades.items():
-        for class_key, graded_class in classes_of(entry):
-            for section in graded_class["Sections"]:
-                offering = (graded_class["Semester"], course_of(class_key), section)
-                instructors[offering] = name
-    return instructors
-
-
-def course_of(class_key):
-    return CLASS_KEY.fullmatch(class_key)["course"]
-
-
-def registrar_name(syllabus_name, entry, grades, syllabi, instructors):
-    if syllabus_name in grades:
-        return syllabus_name
-    for offering in offerings_of(entry):
-        instructor = instructors.get(offering)
-        if (
-            instructor
-            and instructor not in syllabi
-            and share_a_name(instructor, syllabus_name)
-        ):
-            return instructor
-    return syllabus_name
-
-
-def offerings_of(entry):
-    return [
-        offering
-        for class_key, syllabus_class in classes_of(entry)
-        for combined_section in syllabus_class["Syllabus"]
-        for offering in split_cross_listing(class_key, combined_section)
-    ]
-
-
-def split_cross_listing(class_key, combined_section):
-    match = CLASS_KEY.fullmatch(class_key)
-    subjects, numbers = match["course"].rsplit(" ", 1)
-    return [
-        (match["semester"], f"{subject} {number}", section)
-        for subject, number, section in zip(
-            subjects.split("/"), numbers.split("/"), combined_section.split("/")
-        )
-    ]
-
-
-def share_a_name(first_name, second_name):
-    return bool(set(name_words(first_name)) & set(name_words(second_name)))
-
-
-def name_words(name):
-    ascii_name = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode()
-    return re.sub(r"[^a-z ]", "", ascii_name.lower().replace("-", " ")).split()
-
-
-def add_syllabus_class(professor, class_key, syllabus_class):
-    for combined_section, link in syllabus_class["Syllabus"].items():
-        offerings = split_cross_listing(class_key, combined_section)
-        graded = [
-            (find_class(professor, offering), offering[2]) for offering in offerings
-        ]
-        graded = [(found, section) for found, section in graded if found]
-        for graded_class, section in graded:
-            graded_class["Syllabus"][section] = link
-        if not graded:
-            add_unmatched_section(professor, class_key, combined_section, link)
-
-
-def find_class(professor, offering):
-    semester, course, section = offering
-    for class_key, candidate in classes_of(professor):
-        if (
-            is_graded(candidate)
-            and candidate["Semester"] == semester
-            and course_of(class_key) == course
-            and section in candidate["Sections"]
-        ):
-            return candidate
-    return None
-
-
-def is_graded(class_entry):
-    return class_entry["A"] is not None
-
-
-def add_unmatched_section(professor, class_key, section, link):
-    semester = CLASS_KEY.fullmatch(class_key)["semester"]
-    class_entry = professor.setdefault(
-        class_key,
-        {
-            "Semester": semester,
-            "Sections": [],
-            "Syllabus": {},
-            **{grade: None for grade in GRADES},
-        },
+    sections = combiner.sections.values()
+    print(f"{len(data)} professors | {len(combiner.sections)} sections")
+    print(
+        f"grades: {sum(s['grades'] is not None for s in sections)} | "
+        f"evaluations: {sum(s['instructorEvaluation'] is not None for s in sections)} | "
+        f"syllabi: {sum(s['syllabusCode'] is not None for s in sections)} | "
+        f"RMP: {sum(bool(p['rmp']) for p in data.values())} professors"
     )
-    if not is_graded(class_entry) and section not in class_entry["Sections"]:
-        class_entry["Sections"].append(section)
-    class_entry["Syllabus"][section] = link
-
-
-def index_spare_ratings(ratings, known_names):
-    taken_names = {name for names in known_names.values() for name in names}
-    spare_ratings = {}
-    for name, entry in ratings.items():
-        if name not in taken_names:
-            spare_ratings.setdefault(name_key(name), []).append(entry["RMP"])
-    return spare_ratings
-
-
-def name_key(name):
-    words = name_words(re.sub(r"\[RMP \d+\]", "", name))
-    return (words[0], words[-1]) if words else ()
-
-
-def best_rating(names, ratings, spare_ratings):
-    matches = [ratings[name]["RMP"] for name in names if name in ratings]
-    if not matches:
-        matches = [
-            rating for name in names for rating in spare_ratings.get(name_key(name), [])
-        ]
-    return max(
-        matches, key=lambda rating: rating["Number of ratings"], default=NO_RATING
-    )
+    print(f"Took {time.perf_counter() - start:.1f}s")
 
 
 if __name__ == "__main__":
-    main()
+    combine_data()

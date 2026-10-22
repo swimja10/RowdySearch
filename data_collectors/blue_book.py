@@ -263,7 +263,7 @@ def bluebook(workers=4, professor_limit=None):
             merge(data, chunk_data)
             failed += chunk_failed
 
-    save(data, "bluebook.json")
+    save(data, "bluebook_data.json")
     print("Bluebook is finally done...")
     print(
         f"Done: {len(data)} professors | failed: {failed} | took {(time.time() - start) / 60:.1f} min"
