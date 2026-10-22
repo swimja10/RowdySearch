@@ -1,4 +1,25 @@
 {
+    "VGVhY2hlci01MDc1Nzcw": {
+        "name": "Joseph  Ruesch",
+        "department": "Chemistry",
+        "avgRating": 1,
+        "avgDifficulty": 5,
+        "wouldTakeAgainPercent": 0,
+        "recentReviews": [
+            {
+                "course": "CHE-1073",
+                "comment": "Doesn't know how to teach."
+            },
+            {
+                "course": "CHE-1073",
+                "comment": "lectures are poor, puts questions and equations up and does not explain how to do them just asks to solve them, also does not explain concepts well, homework and pre lecture videos do not correlate with the content learned in class and no review for exams except one session."
+            },
+            {
+                "course": "CHE-1073",
+                "comment": "Does NOT show you grades at all. Does NOT give practice exams or any source material of extra credit at all. Does NOT respond to emails or canvas. Encourages people to drop out of his class. Take anyone other than this guy."
+            }
+        ]
+    },
     "VGVhY2hlci0zMDI2Mzc5": {
         "name": "Bijal Karia",
         "department": "Biology",
@@ -25,23 +46,6 @@
             {
                 "course": "1203",
                 "comment": "Dr. Bijal was amazing, and despite her reading straight off the slides, she always goes further into detail and will answer any questions. She's willing to help, and around final exams, she'll offer extended office hours for all students. The material is difficult, but she provides plenty of reviews."
-            }
-        ]
-    },
-    "VGVhY2hlci01MDc1Nzcw": {
-        "name": "Joseph  Ruesch",
-        "department": "Chemistry",
-        "avgRating": 1,
-        "avgDifficulty": 5,
-        "wouldTakeAgainPercent": 0,
-        "recentReviews": [
-            {
-                "course": "CHE-1073",
-                "comment": "lectures are poor, puts questions and equations up and does not explain how to do them just asks to solve them, also does not explain concepts well, homework and pre lecture videos do not correlate with the content learned in class and no review for exams except one session."
-            },
-            {
-                "course": "CHE-1073",
-                "comment": "Does NOT show you grades at all. Does NOT give practice exams or any source material of extra credit at all. Does NOT respond to emails or canvas. Encourages people to drop out of his class. Take anyone other than this guy."
             }
         ]
     },
@@ -14039,19 +14043,6 @@
             }
         ]
     },
-    "VGVhY2hlci0zMTA0MzYz": {
-        "name": "Kassady Thomas",
-        "department": "Law",
-        "avgRating": null,
-        "avgDifficulty": null,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            {
-                "course": "4323",
-                "comment": "Easy class if you're ready to read/work. The only grades are 4 case brief essays and 1 test. The briefs are easy as long as you read the cases and guidelines thoroughly. However, the cases are LONG 30-50(ish) pages each and since they're federal documents, they can be hard to understand."
-            }
-        ]
-    },
     "VGVhY2hlci0zMTQ4NDYw": {
         "name": "Monica Barbay",
         "department": "Writing",
@@ -14062,6 +14053,19 @@
             {
                 "course": "2413",
                 "comment": "She makes lectures interesting and is always availabe to give feedback on your work, also very understanding. She explains very well and you can tell she knows about the subject. Activities are easy, so you do need to go to class or you will go down one letter grade after 3 unjustified absences"
+            }
+        ]
+    },
+    "VGVhY2hlci0zMTA0MzYz": {
+        "name": "Kassady Thomas",
+        "department": "Law",
+        "avgRating": null,
+        "avgDifficulty": null,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            {
+                "course": "4323",
+                "comment": "Easy class if you're ready to read/work. The only grades are 4 case brief essays and 1 test. The briefs are easy as long as you read the cases and guidelines thoroughly. However, the cases are LONG 30-50(ish) pages each and since they're federal documents, they can be hard to understand."
             }
         ]
     },
@@ -20293,27 +20297,6 @@
             }
         ]
     },
-    "VGVhY2hlci0yNjY2OTA0": {
-        "name": "Tiffany Farias-Sokoloski",
-        "department": "Education",
-        "avgRating": 5,
-        "avgDifficulty": 1.7,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            {
-                "course": "EED-3303",
-                "comment": "She is a really nice and passionate professor who makes lectures easy but informative. It is graded by very few things, but she thankfully offers time to work on it during class time. I would recommend!"
-            },
-            {
-                "course": "EED-3303",
-                "comment": "Sokoloski was a great professor. She really does care about her students. You do NOT need the text book at all."
-            },
-            {
-                "course": "EED-3303",
-                "comment": "Dr.Fairas is an amazing professor and really shows she cares about her students. Her lectures are so informative and really stick with you. The homework is light, and really easy to follow with her rubrics."
-            }
-        ]
-    },
     "VGVhY2hlci0yNzUxMzE0": {
         "name": "Allison Veach",
         "department": "Biology",
@@ -20332,6 +20315,27 @@
             {
                 "course": "ES3103",
                 "comment": "Dr. Veach is a very knowledgeable professor with a big background in microbiology. I'm glad I took this class, as ES majors aren't given much other bio and microbio exposure. The exams can be a little tricky but you just need to study hard. Also, she is pretty strict on attendance and only lets you miss one class without an excuse."
+            }
+        ]
+    },
+    "VGVhY2hlci0yNjY2OTA0": {
+        "name": "Tiffany Farias-Sokoloski",
+        "department": "Education",
+        "avgRating": 5,
+        "avgDifficulty": 1.7,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            {
+                "course": "EED-3303",
+                "comment": "She is a really nice and passionate professor who makes lectures easy but informative. It is graded by very few things, but she thankfully offers time to work on it during class time. I would recommend!"
+            },
+            {
+                "course": "EED-3303",
+                "comment": "Sokoloski was a great professor. She really does care about her students. You do NOT need the text book at all."
+            },
+            {
+                "course": "EED-3303",
+                "comment": "Dr.Fairas is an amazing professor and really shows she cares about her students. Her lectures are so informative and really stick with you. The homework is light, and really easy to follow with her rubrics."
             }
         ]
     },
@@ -23216,19 +23220,6 @@
             }
         ]
     },
-    "VGVhY2hlci0zMDc5MjI1": {
-        "name": "Marian Mae Cedeno",
-        "department": "Economics",
-        "avgRating": 5,
-        "avgDifficulty": 2,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            {
-                "course": "ECO2023",
-                "comment": "She does chapter reviews which were really helpful on the tests. Lectures were interesting and entertaing. Answered every question I had about anything. Easy to participate. Tests were low stress. Only downside I would say are the Inquisitives."
-            }
-        ]
-    },
     "VGVhY2hlci0zMDUwNjUw": {
         "name": "Jacquelyne Read",
         "department": "Chemistry",
@@ -23239,6 +23230,19 @@
             {
                 "course": "3643",
                 "comment": "Dr. Read made Organic Chemistry II engaging and clear. She explained complex reactions with patience and humor, turning difficult topics into interesting lessons. Her passion for teaching and dedication to helping students truly made the class enjoyable and rewarding."
+            }
+        ]
+    },
+    "VGVhY2hlci0zMDc5MjI1": {
+        "name": "Marian Mae Cedeno",
+        "department": "Economics",
+        "avgRating": 5,
+        "avgDifficulty": 2,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            {
+                "course": "ECO2023",
+                "comment": "She does chapter reviews which were really helpful on the tests. Lectures were interesting and entertaing. Answered every question I had about anything. Easy to participate. Tests were low stress. Only downside I would say are the Inquisitives."
             }
         ]
     },
@@ -26839,35 +26843,6 @@
             }
         ]
     },
-    "VGVhY2hlci0yNTg1Mjkw": {
-        "name": "Casey Straud",
-        "department": "Psychology",
-        "avgRating": 4.8,
-        "avgDifficulty": 2.3,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            {
-                "course": "PSY3543",
-                "comment": "Good professor, cares about his students. You will HAVE to read the textbook. No assignments so not much grading cushion; graded only on 3 tests & the final (mandatory, cumulative), lowest grade is dropped, & tests are in person/no notes. Attendance was not mandatory but I'd recommend going. Some extra credit at the end of the semester"
-            },
-            {
-                "course": "PSY4253",
-                "comment": "Attendance was optional but the lectures were good and informative so I would attend. Dr Straud really cares for his students and subject matter and you can tell. Read the text, go over the powerpoint, and go to class and it will be a pretty easy A."
-            },
-            {
-                "course": "PSY4253",
-                "comment": "I loved this class. Scheduled meetings twice a week. If you like to participate in class discussion TAKE THIS CLASS! Professor Straud loves hearing our thoughts/feedback and is constantly checking if we have any questions. The course was a breeze but I definitely learned a lot! highly recommend!!"
-            },
-            {
-                "course": "PSY3543",
-                "comment": "Dr. Straud is a great lecturer. Just completed his class with an A+. Attend lectures, take notes, read the chapters and you'll do great. Easy A but also incredibly interesting course and I learned a lot. Dr. S offers extra credit towards the end but I didn't even need it. Take this class!"
-            },
-            {
-                "course": "PSY3543",
-                "comment": "Great professor and really wants his students to pass and learn. Gave no tests only weekly quizzes that were really easy. Only 1 test which is the final and is 100 questions but gives you plenty of time to finish it and it's really easy. TAKE HIM FOR AN EASY A! Plus it's a great subject to learn about."
-            }
-        ]
-    },
     "VGVhY2hlci0zMDQ3MDE0": {
         "name": "Ivan Toledo",
         "department": "Mathematics",
@@ -26894,6 +26869,35 @@
             {
                 "course": "MAT1093",
                 "comment": "He's awesome! Just pay attention in class and you'll be good. Do all the homeworks, allows test corrections which saved my grade. I would 100% take him again!"
+            }
+        ]
+    },
+    "VGVhY2hlci0yNTg1Mjkw": {
+        "name": "Casey Straud",
+        "department": "Psychology",
+        "avgRating": 4.8,
+        "avgDifficulty": 2.3,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            {
+                "course": "PSY3543",
+                "comment": "Good professor, cares about his students. You will HAVE to read the textbook. No assignments so not much grading cushion; graded only on 3 tests & the final (mandatory, cumulative), lowest grade is dropped, & tests are in person/no notes. Attendance was not mandatory but I'd recommend going. Some extra credit at the end of the semester"
+            },
+            {
+                "course": "PSY4253",
+                "comment": "Attendance was optional but the lectures were good and informative so I would attend. Dr Straud really cares for his students and subject matter and you can tell. Read the text, go over the powerpoint, and go to class and it will be a pretty easy A."
+            },
+            {
+                "course": "PSY4253",
+                "comment": "I loved this class. Scheduled meetings twice a week. If you like to participate in class discussion TAKE THIS CLASS! Professor Straud loves hearing our thoughts/feedback and is constantly checking if we have any questions. The course was a breeze but I definitely learned a lot! highly recommend!!"
+            },
+            {
+                "course": "PSY3543",
+                "comment": "Dr. Straud is a great lecturer. Just completed his class with an A+. Attend lectures, take notes, read the chapters and you'll do great. Easy A but also incredibly interesting course and I learned a lot. Dr. S offers extra credit towards the end but I didn't even need it. Take this class!"
+            },
+            {
+                "course": "PSY3543",
+                "comment": "Great professor and really wants his students to pass and learn. Gave no tests only weekly quizzes that were really easy. Only 1 test which is the final and is 100 questions but gives you plenty of time to finish it and it's really easy. TAKE HIM FOR AN EASY A! Plus it's a great subject to learn about."
             }
         ]
     },
@@ -55603,35 +55607,6 @@
             }
         ]
     },
-    "VGVhY2hlci0yMDQ5MTM3": {
-        "name": "Siwing Tsoi",
-        "department": "Philosophy",
-        "avgRating": 1.5,
-        "avgDifficulty": 4.7,
-        "wouldTakeAgainPercent": 0,
-        "recentReviews": [
-            {
-                "course": "PHIL102",
-                "comment": "I dropped this class because my grade was so poor. I only missed one class, took notes, read the handouts and participated in class and my grade was in the 40's 3 months into the semester. This professor is rude, condescending, does not care about her students, and is detrimental to education and success. Avoid this class at all costs. Do not take!"
-            },
-            {
-                "course": "PHIL102",
-                "comment": "Avoid this professor. Rude and the entire class structure is terrible. 2 daily 1 question quizzes that make little to zero sense."
-            },
-            {
-                "course": "PHIL1301",
-                "comment": "She has to be the worse professor I have ever had. She expects you to know all the material and if you don't she will make you feel dumb for answering wrong. You take quizzes every class that's only one question so if you get it wrong it's a zero for the day. You know it's bad when half the class drops before thanksgiving break. I would STAY AWAY!"
-            },
-            {
-                "course": "PHIL1301",
-                "comment": "Hardest class I've ever taken. Doesn't explain very much and expects you to understand from the start. Hard to understand due to Language barrier. I think she understands what she's talking about but expects you to also."
-            },
-            {
-                "course": "PHI3213",
-                "comment": "You will read 15-20 pages before class take a one question quiz before and after class. That is your grade for the day. 100,50 or 0. You will break into group discussion for 40mins. You will talk with your group about how no one understands the reading. Then spend 10 mins of Tsoi telling people they are wrong with no explanation or lecture. Repeat."
-            }
-        ]
-    },
     "VGVhY2hlci0xNzk0MTc3": {
         "name": "Laural Logan-Fain",
         "department": "Education",
@@ -55658,6 +55633,35 @@
             {
                 "course": "EDU5523",
                 "comment": "Excellent teacher who provides a lot of hands-on activities that relate to what is taught. We had to apply what we learned and not just learn a bunch of fact."
+            }
+        ]
+    },
+    "VGVhY2hlci0yMDQ5MTM3": {
+        "name": "Siwing Tsoi",
+        "department": "Philosophy",
+        "avgRating": 1.5,
+        "avgDifficulty": 4.7,
+        "wouldTakeAgainPercent": 0,
+        "recentReviews": [
+            {
+                "course": "PHIL102",
+                "comment": "I dropped this class because my grade was so poor. I only missed one class, took notes, read the handouts and participated in class and my grade was in the 40's 3 months into the semester. This professor is rude, condescending, does not care about her students, and is detrimental to education and success. Avoid this class at all costs. Do not take!"
+            },
+            {
+                "course": "PHIL102",
+                "comment": "Avoid this professor. Rude and the entire class structure is terrible. 2 daily 1 question quizzes that make little to zero sense."
+            },
+            {
+                "course": "PHIL1301",
+                "comment": "She has to be the worse professor I have ever had. She expects you to know all the material and if you don't she will make you feel dumb for answering wrong. You take quizzes every class that's only one question so if you get it wrong it's a zero for the day. You know it's bad when half the class drops before thanksgiving break. I would STAY AWAY!"
+            },
+            {
+                "course": "PHIL1301",
+                "comment": "Hardest class I've ever taken. Doesn't explain very much and expects you to understand from the start. Hard to understand due to Language barrier. I think she understands what she's talking about but expects you to also."
+            },
+            {
+                "course": "PHI3213",
+                "comment": "You will read 15-20 pages before class take a one question quiz before and after class. That is your grade for the day. 100,50 or 0. You will break into group discussion for 40mins. You will talk with your group about how no one understands the reading. Then spend 10 mins of Tsoi telling people they are wrong with no explanation or lecture. Repeat."
             }
         ]
     },
@@ -59226,35 +59230,6 @@
             }
         ]
     },
-    "VGVhY2hlci0xMjUzNDUx": {
-        "name": "Erin Reat",
-        "department": "Criminal Justice",
-        "avgRating": 4,
-        "avgDifficulty": 2.9,
-        "wouldTakeAgainPercent": 100,
-        "recentReviews": [
-            {
-                "course": "CRJ3233",
-                "comment": "Goes really fast in lectures but he has really good information. He uses powerpoints but he cant keep his train of thought, he really relies on the powerpoint although I know he can give the information without it. Good demonstrations and very friendly. Attendance only matters when there is a lab that needs to be done."
-            },
-            {
-                "course": "CRJ3233",
-                "comment": "Classes not long,  3 tests can replace with a paper for the one of the first two. Not comprehensive tests but tells you what is good to remember from the lectures so go to class or you have to really study everything. Tests are pretty easy, multiple choice, fill in the blank w word bank, label diagrams. Great teacher would definitely  take again."
-            },
-            {
-                "course": "3233",
-                "comment": "his test are tough. you have to study. no papers or projects just test.  he does post powerpoints. he is upbeat and very into his field.  no study guide for test though and doesn't give specifics on what to study exactly leading a lot of studying because material is a lot."
-            },
-            {
-                "course": "3233",
-                "comment": "Attendance not taken but gives unannounced labs worth 100 pts No book req but sometimes you get 40+ ppt slides in one class so test material covers 200 slides with no study guide just have to memorize it all. tests are mc,tf, fill in (gives a word bank) short answer. thought it would be more hands on. would not recommend"
-            },
-            {
-                "course": "CRJ3233",
-                "comment": "Great instructor. Some material was a bit complicated but he made it easier to understand. Labs were fairly simple. There was no study guide for any exams, but he gave good hints during lecture so I recommend attending class. Final exam was the trickiest but it's not impossible. Study the pp slides well & you'll do great."
-            }
-        ]
-    },
     "VGVhY2hlci0xNzA2MDY2": {
         "name": "Jennifer Espronceda",
         "department": "Policy Studies",
@@ -59281,6 +59256,35 @@
             {
                 "course": "LGS4123",
                 "comment": "Took this course in the SLSPA and she curves the grades a pretty good amount. I learned a lot about reasoning, but she only spent a week on philosophy. She was not super available and did not always explain work clearly. Easy A but a lot of classmates were worried about their grade all semester because her grading is not always clear."
+            }
+        ]
+    },
+    "VGVhY2hlci0xMjUzNDUx": {
+        "name": "Erin Reat",
+        "department": "Criminal Justice",
+        "avgRating": 4,
+        "avgDifficulty": 2.9,
+        "wouldTakeAgainPercent": 100,
+        "recentReviews": [
+            {
+                "course": "CRJ3233",
+                "comment": "Goes really fast in lectures but he has really good information. He uses powerpoints but he cant keep his train of thought, he really relies on the powerpoint although I know he can give the information without it. Good demonstrations and very friendly. Attendance only matters when there is a lab that needs to be done."
+            },
+            {
+                "course": "CRJ3233",
+                "comment": "Classes not long,  3 tests can replace with a paper for the one of the first two. Not comprehensive tests but tells you what is good to remember from the lectures so go to class or you have to really study everything. Tests are pretty easy, multiple choice, fill in the blank w word bank, label diagrams. Great teacher would definitely  take again."
+            },
+            {
+                "course": "3233",
+                "comment": "his test are tough. you have to study. no papers or projects just test.  he does post powerpoints. he is upbeat and very into his field.  no study guide for test though and doesn't give specifics on what to study exactly leading a lot of studying because material is a lot."
+            },
+            {
+                "course": "3233",
+                "comment": "Attendance not taken but gives unannounced labs worth 100 pts No book req but sometimes you get 40+ ppt slides in one class so test material covers 200 slides with no study guide just have to memorize it all. tests are mc,tf, fill in (gives a word bank) short answer. thought it would be more hands on. would not recommend"
+            },
+            {
+                "course": "CRJ3233",
+                "comment": "Great instructor. Some material was a bit complicated but he made it easier to understand. Labs were fairly simple. There was no study guide for any exams, but he gave good hints during lecture so I recommend attending class. Final exam was the trickiest but it's not impossible. Study the pp slides well & you'll do great."
             }
         ]
     },
@@ -73891,35 +73895,6 @@
             }
         ]
     },
-    "VGVhY2hlci0xMjE0NzU2": {
-        "name": "Maureen King",
-        "department": "Writing",
-        "avgRating": 4.5,
-        "avgDifficulty": 2,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            {
-                "course": "WRC1003",
-                "comment": "I enjoyed her class, attendance is mandatory she does take role. There's reading with in class discussion (must buy book) accepts late work and will work with students. Dosent ask much execpt read the material asked and write the papers. Good Professor!"
-            },
-            {
-                "course": "WRC1023",
-                "comment": "She is the best teacher I have had thus far.  She is one of the few that actually cares about her students and works hard to use the real world to teach instead of following the typical outline for the class. Taking this class will not only revitalize your faith in the teaching profession, it will also be easy enough to get you through the semester"
-            },
-            {
-                "course": "WRC1023",
-                "comment": "Wonderful class has been my favorite class at UTSA thus far."
-            },
-            {
-                "course": "WRC1023",
-                "comment": "Dr. King is very reasonable and is concerned of the well-being of her students. There are journal entires due for readings that are discussed during class, and 4 papers. The papers required some effort, but the journals are easy.  Great sense of humor and cares about her students!"
-            },
-            {
-                "course": "WRC1023",
-                "comment": "She is a new teacher from University of San Francisco, and didn't seem to have all her bearings yet. There are a lot of readings in the Conversations book that you have to write journals about, and roughly 4 papers to write. The papers were mainly soft deadlines, so there's not much to worry about in the class."
-            }
-        ]
-    },
     "VGVhY2hlci02NzU3MTc=": {
         "name": "Neal Cox",
         "department": "Art History",
@@ -73949,32 +73924,32 @@
             }
         ]
     },
-    "VGVhY2hlci01MjMyMDI=": {
-        "name": "Sherra Theison",
-        "department": "Philosophy",
-        "avgRating": 3.3,
-        "avgDifficulty": 3.8,
+    "VGVhY2hlci0xMjE0NzU2": {
+        "name": "Maureen King",
+        "department": "Writing",
+        "avgRating": 4.5,
+        "avgDifficulty": 2,
         "wouldTakeAgainPercent": null,
         "recentReviews": [
             {
-                "course": "PHIL2102",
-                "comment": "Best Phil prof. I've ever had!"
+                "course": "WRC1003",
+                "comment": "I enjoyed her class, attendance is mandatory she does take role. There's reading with in class discussion (must buy book) accepts late work and will work with students. Dosent ask much execpt read the material asked and write the papers. Good Professor!"
             },
             {
-                "course": "HUMSECT",
-                "comment": "If you work and go to school don't take this class. you have to read 100pgs. or more a night. There are only 2 papers that you write which make up your grade and they are hard really hard topics to write about. She is sweet and will help, but the work load doesn't allow time for other classes"
+                "course": "WRC1023",
+                "comment": "She is the best teacher I have had thus far.  She is one of the few that actually cares about her students and works hard to use the real world to teach instead of following the typical outline for the class. Taking this class will not only revitalize your faith in the teaching profession, it will also be easy enough to get you through the semester"
             },
             {
-                "course": "PHLIO1341",
-                "comment": "No Comments"
+                "course": "WRC1023",
+                "comment": "Wonderful class has been my favorite class at UTSA thus far."
             },
             {
-                "course": "PHILOSOPHY",
-                "comment": "Great Teacher- but be prepared to work your A** off.  You will be reading a book a week- and doggy paddling the whole time to keep up.  Be sure and ask her for help on your papers.  If you do- and follow her advice and re-write- she will give you a much better grade."
+                "course": "WRC1023",
+                "comment": "Dr. King is very reasonable and is concerned of the well-being of her students. There are journal entires due for readings that are discussed during class, and 4 papers. The papers required some effort, but the journals are easy.  Great sense of humor and cares about her students!"
             },
             {
-                "course": "PHILOSOPHY",
-                "comment": "Prof Theisen is animated and enthusiastic.  She is also completely into her own political agenda- liberal, socialist, simplistic, and self-congratulatory."
+                "course": "WRC1023",
+                "comment": "She is a new teacher from University of San Francisco, and didn't seem to have all her bearings yet. There are a lot of readings in the Conversations book that you have to write journals about, and roughly 4 papers to write. The papers were mainly soft deadlines, so there's not much to worry about in the class."
             }
         ]
     },
@@ -74007,6 +73982,35 @@
             }
         ]
     },
+    "VGVhY2hlci01MjMyMDI=": {
+        "name": "Sherra Theison",
+        "department": "Philosophy",
+        "avgRating": 3.3,
+        "avgDifficulty": 3.8,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "PHIL2102",
+                "comment": "Best Phil prof. I've ever had!"
+            },
+            {
+                "course": "HUMSECT",
+                "comment": "If you work and go to school don't take this class. you have to read 100pgs. or more a night. There are only 2 papers that you write which make up your grade and they are hard really hard topics to write about. She is sweet and will help, but the work load doesn't allow time for other classes"
+            },
+            {
+                "course": "PHLIO1341",
+                "comment": "No Comments"
+            },
+            {
+                "course": "PHILOSOPHY",
+                "comment": "Great Teacher- but be prepared to work your A** off.  You will be reading a book a week- and doggy paddling the whole time to keep up.  Be sure and ask her for help on your papers.  If you do- and follow her advice and re-write- she will give you a much better grade."
+            },
+            {
+                "course": "PHILOSOPHY",
+                "comment": "Prof Theisen is animated and enthusiastic.  She is also completely into her own political agenda- liberal, socialist, simplistic, and self-congratulatory."
+            }
+        ]
+    },
     "VGVhY2hlci05MjUxODc=": {
         "name": "Julie Shipp",
         "department": "Fine Arts",
@@ -74032,31 +74036,6 @@
             }
         ]
     },
-    "VGVhY2hlci0zMTQwNDU=": {
-        "name": "Amy Gilmour",
-        "department": "English",
-        "avgRating": 4.8,
-        "avgDifficulty": 2,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            {
-                "course": "ENG101",
-                "comment": "Such a nice and caring lady. Her class is always interesting to go to. As long as you do the work, and come to class, you will definately make an A."
-            },
-            {
-                "course": "ENG1013",
-                "comment": "not the clearest teaching but she'll go out of her way to help you if your having trouble"
-            },
-            {
-                "course": "ENG1013",
-                "comment": "I LOVE Mrs. Gilmour!!!  She is the best!"
-            },
-            {
-                "course": "ENG1013",
-                "comment": "No Comments"
-            }
-        ]
-    },
     "VGVhY2hlci0xMTUyOTgw": {
         "name": "Kelly Rodgers",
         "department": "Education",
@@ -74079,6 +74058,31 @@
             {
                 "course": "EDP3133",
                 "comment": "Great teacher. I took her in summer session so it was fast, but she covered all of the important material.  She usually gives real life stories along with her lectures which makes it more interesting.  Gives reviews for tests and she is very straightforward in her expectations.  Take her if you can!"
+            }
+        ]
+    },
+    "VGVhY2hlci0zMTQwNDU=": {
+        "name": "Amy Gilmour",
+        "department": "English",
+        "avgRating": 4.8,
+        "avgDifficulty": 2,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "ENG101",
+                "comment": "Such a nice and caring lady. Her class is always interesting to go to. As long as you do the work, and come to class, you will definately make an A."
+            },
+            {
+                "course": "ENG1013",
+                "comment": "not the clearest teaching but she'll go out of her way to help you if your having trouble"
+            },
+            {
+                "course": "ENG1013",
+                "comment": "I LOVE Mrs. Gilmour!!!  She is the best!"
+            },
+            {
+                "course": "ENG1013",
+                "comment": "No Comments"
             }
         ]
     },
@@ -74255,19 +74259,6 @@
             }
         ]
     },
-    "VGVhY2hlci0xMjkwMzIw": {
-        "name": "Joseph Starkey",
-        "department": "Statistics",
-        "avgRating": 4.5,
-        "avgDifficulty": 2,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            {
-                "course": "STA1053",
-                "comment": "Great professor! I hate stats and managed an A in his class. Honestly, anyone who said he is a hard prof to take has the IQ of a brick. That being said - he does not tolerate cheating or people playing dumb. If you have to take stats, take Starkey!"
-            }
-        ]
-    },
     "VGVhY2hlci0xMDY4NzU1": {
         "name": "Brett Winters",
         "department": "Architecture",
@@ -74278,6 +74269,19 @@
             {
                 "course": "ARCH903",
                 "comment": "easy professor...do your drawings and get an A simple...\r only thing is that he does talk a lot at the beginning of class\r other than that easy prof.."
+            }
+        ]
+    },
+    "VGVhY2hlci0xMjkwMzIw": {
+        "name": "Joseph Starkey",
+        "department": "Statistics",
+        "avgRating": 4.5,
+        "avgDifficulty": 2,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "STA1053",
+                "comment": "Great professor! I hate stats and managed an A in his class. Honestly, anyone who said he is a hard prof to take has the IQ of a brick. That being said - he does not tolerate cheating or people playing dumb. If you have to take stats, take Starkey!"
             }
         ]
     },
@@ -83082,19 +83086,6 @@
             }
         ]
     },
-    "VGVhY2hlci0xOTk0ODAx": {
-        "name": "Emmanuel Michaelides",
-        "department": "Science",
-        "avgRating": 1.5,
-        "avgDifficulty": 5,
-        "wouldTakeAgainPercent": null,
-        "recentReviews": [
-            {
-                "course": "2413",
-                "comment": "69 questions on test and half are questions with a paragraph explanation that is needed of a full blown summary. For example create a barometer with these materials...  fml DROP!"
-            }
-        ]
-    },
     "VGVhY2hlci0xOTU2NzM5": {
         "name": "Carla Flink",
         "department": "Public Administration",
@@ -83108,16 +83099,16 @@
             }
         ]
     },
-    "VGVhY2hlci0xOTc2OTMz": {
-        "name": "Juan Gonzalez",
-        "department": "Statistics",
+    "VGVhY2hlci0xOTk0ODAx": {
+        "name": "Emmanuel Michaelides",
+        "department": "Science",
         "avgRating": 1.5,
-        "avgDifficulty": 4,
+        "avgDifficulty": 5,
         "wouldTakeAgainPercent": null,
         "recentReviews": [
             {
-                "course": "STATSII",
-                "comment": "Threatening class, but manageable if your not working... Get ready to read the book, but he does help understand the material so read before class. Thick accent"
+                "course": "2413",
+                "comment": "69 questions on test and half are questions with a paragraph explanation that is needed of a full blown summary. For example create a barometer with these materials...  fml DROP!"
             }
         ]
     },
@@ -83131,6 +83122,19 @@
             {
                 "course": "STA1053",
                 "comment": "Awful Instructor, always late, does not know how to teach, the fact that she is a TEACHER is amazing.  Do not take.  Class is pretty much mandatory because she has so many pop quizzes.  The entire class is taught from powerpoint slides that she herself did not even make, when she doesn't know how to explain a slide she just skips over it entirely."
+            }
+        ]
+    },
+    "VGVhY2hlci0xOTc2OTMz": {
+        "name": "Juan Gonzalez",
+        "department": "Statistics",
+        "avgRating": 1.5,
+        "avgDifficulty": 4,
+        "wouldTakeAgainPercent": null,
+        "recentReviews": [
+            {
+                "course": "STATSII",
+                "comment": "Threatening class, but manageable if your not working... Get ready to read the book, but he does help understand the material so read before class. Thick accent"
             }
         ]
     },

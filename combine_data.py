@@ -239,7 +239,7 @@ def combine_data():
 
     combiner = Combiner()
     combiner.add_grades(grades)
-    combiner.add_bluebook(load("bluebook.json"))
+    combiner.add_bluebook(load("bluebook_data.json"))
     combiner.add_syllabi(load("simple_syllabus_data.json"), graded_terms)
     combiner.add_rmp(load("rmp_data.json"))
     data = combiner.sorted_output()
