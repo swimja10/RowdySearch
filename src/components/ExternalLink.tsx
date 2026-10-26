@@ -12,7 +12,7 @@ export function ExternalLink({ href, children }: ExternalLinkProps) {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="text-orange-400 hover:text-orange-300 hover:underline">
+      className="text-orange-400 hover:text-orange-300 active:text-orange-200 hover:underline">
       {children} ↗
     </a>
   );

@@ -75,9 +75,9 @@ function Button(t0) {
 }
 function getVariantStyles(variant) {
 	switch (variant) {
-		case "primary": return "bg-orange-600 hover:bg-orange-500";
-		case "secondary": return "bg-zinc-700 hover:bg-zinc-600 text-zinc-200";
-		case "link": return "p-0 text-left text-orange-400 hover:text-orange-300 hover:underline";
+		case "primary": return "bg-orange-600 hover:bg-orange-500 active:bg-orange-400";
+		case "secondary": return "bg-zinc-700 hover:bg-zinc-600 active:bg-zinc-500 text-zinc-200";
+		case "link": return "p-0 text-left text-orange-400 hover:text-orange-300 active:text-orange-200 hover:underline";
 		default: throw new Error(`Invalid variant: ${variant}`);
 	}
 }
@@ -2589,7 +2589,7 @@ function ExternalLink(t0) {
 			href,
 			target: "_blank",
 			rel: "noreferrer",
-			className: "text-orange-400 hover:text-orange-300 hover:underline",
+			className: "text-orange-400 hover:text-orange-300 active:text-orange-200 hover:underline",
 			children: [children, " ↗"]
 		});
 		$[0] = children;
@@ -3684,7 +3684,7 @@ function AnalyticsButton() {
 		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
 			onClick: openAnalytics,
 			"aria-label": "Analytical Mode",
-			className: "rounded p-1 text-orange-600 transition-colors hover:text-orange-400 focus-visible:text-orange-400",
+			className: "rounded p-1 text-orange-600 transition-colors hover:text-orange-400 focus-visible:text-orange-400 active:text-orange-300",
 			children: t0
 		});
 		$[1] = openAnalytics;
@@ -4073,7 +4073,7 @@ function ReviewCard() {
 			href: STORE_REVIEWS_LINK,
 			target: "_blank",
 			rel: "noreferrer",
-			className: "flex flex-col gap-1 rounded-xl bg-zinc-800 p-4 outline-none transition-colors hover:bg-zinc-700 focus-visible:ring-2 focus-visible:ring-orange-500",
+			className: "flex flex-col gap-1 rounded-xl bg-zinc-800 p-4 outline-none transition-colors hover:bg-zinc-700 active:bg-zinc-600 focus-visible:ring-2 focus-visible:ring-orange-500",
 			children: [t0, /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 				className: "text-sm text-zinc-400",
 				children: [
@@ -4392,7 +4392,7 @@ function ScrollingRow(t0) {
 function RowArrow(t0) {
 	const $ = (0, import_compiler_runtime.c)(5);
 	const { label, side, onClick, children } = t0;
-	const t1 = `absolute top-[22px] flex size-7 -translate-y-1/2 items-center justify-center rounded-full bg-zinc-600 pb-0.5 text-xl leading-none text-zinc-100 opacity-0 shadow-lg transition hover:bg-zinc-500 focus-visible:opacity-100 group-hover/row:opacity-100 ${side === "left" ? "-left-3" : "-right-3"}`;
+	const t1 = `absolute top-[22px] flex size-7 -translate-y-1/2 items-center justify-center rounded-full bg-zinc-600 pb-0.5 text-xl leading-none text-zinc-100 opacity-0 shadow-lg transition hover:bg-zinc-500 active:bg-zinc-400 focus-visible:opacity-100 group-hover/row:opacity-100 ${side === "left" ? "-left-3" : "-right-3"}`;
 	let t2;
 	if ($[0] !== children || $[1] !== label || $[2] !== onClick || $[3] !== t1) {
 		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
@@ -4411,7 +4411,7 @@ function RowArrow(t0) {
 	return t2;
 }
 function ShareLink(t0) {
-	const $ = (0, import_compiler_runtime.c)(11);
+	const $ = (0, import_compiler_runtime.c)(10);
 	const { target, onMessage } = t0;
 	let t1;
 	if ($[0] !== onMessage || $[1] !== target.name) {
@@ -4424,36 +4424,33 @@ function ShareLink(t0) {
 		$[2] = t1;
 	} else t1 = $[2];
 	const copyMessage = t1;
-	const t2 = target.copiesMessage ? `Copy a message about RowdySearch and open ${target.name}` : `Share on ${target.name}`;
-	const t3 = target.copiesMessage ? copyMessage : void 0;
-	let t4;
+	const t2 = target.copiesMessage ? copyMessage : void 0;
+	let t3;
 	if ($[3] !== target.icon || $[4] !== target.name) {
-		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShareIcon, {
+		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShareIcon, {
 			icon: target.icon,
 			children: target.name
 		});
 		$[3] = target.icon;
 		$[4] = target.name;
-		$[5] = t4;
-	} else t4 = $[5];
-	let t5;
-	if ($[6] !== t2 || $[7] !== t3 || $[8] !== t4 || $[9] !== target.link) {
-		t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+		$[5] = t3;
+	} else t3 = $[5];
+	let t4;
+	if ($[6] !== t2 || $[7] !== t3 || $[8] !== target.link) {
+		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
 			href: target.link,
 			target: "_blank",
 			rel: "noreferrer",
-			title: t2,
-			onClick: t3,
+			onClick: t2,
 			className: SHARE_BUTTON_STYLE,
-			children: t4
+			children: t3
 		});
 		$[6] = t2;
 		$[7] = t3;
-		$[8] = t4;
-		$[9] = target.link;
-		$[10] = t5;
-	} else t5 = $[10];
-	return t5;
+		$[8] = target.link;
+		$[9] = t4;
+	} else t4 = $[9];
+	return t4;
 }
 function ShareIcon(t0) {
 	const $ = (0, import_compiler_runtime.c)(8);
@@ -4467,7 +4464,7 @@ function ShareIcon(t0) {
 	let t2;
 	if ($[2] !== icon.color || $[3] !== t1) {
 		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-			className: "flex size-11 items-center justify-center rounded-full bg-zinc-900 transition-colors group-hover:bg-zinc-700 group-focus-visible:ring-2 group-focus-visible:ring-orange-500",
+			className: "flex size-11 items-center justify-center rounded-full bg-zinc-900 transition-colors group-hover:bg-zinc-700 group-active:bg-zinc-600 group-focus-visible:ring-2 group-focus-visible:ring-orange-500",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
 				viewBox: "0 0 24 24",
 				className: "size-5",

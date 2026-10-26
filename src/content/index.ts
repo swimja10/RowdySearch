@@ -2,6 +2,7 @@
 // and on any other page once you click RowdySearch's icon in Chrome's toolbar.
 import { BANNER_RESULTS_BUTTON_COLUMN, BANNER_RESULTS_COLUMNS, readBannerResultsSection } from "./bannerSearchResults.ts";
 import { BANNER_SUMMARY_COLUMNS, readBannerSection } from "./bannerSummary.ts";
+import { addPageStyles } from "./pageStyles.ts";
 import { SCHEDULE_PLANNER_COLUMNS, readSchedulePlannerSection } from "./schedulePlanner.ts";
 import { addSearchButtons, tablesWithColumns, type SearchableTable } from "./searchColumn.ts";
 import { addSidebar } from "./sidebar.ts";
@@ -13,6 +14,7 @@ const SEARCHABLE_TABLES: SearchableTable[] = [
   { columns: BANNER_RESULTS_COLUMNS, readSection: readBannerResultsSection, takeOverColumn: BANNER_RESULTS_BUTTON_COLUMN },
 ];
 
+addPageStyles();
 addSidebar();
 addAllSearchButtons();
 // The sites build their tables after the page loads, so look again whenever the page changes.

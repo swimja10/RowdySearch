@@ -1,10 +1,10 @@
 // Adds a "RowdySearch" column with a Search button on every row of a registration table.
 // Each button opens that row's professor and class in the sidebar.
 import type { Section } from "../page.ts";
+import { SEARCH_BUTTON_CLASS } from "./pageStyles.ts";
 import { showInSidebar } from "./sidebar.ts";
 
 const COLUMN_TITLE = "RowdySearch";
-const BUTTON_MARK = "data-rowdysearch"; // on our buttons, so we can tell which rows have one
 const SITE_NAVY = "#0c2340"; // The registration sites' own button color
 
 // Gets one of a row's cells by its column's title, like cellUnder("Instructor").
@@ -72,7 +72,7 @@ function fillColumn(table: HTMLTableElement, takenTitle: string, readSection: Se
   for (const body of table.tBodies) {
     for (const row of body.rows) {
       const cell = row.cells[column];
-      if (row.cells.length === titles.length && !cell.querySelector(`[${BUTTON_MARK}]`)) {
+      if (row.cells.length === titles.length && !cell.querySelector(`.${SEARCH_BUTTON_CLASS}`)) {
         cell.prepend(searchButton(row, titles, readSection));
       }
     }
@@ -129,7 +129,7 @@ function createSearchButton() {
   const button = document.createElement("button");
   button.type = "button";
   button.textContent = "Search";
-  button.setAttribute(BUTTON_MARK, "");
+  button.className = SEARCH_BUTTON_CLASS;
   Object.assign(button.style, {
     padding: "4px 12px",
     border: "none",
@@ -138,6 +138,7 @@ function createSearchButton() {
     color: "white",
     font: "inherit",
     cursor: "pointer",
+    transition: "background-color 0.15s",
   });
   return button;
 }

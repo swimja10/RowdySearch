@@ -4,6 +4,7 @@
 // and our styles can't break the site. Tailwind classes don't exist on these pages,
 // so the tab is styled by hand here.
 import type { Section, SidebarMessage, ToolbarMessage } from "../page.ts";
+import { TAB_CLASS } from "./pageStyles.ts";
 
 const SIDEBAR_URL = chrome.runtime.getURL("dist/index.html");
 const SIDEBAR_WIDTH = "420px";
@@ -87,6 +88,7 @@ function createSidebar() {
 function createSidebarTab() {
   const button = document.createElement("button");
   button.textContent = TAB_TITLE;
+  button.className = TAB_CLASS;
   Object.assign(button.style, {
     position: "fixed",
     top: "50%",
@@ -101,6 +103,7 @@ function createSidebarTab() {
     font: "600 14px system-ui, sans-serif",
     letterSpacing: "1px",
     cursor: "pointer",
+    transition: "background-color 0.15s",
     zIndex: ON_TOP_OF_EVERYTHING,
   });
   return button;

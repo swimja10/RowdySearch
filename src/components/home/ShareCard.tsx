@@ -92,7 +92,7 @@ function RowArrow({ label, side, onClick, children }: RowArrowProps) {
       type="button"
       aria-label={label}
       onClick={onClick}
-      className={`absolute top-[22px] flex size-7 -translate-y-1/2 items-center justify-center rounded-full bg-zinc-600 pb-0.5 text-xl leading-none text-zinc-100 opacity-0 shadow-lg transition hover:bg-zinc-500 focus-visible:opacity-100 group-hover/row:opacity-100 ${side === "left" ? "-left-3" : "-right-3"}`}>
+      className={`absolute top-[22px] flex size-7 -translate-y-1/2 items-center justify-center rounded-full bg-zinc-600 pb-0.5 text-xl leading-none text-zinc-100 opacity-0 shadow-lg transition hover:bg-zinc-500 active:bg-zinc-400 focus-visible:opacity-100 group-hover/row:opacity-100 ${side === "left" ? "-left-3" : "-right-3"}`}>
       {children}
     </button>
   );
@@ -115,7 +115,6 @@ function ShareLink({ target, onMessage }: ShareLinkProps) {
       href={target.link}
       target="_blank"
       rel="noreferrer"
-      title={target.copiesMessage ? `Copy a message about RowdySearch and open ${target.name}` : `Share on ${target.name}`}
       onClick={target.copiesMessage ? copyMessage : undefined}
       className={SHARE_BUTTON_STYLE}>
       <ShareIcon icon={target.icon}>{target.name}</ShareIcon>
@@ -132,7 +131,7 @@ type ShareIconProps = {
 function ShareIcon({ icon, children }: ShareIconProps) {
   return (
     <>
-      <span className="flex size-11 items-center justify-center rounded-full bg-zinc-900 transition-colors group-hover:bg-zinc-700 group-focus-visible:ring-2 group-focus-visible:ring-orange-500">
+      <span className="flex size-11 items-center justify-center rounded-full bg-zinc-900 transition-colors group-hover:bg-zinc-700 group-active:bg-zinc-600 group-focus-visible:ring-2 group-focus-visible:ring-orange-500">
         <svg viewBox="0 0 24 24" className="size-5" fill={icon.color} aria-hidden="true">
           <path d={icon.path} />
         </svg>

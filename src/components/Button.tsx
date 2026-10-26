@@ -16,11 +16,11 @@ export default function Button({ variant = "primary", className, ...props }: But
 function getVariantStyles(variant: Variant) {
   switch (variant) {
     case "primary":
-      return "bg-orange-600 hover:bg-orange-500";
+      return "bg-orange-600 hover:bg-orange-500 active:bg-orange-400";
     case "secondary":
-      return "bg-zinc-700 hover:bg-zinc-600 text-zinc-200";
+      return "bg-zinc-700 hover:bg-zinc-600 active:bg-zinc-500 text-zinc-200";
     case "link":
-      return "p-0 text-left text-orange-400 hover:text-orange-300 hover:underline";
+      return "p-0 text-left text-orange-400 hover:text-orange-300 active:text-orange-200 hover:underline";
 
     default:
       throw new Error(`Invalid variant: ${variant satisfies never}`);

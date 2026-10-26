@@ -43,6 +43,22 @@ function synchronizerToken() {
 	return document.querySelector("meta[name=\"synchronizerToken\"]")?.content ?? "";
 }
 //#endregion
+//#region src/content/pageStyles.ts
+var SEARCH_BUTTON_CLASS = "rowdysearch-search-button";
+var TAB_CLASS = "rowdysearch-tab";
+var STYLES = `
+  .${SEARCH_BUTTON_CLASS}:hover { background: #1b3a63 !important; }
+  .${SEARCH_BUTTON_CLASS}:active { background: #2a5288 !important; }
+  .${TAB_CLASS}:hover { background: #f97316 !important; }
+  .${TAB_CLASS}:active { background: #fb923c !important; }
+  [role="tooltip"]:has(.${SEARCH_BUTTON_CLASS}) { display: none !important; }
+`;
+function addPageStyles() {
+	const style = document.createElement("style");
+	style.textContent = STYLES;
+	document.head.append(style);
+}
+//#endregion
 //#region src/content/schedulePlanner.ts
 var SCHEDULE_PLANNER_COLUMNS = [
 	"Subject",
@@ -119,6 +135,7 @@ function createSidebar() {
 function createSidebarTab() {
 	const button = document.createElement("button");
 	button.textContent = TAB_TITLE;
+	button.className = TAB_CLASS;
 	Object.assign(button.style, {
 		position: "fixed",
 		top: "50%",
@@ -133,6 +150,7 @@ function createSidebarTab() {
 		font: "600 14px system-ui, sans-serif",
 		letterSpacing: "1px",
 		cursor: "pointer",
+		transition: "background-color 0.15s",
 		zIndex: ON_TOP_OF_EVERYTHING
 	});
 	return button;
@@ -140,7 +158,6 @@ function createSidebarTab() {
 //#endregion
 //#region src/content/searchColumn.ts
 var COLUMN_TITLE = "RowdySearch";
-var BUTTON_MARK = "data-rowdysearch";
 var SITE_NAVY = "#0c2340";
 function tablesWithColumns(neededTitles) {
 	return [...document.querySelectorAll("table")].filter((table) => {
@@ -170,7 +187,7 @@ function fillColumn(table, takenTitle, readSection) {
 	retitle(table.tHead.rows[0].cells[column], takenTitle, COLUMN_TITLE);
 	for (const body of table.tBodies) for (const row of body.rows) {
 		const cell = row.cells[column];
-		if (row.cells.length === titles.length && !cell.querySelector(`[${BUTTON_MARK}]`)) cell.prepend(searchButton(row, titles, readSection));
+		if (row.cells.length === titles.length && !cell.querySelector(`.rowdysearch-search-button`)) cell.prepend(searchButton(row, titles, readSection));
 	}
 }
 function columnTitles(table) {
@@ -209,7 +226,7 @@ function createSearchButton() {
 	const button = document.createElement("button");
 	button.type = "button";
 	button.textContent = "Search";
-	button.setAttribute(BUTTON_MARK, "");
+	button.className = SEARCH_BUTTON_CLASS;
 	Object.assign(button.style, {
 		padding: "4px 12px",
 		border: "none",
@@ -217,7 +234,8 @@ function createSearchButton() {
 		background: SITE_NAVY,
 		color: "white",
 		font: "inherit",
-		cursor: "pointer"
+		cursor: "pointer",
+		transition: "background-color 0.15s"
 	});
 	return button;
 }
@@ -238,6 +256,7 @@ var SEARCHABLE_TABLES = [
 		takeOverColumn: BANNER_RESULTS_BUTTON_COLUMN
 	}
 ];
+addPageStyles();
 addSidebar();
 addAllSearchButtons();
 new MutationObserver(addAllSearchButtons).observe(document.body, {

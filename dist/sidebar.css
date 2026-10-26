@@ -46,6 +46,7 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-red-400: oklch(70.4% .191 22.216);
+    --color-orange-200: oklch(90.1% .076 70.697);
     --color-orange-300: oklch(83.7% .128 66.29);
     --color-orange-400: oklch(75% .183 55.934);
     --color-orange-500: oklch(70.5% .213 47.604);
@@ -415,6 +416,10 @@
 
   .hidden {
     display: none;
+  }
+
+  .inline {
+    display: inline;
   }
 
   .table {
@@ -956,6 +961,10 @@
     --tw-ring-color: var(--color-orange-500);
   }
 
+  .group-active\:bg-zinc-600:is(:where(.group):active *) {
+    background-color: var(--color-zinc-600);
+  }
+
   @media (hover: hover) {
     .hover\:bg-orange-500:hover {
       background-color: var(--color-orange-500);
@@ -1001,6 +1010,30 @@
 
   .focus-visible\:ring-orange-500:focus-visible {
     --tw-ring-color: var(--color-orange-500);
+  }
+
+  .active\:bg-orange-400:active {
+    background-color: var(--color-orange-400);
+  }
+
+  .active\:bg-zinc-400:active {
+    background-color: var(--color-zinc-400);
+  }
+
+  .active\:bg-zinc-500:active {
+    background-color: var(--color-zinc-500);
+  }
+
+  .active\:bg-zinc-600:active {
+    background-color: var(--color-zinc-600);
+  }
+
+  .active\:text-orange-200:active {
+    color: var(--color-orange-200);
+  }
+
+  .active\:text-orange-300:active {
+    color: var(--color-orange-300);
   }
 
   .disabled\:cursor-not-allowed:disabled {
