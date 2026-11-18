@@ -15,8 +15,13 @@ async function toggleSidebarIn(tabId: number) {
     await chrome.tabs.sendMessage(tabId, TOGGLE_SIDEBAR);
   } catch {
     // Any other page doesn't have it yet. Add it, then open it. ("activeTab" in manifest.json
-    // allows this for the tab whose icon was clicked. Chrome's own chrome:// pages never allow it.)
-    await chrome.scripting.executeScript({ target: { tabId }, files: ["dist/content.js"] });
-    await chrome.tabs.sendMessage(tabId, TOGGLE_SIDEBAR);
+    // allows this for the tab whose icon was clicked. Chrome's own chrome:// pages never allow it,
+    // and there's nothing to do about that, so that failure is only noted.)
+    try {
+      await chrome.scripting.executeScript({ target: { tabId }, files: ["dist/content.js"] });
+      await chrome.tabs.sendMessage(tabId, TOGGLE_SIDEBAR);
+    } catch (error) {
+      console.info("RowdySearch can't open on this page.", error);
+    }
   }
 }

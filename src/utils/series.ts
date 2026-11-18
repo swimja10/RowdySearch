@@ -1,6 +1,6 @@
 import type { GradeData } from "../hooks/useGradeData.ts";
 import type { Subject } from "../page.ts";
-import { bluebookOf, gradesOf, type Bluebook } from "./courses.ts";
+import { bluebookOf, courseBluebook, courseRmp, gradesOf, teachersOf, type Bluebook } from "./courses.ts";
 import type { GradeCounts } from "./grades.ts";
 import { averageGpa } from "./statistics.ts";
 import { offeringsForSubject, professorNameOf, subjectKey, subjectLabel } from "./subjects.ts";
@@ -25,7 +25,7 @@ export type SeriesData = {
   grades: GradeCounts;
   bluebook: Bluebook;
   professorName: string | null;
-  rating: number | null;
+  rating: number | null; // RMP; for a whole course, the median professor's (as on its course page)
   courseGpa: number | null; // for one professor's class: the whole course's average GPA
 };
 
@@ -48,6 +48,8 @@ export function withSubjectAdded(seriesList: Series[], subject: Subject): Series
 export function describeSeries({ subject, color }: Series, gradeData: GradeData): SeriesData {
   const professorName = professorNameOf(subject);
   const offerings = offeringsForSubject(subject, gradeData);
+  // A whole course uses the same medians as its course page, so the two never disagree.
+  const teachers = subject.type === "course" ? teachersOf(subject.courseCode, gradeData.professors, gradeData.searchIndex) : null;
 
   return {
     subject,
@@ -55,9 +57,9 @@ export function describeSeries({ subject, color }: Series, gradeData: GradeData)
     label: subjectLabel(subject),
     color,
     grades: gradesOf(offerings),
-    bluebook: bluebookOf(offerings),
+    bluebook: teachers ? courseBluebook(teachers) : bluebookOf(offerings),
     professorName,
-    rating: professorName === null ? null : gradeData.professors[professorName].rmp.rating,
+    rating: teachers ? courseRmp(teachers).rating : gradeData.professors[professorName!].rmp.rating,
     courseGpa: subject.type === "class" ? wholeCourseGpa(subject.courseCode, gradeData) : null,
   };
 }

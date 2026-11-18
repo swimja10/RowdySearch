@@ -1,0 +1,28 @@
+---
+import Base from "../layouts/Base.astro";
+import { CONTACT_EMAIL, CREATOR } from "../data/site.ts";
+---
+
+<Base
+  title="Contact"
+  description={`RowdySearch was created by ${CREATOR}. Email ${CONTACT_EMAIL} with questions, corrections, or ideas.`}>
+  <article class="prose mx-auto max-w-3xl">
+    <h1 class="mb-4 text-3xl font-bold sm:text-4xl">Contact</h1>
+
+    <p>RowdySearch was created by <strong>{CREATOR}</strong>.</p>
+    <p>
+      Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> with questions, corrections, or
+      ideas.
+    </p>
+
+    <h2>If something is wrong</h2>
+    <p>
+      Include the address of the page and what is wrong. If you are a professor and something about
+      your page is incorrect, say so in the email.
+    </p>
+    <p>
+      Grades and evaluations come from UTSA's records.{" "}
+      <a href="/data/">Where the data comes from</a>
+    </p>
+  </article>
+</Base>

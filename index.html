@@ -5,9 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RowdySearch</title>
     <link rel="icon" href="icons/icon-32.png" />
+    <style>
+      /* The sidebar is dark from the very start, before (or even if) its code and styles load, so
+         the website underneath never shows through it. Analytical Mode turns this off while its
+         panel grows across the screen (see utils/hostPage.ts). */
+      body { margin: 0; background-color: #18181b; color: #f4f4f5; }
+      body.see-through { background-color: transparent; }
+
+      /* What #root shows until React starts and replaces it. It's plain HTML and CSS, so it still
+         works when the sidebar's code fails to load, and only after 10 seconds offers a reload. */
+      .boot { padding: 48px 16px; text-align: center; font: 14px system-ui, sans-serif; color: #a1a1aa; }
+      .boot a { color: #fb923c; }
+      .boot-stuck { margin-top: 16px; visibility: hidden; animation: boot-stuck 0s 10s forwards; }
+      @keyframes boot-stuck { to { visibility: visible; } }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="boot">
+        <p>Loading RowdySearch…</p>
+        <p class="boot-stuck">This is taking longer than usual. <a href="index.html">Reload</a></p>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

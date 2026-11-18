@@ -1,4 +1,5 @@
-import { countStudents, gradeShares, type GradeCounts } from "../utils/grades.ts";
+import { formatShare } from "../utils/format.ts";
+import { FINISHED_OR_WITHDREW, countStudents, gradeShares, type GradeCounts } from "../utils/grades.ts";
 
 type GradeBarsProps = {
   grades: GradeCounts;
@@ -18,7 +19,7 @@ export function GradeBars({ grades }: GradeBarsProps) {
       <div className="flex gap-2">
         {shares.map(share => (
           <div key={share.label} className="flex flex-1 flex-col items-center gap-1">
-            <span className="text-xs text-zinc-400">{Math.round(share.percent)}%</span>
+            <span className="text-xs text-zinc-400">{formatShare(share.percent)}</span>
             <div className="flex h-16 w-full items-end rounded bg-zinc-700">
               <div className="w-full rounded bg-orange-500" style={{ height: `${(share.percent / tallestPercent) * 100}%` }} />
             </div>
@@ -26,7 +27,7 @@ export function GradeBars({ grades }: GradeBarsProps) {
           </div>
         ))}
       </div>
-      <span className="text-xs text-zinc-400">Based on {countStudents(grades).toLocaleString()} grades</span>
+      <span className="text-xs text-zinc-400">Based on {countStudents(grades, FINISHED_OR_WITHDREW).toLocaleString()} grades</span>
     </div>
   );
 }

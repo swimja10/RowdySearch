@@ -45,12 +45,22 @@ def add_section(professors, professor_name, course_id, title, section_info):
     course["sections"].append(section_info)
 
 
+def tidy(value):
+    # "Management Science  & Statisti" has two spaces in the spreadsheet. Blank cells aren't text.
+    return " ".join(value.split()) if isinstance(value, str) else None
+
+
 def process_info(df, term, professors):
-    course_id = section = title = professor_name = None
+    course_id = section = title = professor_name = college = department = None
     grades = {}
 
     for label, value, name, professor in df.itertuples(index=False, name=None):
-        if label == "SUB/CRS":
+        # The spreadsheet names a college and a department once, above all of their sections.
+        if label == "COLL":
+            college = tidy(value)
+        elif label == "DEPT":
+            department = tidy(value)
+        elif label == "SUB/CRS":
             course_id = value
         elif label == "SEC":
             section = value
@@ -64,6 +74,8 @@ def process_info(df, term, professors):
             section_info = {
                 "term": term,
                 "section": section,
+                "college": college,
+                "department": department,
                 "totalStudents": int(value),
                 "grades": grades,
             }

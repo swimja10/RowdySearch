@@ -1,0 +1,159 @@
+---
+import BeforeAfter from "../components/BeforeAfter.astro";
+import InstallButtons from "../components/InstallButtons.astro";
+import Base from "../layouts/Base.astro";
+
+// Looking one professor up by hand was timed at about a minute and a half, and that gets no grade
+// data, because there is nowhere to look it up. The extension's first click takes about a second,
+// since that click also loads its data. Later clicks take milliseconds, so this is RowdySearch at
+// its slowest.
+const BY_HAND_SECONDS = 90;
+const ROWDYSEARCH_SECONDS = 1;
+const TIMES_FASTER = BY_HAND_SECONDS / ROWDYSEARCH_SECONDS;
+
+const withoutSteps = [
+  "Open Rate My Professors and search for the professor.",
+  "Open Simple Syllabus and find their section's syllabus.",
+  "Open Bluebook and search for their evaluations.",
+];
+
+const places = [
+  {
+    name: "Schedule Planner",
+    detail: "A Search button on every section in the class tables and in the Shopping Cart.",
+  },
+  {
+    name: "Browse Classes and Find Classes",
+    detail: "A Search button on every result in UTSA's class search.",
+  },
+  {
+    name: "Register for Classes",
+    detail: "A Search button on every class in your Summary table.",
+  },
+  {
+    name: "Any other website",
+    detail: "Click the toolbar icon to open the RowdySearch sidebar and search from there.",
+  },
+];
+---
+
+<Base
+  title="The RowdySearch extension for Chrome and Firefox"
+  description="The RowdySearch extension adds a Search button to every class in UTSA's Schedule Planner and registration pages. One click shows the professor's grades, ratings, and syllabus.">
+  <div class="flex flex-col gap-12">
+    <section class="flex max-w-3xl flex-col gap-4">
+      <h1 class="text-3xl font-bold sm:text-4xl">RowdySearch on the registration page</h1>
+      <p class="text-lg text-zinc-300">
+        This site looks professors up. The extension does it where you pick your classes: it adds a
+        Search button to every class in Schedule Planner and in UTSA's registration pages. One click
+        opens that professor's grades, ratings, and syllabus beside the page.
+      </p>
+      <InstallButtons />
+      <p class="text-sm text-zinc-500">Free. No account, no ads, and it collects nothing.</p>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <div class="flex max-w-3xl flex-col gap-1">
+        <h2 class="text-xl font-bold">Schedule Planner, before and after</h2>
+        <p class="text-zinc-400">The same class list. Flip between the three to see what changes.</p>
+      </div>
+      <BeforeAfter
+        name="planner"
+        width={1914}
+        height={940}
+        frames={[
+          {
+            label: "Without RowdySearch",
+            image: "/extension/planner-without.webp",
+            description: "Schedule Planner's list of sections for CS 2123 Data Structures, as UTSA shows it.",
+          },
+          {
+            label: "With RowdySearch",
+            image: "/extension/planner-with.webp",
+            description: "The same list with a RowdySearch column: a Search button beside every section.",
+          },
+          {
+            label: "After one click",
+            image: "/extension/planner-open.webp",
+            description:
+              "The RowdySearch sidebar open beside the list, showing one professor's median grade, Bluebook and Rate My Professors ratings, latest syllabus, grade distribution, and reviews.",
+          },
+        ]}
+      />
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <div class="flex max-w-3xl flex-col gap-1">
+        <h2 class="text-xl font-bold">Browse Classes, before and after</h2>
+        <p class="text-zinc-400">UTSA's class search, with the same three views.</p>
+      </div>
+      <BeforeAfter
+        name="banner"
+        width={1905}
+        height={942}
+        frames={[
+          {
+            label: "Without RowdySearch",
+            image: "/extension/banner-without.webp",
+            description: "Browse Classes results for POL 1013 Intro to American Politics, as UTSA shows them.",
+          },
+          {
+            label: "With RowdySearch",
+            image: "/extension/banner-with.webp",
+            description: "The same results with a RowdySearch column: a Search button beside every class.",
+          },
+          {
+            label: "After one click",
+            image: "/extension/banner-open.webp",
+            description:
+              "The RowdySearch sidebar open beside the results, showing one professor's median grade, Bluebook and Rate My Professors ratings, latest syllabus, grade distribution, and reviews.",
+          },
+        ]}
+      />
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <div class="flex flex-col gap-1">
+        <h2 class="text-4xl font-bold text-orange-400 sm:text-5xl">{TIMES_FASTER}x faster</h2>
+        <p class="text-zinc-400">per professor.</p>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="flex flex-col gap-3 rounded-xl bg-zinc-800 p-5">
+          <h3 class="text-xs font-semibold uppercase tracking-wide text-zinc-400">Without RowdySearch</h3>
+          <p class="text-2xl font-semibold">{BY_HAND_SECONDS} seconds</p>
+          <ol class="flex list-decimal flex-col gap-1.5 pl-5 text-zinc-300">
+            {withoutSteps.map((step) => <li>{step}</li>)}
+          </ol>
+          <p class="mt-auto border-t border-zinc-700 pt-3 text-zinc-300">
+            <strong class="text-zinc-100">No grade data.</strong> You can't get it. UTSA doesn't publish it.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 rounded-xl bg-zinc-800 p-5 ring-1 ring-orange-500">
+          <h3 class="text-xs font-semibold uppercase tracking-wide text-orange-400">With RowdySearch</h3>
+          <p class="text-2xl font-semibold">{ROWDYSEARCH_SECONDS} second</p>
+          <ol class="flex list-decimal flex-col gap-1.5 pl-5 text-zinc-300">
+            <li>Click Search.</li>
+          </ol>
+          <p class="mt-auto border-t border-zinc-700 pt-3 font-semibold text-orange-400">Comes with grade data.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class="text-xl font-bold">Where the Search button appears</h2>
+      <ul class="grid gap-3 sm:grid-cols-2">
+        {places.map((place) => (
+          <li class="flex flex-col gap-1 rounded-xl bg-zinc-800 p-4">
+            <span class="font-semibold">{place.name}</span>
+            <span class="text-sm text-zinc-400">{place.detail}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="flex max-w-3xl flex-col gap-4">
+      <h2 class="text-xl font-bold">Get the extension</h2>
+      <InstallButtons />
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,15 @@
+---
+import { CREATOR, DISCLAIMER, FOOTER_LINKS } from "../data/site.ts";
+---
+
+<footer class="border-t border-zinc-800">
+  <div class="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-6 text-sm text-zinc-500">
+    <nav aria-label="Footer" class="flex flex-wrap gap-x-5 gap-y-2">
+      {FOOTER_LINKS.map((link) => (
+        <a href={link.href} class="text-zinc-400 hover:text-orange-300">{link.label}</a>
+      ))}
+    </nav>
+    <p>Created by {CREATOR}</p>
+    <p class="text-xs">{DISCLAIMER}</p>
+  </div>
+</footer>

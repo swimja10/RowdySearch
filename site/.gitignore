@@ -1,0 +1,6 @@
+node_modules
+dist
+.astro
+
+# What scripts/indexnow.mjs last submitted to search engines. Without it, it submits every page again.
+.indexnow-sent.json

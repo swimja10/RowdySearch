@@ -6,7 +6,10 @@
 
 **Pick the right UTSA professor in one click.** RowdySearch is a Chrome extension that puts grade distributions, Bluebook course evaluations, Rate My Professors ratings, and the latest syllabus next to every class while you register.
 
-Built by Jacob Swim and Angelina Lu.
+Built by Jacob Swim.
+
+## Use it on the web
+No install needed. Look up any UTSA professor, course, or class on any device: https://rowdysearch.com
 
 ## Download the Chrome Extension
 RowdySearch: https://chromewebstore.google.com/detail/geiimkdngembhenfhcnbmlfgbclheoek?utm_source=item-share-cb
@@ -135,12 +138,36 @@ node searcher.ts "Darrn Meritz WRC"
 
 Running a `.ts` file directly with `node` needs Node.js 22.18 or newer. On Node 22.6 through 22.17, add the flag: `node --experimental-strip-types searcher.ts "Darrn Meritz WRC"`.
 
+### Testing
+
+```bash
+npm run test:search
+```
+
+Checks that searches students actually type open the right page, using the real data.
+
+```bash
+npm run build
+.venv/bin/python tests/chaos.py
+```
+
+```bash
+.venv/bin/python tests/accuracy.py
+```
+
+The accuracy test. First it checks that `data/professors.json` holds exactly what the scrapers collected: every graded section with the same grade counts, and every Bluebook score. Then it opens the professor page, a class page, that course's page, and Analytical Mode for 40 random professors (plus a few always checked), reads every number on screen, and checks it against an answer worked out separately with exact fractions, so a rounding mistake or a number that differs between the sidebar and Analytical Mode fails the test (`--sample 200` for more professors).
+
+The chaos test, in the spirit of Netflix's Chaos Monkey: it runs the built sidebar on a fake Schedule Planner page and breaks it on purpose. Files load slowly, fail, or arrive cut off; the professor data is corrupted; and pages, charts, and Analytical Mode crash. Each time, the sidebar must never go see-through or blank, must say what's wrong, and must come back once things work again, with reloading only as the last resort. After the fixed scenarios it runs 25 random "monkey" runs (`--monkey 100` for more, `--only <name>` for one scenario, `--headed` to watch). It needs Playwright's Chromium: `pip install -r requirements.txt`, then `playwright install chromium`.
+
 ### Updating the data
 
 1. For new semesters of grades, file a new public records request with UTSA (through the online portal on [utsa.edu/openrecords](https://www.utsa.edu/openrecords/), by email to PublicInfo@utsa.edu, or by mail to the Office of Legal Affairs) and add the spreadsheets they send to `grade_data/`.
 2. Run `python3 run_collectors.py` to collect grades, Rate My Professors, Simple Syllabus, and Bluebook into `data/raw_data/` (about 45 minutes).
-3. Run `python3 combine_data.py` to rebuild `data/professors.json`.
-4. Reload the extension. (No build needed: the sidebar reads the data file directly.)
+3. Run `python3 combine_data.py` to rebuild `data/professors.json`. It also writes `data/same_name_report.md`, a list of names that may be two different professors.
+4. Look over that report. If a name really is two people, add it to `data/professor_splits.json` (the report shows what to paste) and run `combine_data.py` again.
+5. Reload the extension. (No build needed: the sidebar reads the data file directly.)
+
+`combine_data.py` gives every professor a department from the grade spreadsheets, and gives a course its full title when the spreadsheets cut it off ("Quantitative Analysis for Acc" becomes "Quantitative Analysis for Accountants"). `tests/test_combine_data.py` checks both: `.venv/bin/python -m pytest tests/test_combine_data.py`.
 
 ### How it fits together
 

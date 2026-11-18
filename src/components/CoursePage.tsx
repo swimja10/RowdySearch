@@ -1,8 +1,11 @@
+import Button from "./Button.tsx";
 import { ClassCard } from "./ClassCard.tsx";
+import { CourseStats } from "./CourseStats.tsx";
 import { GradeBars } from "./GradeBars.tsx";
 import { Section } from "./Section.tsx";
+import { LatestSyllabus } from "./SyllabusLinks.tsx";
 import { useLookup } from "../context/useLookup.ts";
-import { courseName, gradesOf, teachersOf, type Teacher } from "../utils/courses.ts";
+import { courseName, gradesOf, latestSyllabus, teachersOf, type Teacher } from "../utils/courses.ts";
 
 type CoursePageProps = {
   courseCode: string;
@@ -10,7 +13,7 @@ type CoursePageProps = {
 
 // Everyone who has taught a course, so you can compare them side by side.
 export function CoursePage({ courseCode }: CoursePageProps) {
-  const { professors, searchIndex } = useLookup();
+  const { professors, searchIndex, openClass } = useLookup();
   const teachers = teachersOf(courseCode, professors, searchIndex);
 
   if (teachers.length === 0) {
@@ -19,6 +22,7 @@ export function CoursePage({ courseCode }: CoursePageProps) {
 
   const everyonesGrades = gradesOf(teachers.flatMap(teacher => teacher.course.offerings));
   const name = courseName(teachers);
+  const syllabus = latestSyllabus(teachers);
 
   return (
     <div className="flex flex-col gap-5">
@@ -30,7 +34,21 @@ export function CoursePage({ courseCode }: CoursePageProps) {
         </span>
       </div>
 
-      <Section title={`Grades in ${courseCode} (every professor)`}>
+      <CourseStats teachers={teachers} />
+
+      {/* The newest syllabus anyone posted, from whichever professor posted it. */}
+      <Section title="Latest syllabus">
+        <LatestSyllabus
+          offering={syllabus?.offering}
+          teacher={syllabus && (
+            <Button variant="link" className="text-sm" onClick={() => openClass(syllabus.teacher.professor.name, courseCode)}>
+              {syllabus.teacher.professor.name}
+            </Button>
+          )}
+        />
+      </Section>
+
+      <Section title={`Grades in ${courseCode} (Every Professor)`}>
         <GradeBars grades={everyonesGrades} />
       </Section>
 

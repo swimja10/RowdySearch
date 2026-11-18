@@ -1,0 +1,13 @@
+---
+import SearchBox from "../components/SearchBox.astro";
+import Base from "../layouts/Base.astro";
+---
+
+<Base isHidden title="Page not found" description="That page isn't on RowdySearch. Search for a professor, class, or subject instead.">
+  <div class="mx-auto flex max-w-xl flex-col gap-4 py-12 text-center">
+    <h1 class="text-3xl font-bold">That page isn't here</h1>
+    <p class="text-zinc-400">The address may be mistyped, or the page may have moved. Search for what you were looking for.</p>
+    <SearchBox size="large" />
+    <p><a href="/" class="text-orange-400 hover:text-orange-300 hover:underline">Go to the home page</a></p>
+  </div>
+</Base>

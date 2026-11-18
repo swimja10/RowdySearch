@@ -1,0 +1,20 @@
+---
+import type { Syllabus } from "../data/shared.ts";
+import ExternalLink from "./ExternalLink.astro";
+
+type Props = {
+  syllabi: Syllabus[];
+};
+
+const { syllabi } = Astro.props;
+---
+
+{syllabi.length === 0 ? (
+  <span class="text-sm text-zinc-500">No syllabus on Simple Syllabus</span>
+) : (
+  <div class="flex flex-wrap gap-x-3 gap-y-1 text-sm">
+    {syllabi.map((syllabus) => (
+      <ExternalLink href={syllabus.link}>Section {syllabus.section} syllabus</ExternalLink>
+    ))}
+  </div>
+)}

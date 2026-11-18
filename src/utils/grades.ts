@@ -6,6 +6,10 @@ export type LetterGrade = (typeof LETTER_GRADES)[number];
 export type Grade = (typeof GRADES)[number];
 export type GradeCounts = Record<Grade, number>;
 
+// Everyone who finished with a letter grade, plus everyone who withdrew. Every percent of students
+// in the sidebar and in analytical mode is out of these students, so the same grade always matches.
+export const FINISHED_OR_WITHDREW: Grade[] = [...LETTER_GRADES, "W"];
+
 const GRADE_GROUPS: { label: string; grades: Grade[] }[] = [
   { label: "A", grades: ["A+", "A", "A-"] },
   { label: "B", grades: ["B+", "B", "B-"] },
@@ -43,7 +47,7 @@ export function medianGrade(counts: GradeCounts): LetterGrade | null {
 }
 
 export function gradeShares(counts: GradeCounts) {
-  const total = countStudents(counts, GRADE_GROUPS.flatMap((group) => group.grades));
+  const total = countStudents(counts, FINISHED_OR_WITHDREW);
 
   return GRADE_GROUPS.map((group) => ({
     label: group.label,

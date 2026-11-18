@@ -1,0 +1,60 @@
+---
+import InstallButtons from "../components/InstallButtons.astro";
+import Base from "../layouts/Base.astro";
+import { loadData } from "../data/professors.ts";
+import { CONTACT_EMAIL, CREATOR, DISCLAIMER } from "../data/site.ts";
+
+const { totals } = loadData();
+---
+
+<Base
+  title="What RowdySearch is"
+  description="RowdySearch is a free lookup for UTSA professors and courses: official grade distributions, Bluebook evaluations, Rate My Professors ratings, and syllabi in one place.">
+  <article class="prose mx-auto max-w-3xl">
+    <h1 class="mb-4 text-3xl font-bold sm:text-4xl">What RowdySearch is</h1>
+
+    <p>
+      RowdySearch is a free tool for choosing professors at the University of Texas at San Antonio
+      (UTSA). Search a professor, a course, or a subject, and it shows what you would otherwise have
+      to collect from four different places.
+    </p>
+
+    <h2>What it shows</h2>
+    <ul>
+      <li><strong>Grade distributions.</strong> How many students got each grade in every section, from UTSA's own records.</li>
+      <li><strong>Bluebook evaluations.</strong> UTSA's end-of-semester ratings of the instructor and the course, out of 5.</li>
+      <li><strong>Rate My Professors.</strong> The rating, difficulty, would-take-again percentage, and recent reviews.</li>
+      <li><strong>Syllabi.</strong> Links to each section's syllabus on Simple Syllabus.</li>
+    </ul>
+    <p>
+      It covers {totals.professors.toLocaleString("en-US")} professors and {totals.courses.toLocaleString("en-US")} courses.{" "}
+      <a href="/data/">Where the data comes from</a>
+    </p>
+
+    <h2>Why it exists</h2>
+    <p>
+      Picking a class means spending months with its professor. Before registering, students look the
+      professor up on Rate My Professors, then find the syllabus, then go looking for grade data,
+      which UTSA does not publish. RowdySearch puts all of it in one search.
+    </p>
+    <p>
+      The grade data is the part that matters most. It shows whether a professor is hard or the
+      course is hard, because every professor's grades sit beside the grades for the whole course.
+    </p>
+
+    <h2>The site and the extension</h2>
+    <p>
+      This site works in any browser, on a phone or a computer, with nothing to install. The
+      extension, for Chrome and Firefox, puts the same lookup on UTSA's registration pages.{" "}
+      <a href="/extension/">See what the extension does</a>
+    </p>
+    <InstallButtons />
+
+    <h2>Who made it</h2>
+    <p>
+      RowdySearch was created by {CREATOR}. It is free, has no ads, and has no accounts. Questions
+      and corrections go to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+    </p>
+    <p>{DISCLAIMER}</p>
+  </article>
+</Base>

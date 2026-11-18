@@ -1,0 +1,21 @@
+---
+import { CHROME_LINK, FIREFOX_LINK } from "../data/site.ts";
+
+const stores = [
+  { name: "Chrome", link: CHROME_LINK },
+  { name: "Firefox", link: FIREFOX_LINK },
+];
+---
+
+<div class="flex flex-wrap gap-3">
+  {stores.map((store) => (
+    <a
+      href={store.link}
+      target="_blank"
+      rel="noreferrer"
+      class="rounded-lg bg-orange-600 px-4 py-2 font-medium text-zinc-100 transition-colors hover:bg-orange-500 active:bg-orange-400">
+      {/* The ︎ after the arrow keeps phones from drawing it as a colored emoji. */}
+      Add to {store.name} <span aria-hidden="true">&#8599;&#xFE0E;</span>
+    </a>
+  ))}
+</div>

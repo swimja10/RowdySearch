@@ -1,0 +1,104 @@
+---
+import { PAGE_SIZE } from "../data/paging.ts";
+
+// Previous and Next buttons that show a long list one page at a time.
+//
+// The whole list is in the page, so it costs no extra files (see "File budget" in
+// docs/website-plan.md), search engines read every link, and it all shows with JavaScript off.
+// Items past the first page have the "later" class, which hides them. The buttons move that class.
+//
+// To page a list: put data-paged="<name>" on something around it, data-paged-item on each item,
+// class "later" on the items isLater() says, and this inside the data-paged element, after the items.
+// The page number goes in the address as ?<name>=3, so Back and Reload return to the same page.
+// A link to an item's id ("#M" on the professor list) opens the page that item is on.
+type Props = {
+  total: number; // how many items the list has
+};
+
+const { total } = Astro.props;
+const pages = Math.ceil(total / PAGE_SIZE);
+---
+
+{pages > 1 && (
+  <nav data-pager data-size={PAGE_SIZE} aria-label="Pages" hidden class="flex items-center justify-between gap-3">
+    <button type="button" data-pager-previous class="min-h-11 rounded-lg bg-zinc-800 px-4 text-sm font-semibold text-orange-400 hover:bg-zinc-700 disabled:text-zinc-600 disabled:hover:bg-zinc-800">
+      Previous
+    </button>
+    <span data-pager-label aria-live="polite" class="text-sm text-zinc-400 tabular-nums">Page 1 of {pages}</span>
+    <button type="button" data-pager-next class="min-h-11 rounded-lg bg-zinc-800 px-4 text-sm font-semibold text-orange-400 hover:bg-zinc-700 disabled:text-zinc-600 disabled:hover:bg-zinc-800">
+      Next
+    </button>
+  </nav>
+  <script is:inline>
+    // Written into the page itself, so paging works even when the site's script files don't load,
+    // and the right page is showing before the list is first drawn.
+    (() => {
+      const nav = document.currentScript.previousElementSibling;
+      const list = nav.closest("[data-paged]");
+      const name = list.dataset.paged;
+      const size = Number(nav.dataset.size);
+      const items = [...list.querySelectorAll("[data-paged-item]")];
+      const pages = Math.ceil(items.length / size);
+      const previous = nav.querySelector("[data-pager-previous]");
+      const next = nav.querySelector("[data-pager-next]");
+      const label = nav.querySelector("[data-pager-label]");
+      let page = 1;
+
+      function show(number) {
+        page = Math.min(pages, Math.max(1, Math.floor(number) || 1));
+        items.forEach((item, index) => item.classList.toggle("later", Math.floor(index / size) + 1 !== page));
+        previous.disabled = page === 1;
+        next.disabled = page === pages;
+        label.textContent = `Page ${page} of ${pages}`;
+      }
+
+      // Puts the page number in the address without adding a step to the Back button.
+      function remember(keepHash) {
+        const address = new URL(location.href);
+        if (page === 1) address.searchParams.delete(name);
+        else address.searchParams.set(name, String(page));
+        if (!keepHash) address.hash = "";
+        try {
+          history.replaceState(history.state, "", address);
+        } catch {
+          // The address can't be changed here. Paging still works.
+        }
+      }
+
+      // The item the address's "#..." points at, if it's in this list.
+      function linkedItem() {
+        let id = "";
+        try {
+          id = decodeURIComponent(location.hash.slice(1));
+        } catch {
+          return -1;
+        }
+        const target = id === "" ? null : document.getElementById(id);
+        return target === null ? -1 : items.findIndex((item) => item === target || item.contains(target));
+      }
+
+      function openLinkedItem() {
+        const index = linkedItem();
+        if (index < 0) return false;
+        show(Math.floor(index / size) + 1);
+        remember(true);
+        items[index].scrollIntoView();
+        return true;
+      }
+
+      function turnTo(number) {
+        show(number);
+        remember(false);
+        // The reader is at the bottom of the list. Bring them back to its top.
+        if (list.getBoundingClientRect().top < 0) list.scrollIntoView();
+      }
+
+      previous.addEventListener("click", () => turnTo(page - 1));
+      next.addEventListener("click", () => turnTo(page + 1));
+      window.addEventListener("hashchange", openLinkedItem);
+
+      nav.hidden = false;
+      if (!openLinkedItem()) show(Number(new URLSearchParams(location.search).get(name)));
+    })();
+  </script>
+)}

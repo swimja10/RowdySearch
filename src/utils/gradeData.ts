@@ -7,6 +7,9 @@ import { average } from "./statistics.ts";
 export type RawData = Record<string, RawProfessor>;
 
 type RawProfessor = {
+  // From UTSA's grade spreadsheets: where they taught in their newest semester with grades.
+  // Missing or null when they have no grades yet.
+  department?: string | null;
   courses: Record<string, RawCourse>; // "MAT 1213" -> that course
   rmp: RawRmpProfile[]; // usually one, none when they aren't on RMP, two when RMP has a duplicate
 };
@@ -28,8 +31,8 @@ type RawSection = {
 type RawRmpProfile = {
   rmpId: number;
   department: string;
-  avgRating: number;
-  avgDifficulty: number;
+  avgRating: number | null; // null when the profile has reviews but no ratings
+  avgDifficulty: number | null;
   wouldTakeAgainPercent: number | null;
   recentReviews: Review[];
 };
@@ -37,7 +40,7 @@ type RawRmpProfile = {
 // The easier-to-use shape the sidebar works with.
 export type Professor = {
   name: string;
-  department: string | null; // from Rate My Professors, so null when they aren't on it
+  department: string | null; // UTSA's, or Rate My Professors' when they have no grades yet; null with neither
   rmp: Rmp;
   courses: Course[]; // the course they taught most recently first
 };
@@ -77,23 +80,47 @@ export type Review = {
   comment: string;
 };
 
+// A professor or course whose data is broken (a bad scrape, say) is left out, and the rest still load.
 export function readProfessors(rawData: RawData): Record<string, Professor> {
+  if (typeof rawData !== "object" || rawData === null) throw new Error("The professors file isn't a list of professors");
+
   const professors: Record<string, Professor> = {};
+  const skipped: string[] = [];
   for (const [name, rawProfessor] of Object.entries(rawData)) {
-    professors[name] = readProfessor(name, rawProfessor);
+    try {
+      professors[name] = readProfessor(name, rawProfessor);
+    } catch {
+      skipped.push(name);
+    }
   }
+  if (skipped.length > 0) console.warn(`RowdySearch: left out ${skipped.length} professors with broken data:`, skipped);
   return professors;
 }
 
 function readProfessor(name: string, rawProfessor: RawProfessor): Professor {
-  const courses = Object.entries(rawProfessor.courses).map(([code, rawCourse]) => readCourse(code, rawCourse));
+  const courses = Object.entries(rawProfessor.courses).flatMap(([code, rawCourse]) => {
+    try {
+      const course = readCourse(code, rawCourse);
+      // Every page assumes a course was taught at least once.
+      return course.offerings.length > 0 ? [course] : [];
+    } catch {
+      console.warn(`RowdySearch: left out ${name}'s ${code}, its data is broken.`);
+      return [];
+    }
+  });
+  if (courses.length === 0) throw new Error(`${name} has no courses`);
 
+  const rmpProfiles = Array.isArray(rawProfessor.rmp) ? rawProfessor.rmp : [];
   return {
     name,
-    department: rawProfessor.rmp[0]?.department ?? null,
-    rmp: readRmp(rawProfessor.rmp),
+    department: readDepartment(rawProfessor.department) ?? rmpProfiles[0]?.department ?? null,
+    rmp: readRmp(rmpProfiles),
     courses: courses.sort((first, second) => lastTaughtRank(second) - lastTaughtRank(first)),
   };
+}
+
+function readDepartment(department: unknown): string | null {
+  return typeof department === "string" && department !== "" ? department : null;
 }
 
 function readCourse(code: string, rawCourse: RawCourse): Course {
@@ -125,27 +152,32 @@ function readSyllabus({ section, syllabusCode }: RawSection): Syllabus[] {
 }
 
 function readEvaluation({ instructorEvaluation, courseEvaluation }: RawSection): Evaluation[] {
-  if (instructorEvaluation === null || courseEvaluation === null) return [];
+  if (typeof instructorEvaluation !== "number" || typeof courseEvaluation !== "number") return [];
   return [{ instructor: instructorEvaluation, course: courseEvaluation }];
 }
 
 // Sections that only have a syllabus (no grades yet) count as zero students.
 function readGradeCounts(section: RawSection): GradeCounts {
   const counts = emptyGradeCounts();
-  for (const grade of GRADES) counts[grade] = section.grades?.[grade] ?? 0;
+  for (const grade of GRADES) {
+    const count = section.grades?.[grade];
+    counts[grade] = typeof count === "number" ? count : 0;
+  }
   return counts;
 }
 
 // A professor with two RMP profiles gets both profiles' reviews and the average of their numbers.
 // RMP doesn't say how many ratings each profile has, so they count the same.
+// A profile with only reviews has no numbers, so it's left out of the averages (not counted as 0).
 function readRmp(profiles: RawRmpProfile[]): Rmp {
-  const wouldTakeAgainPercents = profiles.map((profile) => profile.wouldTakeAgainPercent).filter((percent) => percent !== null);
+  const numbersOf = (read: (profile: RawRmpProfile) => number | null) =>
+    profiles.map(read).filter((value) => typeof value === "number");
 
   return {
-    rating: average(profiles.map((profile) => profile.avgRating)),
-    difficulty: average(profiles.map((profile) => profile.avgDifficulty)),
-    wouldTakeAgainPercent: average(wouldTakeAgainPercents),
+    rating: average(numbersOf((profile) => profile.avgRating)),
+    difficulty: average(numbersOf((profile) => profile.avgDifficulty)),
+    wouldTakeAgainPercent: average(numbersOf((profile) => profile.wouldTakeAgainPercent)),
     profiles: profiles.map((profile) => ({ department: profile.department, link: rmpLink(profile.rmpId) })),
-    reviews: profiles.flatMap((profile) => profile.recentReviews),
+    reviews: profiles.flatMap((profile) => (Array.isArray(profile.recentReviews) ? profile.recentReviews : [])),
   };
 }

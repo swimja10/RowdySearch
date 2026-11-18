@@ -9,6 +9,9 @@ import { TAB_CLASS } from "./pageStyles.ts";
 const SIDEBAR_URL = chrome.runtime.getURL("dist/index.html");
 const SIDEBAR_WIDTH = "420px";
 const SIDEBAR_SHADOW = "-4px 0 16px rgba(0, 0, 0, 0.4)";
+// The sidebar's own dark background (Tailwind's zinc-900), on the iframe too, so the page never
+// shows through it, even before the sidebar has loaded.
+const SIDEBAR_BACKGROUND = "#18181b";
 const ON_TOP_OF_EVERYTHING = "2147483647";
 const TAB_TITLE = "RowdySearch";
 
@@ -20,6 +23,12 @@ export function addSidebar() {
   window.addEventListener("message", handleSidebarMessage);
   chrome.runtime.onMessage.addListener(handleToolbarMessage);
   document.body.append(sidebar, sidebarTab);
+}
+
+// Opens the sidebar on whatever page it was on (the home page the first time).
+export function openSidebar() {
+  if (sidebar.src === "") sidebar.src = SIDEBAR_URL;
+  setSidebarOpen(true);
 }
 
 // Opens the sidebar straight to one section's professor and class.
@@ -64,6 +73,7 @@ function setFullScreen(isFullScreen: boolean) {
   sidebar.style.width = isFullScreen ? "100vw" : SIDEBAR_WIDTH;
   // Analytical Mode draws its own panel, and the page shows through around it while it grows.
   sidebar.style.boxShadow = isFullScreen ? "none" : SIDEBAR_SHADOW;
+  sidebar.style.background = isFullScreen ? "transparent" : SIDEBAR_BACKGROUND;
   sidebarTab.style.display = isFullScreen ? "none" : "block";
 }
 
@@ -79,6 +89,7 @@ function createSidebar() {
     width: SIDEBAR_WIDTH,
     height: "100vh",
     border: "none",
+    background: SIDEBAR_BACKGROUND,
     boxShadow: SIDEBAR_SHADOW,
     zIndex: ON_TOP_OF_EVERYTHING,
   });

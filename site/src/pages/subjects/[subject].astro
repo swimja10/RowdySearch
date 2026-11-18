@@ -1,0 +1,79 @@
+---
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import Pager from "../../components/Pager.astro";
+import Section from "../../components/Section.astro";
+import { courseUrl, professorUrl } from "../../data/addresses.ts";
+import { loadCatalog } from "../../data/catalog.ts";
+import { isLater } from "../../data/paging.ts";
+import { formatCount } from "../../data/shared.ts";
+import Base from "../../layouts/Base.astro";
+
+export function getStaticPaths() {
+  return [...loadCatalog().subjects.keys()].map((subject) => ({
+    params: { subject: subject.toLowerCase() },
+    props: { subject },
+  }));
+}
+
+type Props = { subject: string };
+
+const { subject, courses, professors } = loadCatalog().subjects.get(Astro.props.subject)!;
+const summary =
+  `UTSA has offered ${formatCount(courses.length, `${subject} course`)}, taught by ${formatCount(professors.length, "professor")}. ` +
+  "See each course's median grade and everyone who has taught it.";
+---
+
+<Base title={`${subject} courses and professors at UTSA`} description={summary}>
+  <div class="flex flex-col gap-6">
+    <Breadcrumbs crumbs={[{ label: "Home", href: "/" }, { label: "Subjects", href: "/subjects/" }, { label: subject }]} />
+
+    <header class="flex flex-col gap-2">
+      <h1 class="text-3xl font-bold">{subject} courses at UTSA</h1>
+      <p class="max-w-3xl text-zinc-300">{summary}</p>
+    </header>
+
+    <Section title={`Courses (${courses.length})`}>
+      <div data-paged="courses" class="flex scroll-mt-4 flex-col gap-4">
+        <div class="overflow-x-auto rounded-xl bg-zinc-800">
+          <table class="w-full text-left text-sm tabular-nums">
+            <thead>
+              <tr class="text-xs text-zinc-400">
+                <th scope="col" class="px-3 py-2 font-medium">Course</th>
+                <th scope="col" class="px-3 py-2 text-right font-medium whitespace-nowrap">Median grade</th>
+                <th scope="col" class="px-3 py-2 text-right font-medium">Professors</th>
+                <th scope="col" class="px-3 py-2 text-right font-medium whitespace-nowrap">Last taught</th>
+              </tr>
+            </thead>
+            <tbody>
+              {courses.map((course, index) => (
+                <tr data-paged-item class:list={["border-t border-zinc-700", isLater(index) && "later"]}>
+                  <th scope="row" class="px-3 py-2 font-normal">
+                    <a href={courseUrl(course.code)} class="font-medium text-orange-400 hover:text-orange-300 hover:underline">{course.code}</a>
+                    <span class="text-zinc-300"> · {course.name ?? "Topics course"}</span>
+                  </th>
+                  <td class="px-3 py-2 text-right">{course.median ?? "—"}</td>
+                  <td class="px-3 py-2 text-right">{course.teachers.length}</td>
+                  <td class="px-3 py-2 text-right whitespace-nowrap">{course.lastTaught}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <Pager total={courses.length} />
+      </div>
+    </Section>
+
+    <Section title={`Professors (${professors.length})`}>
+      <div data-paged="professors" class="flex scroll-mt-4 flex-col gap-4">
+        <ul class="columns-2 gap-6 rounded-xl bg-zinc-800 p-4 sm:columns-3 lg:columns-4">
+          {professors.map((professor, index) => (
+            <li data-paged-item class:list={["break-inside-avoid", isLater(index) && "later"]}>
+              <a href={professorUrl(professor.name)} class="block py-1.5 text-orange-400 hover:text-orange-300 hover:underline">{professor.name}</a>
+            </li>
+          ))}
+        </ul>
+        <Pager total={professors.length} />
+      </div>
+    </Section>
+  </div>
+</Base>

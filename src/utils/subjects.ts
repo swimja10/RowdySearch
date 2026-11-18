@@ -10,9 +10,9 @@ const PROFESSORS_TO_START_WITH = 3;
 export function subjectLabel(subject: Subject): string {
   switch (subject.type) {
     case "professor":
-      return `${subject.professorName} (all classes)`;
+      return `${subject.professorName} (All Classes)`;
     case "course":
-      return `${subject.courseCode} (every professor)`;
+      return `${subject.courseCode} (Every Professor)`;
     case "class":
       return `${subject.professorName} · ${subject.courseCode}`;
 

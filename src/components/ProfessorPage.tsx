@@ -5,7 +5,7 @@ import { Reviews } from "./Reviews.tsx";
 import { Section } from "./Section.tsx";
 import { useLookup } from "../context/useLookup.ts";
 import { allOfferings, bluebookOf, gradesOf } from "../utils/courses.ts";
-import { formatRating } from "../utils/format.ts";
+import { formatDepartment, formatRating } from "../utils/format.ts";
 import { medianGrade } from "../utils/grades.ts";
 import type { Course } from "../utils/gradeData.ts";
 
@@ -23,13 +23,13 @@ export function ProfessorPage({ professorName }: ProfessorPageProps) {
       <div className="flex flex-col">
         <h2 className="text-2xl font-bold">{professor.name}</h2>
         {professor.department !== null && (
-          <span className="text-sm text-zinc-400">{professor.department} department</span>
+          <span className="text-sm text-zinc-400">{formatDepartment(professor.department)}</span>
         )}
       </div>
 
-      <ProfessorStats rmp={professor.rmp} offerings={offerings} medianLabel="Median Grade (all classes)" />
+      <ProfessorStats rmp={professor.rmp} offerings={offerings} medianLabel="Median Grade (All Classes)" />
 
-      <Section title="Grades in all classes">
+      <Section title="Grades in All Classes">
         <GradeBars grades={gradesOf(offerings)} />
       </Section>
 

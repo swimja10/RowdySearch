@@ -2,7 +2,7 @@
 // Each button opens that row's professor and class in the sidebar.
 import type { Section } from "../page.ts";
 import { SEARCH_BUTTON_CLASS } from "./pageStyles.ts";
-import { showInSidebar } from "./sidebar.ts";
+import { openSidebar, showInSidebar } from "./sidebar.ts";
 
 const COLUMN_TITLE = "RowdySearch";
 const SITE_NAVY = "#0c2340"; // The registration sites' own button color
@@ -91,7 +91,15 @@ function searchButton(row: HTMLTableRowElement, titles: string[], readSection: S
   const cellUnder: CellFinder = (columnTitle) => row.cells[titles.indexOf(columnTitle)];
 
   const button = createSearchButton();
-  button.addEventListener("click", async () => showInSidebar(await readSection(cellUnder)));
+  button.addEventListener("click", async () => {
+    try {
+      showInSidebar(await readSection(cellUnder));
+    } catch (error) {
+      // The site changed this table in a way we can't read. Still open the sidebar, so you can search.
+      console.warn("RowdySearch: couldn't read this row.", error);
+      openSidebar();
+    }
+  });
   return button;
 }
 

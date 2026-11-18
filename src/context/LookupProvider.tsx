@@ -22,10 +22,15 @@ export function LookupProvider({ gradeData, children }: LookupProviderProps) {
     function openSectionFromAddress() {
       if (window.location.hash === "") return;
 
-      const section: Section = JSON.parse(decodeURIComponent(window.location.hash.slice(1)));
-      const page = pageForSection(section, gradeData.searchIndex);
-      setPages(curr => [...curr, page]);
-      window.scrollTo(0, 0);
+      // A garbled address is skipped, leaving the sidebar on the page it was on.
+      try {
+        const section = readSection(window.location.hash.slice(1));
+        const page = pageForSection(section, gradeData.searchIndex);
+        setPages(curr => [...curr, page]);
+        window.scrollTo(0, 0);
+      } catch (error) {
+        console.warn("RowdySearch: couldn't open the section in the address.", error);
+      }
       // Clear the "#" part (and only that part) so clicking the same Search button again still works.
       window.history.replaceState(null, "", window.location.pathname + window.location.search);
     }
@@ -80,4 +85,13 @@ export function LookupProvider({ gradeData, children }: LookupProviderProps) {
       {children}
     </LookupContext>
   );
+}
+
+// The part of the address after "#": a Section, as JSON.
+function readSection(text: string): Section {
+  const section = JSON.parse(decodeURIComponent(text));
+  if (typeof section?.instructor !== "string" || typeof section?.courseCode !== "string") {
+    throw new Error(`Not a section: ${text}`);
+  }
+  return section;
 }

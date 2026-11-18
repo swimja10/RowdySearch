@@ -1,0 +1,112 @@
+---
+import { classUrl, professorUrl } from "../data/addresses.ts";
+import { ratesOf, type CourseEntry } from "../data/catalog.ts";
+import { classKey, loadData } from "../data/professors.ts";
+import {
+  bluebookOf,
+  formatGpa,
+  formatShare,
+  gradePosition,
+  gradesOf,
+  medianGrade,
+  roundHalfUp,
+  semesterRank,
+} from "../data/shared.ts";
+
+type Props = {
+  course: CourseEntry;
+};
+
+const { course } = Astro.props;
+const { sectionCounts } = loadData();
+
+const rating = (value: number | null) => (value === null ? "—" : roundHalfUp(value, 1).toFixed(1));
+
+// One row per professor, most recent first. `sort` is the number a column sorts by when its
+// heading is clicked. A professor with no number for a column always sorts to the bottom.
+const rows = course.teachers.map(({ professor, course: theirs }) => {
+  const grades = gradesOf(theirs.offerings);
+  const rates = ratesOf(grades);
+  const median = medianGrade(grades);
+  const bluebook = bluebookOf(theirs.offerings).instructor;
+  const lastTaught = theirs.offerings[0].semester;
+
+  return {
+    name: professor.name,
+    // Their own title for the course, when it isn't the course's name: a topic, or an older name.
+    topic: theirs.title === course.name ? null : theirs.title,
+    cells: [
+      { text: median ?? "—", sort: median === null ? null : gradePosition(median) },
+      { text: formatGpa(rates.gpa), sort: rates.gpa },
+      { text: formatShare(rates.aPercent), sort: rates.aPercent },
+      { text: formatShare(rates.dAndFPercent), sort: rates.dAndFPercent },
+      { text: formatShare(rates.withdrewPercent), sort: rates.withdrewPercent },
+      { text: rating(bluebook), sort: bluebook },
+      { text: rating(professor.rmp.rating), sort: professor.rmp.rating },
+      { text: String(sectionCounts.get(classKey(professor.name, course.code))!.sections), sort: sectionCounts.get(classKey(professor.name, course.code))!.sections },
+      { text: lastTaught, sort: semesterRank(lastTaught) },
+    ],
+  };
+});
+
+const columns = ["Median", "GPA", "A's", "D's and F's", "Withdrew", "Bluebook", "RMP", "Sections", "Last taught"];
+---
+
+{/* Every professor who has taught the course, side by side. It reads fine without JavaScript;
+    the script only adds sorting. On a phone it scrolls sideways, with the names staying put. */}
+<div class="overflow-x-auto rounded-xl bg-zinc-800">
+  <table class="w-full text-left text-sm tabular-nums" data-sortable>
+    <thead>
+      <tr class="text-xs text-zinc-400">
+        <th scope="col" class="sticky left-0 bg-zinc-800 px-3 py-2 font-medium">Professor</th>
+        {columns.map((column) => (
+          <th scope="col" class="px-3 py-2 text-right font-medium whitespace-nowrap">
+            <button type="button" data-sort-button class="cursor-pointer hover:text-orange-300">{column}</button>
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr class="border-t border-zinc-700">
+          <th scope="row" class="sticky left-0 bg-zinc-800 px-3 py-2 font-normal">
+            <a href={classUrl(row.name, course.code)} class="font-medium text-orange-400 hover:text-orange-300 hover:underline">{row.name}</a>
+            {row.topic !== null && <span class="block text-xs text-zinc-500">{row.topic}</span>}
+            <a href={professorUrl(row.name)} class="block text-xs text-zinc-500 hover:text-orange-300 hover:underline">All their classes</a>
+          </th>
+          {row.cells.map((cell) => (
+            <td class="px-3 py-2 text-right whitespace-nowrap" data-sort={cell.sort ?? ""}>{cell.text}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<script is:inline>
+  // Clicking a column's heading sorts by it, highest first. Clicking again flips it.
+  document.querySelectorAll("table[data-sortable]").forEach(function (table) {
+    var body = table.tBodies[0];
+    var buttons = table.querySelectorAll("[data-sort-button]");
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var heading = button.parentElement;
+        var column = heading.cellIndex;
+        var highestFirst = heading.getAttribute("aria-sort") !== "descending";
+
+        var rows = Array.prototype.slice.call(body.rows);
+        rows.sort(function (first, second) {
+          var a = first.cells[column].getAttribute("data-sort");
+          var b = second.cells[column].getAttribute("data-sort");
+          if (a === "" || b === "") return (a === "") - (b === ""); // no number: always last
+          return highestFirst ? b - a : a - b;
+        });
+        rows.forEach(function (row) { body.appendChild(row); });
+
+        buttons.forEach(function (other) { other.parentElement.removeAttribute("aria-sort"); });
+        heading.setAttribute("aria-sort", highestFirst ? "descending" : "ascending");
+      });
+    });
+  });
+</script>

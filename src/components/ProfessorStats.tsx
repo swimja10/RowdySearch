@@ -76,7 +76,7 @@ type StatGroupProps = {
   children: ReactNode;
 };
 
-function StatGroup({ title, detail, children }: StatGroupProps) {
+export function StatGroup({ title, detail, children }: StatGroupProps) {
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex items-baseline justify-between gap-2 text-xs">
@@ -93,7 +93,7 @@ type StatProps = {
   value: string;
 };
 
-function Stat({ label, value }: StatProps) {
+export function Stat({ label, value }: StatProps) {
   return (
     <div className="flex flex-col rounded-xl bg-zinc-800 p-3">
       <span className="text-xs text-zinc-400">{label}</span>
@@ -106,6 +106,6 @@ type UnavailableProps = {
   children: ReactNode;
 };
 
-function Unavailable({ children }: UnavailableProps) {
+export function Unavailable({ children }: UnavailableProps) {
   return <p className="text-sm text-zinc-500">{children}</p>;
 }

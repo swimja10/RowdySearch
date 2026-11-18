@@ -1,0 +1,12 @@
+---
+// Facts about the page written for search engines and AI assistants, in schema.org's format.
+// People don't see it.
+type Props = {
+  data: Record<string, unknown>;
+};
+
+// "<" is written as <, so nothing in the data can end the script early.
+const json = JSON.stringify({ "@context": "https://schema.org", ...Astro.props.data }).replaceAll("<", "\\u003c");
+---
+
+<script type="application/ld+json" is:inline set:html={json} />

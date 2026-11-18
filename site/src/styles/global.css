@@ -1,0 +1,193 @@
+@import "tailwindcss";
+
+/* Analytical Mode uses the extension's own components, so their classes are needed too. */
+@source "../../../src/components";
+
+/* The same dark look as the extension's sidebar. */
+html {
+  color-scheme: dark;
+  background-color: var(--color-zinc-900);
+}
+
+body {
+  color: var(--color-zinc-100);
+}
+
+/* Long lists show a page at a time (components/Pager.astro). Items on other pages are hidden,
+   but only once the page knows JavaScript is on, so with it off the whole list shows. */
+html.js .later {
+  display: none;
+}
+
+/* The phone menu (components/Header.astro). The button's three lines turn into an X, the menu comes
+   down from the top to cover the screen, and its links arrive one after another. Closing plays it
+   backwards: the header's script puts data-closing on the menu, waits, then closes it.
+   The timing follows apple.com's menu. */
+.menu-icon {
+  position: relative;
+  display: block;
+  width: 22px;
+  height: 16px;
+}
+
+.menu-icon span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  transition:
+    transform 320ms cubic-bezier(0.4, 0, 0.6, 1),
+    opacity 160ms linear;
+}
+
+.menu-icon span:nth-child(1) {
+  top: 0;
+}
+
+.menu-icon span:nth-child(2) {
+  top: 7px;
+}
+
+.menu-icon span:nth-child(3) {
+  top: 14px;
+}
+
+details[data-menu][open]:not([data-closing]) .menu-icon span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+details[data-menu][open]:not([data-closing]) .menu-icon span:nth-child(2) {
+  opacity: 0;
+}
+
+details[data-menu][open]:not([data-closing]) .menu-icon span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.menu-panel {
+  animation: menu-opens 400ms cubic-bezier(0.4, 0, 0.6, 1) both;
+}
+
+.menu-panel a {
+  animation: menu-link-arrives 320ms cubic-bezier(0.4, 0, 0.6, 1) both;
+  animation-delay: calc(120ms + var(--number) * 40ms);
+}
+
+details[data-closing] .menu-panel {
+  animation: menu-closes 240ms cubic-bezier(0.4, 0, 0.6, 1) 40ms both;
+}
+
+details[data-closing] .menu-panel a {
+  animation: menu-link-leaves 160ms cubic-bezier(0.4, 0, 0.6, 1) both;
+}
+
+@keyframes menu-opens {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+
+  to {
+    opacity: 1;
+    clip-path: inset(0);
+  }
+}
+
+@keyframes menu-closes {
+  from {
+    opacity: 1;
+    clip-path: inset(0);
+  }
+
+  to {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+@keyframes menu-link-arrives {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes menu-link-leaves {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* The page under the open menu doesn't scroll. 64rem is where the menu gives way to links in a row. */
+@media (width < 64rem) {
+  html:has(details[data-menu][open]) {
+    overflow: hidden;
+  }
+}
+
+/* For people who have asked their device for less movement, the menu just appears. */
+@media (prefers-reduced-motion: reduce) {
+  .menu-icon span,
+  .menu-panel,
+  .menu-panel a {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Pages that are mostly writing (About, The data, Privacy): headings, paragraphs, lists, and tables. */
+@layer components {
+  .prose h2 {
+    @apply mt-10 mb-3 text-xl font-bold;
+  }
+
+  .prose h3 {
+    @apply mt-6 mb-2 font-semibold;
+  }
+
+  .prose p,
+  .prose ul,
+  .prose ol {
+    @apply mb-4 leading-relaxed text-zinc-300;
+  }
+
+  .prose ul {
+    @apply list-disc pl-6;
+  }
+
+  .prose ol {
+    @apply list-decimal pl-6;
+  }
+
+  .prose li {
+    @apply mb-1;
+  }
+
+  .prose a {
+    @apply text-orange-400 hover:text-orange-300 hover:underline;
+  }
+
+  .prose strong {
+    @apply font-semibold text-zinc-100;
+  }
+
+  .prose table {
+    @apply mb-4 w-full text-left text-sm;
+  }
+
+  .prose th {
+    @apply border-b border-zinc-700 px-3 py-2 font-semibold text-zinc-200;
+  }
+
+  .prose td {
+    @apply border-b border-zinc-800 px-3 py-2 align-top text-zinc-300;
+  }
+}

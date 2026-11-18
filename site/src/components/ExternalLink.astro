@@ -1,0 +1,11 @@
+---
+type Props = {
+  href: string;
+};
+
+const { href } = Astro.props;
+---
+
+{/* Opens Rate My Professors or Simple Syllabus in a new tab. The ︎ after the arrow keeps phones
+    from drawing it as a colored emoji. */}
+<a href={href} target="_blank" rel="noreferrer" class="text-orange-400 hover:text-orange-300 hover:underline active:text-orange-200"><slot /> <span aria-hidden="true">&#8599;&#xFE0E;</span></a>

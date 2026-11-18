@@ -1,4 +1,4 @@
-import { LETTER_GRADES, countStudents, type Grade, type GradeCounts, type LetterGrade } from "./grades.ts";
+import { FINISHED_OR_WITHDREW, LETTER_GRADES, countStudents, type Grade, type GradeCounts, type LetterGrade } from "./grades.ts";
 
 // Grades from worst to best: the order analytical mode's charts use along the bottom.
 export const GRADES_WORST_FIRST: LetterGrade[] = [...LETTER_GRADES].reverse();
@@ -16,9 +16,6 @@ const GRADE_POINTS: Record<LetterGrade, number> = {
   "F": 0,
 };
 
-// Everyone who finished with a letter grade, plus everyone who withdrew.
-const FINISHED_OR_WITHDREW: Grade[] = [...LETTER_GRADES, "W"];
-
 type DistributionOptions = {
   inPercent: boolean; // percent of students instead of number of students
   atOrAbove: boolean; // students who got that grade or better, instead of exactly that grade
@@ -28,6 +25,15 @@ type DistributionOptions = {
 export function average(values: number[]): number | null {
   if (values.length === 0) return null;
   return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
+// The middle value of some numbers (halfway between the two middle ones when there's an even
+// count), or null when there aren't any. Unlike the average, one unusual value can't pull it far.
+export function median(values: number[]): number | null {
+  if (values.length === 0) return null;
+  const sorted = [...values].sort((first, second) => first - second);
+  const middle = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 1 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2;
 }
 
 // Average grade points of everyone who got a letter grade, or null when nobody has yet.
@@ -65,7 +71,7 @@ export function gradeDistribution(counts: GradeCounts, { inPercent, atOrAbove }:
   const values = atOrAbove ? countAtOrAbove(studentsPerGrade) : studentsPerGrade;
   if (!inPercent) return values;
 
-  const totalStudents = countStudents(counts, LETTER_GRADES);
+  const totalStudents = countStudents(counts, FINISHED_OR_WITHDREW);
   return values.map((value) => (totalStudents === 0 ? 0 : (value / totalStudents) * 100));
 }
 

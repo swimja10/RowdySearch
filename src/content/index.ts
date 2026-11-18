@@ -20,8 +20,19 @@ addAllSearchButtons();
 // The sites build their tables after the page loads, so look again whenever the page changes.
 new MutationObserver(addAllSearchButtons).observe(document.body, { childList: true, subtree: true });
 
+// Tables that something went wrong in, so each one is only reported once (this runs on every change).
+const brokenTables = new WeakSet<HTMLTableElement>();
+
 function addAllSearchButtons() {
   for (const searchableTable of SEARCHABLE_TABLES) {
-    for (const table of tablesWithColumns(searchableTable.columns)) addSearchButtons(table, searchableTable);
+    for (const table of tablesWithColumns(searchableTable.columns)) {
+      // A table laid out in a way we don't expect is skipped, and the other tables still get buttons.
+      try {
+        addSearchButtons(table, searchableTable);
+      } catch (error) {
+        if (!brokenTables.has(table)) console.warn("RowdySearch: couldn't add Search buttons to a table.", error);
+        brokenTables.add(table);
+      }
+    }
   }
 }

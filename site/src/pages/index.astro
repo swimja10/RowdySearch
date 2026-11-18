@@ -1,0 +1,110 @@
+---
+import InstallButtons from "../components/InstallButtons.astro";
+import Markup from "../components/Markup.astro";
+import SearchBox from "../components/SearchBox.astro";
+import ShareCard from "../components/ShareCard.astro";
+import Base from "../layouts/Base.astro";
+import { classUrl, courseUrl, professorUrl, subjectUrl } from "../data/addresses.ts";
+import { loadData } from "../data/professors.ts";
+import { CHROME_LINK, CONTACT_EMAIL, CREATOR, FIREFOX_LINK, SITE_NAME, SITE_URL } from "../data/site.ts";
+
+const { totals } = loadData();
+const firstSemester = totals.gradedSemesters[0];
+const lastSemester = totals.gradedSemesters.at(-1);
+
+const counts = [
+  { label: "Professors", value: totals.professors },
+  { label: "Courses", value: totals.courses },
+  { label: "Sections", value: totals.sections },
+  { label: "Semesters of grades", value: totals.gradedSemesters.length },
+];
+
+const DESCRIPTION =
+  "Look up any UTSA professor or course: official grade distributions, Bluebook evaluations, Rate My Professors ratings, and syllabi. Free, with no account.";
+
+// What the site is and who makes it, for search engines and AI assistants.
+const whoWeAre = {
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: `${SITE_URL}/`,
+      name: SITE_NAME,
+      description: DESCRIPTION,
+      inLanguage: "en-US",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      url: `${SITE_URL}/`,
+      logo: `${SITE_URL}/icons/icon-128.png`,
+      email: CONTACT_EMAIL,
+      founder: { "@type": "Person", name: CREATOR },
+      sameAs: [CHROME_LINK.split("?")[0], FIREFOX_LINK],
+    },
+  ],
+};
+
+// What each example search opens, so they work as links before you've typed anything.
+const examples = [
+  { text: "Sean Beatty", href: professorUrl("Sean Beatty") },
+  { text: "Beatty MAT 1213", href: classUrl("Sean Beatty", "MAT 1213") },
+  { text: "CS 2123", href: courseUrl("CS 2123") },
+  { text: "MAT", href: subjectUrl("MAT") },
+];
+---
+
+<Base
+  isHome
+  title="RowdySearch: UTSA grade distributions, Bluebook, and professor ratings"
+  description={DESCRIPTION}>
+  <Markup data={whoWeAre} />
+  <div class="mx-auto flex max-w-3xl flex-col gap-10">
+    <section class="flex flex-col gap-5 pt-4 text-center sm:pt-10">
+      <h1 class="text-3xl font-bold sm:text-5xl">Pick the right UTSA professor</h1>
+      <p class="text-lg text-zinc-300">
+        Grade data, Bluebook, Rate My Professors, and syllabi for every UTSA professor, in one search.
+      </p>
+      <SearchBox size="large" autofocus />
+      <p class="text-sm text-zinc-500">
+        Try {examples.map((example, number) => (
+          <>{number > 0 && ", "}<a href={example.href} class="text-orange-400 hover:text-orange-300 hover:underline">{example.text}</a></>
+        ))}
+      </p>
+      <p class="text-sm text-zinc-500">
+        Or browse <a href="/subjects/" class="text-orange-400 hover:text-orange-300 hover:underline">every subject</a>{" "}
+        and <a href="/professors/" class="text-orange-400 hover:text-orange-300 hover:underline">every professor</a>.
+      </p>
+    </section>
+
+    <section aria-label="What's in RowdySearch" class="flex flex-col gap-3">
+      <dl class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {counts.map((count) => (
+          <div class="flex flex-col-reverse rounded-xl bg-zinc-800 p-3">
+            <dt class="text-xs text-zinc-400">{count.label}</dt>
+            <dd class="text-2xl font-semibold">{count.value.toLocaleString("en-US")}</dd>
+          </div>
+        ))}
+      </dl>
+      <p class="text-sm text-zinc-400">
+        The grades are UTSA's own records for {firstSemester} through {lastSemester}, obtained through a
+        public records request. <a href="/data/" class="text-orange-400 hover:text-orange-300 hover:underline">Where the data comes from</a>
+      </p>
+    </section>
+
+    <section class="flex flex-col gap-3 rounded-xl bg-zinc-800 p-4">
+      <div class="flex flex-col">
+        <h2 class="font-semibold">Use it while you register</h2>
+        <p class="text-sm text-zinc-400">
+          The free extension adds a Search button to every class in Schedule Planner and in UTSA's
+          registration pages. <a href="/extension/" class="text-orange-400 hover:text-orange-300 hover:underline">See what it does</a>
+        </p>
+      </div>
+      <InstallButtons />
+    </section>
+
+    <ShareCard />
+  </div>
+</Base>

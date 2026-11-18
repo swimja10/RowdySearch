@@ -1,0 +1,23 @@
+# How long browsers keep each kind of file. Cloudflare reads this when it serves the site.
+
+# Scripts and styles have a fingerprint of their contents in their names, so they can be kept
+# for a year: a changed file gets a new name.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The search index is fingerprinted the same way.
+/search-index.*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The screenshots and icons change rarely, but keep their names when they do. The rule names the
+# picture files only: "/extension/*" also matched the Extension page itself, so phones kept an
+# old copy of that page for a day.
+/extension/*.webp
+  Cache-Control: public, max-age=86400
+/icons/*
+  Cache-Control: public, max-age=86400
+
+# Every Worker also gets a preview address ending in workers.dev. It isn't the real site, so
+# search engines are told to leave it out. rowdysearch.com itself is unaffected.
+https://:worker.:account.workers.dev/*
+  X-Robots-Tag: noindex

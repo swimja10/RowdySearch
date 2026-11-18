@@ -1,0 +1,23 @@
+---
+import type { Rates } from "../data/catalog.ts";
+import { formatGpa, formatShare } from "../data/shared.ts";
+import Stat from "./Stat.astro";
+import StatGroup from "./StatGroup.astro";
+
+type Props = {
+  rates: Rates;
+};
+
+const { rates } = Astro.props;
+---
+
+{/* How the grades break down, each out of everyone who got a letter grade or withdrew. */}
+{rates.grades > 0 && (
+  <StatGroup title="Grade breakdown">
+    <Fragment slot="detail">{rates.grades.toLocaleString("en-US")} grades</Fragment>
+    <Stat label="Average GPA" value={formatGpa(rates.gpa)} />
+    <Stat label="A's" value={formatShare(rates.aPercent)} />
+    <Stat label="D's and F's" value={formatShare(rates.dAndFPercent)} />
+    <Stat label="Withdrew" value={formatShare(rates.withdrewPercent)} />
+  </StatGroup>
+)}

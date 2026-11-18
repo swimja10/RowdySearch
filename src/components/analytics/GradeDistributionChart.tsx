@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { Data, Layout } from "plotly.js";
 import { PlotlyChart } from "./PlotlyChart.tsx";
 import { Toggle } from "./Toggle.tsx";
+import { formatShare } from "../../utils/format.ts";
 import { countStudents, LETTER_GRADES } from "../../utils/grades.ts";
 import type { SeriesData } from "../../utils/series.ts";
 import { GRADES_WORST_FIRST, gradeDistribution } from "../../utils/statistics.ts";
@@ -21,16 +22,21 @@ export function GradeDistributionChart({ seriesData }: GradeDistributionChartPro
   const withGrades = seriesData.filter(series => countStudents(series.grades, LETTER_GRADES) > 0);
   const withoutGrades = seriesData.filter(series => !withGrades.includes(series));
 
-  const data: Data[] = withGrades.map(series => ({
-    type: asLines ? "scatter" : "bar",
-    mode: "lines+markers",
-    name: series.label,
-    x: GRADES_WORST_FIRST,
-    y: gradeDistribution(series.grades, options),
-    line: { color: series.color, width: 2 },
-    marker: { color: series.color, size: 8 },
-    hovertemplate: inPercent ? "%{y:.1f}%" : "%{y} students",
-  }));
+  const data: Data[] = withGrades.map(series => {
+    const values = gradeDistribution(series.grades, options);
+    return {
+      type: asLines ? "scatter" : "bar",
+      mode: "lines+markers",
+      name: series.label,
+      x: GRADES_WORST_FIRST,
+      y: values,
+      // The hover text is rounded by RowdySearch, not Plotly, so it's the same number the sidebar shows.
+      customdata: values.map(value => (inPercent ? formatShare(value) : `${value.toLocaleString()} students`)),
+      hovertemplate: "%{customdata}",
+      line: { color: series.color, width: 2 },
+      marker: { color: series.color, size: 8 },
+    };
+  });
 
   const layout: Partial<Layout> = {
     barmode: "group",
@@ -52,7 +58,7 @@ export function GradeDistributionChart({ seriesData }: GradeDistributionChartPro
       </div>
       <PlotlyChart data={data} layout={layout} className="h-96" />
       <span className="text-xs text-zinc-500">
-        Out of students who got a letter grade. Withdrawals (W) are in the table below.
+        Out of everyone who got a letter grade or withdrew. Withdrawals (W) are in the table below.
         {withoutGrades.length > 0 && ` Not shown (no grades yet): ${withoutGrades.map(series => series.label).join(", ")}.`}
       </span>
     </div>

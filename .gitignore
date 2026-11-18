@@ -15,6 +15,9 @@ venv/
 # dist/ is NOT ignored on purpose: it's the built extension, so anyone who clones
 # the repo can "Load unpacked" this folder in Chrome without building it first.
 
+# Chrome Web Store uploads (manifest.json, dist/ and data/professors.json, zipped).
+*.zip
+
 # Windows adds these "downloaded from the internet" stamps next to downloaded files.
 # Their names contain ":", which breaks cloning the repo on Windows.
 *:Zone.Identifier

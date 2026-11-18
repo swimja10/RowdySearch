@@ -3,12 +3,12 @@ import { GradeBars } from "./GradeBars.tsx";
 import { ProfessorStats } from "./ProfessorStats.tsx";
 import { Reviews } from "./Reviews.tsx";
 import { Section } from "./Section.tsx";
-import { SyllabusLinks } from "./SyllabusLinks.tsx";
+import { LatestSyllabus, SyllabusLinks } from "./SyllabusLinks.tsx";
 import { useLookup } from "../context/useLookup.ts";
 import { bluebookOf, findCourse, gradesOf } from "../utils/courses.ts";
 import { formatRating } from "../utils/format.ts";
 import { medianGrade } from "../utils/grades.ts";
-import type { ClassOffering, Course, Review } from "../utils/gradeData.ts";
+import type { ClassOffering, Review } from "../utils/gradeData.ts";
 
 type ClassPageProps = {
   professorName: string;
@@ -35,7 +35,7 @@ export function ClassPage({ professorName, courseCode }: ClassPageProps) {
       <ProfessorStats rmp={professor.rmp} offerings={course.offerings} medianLabel={`Median Grade in ${course.code}`} />
 
       <Section title="Latest syllabus">
-        <LatestSyllabus course={course} />
+        <LatestSyllabus offering={course.offerings.find(offering => offering.syllabi.length > 0)} />
       </Section>
 
       <Section title={`Grades in ${course.code}`}>
@@ -70,25 +70,6 @@ function thisCourseFirst(reviews: Review[], courseCode: string): Review[] {
   const courseNumber = courseCode.split(" ")[1];
   const isThisCourse = (review: Review) => review.course.match(/\d{4}/)?.[0] === courseNumber;
   return [...reviews].sort((first, second) => Number(isThisCourse(second)) - Number(isThisCourse(first)));
-}
-
-type LatestSyllabusProps = {
-  course: Course;
-};
-
-function LatestSyllabus({ course }: LatestSyllabusProps) {
-  const latest = course.offerings.find(offering => offering.syllabi.length > 0);
-
-  if (latest === undefined) {
-    return <span className="text-sm text-zinc-500">No syllabus on Simple Syllabus</span>;
-  }
-
-  return (
-    <div className="flex flex-col gap-1 rounded-xl bg-zinc-800 p-3">
-      <span className="font-medium">{latest.semester}</span>
-      <SyllabusLinks syllabi={latest.syllabi} />
-    </div>
-  );
 }
 
 type SemesterRowProps = {

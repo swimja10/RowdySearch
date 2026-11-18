@@ -7,11 +7,15 @@ async function toggleSidebarIn(tabId) {
 	try {
 		await chrome.tabs.sendMessage(tabId, TOGGLE_SIDEBAR);
 	} catch {
-		await chrome.scripting.executeScript({
-			target: { tabId },
-			files: ["dist/content.js"]
-		});
-		await chrome.tabs.sendMessage(tabId, TOGGLE_SIDEBAR);
+		try {
+			await chrome.scripting.executeScript({
+				target: { tabId },
+				files: ["dist/content.js"]
+			});
+			await chrome.tabs.sendMessage(tabId, TOGGLE_SIDEBAR);
+		} catch (error) {
+			console.info("RowdySearch can't open on this page.", error);
+		}
 	}
 }
 //#endregion

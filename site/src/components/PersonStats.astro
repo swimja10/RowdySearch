@@ -1,0 +1,58 @@
+---
+import {
+  bluebookOf,
+  formatCount,
+  formatOutOfFive,
+  formatPercent,
+  gradesOf,
+  medianGrade,
+  type ClassOffering,
+  type Rmp,
+} from "../data/shared.ts";
+import ExternalLink from "./ExternalLink.astro";
+import Stat from "./Stat.astro";
+import StatGroup from "./StatGroup.astro";
+
+type Props = {
+  rmp: Rmp;
+  offerings: ClassOffering[];
+  medianLabel: string;
+  medianNote?: string; // on a class page: the whole course's median
+};
+
+const { rmp, offerings, medianLabel, medianNote } = Astro.props;
+const bluebook = bluebookOf(offerings);
+---
+
+{/* The numbers at the top of a professor's or a class's page, grouped by where they're from. */}
+<div class="flex flex-col gap-3">
+  <Stat label={medianLabel} value={medianGrade(gradesOf(offerings)) ?? "No grades yet"} note={medianNote} />
+
+  {bluebook.sectionCount === 0 ? (
+    <p class="text-sm text-zinc-500">No Bluebook evaluations yet</p>
+  ) : (
+    <StatGroup title="Bluebook">
+      <Fragment slot="detail">UTSA course evaluations · {formatCount(bluebook.sectionCount, "section")}</Fragment>
+      <Stat label="Instructor" value={formatOutOfFive(bluebook.instructor)} />
+      <Stat label="Course" value={formatOutOfFive(bluebook.course)} />
+    </StatGroup>
+  )}
+
+  {rmp.profiles.length === 0 ? (
+    <p class="text-sm text-zinc-500">Not found on Rate My Professors</p>
+  ) : (
+    <StatGroup title="Rate My Professors">
+      {/* A few professors have two profiles (Rate My Professors made a duplicate), so each link says its department. */}
+      <span slot="detail" class="flex justify-end gap-2">
+        {rmp.profiles.length === 1 ? (
+          <ExternalLink href={rmp.profiles[0].link}>See all ratings</ExternalLink>
+        ) : (
+          rmp.profiles.map((profile) => <ExternalLink href={profile.link}>{profile.department}</ExternalLink>)
+        )}
+      </span>
+      <Stat label="Rating" value={formatOutOfFive(rmp.rating)} />
+      <Stat label="Difficulty" value={formatOutOfFive(rmp.difficulty)} />
+      <Stat label="Would take again" value={formatPercent(rmp.wouldTakeAgainPercent)} />
+    </StatGroup>
+  )}
+</div>

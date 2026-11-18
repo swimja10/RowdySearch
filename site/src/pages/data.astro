@@ -1,0 +1,151 @@
+---
+import Markup from "../components/Markup.astro";
+import Base from "../layouts/Base.astro";
+import { loadData } from "../data/professors.ts";
+import { CONTACT_EMAIL, DISCLAIMER, SITE_NAME, SITE_URL } from "../data/site.ts";
+
+const { totals } = loadData();
+const firstSemester = totals.gradedSemesters[0];
+const lastSemester = totals.gradedSemesters.at(-1);
+const number = (value: number) => value.toLocaleString("en-US");
+
+// What the grade data is, for search engines that list data sets. "Fall 2022" -> "2022".
+const yearOf = (semester: string) => semester.split(" ").at(-1)!;
+const dataSet = {
+  "@type": "Dataset",
+  name: "UTSA grade distributions by professor and course",
+  description:
+    `The number of students who got each letter grade in every section at the University of Texas at San Antonio (UTSA), ` +
+    `from ${firstSemester} to ${lastSemester}: ${number(totals.gradedSections)} sections with grades, ` +
+    `${number(totals.professors)} professors, and ${number(totals.courses)} courses. They are UTSA's official records, ` +
+    `obtained through requests under the Texas Public Information Act, and are shown with Bluebook course evaluations, ` +
+    `Rate My Professors ratings, and links to syllabi.`,
+  url: `${SITE_URL}/data/`,
+  keywords: ["UTSA", "grade distributions", "professors", "courses", "median grade", "withdrawal rate", "Bluebook"],
+  isAccessibleForFree: true,
+  inLanguage: "en-US",
+  temporalCoverage: `${yearOf(firstSemester)}/${yearOf(lastSemester!)}`,
+  spatialCoverage: "The University of Texas at San Antonio",
+  variableMeasured: ["Students per letter grade", "Median grade", "Withdrawal rate", "Grade point average"],
+  creator: { "@type": "Organization", name: SITE_NAME, url: `${SITE_URL}/` },
+  sourceOrganization: { "@type": "CollegeOrUniversity", name: "The University of Texas at San Antonio", url: "https://www.utsa.edu/" },
+};
+---
+
+<Base
+  title="Where RowdySearch's data comes from"
+  description="RowdySearch's grade distributions are UTSA's official records, obtained through a Texas Public Information Act request. How every number is worked out, and answers to legal questions.">
+  <article class="prose mx-auto max-w-3xl">
+    <h1 class="mb-4 text-3xl font-bold sm:text-4xl">Where the data comes from</h1>
+    <Markup data={dataSet} />
+
+    <p>
+      RowdySearch combines four sources. The grade distributions are UTSA's own records. They are
+      not scraped, estimated, or reported by students.
+    </p>
+
+    <h2>The four sources</h2>
+    <div class="overflow-x-auto">
+      <table>
+        <thead>
+          <tr><th>What</th><th>Where it comes from</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Grade distributions</td>
+            <td>
+              UTSA, through a public records request under the Texas Public Information Act (Texas
+              Government Code, Chapter 552). The university sends a spreadsheet for each semester
+              with the number of students who got each grade in every section.
+            </td>
+          </tr>
+          <tr>
+            <td>Bluebook evaluations</td>
+            <td>
+              <a href="https://bluebook.utsa.edu/" target="_blank" rel="noreferrer">Bluebook</a>, where
+              UTSA publishes its end-of-semester course evaluations.
+            </td>
+          </tr>
+          <tr>
+            <td>Ratings and reviews</td>
+            <td>
+              <a href="https://www.ratemyprofessors.com/" target="_blank" rel="noreferrer">Rate My Professors</a>.
+              Every professor's page links to their full profile there.
+            </td>
+          </tr>
+          <tr>
+            <td>Syllabi</td>
+            <td>
+              <a href="https://utsa.simplesyllabus.com/" target="_blank" rel="noreferrer">Simple Syllabus</a>.
+              RowdySearch links to each syllabus and does not copy it.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>What it covers</h2>
+    <ul>
+      <li>{number(totals.professors)} professors and {number(totals.courses)} courses.</li>
+      <li>{number(totals.sections)} sections, {number(totals.gradedSections)} of them with grades.</li>
+      <li>{number(totals.gradesCounted)} grades in all.</li>
+      <li>Grades for {totals.gradedSemesters.length} semesters, {firstSemester} through {lastSemester}.</li>
+      <li>Syllabi and evaluations through {totals.newestSemester}.</li>
+    </ul>
+    <p>
+      New grades are added after each semester ends, once UTSA answers a new records request.
+    </p>
+
+    <h2>How the numbers are worked out</h2>
+    <ul>
+      <li>
+        <strong>Median grade.</strong> Line up every student who got a letter grade, from A+ to F.
+        The median is the grade of the student in the middle. Withdrawals and incompletes are not
+        counted.
+      </li>
+      <li>
+        <strong>Grade percentages.</strong> Each is out of everyone who got a letter grade or
+        withdrew. Pluses and minuses are grouped with their letter, so A+, A, and A- are all "A".
+      </li>
+      <li>
+        <strong>Bluebook.</strong> The instructor rating and the course rating, each out of 5,
+        averaged over every section that has results.
+      </li>
+      <li>
+        <strong>Rate My Professors.</strong> The rating, difficulty, and would-take-again percentage
+        as Rate My Professors reports them. When a professor has two profiles there, the numbers are
+        averaged.
+      </li>
+    </ul>
+
+    <h2>Legal questions</h2>
+
+    <h3>Is it legal to publish the grade data?</h3>
+    <p>
+      Yes. Grade distributions are public information in Texas. UTSA released them in response to a
+      request under the Texas Public Information Act, and anyone can file the same request through{" "}
+      <a href="https://www.utsa.edu/openrecords/" target="_blank" rel="noreferrer">UTSA's open records office</a>.
+    </p>
+
+    <h3>Does this comply with FERPA?</h3>
+    <p>
+      UTSA is the one that made sure of it. FERPA protects the education records of individual
+      students, and by law the university has to make sure records follow FERPA before it releases
+      them. UTSA reviewed this grade data and then released it.
+    </p>
+    <p>
+      What UTSA released has no student names, ID numbers, or individual records. It is a count of
+      how many students got each grade in a section.
+    </p>
+
+    <h3>Something about a professor is wrong. How do I get it fixed?</h3>
+    <p>
+      Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> with the page's address and what is
+      wrong. Grades and evaluations come straight from UTSA's records, so an error there may need to
+      be corrected with the university as well.
+    </p>
+
+    <h3>Is RowdySearch part of UTSA?</h3>
+    <p>No. {DISCLAIMER}</p>
+  </article>
+</Base>

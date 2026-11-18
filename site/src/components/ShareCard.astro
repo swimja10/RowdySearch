@@ -1,0 +1,145 @@
+---
+import {
+  SHARE_LINK,
+  SHARE_MESSAGE,
+  SHARE_MORE_ICON,
+  SHARE_TEXT,
+  SHARE_TITLE,
+  SITE_SHARE_TARGETS,
+} from "../data/share.ts";
+
+const buttonStyle = "group flex flex-col items-center gap-1 text-xs text-zinc-300 outline-none";
+const iconStyle =
+  "flex size-11 items-center justify-center rounded-full bg-zinc-900 transition-colors group-hover:bg-zinc-700 group-active:bg-zinc-600 group-focus-visible:ring-2 group-focus-visible:ring-orange-500";
+---
+
+{/* The same Share card as the extension's home page. Every button is a plain link, so it works
+    without JavaScript. The script below adds copying, and the system share menu where there is one. */}
+<section
+  class="flex flex-col gap-3 rounded-xl bg-zinc-800 p-4"
+  data-share
+  data-share-title={SHARE_TITLE}
+  data-share-message={SHARE_MESSAGE}
+  data-share-text={SHARE_TEXT}
+  data-share-link={SHARE_LINK}>
+  <div class="flex flex-col">
+    <h2 class="font-semibold">Share RowdySearch</h2>
+    <p class="text-sm text-zinc-400">Know someone picking classes? Send it their way.</p>
+  </div>
+
+  <div class="grid grid-cols-5 gap-y-3 sm:grid-cols-11">
+    {SITE_SHARE_TARGETS.map((target) => (
+      <a
+        href={target.link}
+        target="_blank"
+        rel="noreferrer"
+        class={buttonStyle}
+        data-share-copies={target.copiesMessage ? target.name : undefined}>
+        <span class={iconStyle}>
+          <svg viewBox="0 0 24 24" class="size-5" fill={target.icon.color} aria-hidden="true">
+            <path d={target.icon.path} />
+          </svg>
+        </span>
+        {target.name}
+      </a>
+    ))}
+    <button type="button" class={buttonStyle} data-share-more hidden>
+      <span class={iconStyle}>
+        <svg viewBox="0 0 24 24" class="size-5" fill={SHARE_MORE_ICON.color} aria-hidden="true">
+          <path d={SHARE_MORE_ICON.path} />
+        </svg>
+      </span>
+      More
+    </button>
+  </div>
+  <p role="status" class="text-xs text-zinc-400 empty:hidden" data-share-status></p>
+
+  <div class="flex gap-2">
+    <input
+      readonly
+      value={SHARE_LINK}
+      aria-label="RowdySearch's link"
+      data-share-input
+      class="min-w-0 flex-1 rounded-lg bg-zinc-900 px-3 py-1.5 text-sm text-zinc-400 outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+    />
+    <button
+      type="button"
+      data-share-copy
+      class="min-w-24 shrink-0 rounded bg-orange-600 px-2 py-1 text-sm text-zinc-100 transition-colors hover:bg-orange-500 active:bg-orange-400">
+      Copy link
+    </button>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    var STATUS_MESSAGE_MS = 4000;
+    var COPIED_LABEL_MS = 2000;
+
+    // Copies text and says whether it worked, falling back to the browser's older copy command.
+    function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text).then(
+          function () { return true; },
+          function () { return copyTheOldWay(text); }
+        );
+      }
+      return Promise.resolve(copyTheOldWay(text));
+    }
+
+    function copyTheOldWay(text) {
+      var scratch = document.createElement("textarea");
+      scratch.value = text;
+      document.body.appendChild(scratch);
+      scratch.select();
+      var copied = false;
+      try { copied = document.execCommand("copy"); } catch (error) { copied = false; }
+      scratch.remove();
+      return copied;
+    }
+
+    document.querySelectorAll("[data-share]").forEach(function (card) {
+      var status = card.querySelector("[data-share-status]");
+      var input = card.querySelector("[data-share-input]");
+      var copyButton = card.querySelector("[data-share-copy]");
+      var moreButton = card.querySelector("[data-share-more]");
+      var statusTimer;
+
+      function showStatus(text) {
+        status.textContent = text;
+        clearTimeout(statusTimer);
+        statusTimer = setTimeout(function () { status.textContent = ""; }, STATUS_MESSAGE_MS);
+      }
+
+      // Apps with no share link: copy the message as the click happens. The link then opens the app.
+      card.querySelectorAll("[data-share-copies]").forEach(function (link) {
+        link.addEventListener("click", function () {
+          var app = link.getAttribute("data-share-copies");
+          copyText(card.dataset.shareText).then(function (copied) {
+            showStatus(copied ? "Message copied. Paste it in " + app + "." : "Copy the link below and paste it in " + app + ".");
+          });
+        });
+      });
+
+      input.addEventListener("focus", function () { input.select(); });
+
+      copyButton.addEventListener("click", function () {
+        copyText(card.dataset.shareLink).then(function (copied) {
+          if (!copied) { input.select(); return; }
+          copyButton.textContent = "Copied!";
+          setTimeout(function () { copyButton.textContent = "Copy link"; }, COPIED_LABEL_MS);
+        });
+      });
+
+      // Phones and most desktops have a system share menu. Where there isn't one, More stays hidden.
+      if (navigator.share) {
+        moreButton.hidden = false;
+        moreButton.addEventListener("click", function () {
+          navigator
+            .share({ title: card.dataset.shareTitle, text: card.dataset.shareMessage, url: card.dataset.shareLink })
+            .catch(function () { /* Closing the menu without picking an app isn't a problem. */ });
+        });
+      }
+    });
+  })();
+</script>

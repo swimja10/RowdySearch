@@ -1,0 +1,43 @@
+---
+import { SITE_URL } from "../data/site.ts";
+import Markup from "./Markup.astro";
+
+type Crumb = {
+  label: string;
+  href?: string; // left out for the page you're on
+};
+
+type Props = {
+  crumbs: Crumb[];
+};
+
+const { crumbs } = Astro.props;
+
+// The same trail for search engines, which show it above the page's title in results.
+const trail = {
+  "@type": "BreadcrumbList",
+  itemListElement: crumbs.map((crumb, number) => ({
+    "@type": "ListItem",
+    position: number + 1,
+    name: crumb.label,
+    item: new URL(crumb.href ?? Astro.url.pathname, SITE_URL).href,
+  })),
+};
+---
+
+{/* Where this page sits: Home › MAT › MAT 1213 › Sean Beatty. */}
+<nav aria-label="Breadcrumb" class="text-sm text-zinc-500">
+  <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+    {crumbs.map((crumb, number) => (
+      <li class="flex items-center gap-2">
+        {number > 0 && <span aria-hidden="true">›</span>}
+        {crumb.href === undefined ? (
+          <span aria-current="page" class="text-zinc-400">{crumb.label}</span>
+        ) : (
+          <a href={crumb.href} class="hover:text-orange-300 hover:underline">{crumb.label}</a>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+<Markup data={trail} />

@@ -16,7 +16,9 @@ export function VennIcon({ className }: VennIconProps) {
   const overlapId = `${id}-overlap`;
 
   return (
-    <svg viewBox="0 0 48 32" className={className} aria-hidden="true">
+    // width and height give it a size even if the stylesheet doesn't load (then it would shrink to
+    // nothing, and the Analytical Mode button with it). The className's sizes override them.
+    <svg viewBox="0 0 48 32" width="48" height="32" className={className} aria-hidden="true">
       <defs>
         <clipPath id={overlapId}>
           <circle {...RIGHT_CIRCLE} />

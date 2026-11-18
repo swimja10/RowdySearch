@@ -1,6 +1,6 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["./plotly.js","./rolldown-runtime.js"])))=>i.map(i=>d[i]);
 import { n as __toESM } from "./rolldown-runtime.js";
 import { a as animate, c as require_react, i as set, n as twMerge, o as require_compiler_runtime, r as stagger, s as require_client, t as require_jsx_runtime } from "./libraries.js";
-import { t as require_plotly_basic } from "./plotly.js";
 //#region \0vite/modulepreload-polyfill.js
 (function polyfill() {
 	const relList = document.createElement("link").relList;
@@ -75,7 +75,7 @@ function Button(t0) {
 }
 function getVariantStyles(variant) {
 	switch (variant) {
-		case "primary": return "bg-orange-600 hover:bg-orange-500 active:bg-orange-400";
+		case "primary": return "bg-orange-600 text-zinc-100 hover:bg-orange-500 active:bg-orange-400";
 		case "secondary": return "bg-zinc-700 hover:bg-zinc-600 active:bg-zinc-500 text-zinc-200";
 		case "link": return "p-0 text-left text-orange-400 hover:text-orange-300 active:text-orange-200 hover:underline";
 		default: throw new Error(`Invalid variant: ${variant}`);
@@ -96,9 +96,156 @@ function Footer() {
 	return t0;
 }
 //#endregion
+//#region src/components/ErrorBoundary.tsx
+var ErrorBoundary = class extends import_react.Component {
+	state = {
+		failed: false,
+		resetKey: this.props.resetKey
+	};
+	static getDerivedStateFromError() {
+		return { failed: true };
+	}
+	static getDerivedStateFromProps(props, state) {
+		return props.resetKey === state.resetKey ? null : {
+			failed: false,
+			resetKey: props.resetKey
+		};
+	}
+	componentDidCatch(error, info) {
+		console.error(`RowdySearch: ${this.props.name} crashed.`, error, info.componentStack);
+	}
+	retry = () => this.setState({ failed: false });
+	render() {
+		return this.state.failed ? this.props.fallback(this.retry) : this.props.children;
+	}
+};
+//#endregion
+//#region src/utils/hostPage.ts
+var isOnAPage = window.parent !== window;
+function setFullScreen(isFullScreen) {
+	document.body.classList.toggle("see-through", isFullScreen);
+	if (!isOnAPage) return Promise.resolve();
+	return new Promise((resolve) => {
+		window.addEventListener("resize", () => resolve(), { once: true });
+		setTimeout(resolve, 500);
+		tellPage({
+			rowdySearch: "fullScreen",
+			isFullScreen
+		});
+	});
+}
+function closeSidebar() {
+	if (isOnAPage) tellPage({ rowdySearch: "close" });
+}
+function tellPage(message) {
+	window.parent.postMessage(message, "*");
+}
+//#endregion
+//#region src/components/StatusScreen.tsx
+function StatusScreen(t0) {
+	const $ = (0, import_compiler_runtime.c)(2);
+	const { children } = t0;
+	let t1;
+	if ($[0] !== children) {
+		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: "flex min-h-screen flex-col items-center gap-3 bg-zinc-900 px-4 py-12 text-center text-zinc-400",
+			children
+		});
+		$[0] = children;
+		$[1] = t1;
+	} else t1 = $[1];
+	return t1;
+}
+function Problem(t0) {
+	const $ = (0, import_compiler_runtime.c)(10);
+	const { message, onRetry, offerReload: t1 } = t0;
+	const offerReload = t1 === void 0 ? false : t1;
+	let t2;
+	if ($[0] !== message) {
+		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: message });
+		$[0] = message;
+		$[1] = t2;
+	} else t2 = $[1];
+	let t3;
+	if ($[2] !== onRetry) {
+		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+			onClick: onRetry,
+			children: "Try again"
+		});
+		$[2] = onRetry;
+		$[3] = t3;
+	} else t3 = $[3];
+	let t4;
+	if ($[4] !== offerReload) {
+		t4 = offerReload && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ReloadLink, {});
+		$[4] = offerReload;
+		$[5] = t4;
+	} else t4 = $[5];
+	let t5;
+	if ($[6] !== t2 || $[7] !== t3 || $[8] !== t4) {
+		t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "flex flex-col items-center gap-3 rounded-xl bg-zinc-800 p-6 text-center text-sm text-zinc-300",
+			children: [
+				t2,
+				t3,
+				t4
+			]
+		});
+		$[6] = t2;
+		$[7] = t3;
+		$[8] = t4;
+		$[9] = t5;
+	} else t5 = $[9];
+	return t5;
+}
+function ReloadLink() {
+	const $ = (0, import_compiler_runtime.c)(1);
+	let t0;
+	if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
+		t0 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+			className: "text-xs text-zinc-500",
+			children: [
+				"Still not working?",
+				" ",
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+					href: "index.html",
+					className: "text-orange-400 hover:underline",
+					children: "Reload RowdySearch"
+				})
+			]
+		});
+		$[0] = t0;
+	} else t0 = $[0];
+	return t0;
+}
+function CrashScreen(t0) {
+	const $ = (0, import_compiler_runtime.c)(3);
+	const { onRetry } = t0;
+	let t1;
+	if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
+		t1 = [];
+		$[0] = t1;
+	} else t1 = $[0];
+	(0, import_react.useEffect)(_temp$19, t1);
+	let t2;
+	if ($[1] !== onRetry) {
+		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StatusScreen, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Problem, {
+			message: "Something went wrong in RowdySearch.",
+			onRetry,
+			offerReload: true
+		}) });
+		$[1] = onRetry;
+		$[2] = t2;
+	} else t2 = $[2];
+	return t2;
+}
+function _temp$19() {
+	setFullScreen(false);
+}
+//#endregion
 //#region src/components/Section.tsx
 function Section(t0) {
-	const $ = (0, import_compiler_runtime.c)(5);
+	const $ = (0, import_compiler_runtime.c)(8);
 	const { title, children } = t0;
 	let t1;
 	if ($[0] !== title) {
@@ -109,17 +256,35 @@ function Section(t0) {
 		$[0] = title;
 		$[1] = t1;
 	} else t1 = $[1];
-	let t2;
-	if ($[2] !== children || $[3] !== t1) {
-		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-			className: "flex flex-col gap-2",
-			children: [t1, children]
+	const t2 = `the ${title} section`;
+	let t3;
+	if ($[2] !== children || $[3] !== t2) {
+		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ErrorBoundary, {
+			name: t2,
+			fallback: _temp$18,
+			children
 		});
 		$[2] = children;
-		$[3] = t1;
-		$[4] = t2;
-	} else t2 = $[4];
-	return t2;
+		$[3] = t2;
+		$[4] = t3;
+	} else t3 = $[4];
+	let t4;
+	if ($[5] !== t1 || $[6] !== t3) {
+		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+			className: "flex flex-col gap-2",
+			children: [t1, t3]
+		});
+		$[5] = t1;
+		$[6] = t3;
+		$[7] = t4;
+	} else t4 = $[7];
+	return t4;
+}
+function _temp$18(retry) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Problem, {
+		message: "Something went wrong showing this part.",
+		onRetry: retry
+	});
 }
 //#endregion
 //#region src/components/VennIcon.tsx
@@ -178,7 +343,7 @@ function VennIcon(t0) {
 	const t5 = `url(#${overlapId})`;
 	let t6;
 	if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
-		t6 = STRIPE_HEIGHTS.map(_temp$13);
+		t6 = STRIPE_HEIGHTS.map(_temp$17);
 		$[5] = t6;
 	} else t6 = $[5];
 	let t7;
@@ -238,6 +403,8 @@ function VennIcon(t0) {
 	if ($[17] !== className || $[18] !== t11 || $[19] !== t9) {
 		t13 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
 			viewBox: "0 0 48 32",
+			width: "48",
+			height: "32",
 			className,
 			"aria-hidden": "true",
 			children: [
@@ -253,7 +420,7 @@ function VennIcon(t0) {
 	} else t13 = $[20];
 	return t13;
 }
-function _temp$13(y) {
+function _temp$17(y) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("rect", {
 		x: "0",
 		y: y - 1,
@@ -307,84 +474,262 @@ function SeriesName(t0) {
 	return t4;
 }
 //#endregion
+//#region src/utils/semesters.ts
+var SEASON_ORDER = {
+	Spring: 1,
+	Summer: 2,
+	Fall: 3
+};
+function semesterRank(semester) {
+	const [season, year] = semester.split(" ");
+	return Number(year) * 10 + SEASON_ORDER[season];
+}
+//#endregion
 //#region src/searcher.ts
-var ALLOWED_WRONG_WORDS = 1;
+var MIN_PREFIX = 3;
+var MIN_NAME_PREFIX = 4;
+var MIN_ABBREVIATION = 4;
+var LITTLE_WORDS = /* @__PURE__ */ new Set([
+	"a",
+	"an",
+	"and",
+	"at",
+	"for",
+	"in",
+	"of",
+	"on",
+	"the",
+	"to",
+	"with"
+]);
+var ROMAN_NUMERALS = [
+	"i",
+	"ii",
+	"iii",
+	"iv",
+	"v",
+	"vi",
+	"vii",
+	"viii",
+	"ix",
+	"x"
+];
+var SHORTHAND = /* @__PURE__ */ new Map([
+	["us", ["united", "states"]],
+	["ai", ["artificial", "intelligence"]],
+	["ml", ["machine", "learning"]],
+	["oop", [
+		"object",
+		"oriented",
+		"programming"
+	]],
+	["os", ["operating", "systems"]],
+	["stats", ["statistics"]],
+	["orgo", ["organic", "chemistry"]],
+	["govt", ["government"]],
+	["eq", ["equations"]]
+]);
+var NO_MATCH = {
+	quality: 0,
+	isGuess: true
+};
+var FOUND = {
+	quality: 1,
+	isGuess: false
+};
+var GUESSED_WORD_WEIGHT = .25;
 function buildSearchIndex(professors) {
-	return indexByWord(buildEntries(professors));
+	const entries = buildEntries(professors);
+	return {
+		entriesByNameWord: indexByWord(entries, (entry) => entry.nameWords),
+		entriesByCourseWord: indexByWord(entries, (entry) => entry.courseWords),
+		subjectCodes: new Set(entries.map((entry) => wordsOf(entry.course)[0])),
+		entryCount: entries.length
+	};
 }
 function search(index, query) {
-	const queryWords = [...new Set(wordsOf(query))];
-	const neededWords = Math.max(1, queryWords.length - ALLOWED_WRONG_WORDS);
-	const matchedWords = /* @__PURE__ */ new Map();
-	for (const queryWord of queryWords) for (const entry of entriesMatching(index, queryWord)) matchedWords.set(entry, (matchedWords.get(entry) ?? 0) + 1);
-	return [...matchedWords].filter(([, count]) => count >= neededWords).map(([entry]) => ({
+	const queryWords = searchWordsOf(query);
+	const matches = matchesPerEntry(index, queryWords);
+	const matchesAWord = (entryMatches) => entryMatches.some((match, wordNumber) => match.quality > 0 && !isSmallNumber(queryWords[wordNumber]));
+	if (!queryWords.every(isSmallNumber) && ![...matches.values()].some(matchesAWord)) return [];
+	const weights = queryWords.map((queryWord, wordNumber) => rarity(index, matches, wordNumber) * (isSmallNumber(queryWord) ? .5 : 1));
+	const wordsMatched = (entryMatches) => entryMatches.filter((match) => match.quality > 0).length;
+	const mostWordsMatched = Math.max(0, ...[...matches.values()].map(wordsMatched));
+	return [...matches].filter(([, entryMatches]) => wordsMatched(entryMatches) === mostWordsMatched).map(([entry, entryMatches]) => ({
+		entry,
+		score: weightedAverage(entryMatches.map((match) => match.quality), weights),
+		wordsFound: entryMatches.filter((match) => match.quality > 0 && !match.isGuess).length,
+		titleDistance: titleDistance(entry.title, query)
+	})).sort((first, second) => second.score - first.score || second.wordsFound - first.wordsFound || second.entry.lastTaught - first.entry.lastTaught || first.titleDistance - second.titleDistance).map(({ entry, score }) => ({
 		professor: entry.professor,
 		course: entry.course,
-		score: closeness(queryWords, entry.words)
-	})).sort((first, second) => second.score - first.score);
+		score
+	}));
 }
-function sharesAWord(query, text) {
-	const textWords = wordsOf(text);
-	return wordsOf(query).some((queryWord) => isAnyOf(queryWord, textWords));
+function sharesAWord(query, courseText) {
+	return searchWordsOf(query).some((queryWord) => isInCourseText(queryWord, courseText));
 }
-function sharesEveryWord(query, text) {
-	const textWords = wordsOf(text);
-	return wordsOf(query).every((queryWord) => isAnyOf(queryWord, textWords));
+function sharesEveryWord(query, courseText) {
+	return searchWordsOf(query).every((queryWord) => isInCourseText(queryWord, courseText));
 }
-function wordsMissingFrom(text, other) {
-	const otherWords = wordsOf(other);
-	return wordsOf(text).filter((word) => !isAnyOf(word, otherWords));
+function titleDistance(title, query) {
+	const queryWords = searchWordsOf(query).flatMap((queryWord) => [queryWord, ...SHORTHAND.get(queryWord) ?? []]);
+	const wordDistance = (titleWord) => {
+		if (queryWords.some((queryWord) => queryWord === titleWord || isStartOf(queryWord, titleWord, MIN_PREFIX))) return 0;
+		const abbreviated = queryWords.find((queryWord) => titleWord.length >= MIN_PREFIX && queryWord.startsWith(titleWord));
+		if (abbreviated !== void 0) return 1 - titleWord.length / abbreviated.length;
+		if (queryWords.some((queryWord) => isTypoOf(queryWord, titleWord))) return .5;
+		return isSmallNumber(titleWord) ? 1 + (Number(titleWord) - 1) / 10 : 1;
+	};
+	return searchWordsOf(title).reduce((distance, titleWord) => distance + wordDistance(titleWord), 0);
 }
-function isAnyOf(queryWord, words) {
-	return words.some((word) => isSameWord(queryWord, word));
+function namesPerson(query, name) {
+	return searchWordsOf(query).some((queryWord) => isInName(queryWord, name));
+}
+function wordsBesidesName(query, name) {
+	return searchWordsOf(query).filter((queryWord) => !isInName(queryWord, name));
+}
+function nameWordsNotSearched(name, query) {
+	const queryWords = searchWordsOf(query);
+	return wordsOf(name).filter((nameWord) => !queryWords.some((queryWord) => wordMatch(queryWord, nameWord, "name").quality > 0));
+}
+function isInCourseText(queryWord, courseText) {
+	return wordsOf(courseText).some((word) => wordMatch(queryWord, word, word.length >= MIN_ABBREVIATION ? "title" : "subject code").quality > 0);
+}
+function isInName(queryWord, name) {
+	return wordsOf(name).some((nameWord) => wordMatch(queryWord, nameWord, "name").quality > 0);
 }
 function buildEntries(professors) {
 	const built = [];
 	for (const professor of Object.values(professors)) for (const course of professor.courses) {
 		const titles = course.offerings.flatMap((offering) => offering.titles);
-		const words = wordsOf([
-			professor.name,
-			course.code,
-			...titles
-		].join(" "));
 		built.push({
 			professor: professor.name,
 			course: course.code,
-			words: [...new Set(words)]
+			title: course.title,
+			nameWords: [...new Set(wordsOf(professor.name))],
+			courseWords: [...new Set(wordsOf([course.code, ...titles].join(" ")))],
+			lastTaught: semesterRank(course.offerings[0].semester)
 		});
 	}
 	return built;
 }
 function wordsOf(text) {
-	return text.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/([a-z])(\d)/g, "$1 $2").match(/[a-z0-9]+/g) ?? [];
+	return (text.normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/([a-z])(\d)/g, "$1 $2").match(/[a-z0-9]+/g) ?? []).map((word) => ROMAN_NUMERALS.includes(word) ? String(ROMAN_NUMERALS.indexOf(word) + 1) : word);
 }
-function indexByWord(allEntries) {
+function searchWordsOf(query) {
+	const words = [...new Set(wordsOf(query))];
+	const meaningfulWords = words.filter((word) => !LITTLE_WORDS.has(word));
+	return meaningfulWords.length > 0 ? meaningfulWords : words;
+}
+function isSmallNumber(word) {
+	return /^\d{1,2}$/.test(word);
+}
+function indexByWord(allEntries, wordsOfEntry) {
 	const index = /* @__PURE__ */ new Map();
-	for (const entry of allEntries) for (const word of entry.words) {
+	for (const entry of allEntries) for (const word of wordsOfEntry(entry)) {
 		if (!index.has(word)) index.set(word, []);
 		index.get(word).push(entry);
 	}
 	return index;
 }
-function entriesMatching(index, queryWord) {
-	const matching = /* @__PURE__ */ new Set();
-	for (const [word, wordEntries] of index) if (isSameWord(queryWord, word)) for (const entry of wordEntries) matching.add(entry);
+function matchesPerEntry(index, queryWords) {
+	const matchesByEntry = /* @__PURE__ */ new Map();
+	function record(wordNumber, matches) {
+		for (const [entry, match] of matches) {
+			if (!matchesByEntry.has(entry)) matchesByEntry.set(entry, queryWords.map(() => NO_MATCH));
+			const entryMatches = matchesByEntry.get(entry);
+			entryMatches[wordNumber] = better(entryMatches[wordNumber], match);
+		}
+	}
+	const courseWordMatches = (queryWord) => entriesMatching(index.entriesByCourseWord, (word) => wordMatch(queryWord, word, index.subjectCodes.has(word) ? "subject code" : "title"));
+	queryWords.forEach((queryWord, wordNumber) => {
+		record(wordNumber, entriesMatching(index.entriesByNameWord, (word) => wordMatch(queryWord, word, "name")));
+		record(wordNumber, courseWordMatches(queryWord));
+		const spelledOut = SHORTHAND.get(queryWord)?.map(courseWordMatches);
+		if (spelledOut !== void 0) record(wordNumber, entriesInAll(spelledOut));
+	});
+	for (let wordNumber = 0; wordNumber + 1 < queryWords.length; wordNumber++) {
+		const joined = queryWords[wordNumber] + queryWords[wordNumber + 1];
+		const startsWithJoined = (word) => word.startsWith(joined) ? FOUND : NO_MATCH;
+		for (const entriesByWord of [index.entriesByNameWord, index.entriesByCourseWord]) {
+			const matches = entriesMatching(entriesByWord, startsWithJoined);
+			record(wordNumber, matches);
+			record(wordNumber + 1, matches);
+		}
+	}
+	return matchesByEntry;
+}
+function entriesInAll(matchesPerWord) {
+	const [first, ...rest] = matchesPerWord;
+	const inAll = /* @__PURE__ */ new Map();
+	for (const [entry, match] of first) {
+		if (!rest.every((matches) => matches.has(entry))) continue;
+		const all = [match, ...rest.map((matches) => matches.get(entry))];
+		inAll.set(entry, {
+			quality: Math.min(...all.map((one) => one.quality)),
+			isGuess: all.some((one) => one.isGuess)
+		});
+	}
+	return inAll;
+}
+function entriesMatching(entriesByWord, matchWord) {
+	const matching = /* @__PURE__ */ new Map();
+	for (const [word, wordEntries] of entriesByWord) {
+		const match = matchWord(word);
+		if (match.quality === 0) continue;
+		for (const entry of wordEntries) matching.set(entry, better(matching.get(entry) ?? NO_MATCH, match));
+	}
 	return matching;
 }
-function isSameWord(queryWord, word) {
-	if (queryWord === word) return true;
+function better(first, second) {
+	return {
+		quality: Math.max(first.quality, second.quality),
+		isGuess: first.isGuess && second.isGuess
+	};
+}
+function wordMatch(queryWord, word, kind) {
+	if (queryWord === word || isStartOf(queryWord, word, kind === "name" ? MIN_NAME_PREFIX : MIN_PREFIX)) return FOUND;
+	if ((kind === "subject code" || kind === "title" && word.length >= MIN_ABBREVIATION) && queryWord.startsWith(word)) return {
+		quality: 1,
+		isGuess: true
+	};
+	return isTypoOf(queryWord, word) ? {
+		quality: similarity(queryWord, word),
+		isGuess: true
+	} : NO_MATCH;
+}
+function isStartOf(queryWord, word, minLength) {
+	return queryWord.length >= minLength && word.startsWith(queryWord);
+}
+function rarity(index, matches, wordNumber) {
+	let found = 0;
+	let guessed = 0;
+	for (const entryMatches of matches.values()) {
+		const { quality, isGuess } = entryMatches[wordNumber];
+		if (quality > 0 && isGuess) guessed++;
+		else if (quality > 0) found++;
+	}
+	if (found > 0) return Math.log(1 + index.entryCount / found);
+	return Math.log(1 + index.entryCount / Math.max(1, guessed)) * GUESSED_WORD_WEIGHT;
+}
+function weightedAverage(values, weights) {
+	let total = 0;
+	let totalWeight = 0;
+	values.forEach((value, i) => {
+		total += value * weights[i];
+		totalWeight += weights[i];
+	});
+	return total / totalWeight;
+}
+function isTypoOf(queryWord, word) {
 	const typos = typosAllowed(queryWord);
-	if (Math.abs(queryWord.length - word.length) > typos) return false;
+	if (typos === 0 || Math.abs(queryWord.length - word.length) > typos) return false;
 	return editDistance(queryWord, word) <= typos;
 }
 function typosAllowed(word) {
 	if (/\d/.test(word) || word.length < 4) return 0;
 	return word.length < 8 ? 1 : 2;
-}
-function closeness(queryWords, entryWords) {
-	let total = 0;
-	for (const queryWord of queryWords) total += Math.max(...entryWords.map((word) => similarity(queryWord, word)));
-	return total / queryWords.length;
 }
 function similarity(first, second) {
 	return 1 - editDistance(first, second) / Math.max(first.length, second.length);
@@ -431,6 +776,7 @@ var GRADES = [
 	"IW",
 	"IF"
 ];
+var FINISHED_OR_WITHDREW = [...LETTER_GRADES, "W"];
 var GRADE_GROUPS = [
 	{
 		label: "A",
@@ -494,7 +840,7 @@ function medianGrade(counts) {
 	return null;
 }
 function gradeShares(counts) {
-	const total = countStudents(counts, GRADE_GROUPS.flatMap((group) => group.grades));
+	const total = countStudents(counts, FINISHED_OR_WITHDREW);
 	return GRADE_GROUPS.map((group) => ({
 		label: group.label,
 		percent: total === 0 ? 0 : countStudents(counts, group.grades) / total * 100
@@ -504,17 +850,6 @@ function countStudents(counts, grades = GRADES) {
 	let students = 0;
 	for (const grade of grades) students += counts[grade];
 	return students;
-}
-//#endregion
-//#region src/utils/semesters.ts
-var SEASON_ORDER = {
-	Spring: 1,
-	Summer: 2,
-	Fall: 3
-};
-function semesterRank(semester) {
-	const [season, year] = semester.split(" ");
-	return Number(year) * 10 + SEASON_ORDER[season];
 }
 //#endregion
 //#region src/utils/statistics.ts
@@ -546,10 +881,15 @@ var GRADE_POINTS = {
 	"D-": .67,
 	"F": 0
 };
-var FINISHED_OR_WITHDREW = [...LETTER_GRADES, "W"];
 function average(values) {
 	if (values.length === 0) return null;
 	return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+function median(values) {
+	if (values.length === 0) return null;
+	const sorted = [...values].sort((first, second) => first - second);
+	const middle = Math.floor(sorted.length / 2);
+	return sorted.length % 2 === 1 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2;
 }
 function averageGpa(counts) {
 	const students = countStudents(counts, LETTER_GRADES);
@@ -573,7 +913,7 @@ function gradeDistribution(counts, { inPercent, atOrAbove }) {
 	const studentsPerGrade = GRADES_WORST_FIRST.map((grade) => counts[grade]);
 	const values = atOrAbove ? countAtOrAbove(studentsPerGrade) : studentsPerGrade;
 	if (!inPercent) return values;
-	const totalStudents = countStudents(counts, LETTER_GRADES);
+	const totalStudents = countStudents(counts, FINISHED_OR_WITHDREW);
 	return values.map((value) => totalStudents === 0 ? 0 : value / totalStudents * 100);
 }
 function countAtOrAbove(studentsWorstFirst) {
@@ -621,6 +961,35 @@ function bluebookOf(offerings) {
 		sectionCount: evaluations.length
 	};
 }
+function latestSyllabus(teachers) {
+	let latest = null;
+	for (const teacher of teachers) {
+		const offering = teacher.course.offerings.find((each) => each.syllabi.length > 0);
+		if (offering && (latest === null || semesterRank(offering.semester) > semesterRank(latest.offering.semester))) latest = {
+			teacher,
+			offering
+		};
+	}
+	return latest;
+}
+function courseBluebook(teachers) {
+	const evaluations = teachers.flatMap((teacher) => teacher.course.offerings.flatMap((offering) => offering.evaluations));
+	return {
+		instructor: median(evaluations.map((evaluation) => evaluation.instructor)),
+		course: median(evaluations.map((evaluation) => evaluation.course)),
+		sectionCount: evaluations.length
+	};
+}
+function courseRmp(teachers) {
+	const onRmp = teachers.map((teacher) => teacher.professor.rmp).filter((rmp) => rmp.profiles.length > 0);
+	const medianOf = (read) => median(onRmp.map(read).filter((value) => value !== null));
+	return {
+		rating: medianOf((rmp) => rmp.rating),
+		difficulty: medianOf((rmp) => rmp.difficulty),
+		wouldTakeAgainPercent: medianOf((rmp) => rmp.wouldTakeAgainPercent),
+		professorCount: onRmp.length
+	};
+}
 function lastTaughtRank$1(teacher) {
 	return semesterRank(teacher.course.offerings[0].semester);
 }
@@ -629,8 +998,8 @@ function lastTaughtRank$1(teacher) {
 var PROFESSORS_TO_START_WITH = 3;
 function subjectLabel(subject) {
 	switch (subject.type) {
-		case "professor": return `${subject.professorName} (all classes)`;
-		case "course": return `${subject.courseCode} (every professor)`;
+		case "professor": return `${subject.professorName} (All Classes)`;
+		case "course": return `${subject.courseCode} (Every Professor)`;
 		case "class": return `${subject.professorName} · ${subject.courseCode}`;
 		default: throw new Error(`Invalid subject: ${subject}`);
 	}
@@ -704,15 +1073,16 @@ function withSubjectAdded(seriesList, subject) {
 function describeSeries({ subject, color }, gradeData) {
 	const professorName = professorNameOf(subject);
 	const offerings = offeringsForSubject(subject, gradeData);
+	const teachers = subject.type === "course" ? teachersOf(subject.courseCode, gradeData.professors, gradeData.searchIndex) : null;
 	return {
 		subject,
 		key: subjectKey(subject),
 		label: subjectLabel(subject),
 		color,
 		grades: gradesOf(offerings),
-		bluebook: bluebookOf(offerings),
+		bluebook: teachers ? courseBluebook(teachers) : bluebookOf(offerings),
 		professorName,
-		rating: professorName === null ? null : gradeData.professors[professorName].rmp.rating,
+		rating: teachers ? courseRmp(teachers).rating : gradeData.professors[professorName].rmp.rating,
 		courseGpa: subject.type === "class" ? wholeCourseGpa(subject.courseCode, gradeData) : null
 	};
 }
@@ -813,20 +1183,28 @@ function ComparingList(t0) {
 }
 //#endregion
 //#region src/utils/format.ts
+function roundHalfUp(value, decimals) {
+	const scale = 10 ** decimals;
+	const scaled = Number((Math.abs(value) * scale).toFixed(6));
+	return Math.sign(value) * Math.round(scaled) / scale;
+}
 function formatOutOfFive(value) {
-	return value === null ? "No ratings" : `${value.toFixed(1)} / 5`;
+	return value === null ? "No ratings" : `${roundHalfUp(value, 1).toFixed(1)} / 5`;
 }
 function formatPercent(value) {
-	return value === null ? "No ratings" : `${Math.round(value)}%`;
+	return value === null ? "No ratings" : `${roundHalfUp(value, 0)}%`;
 }
 function formatRating(source, rating) {
 	return rating === null ? `No ${source} ratings` : `${source} ${formatOutOfFive(rating)}`;
 }
 function formatGpa(gpa) {
-	return gpa === null ? "—" : gpa.toFixed(2);
+	return gpa === null ? "—" : roundHalfUp(gpa, 2).toFixed(2);
 }
 function formatShare(percent) {
-	return percent === null ? "—" : `${Math.round(percent)}%`;
+	return percent === null ? "—" : `${roundHalfUp(percent, 0)}%`;
+}
+function formatDepartment(department) {
+	return /(College|ROTC)$/.test(department) ? department : `${department} department`;
 }
 function formatCount(count, noun) {
 	return `${count.toLocaleString()} ${count === 1 ? noun : `${noun}s`}`;
@@ -853,13 +1231,13 @@ var TWO_LINE_COLUMNS = [
 	"Bluebook course"
 ];
 function ComparisonTable(t0) {
-	const $ = (0, import_compiler_runtime.c)(8);
+	const $ = (0, import_compiler_runtime.c)(11);
 	const { seriesData, onOpen } = t0;
 	let t1;
 	if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
 		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("thead", {
 			className: "text-xs uppercase tracking-wide text-zinc-400",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { children: COLUMNS.map(_temp$12) })
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tr", { children: COLUMNS.map(_temp$16) })
 		});
 		$[0] = t1;
 	} else t1 = $[0];
@@ -881,19 +1259,33 @@ function ComparisonTable(t0) {
 	} else t2 = $[3];
 	let t3;
 	if ($[6] !== t2) {
-		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			className: "overflow-x-auto rounded-xl bg-zinc-800",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", {
-				className: "w-full text-left text-sm",
-				children: [t1, /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", { children: t2 })]
-			})
+		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("table", {
+			className: "w-full text-left text-sm",
+			children: [t1, /* @__PURE__ */ (0, import_jsx_runtime.jsx)("tbody", { children: t2 })]
 		});
 		$[6] = t2;
 		$[7] = t3;
 	} else t3 = $[7];
-	return t3;
+	let t4;
+	if ($[8] === Symbol.for("react.memo_cache_sentinel")) {
+		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+			className: "border-t border-zinc-700 px-3 py-2 text-xs text-zinc-500",
+			children: "Percents are out of everyone who got a grade or withdrew, the same as the sidebar. A whole course's Bluebook and RMP are the median section and the median professor, the same as on its course page."
+		});
+		$[8] = t4;
+	} else t4 = $[8];
+	let t5;
+	if ($[9] !== t3) {
+		t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "overflow-x-auto rounded-xl bg-zinc-800",
+			children: [t3, t4]
+		});
+		$[9] = t3;
+		$[10] = t5;
+	} else t5 = $[10];
+	return t5;
 }
-function _temp$12(column) {
+function _temp$16(column) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("th", {
 		className: headerStyle(column),
 		children: column
@@ -903,7 +1295,7 @@ function headerStyle(column) {
 	return twMerge("whitespace-nowrap px-3 py-2 font-semibold", CENTERED_COLUMNS.includes(column) && "text-center", TWO_LINE_COLUMNS.includes(column) && "w-24 whitespace-normal");
 }
 function ComparisonRow(t0) {
-	const $ = (0, import_compiler_runtime.c)(64);
+	const $ = (0, import_compiler_runtime.c)(63);
 	const { series, onOpen } = t0;
 	const { grades } = series;
 	let gpa;
@@ -1030,7 +1422,7 @@ function ComparisonRow(t0) {
 	} else t13 = $[33];
 	let t14;
 	if ($[34] !== grades) {
-		t14 = countStudents(grades, LETTER_GRADES).toLocaleString();
+		t14 = countStudents(grades, FINISHED_OR_WITHDREW).toLocaleString();
 		$[34] = grades;
 		$[35] = t14;
 	} else t14 = $[35];
@@ -1074,23 +1466,22 @@ function ComparisonRow(t0) {
 		$[45] = t19;
 	} else t19 = $[45];
 	let t20;
-	if ($[46] !== series.professorName || $[47] !== series.rating) {
-		t20 = series.professorName === null ? "—" : formatOutOfFive(series.rating);
-		$[46] = series.professorName;
-		$[47] = series.rating;
-		$[48] = t20;
-	} else t20 = $[48];
+	if ($[46] !== series.rating) {
+		t20 = series.rating === null ? "—" : formatOutOfFive(series.rating);
+		$[46] = series.rating;
+		$[47] = t20;
+	} else t20 = $[47];
 	let t21;
-	if ($[49] !== t20) {
+	if ($[48] !== t20) {
 		t21 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("td", {
 			className: "whitespace-nowrap px-3 py-2",
 			children: t20
 		});
-		$[49] = t20;
-		$[50] = t21;
-	} else t21 = $[50];
+		$[48] = t20;
+		$[49] = t21;
+	} else t21 = $[49];
 	let t22;
-	if ($[51] !== t11 || $[52] !== t13 || $[53] !== t15 || $[54] !== t17 || $[55] !== t19 || $[56] !== t21 || $[57] !== t3 || $[58] !== t4 || $[59] !== t5 || $[60] !== t6 || $[61] !== t7 || $[62] !== t9) {
+	if ($[50] !== t11 || $[51] !== t13 || $[52] !== t15 || $[53] !== t17 || $[54] !== t19 || $[55] !== t21 || $[56] !== t3 || $[57] !== t4 || $[58] !== t5 || $[59] !== t6 || $[60] !== t7 || $[61] !== t9) {
 		t22 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("tr", {
 			className: t3,
 			children: [
@@ -1107,20 +1498,20 @@ function ComparisonRow(t0) {
 				t21
 			]
 		});
-		$[51] = t11;
-		$[52] = t13;
-		$[53] = t15;
-		$[54] = t17;
-		$[55] = t19;
-		$[56] = t21;
-		$[57] = t3;
-		$[58] = t4;
-		$[59] = t5;
-		$[60] = t6;
-		$[61] = t7;
-		$[62] = t9;
-		$[63] = t22;
-	} else t22 = $[63];
+		$[50] = t11;
+		$[51] = t13;
+		$[52] = t15;
+		$[53] = t17;
+		$[54] = t19;
+		$[55] = t21;
+		$[56] = t3;
+		$[57] = t4;
+		$[58] = t5;
+		$[59] = t6;
+		$[60] = t7;
+		$[61] = t9;
+		$[62] = t22;
+	} else t22 = $[62];
 	return t22;
 }
 function CourseComparison(t0) {
@@ -1144,7 +1535,7 @@ function CourseComparison(t0) {
 	if ($[1] !== courseGpa || $[2] !== gpa) {
 		t4 = Symbol.for("react.early_return_sentinel");
 		bb0: {
-			const difference = Math.round(percentDifference(gpa, courseGpa));
+			const difference = roundHalfUp(percentDifference(gpa, courseGpa), 0);
 			if (difference === 0) {
 				let t5;
 				if ($[7] === Symbol.for("react.memo_cache_sentinel")) {
@@ -1200,8 +1591,82 @@ function CourseComparison(t0) {
 	return t5;
 }
 //#endregion
+//#region \0vite/preload-helper.js
+var scriptRel = "modulepreload";
+var assetsURL = function(dep, importerUrl) {
+	return new URL(dep, importerUrl).href;
+};
+var seen = {};
+var isCssPreloadUrl = function isCssPreloadUrl(url) {
+	return url.pathname.endsWith(".css");
+};
+var __vitePreload = function preload(baseModule, deps, importerUrl) {
+	let promise = Promise.resolve();
+	if (deps && deps.length > 0) {
+		let preloadedHrefs;
+		const cspNonceMeta = document.querySelector("meta[property=csp-nonce]");
+		const cspNonce = cspNonceMeta?.nonce || cspNonceMeta?.getAttribute("nonce");
+		function allSettled(promises) {
+			return Promise.all(promises.map((p) => Promise.resolve(p).then((value) => ({
+				status: "fulfilled",
+				value
+			}), (reason) => ({
+				status: "rejected",
+				reason
+			}))));
+		}
+		function importMetaResolve(specifier) {
+			if (import.meta.resolve) return new URL(import.meta.resolve(specifier));
+			return new URL(specifier, import.meta.url);
+		}
+		promise = allSettled(deps.map((depString) => {
+			depString = assetsURL(depString, importerUrl);
+			const dep = importMetaResolve(depString);
+			if (dep.href in seen) return;
+			seen[dep.href] = true;
+			const isCss = isCssPreloadUrl(dep);
+			if (preloadedHrefs === void 0) {
+				preloadedHrefs = {
+					all: /* @__PURE__ */ new Set(),
+					styles: /* @__PURE__ */ new Set()
+				};
+				const links = document.getElementsByTagName("link");
+				for (let i = links.length - 1; i >= 0; i--) {
+					const link = links[i];
+					preloadedHrefs.all.add(link.href);
+					if (link.rel === "stylesheet") preloadedHrefs.styles.add(link.href);
+				}
+			}
+			if ((isCss ? preloadedHrefs.styles : preloadedHrefs.all).has(dep.href)) return;
+			const link = document.createElement("link");
+			link.rel = isCss ? "stylesheet" : scriptRel;
+			if (!isCss) link.as = "script";
+			link.crossOrigin = "";
+			link.href = dep.href;
+			if (cspNonce) link.setAttribute("nonce", cspNonce);
+			document.head.appendChild(link);
+			if (isCss) return new Promise((res, rej) => {
+				link.addEventListener("load", res);
+				link.addEventListener("error", () => rej(/* @__PURE__ */ new Error(`Unable to preload CSS for ${dep}`)));
+			});
+		}).filter((p) => p !== void 0));
+	}
+	function handlePreloadError(err) {
+		const e = new Event("vite:preloadError", { cancelable: true });
+		e.payload = err;
+		window.dispatchEvent(e);
+		if (!e.defaultPrevented) throw err;
+	}
+	return promise.then((res) => {
+		for (const item of res || []) {
+			if (item.status !== "rejected") continue;
+			handlePreloadError(item.reason);
+		}
+		return baseModule().catch(handlePreloadError);
+	});
+};
+//#endregion
 //#region src/components/analytics/PlotlyChart.tsx
-var import_plotly_basic = /* @__PURE__ */ __toESM(require_plotly_basic(), 1);
 var DARK_LAYOUT = {
 	paper_bgcolor: "rgba(0, 0, 0, 0)",
 	plot_bgcolor: "rgba(0, 0, 0, 0)",
@@ -1252,15 +1717,70 @@ var CONFIG = {
 		"resetScale2d"
 	]
 };
+var plotlyDownload = null;
+var RETRY_EVENT = "rowdysearch:retry-charts";
+function downloadPlotly() {
+	plotlyDownload ??= __vitePreload(() => import("./plotly.js").then((n) => /* @__PURE__ */ __toESM(n.t(), 1)).then((module) => module.default), __vite__mapDeps([0,1]), import.meta.url);
+	plotlyDownload.catch(() => plotlyDownload = null);
+	return plotlyDownload;
+}
+function retryAllCharts() {
+	plotlyDownload = null;
+	window.dispatchEvent(new Event(RETRY_EVENT));
+}
 function PlotlyChart(t0) {
-	const $ = (0, import_compiler_runtime.c)(8);
+	const $ = (0, import_compiler_runtime.c)(22);
 	const { data, layout, className: t1 } = t0;
 	const className = t1 === void 0 ? "h-80" : t1;
 	const chartRef = (0, import_react.useRef)(null);
+	const [plotly, setPlotly] = (0, import_react.useState)(null);
+	const [downloadFailed, setDownloadFailed] = (0, import_react.useState)(false);
+	const [tries, setTries] = (0, import_react.useState)(0);
 	let t2;
 	let t3;
-	if ($[0] !== data || $[1] !== layout) {
+	if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
 		t2 = () => {
+			const tryAgain = () => {
+				setDownloadFailed(false);
+				setTries(_temp$15);
+			};
+			window.addEventListener(RETRY_EVENT, tryAgain);
+			return () => window.removeEventListener(RETRY_EVENT, tryAgain);
+		};
+		t3 = [];
+		$[0] = t2;
+		$[1] = t3;
+	} else {
+		t2 = $[0];
+		t3 = $[1];
+	}
+	(0, import_react.useEffect)(t2, t3);
+	let t4;
+	if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
+		t4 = () => {
+			let isCurrent = true;
+			downloadPlotly().then((loaded) => isCurrent && setPlotly(() => loaded)).catch((error) => {
+				console.error("RowdySearch: couldn't load the chart library.", error);
+				if (isCurrent) setDownloadFailed(true);
+			});
+			return () => {
+				isCurrent = false;
+			};
+		};
+		$[2] = t4;
+	} else t4 = $[2];
+	let t5;
+	if ($[3] !== tries) {
+		t5 = [tries];
+		$[3] = tries;
+		$[4] = t5;
+	} else t5 = $[4];
+	(0, import_react.useEffect)(t4, t5);
+	let t6;
+	let t7;
+	if ($[5] !== data || $[6] !== layout || $[7] !== plotly) {
+		t6 = () => {
+			if (plotly === null || chartRef.current === null) return;
 			const darkLayout = {
 				...DARK_LAYOUT,
 				...layout,
@@ -1273,44 +1793,92 @@ function PlotlyChart(t0) {
 					...layout.yaxis
 				}
 			};
-			import_plotly_basic.default.react(chartRef.current, data, darkLayout, CONFIG);
+			plotly.react(chartRef.current, data, darkLayout, CONFIG);
 		};
-		t3 = [data, layout];
-		$[0] = data;
-		$[1] = layout;
-		$[2] = t2;
-		$[3] = t3;
+		t7 = [
+			plotly,
+			data,
+			layout
+		];
+		$[5] = data;
+		$[6] = layout;
+		$[7] = plotly;
+		$[8] = t6;
+		$[9] = t7;
 	} else {
-		t2 = $[2];
-		t3 = $[3];
+		t6 = $[8];
+		t7 = $[9];
 	}
-	(0, import_react.useEffect)(t2, t3);
-	let t4;
-	let t5;
-	if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
-		t4 = () => {
+	(0, import_react.useEffect)(t6, t7);
+	let t8;
+	let t9;
+	if ($[10] !== plotly) {
+		t8 = () => {
 			const chart = chartRef.current;
-			return () => import_plotly_basic.default.purge(chart);
+			if (plotly === null || chart === null) return;
+			return () => plotly.purge(chart);
 		};
-		t5 = [];
-		$[4] = t4;
-		$[5] = t5;
+		t9 = [plotly];
+		$[10] = plotly;
+		$[11] = t8;
+		$[12] = t9;
 	} else {
-		t4 = $[4];
-		t5 = $[5];
+		t8 = $[11];
+		t9 = $[12];
 	}
-	(0, import_react.useEffect)(t4, t5);
-	const t6 = `w-full ${className}`;
-	let t7;
-	if ($[6] !== t6) {
-		t7 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			ref: chartRef,
-			className: t6
+	(0, import_react.useEffect)(t8, t9);
+	if (downloadFailed && plotly === null) {
+		const t10 = `flex w-full flex-col items-center justify-center gap-3 rounded-xl bg-zinc-800 text-sm text-zinc-300 ${className}`;
+		let t11;
+		let t12;
+		if ($[13] === Symbol.for("react.memo_cache_sentinel")) {
+			t11 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "The charts couldn't load." });
+			t12 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+				onClick: retryAllCharts,
+				children: "Try again"
+			});
+			$[13] = t11;
+			$[14] = t12;
+		} else {
+			t11 = $[13];
+			t12 = $[14];
+		}
+		let t13;
+		if ($[15] !== t10) {
+			t13 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: t10,
+				children: [t11, t12]
+			});
+			$[15] = t10;
+			$[16] = t13;
+		} else t13 = $[16];
+		return t13;
+	}
+	const t10 = `w-full ${className}`;
+	let t11;
+	if ($[17] !== plotly) {
+		t11 = plotly === null && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+			className: "py-12 text-center text-sm text-zinc-500",
+			children: "Loading chart..."
 		});
-		$[6] = t6;
-		$[7] = t7;
-	} else t7 = $[7];
-	return t7;
+		$[17] = plotly;
+		$[18] = t11;
+	} else t11 = $[18];
+	let t12;
+	if ($[19] !== t10 || $[20] !== t11) {
+		t12 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			ref: chartRef,
+			className: t10,
+			children: t11
+		});
+		$[19] = t10;
+		$[20] = t11;
+		$[21] = t12;
+	} else t12 = $[21];
+	return t12;
+}
+function _temp$15(count) {
+	return count + 1;
 }
 //#endregion
 //#region src/components/analytics/Toggle.tsx
@@ -1390,24 +1958,28 @@ function GradeDistributionChart(t0) {
 				inPercent,
 				atOrAbove: t1
 			};
-			const withGrades = seriesData.filter(_temp$11);
+			const withGrades = seriesData.filter(_temp$14);
 			const withoutGrades = seriesData.filter((series_0) => !withGrades.includes(series_0));
-			const data = withGrades.map((series_1) => ({
-				type: asLines ? "scatter" : "bar",
-				mode: "lines+markers",
-				name: series_1.label,
-				x: GRADES_WORST_FIRST,
-				y: gradeDistribution(series_1.grades, options),
-				line: {
-					color: series_1.color,
-					width: 2
-				},
-				marker: {
-					color: series_1.color,
-					size: 8
-				},
-				hovertemplate: inPercent ? "%{y:.1f}%" : "%{y} students"
-			}));
+			const data = withGrades.map((series_1) => {
+				const values = gradeDistribution(series_1.grades, options);
+				return {
+					type: asLines ? "scatter" : "bar",
+					mode: "lines+markers",
+					name: series_1.label,
+					x: GRADES_WORST_FIRST,
+					y: values,
+					customdata: values.map((value) => inPercent ? formatShare(value) : `${value.toLocaleString()} students`),
+					hovertemplate: "%{customdata}",
+					line: {
+						color: series_1.color,
+						width: 2
+					},
+					marker: {
+						color: series_1.color,
+						size: 8
+					}
+				};
+			});
 			let t9;
 			if ($[12] === Symbol.for("react.memo_cache_sentinel")) {
 				t9 = {
@@ -1526,8 +2098,8 @@ function GradeDistributionChart(t0) {
 				className: "h-96"
 			});
 			t2 = "text-xs text-zinc-500";
-			t3 = "Out of students who got a letter grade. Withdrawals (W) are in the table below.";
-			t4 = withoutGrades.length > 0 && ` Not shown (no grades yet): ${withoutGrades.map(_temp2$3).join(", ")}.`;
+			t3 = "Out of everyone who got a letter grade or withdrew. Withdrawals (W) are in the table below.";
+			t4 = withoutGrades.length > 0 && ` Not shown (no grades yet): ${withoutGrades.map(_temp2$4).join(", ")}.`;
 		}
 		$[0] = asLines;
 		$[1] = eachGrade;
@@ -1580,10 +2152,10 @@ function GradeDistributionChart(t0) {
 	} else t10 = $[43];
 	return t10;
 }
-function _temp2$3(series_2) {
+function _temp2$4(series_2) {
 	return series_2.label;
 }
-function _temp$11(series) {
+function _temp$14(series) {
 	return countStudents(series.grades, LETTER_GRADES) > 0;
 }
 function yAxisTitle(inPercent, atOrAbove) {
@@ -1606,8 +2178,8 @@ function MedianChart(t0) {
 	if ($[0] !== seriesData) {
 		t8 = Symbol.for("react.early_return_sentinel");
 		bb0: {
-			const withGrades = seriesData.filter(_temp$10);
-			const medians = withGrades.map(_temp2$2);
+			const withGrades = seriesData.filter(_temp$13);
+			const medians = withGrades.map(_temp2$3);
 			if (withGrades.length === 0) {
 				let t9;
 				if ($[9] === Symbol.for("react.memo_cache_sentinel")) {
@@ -1621,7 +2193,7 @@ function MedianChart(t0) {
 				break bb0;
 			}
 			t2 = "bar";
-			t3 = withGrades.map(_temp3);
+			t3 = withGrades.map(_temp3$1);
 			t4 = medians.map(gradePosition);
 			t5 = medians;
 			t6 = "outside";
@@ -1728,13 +2300,13 @@ function MedianChart(t0) {
 function _temp4(series_2) {
 	return series_2.color;
 }
-function _temp3(series_1) {
+function _temp3$1(series_1) {
 	return series_1.label;
 }
-function _temp2$2(series_0) {
+function _temp2$3(series_0) {
 	return medianGrade(series_0.grades);
 }
-function _temp$10(series) {
+function _temp$13(series) {
 	return medianGrade(series.grades) !== null;
 }
 //#endregion
@@ -1755,7 +2327,7 @@ function Reviews(t0) {
 	}
 	let t1;
 	if ($[1] !== reviews) {
-		t1 = reviews.map(_temp$9);
+		t1 = reviews.map(_temp$12);
 		$[1] = reviews;
 		$[2] = t1;
 	} else t1 = $[2];
@@ -1770,7 +2342,7 @@ function Reviews(t0) {
 	} else t2 = $[4];
 	return t2;
 }
-function _temp$9(review, index) {
+function _temp$12(review, index) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
 		className: "flex flex-col gap-1 rounded-xl bg-zinc-800 p-3 text-sm text-zinc-300",
 		children: [review.course !== "" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
@@ -1799,7 +2371,7 @@ function ProfessorReviews(t0) {
 	const { professors } = useLookup();
 	let t1;
 	if ($[0] !== seriesData) {
-		t1 = new Set(seriesData.map(_temp$8).filter(_temp2$1));
+		t1 = new Set(seriesData.map(_temp$11).filter(_temp2$2));
 		$[0] = seriesData;
 		$[1] = t1;
 	} else t1 = $[1];
@@ -1857,10 +2429,10 @@ function ProfessorReviews(t0) {
 	} else t3 = $[8];
 	return t3;
 }
-function _temp2$1(name) {
+function _temp2$2(name) {
 	return name !== null;
 }
-function _temp$8(series) {
+function _temp$11(series) {
 	return series.professorName;
 }
 //#endregion
@@ -1868,7 +2440,7 @@ function _temp$8(series) {
 function pageForSearch(query, results, professors) {
 	if (results.length === 0) return null;
 	const bestMatches = results.filter((match) => match.score === results[0].score);
-	if (bestMatches.some((match) => sharesEveryWord(query, match.course))) return {
+	if (bestMatches.some((match) => namesCourseCode(query, match.course))) return {
 		type: "course",
 		courseCode: closestCourse(bestMatches, query, professors)
 	};
@@ -1876,8 +2448,8 @@ function pageForSearch(query, results, professors) {
 	const professor = professors[bestMatch.professor];
 	const course = findCourse(professor, bestMatch.course);
 	const courseWords = [course.code, ...course.offerings.flatMap((offering) => offering.titles)].join(" ");
-	const namesProfessor = sharesAWord(query, professor.name);
-	const namesCourse = sharesAWord(wordsMissingFrom(query, professor.name).join(" "), courseWords);
+	const namesProfessor = namesPerson(query, professor.name);
+	const namesCourse = sharesAWord(wordsBesidesName(query, professor.name).join(" "), courseWords);
 	if (namesProfessor && namesCourse) return {
 		type: "class",
 		professorName: professor.name,
@@ -1892,23 +2464,56 @@ function pageForSearch(query, results, professors) {
 		courseCode: closestCourse(bestMatches, query, professors)
 	};
 }
+function withPageFirst(results, page) {
+	if (page === null) return results;
+	const isOnPage = (match) => (page.type === "professor" || match.course === page.courseCode) && (page.type === "course" || match.professor === page.professorName);
+	return [...results.filter(isOnPage), ...results.filter((match) => !isOnPage(match))];
+}
 function closestName(matches, query) {
-	const extraNameWords = (match) => wordsMissingFrom(match.professor, query).length;
+	const extraNameWords = (match) => nameWordsNotSearched(match.professor, query).length;
 	return [...matches].sort((first, second) => extraNameWords(first) - extraNameWords(second))[0];
 }
+function namesCourseCode(query, courseCode) {
+	return /\d{3}/.test(query) && sharesEveryWord(query, courseCode);
+}
 function closestCourse(matches, query, professors) {
-	const courses = /* @__PURE__ */ new Map();
+	const choices = /* @__PURE__ */ new Map();
 	for (const match of matches) {
-		const title = findCourse(professors[match.professor], match.course).title;
-		const teachers = (courses.get(match.course)?.teachers ?? 0) + 1;
-		const codeMatches = sharesEveryWord(query, match.course) ? 1 : 0;
-		courses.set(match.course, {
-			codeMatches,
-			titleWords: title.split(" ").length,
-			teachers
-		});
+		const course = findCourse(professors[match.professor], match.course);
+		const choice = choices.get(match.course) ?? {
+			code: course.code,
+			titles: /* @__PURE__ */ new Set(),
+			codeMatches: namesCourseCode(query, course.code),
+			titleDistance: Infinity,
+			students: 0,
+			lastTaught: 0
+		};
+		choice.titles.add(course.title);
+		choice.titleDistance = Math.min(choice.titleDistance, titleDistance(course.title, query));
+		choice.students += countStudents(gradesOf(course.offerings));
+		choice.lastTaught = Math.max(choice.lastTaught, semesterRank(course.offerings[0].semester));
+		choices.set(match.course, choice);
 	}
-	return [...courses].sort(([, first], [, second]) => second.codeMatches - first.codeMatches || first.titleWords - second.titleWords || second.teachers - first.teachers)[0][0];
+	const distance = (choice) => choice.titleDistance - Math.log2(1 + choice.students) / 3;
+	return withRenumberedCoursesMerged([...choices.values()]).sort((first, second) => Number(second.codeMatches) - Number(first.codeMatches) || distance(first) - distance(second) || second.lastTaught - first.lastTaught)[0].code;
+}
+function withRenumberedCoursesMerged(choices) {
+	const merged = [];
+	const newestFirst = [...choices].sort((first, second) => second.lastTaught - first.lastTaught || second.students - first.students);
+	for (const choice of newestFirst) {
+		const newer = merged.find((kept) => [...choice.titles].some((title) => kept.titles.has(title)));
+		if (newer === void 0) {
+			merged.push({
+				...choice,
+				titles: new Set(choice.titles)
+			});
+			continue;
+		}
+		newer.codeMatches ||= choice.codeMatches;
+		newer.titleDistance = Math.min(newer.titleDistance, choice.titleDistance);
+		newer.students += choice.students;
+	}
+	return merged;
 }
 //#endregion
 //#region src/components/analytics/SubjectPicker.tsx
@@ -2162,26 +2767,6 @@ function MatchChoices(t0) {
 	return t8;
 }
 //#endregion
-//#region src/utils/hostPage.ts
-var isOnAPage = window.parent !== window;
-function setFullScreen(isFullScreen) {
-	if (!isOnAPage) return Promise.resolve();
-	return new Promise((resolve) => {
-		window.addEventListener("resize", () => resolve(), { once: true });
-		setTimeout(resolve, 500);
-		tellPage({
-			rowdySearch: "fullScreen",
-			isFullScreen
-		});
-	});
-}
-function closeSidebar() {
-	if (isOnAPage) tellPage({ rowdySearch: "close" });
-}
-function tellPage(message) {
-	window.parent.postMessage(message, "*");
-}
-//#endregion
 //#region src/components/analytics/AnalyticsMode.tsx
 function AnalyticsMode() {
 	const $ = (0, import_compiler_runtime.c)(51);
@@ -2205,7 +2790,7 @@ function AnalyticsMode() {
 		$[5] = t1;
 	} else t1 = $[5];
 	const [seriesList, setSeriesList] = (0, import_react.useState)(t1);
-	const [sidebarWidth] = (0, import_react.useState)(_temp$7);
+	const [sidebarWidth] = (0, import_react.useState)(_temp$10);
 	const panelRef = (0, import_react.useRef)(null);
 	let t2;
 	if ($[6] !== gradeData || $[7] !== seriesList) {
@@ -2431,7 +3016,7 @@ function AnalyticsMode() {
 	} else t22 = $[50];
 	return t22;
 }
-function _temp$7() {
+function _temp$10() {
 	return window.innerWidth;
 }
 async function slideIn(panel) {
@@ -2479,7 +3064,7 @@ function GradeBars(t0) {
 		t4 = Symbol.for("react.early_return_sentinel");
 		bb0: {
 			const shares = gradeShares(grades);
-			const tallestPercent = Math.max(...shares.map(_temp$6));
+			const tallestPercent = Math.max(...shares.map(_temp$9));
 			if (tallestPercent === 0) {
 				let t5;
 				if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
@@ -2499,9 +3084,9 @@ function GradeBars(t0) {
 				t5 = (share_0) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: "flex flex-1 flex-col items-center gap-1",
 					children: [
-						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: "text-xs text-zinc-400",
-							children: [Math.round(share_0.percent), "%"]
+							children: formatShare(share_0.percent)
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 							className: "flex h-16 w-full items-end rounded bg-zinc-700",
@@ -2545,7 +3130,7 @@ function GradeBars(t0) {
 	} else t5 = $[10];
 	let t6;
 	if ($[11] !== grades) {
-		t6 = countStudents(grades).toLocaleString();
+		t6 = countStudents(grades, FINISHED_OR_WITHDREW).toLocaleString();
 		$[11] = grades;
 		$[12] = t6;
 	} else t6 = $[12];
@@ -2575,7 +3160,7 @@ function GradeBars(t0) {
 	} else t8 = $[18];
 	return t8;
 }
-function _temp$6(share) {
+function _temp$9(share) {
 	return share.percent;
 }
 //#endregion
@@ -2814,7 +3399,7 @@ function RmpLinks(t0) {
 	}
 	let t1;
 	if ($[2] !== profiles) {
-		t1 = profiles.map(_temp$5);
+		t1 = profiles.map(_temp$8);
 		$[2] = profiles;
 		$[3] = t1;
 	} else t1 = $[3];
@@ -2829,7 +3414,7 @@ function RmpLinks(t0) {
 	} else t2 = $[5];
 	return t2;
 }
-function _temp$5(profile) {
+function _temp$8(profile) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ExternalLink, {
 		href: profile.link,
 		children: profile.department
@@ -2952,7 +3537,7 @@ function SyllabusLinks(t0) {
 	}
 	let t1;
 	if ($[1] !== syllabi) {
-		t1 = syllabi.map(_temp$4);
+		t1 = syllabi.map(_temp$7);
 		$[1] = syllabi;
 		$[2] = t1;
 	} else t1 = $[2];
@@ -2967,7 +3552,7 @@ function SyllabusLinks(t0) {
 	} else t2 = $[4];
 	return t2;
 }
-function _temp$4(syllabus) {
+function _temp$7(syllabus) {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(ExternalLink, {
 		href: syllabus.link,
 		children: [
@@ -2977,10 +3562,56 @@ function _temp$4(syllabus) {
 		]
 	}, syllabus.section);
 }
+function LatestSyllabus(t0) {
+	const $ = (0, import_compiler_runtime.c)(9);
+	const { offering, teacher } = t0;
+	if (offering === void 0) {
+		let t1;
+		if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
+			t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+				className: "text-sm text-zinc-500",
+				children: "No syllabus on Simple Syllabus"
+			});
+			$[0] = t1;
+		} else t1 = $[0];
+		return t1;
+	}
+	let t1;
+	if ($[1] !== offering.semester) {
+		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+			className: "font-medium",
+			children: offering.semester
+		});
+		$[1] = offering.semester;
+		$[2] = t1;
+	} else t1 = $[2];
+	let t2;
+	if ($[3] !== offering.syllabi) {
+		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SyllabusLinks, { syllabi: offering.syllabi });
+		$[3] = offering.syllabi;
+		$[4] = t2;
+	} else t2 = $[4];
+	let t3;
+	if ($[5] !== t1 || $[6] !== t2 || $[7] !== teacher) {
+		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "flex flex-col items-start gap-1 rounded-xl bg-zinc-800 p-3",
+			children: [
+				t1,
+				teacher,
+				t2
+			]
+		});
+		$[5] = t1;
+		$[6] = t2;
+		$[7] = teacher;
+		$[8] = t3;
+	} else t3 = $[8];
+	return t3;
+}
 //#endregion
 //#region src/components/ClassPage.tsx
 function ClassPage(t0) {
-	const $ = (0, import_compiler_runtime.c)(69);
+	const $ = (0, import_compiler_runtime.c)(71);
 	const { professorName, courseCode } = t0;
 	const { professors, openProfessor, openCourse } = useLookup();
 	const professor = professors[professorName];
@@ -3073,208 +3704,166 @@ function ClassPage(t0) {
 		$[24] = t9;
 	} else t9 = $[24];
 	let t10;
-	if ($[25] !== course) {
-		t10 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
-			title: "Latest syllabus",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LatestSyllabus, { course })
-		});
-		$[25] = course;
+	if ($[25] !== course.offerings) {
+		t10 = course.offerings.find(_temp$6);
+		$[25] = course.offerings;
 		$[26] = t10;
 	} else t10 = $[26];
-	const t11 = `Grades in ${course.code}`;
-	let t12;
-	if ($[27] !== course.offerings) {
-		t12 = gradesOf(course.offerings);
-		$[27] = course.offerings;
-		$[28] = t12;
-	} else t12 = $[28];
+	let t11;
+	if ($[27] !== t10) {
+		t11 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+			title: "Latest syllabus",
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LatestSyllabus, { offering: t10 })
+		});
+		$[27] = t10;
+		$[28] = t11;
+	} else t11 = $[28];
+	const t12 = `Grades in ${course.code}`;
 	let t13;
-	if ($[29] !== t12) {
-		t13 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GradeBars, { grades: t12 });
-		$[29] = t12;
+	if ($[29] !== course.offerings) {
+		t13 = gradesOf(course.offerings);
+		$[29] = course.offerings;
 		$[30] = t13;
 	} else t13 = $[30];
 	let t14;
-	if ($[31] !== t11 || $[32] !== t13) {
-		t14 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
-			title: t11,
-			children: t13
-		});
-		$[31] = t11;
-		$[32] = t13;
-		$[33] = t14;
-	} else t14 = $[33];
+	if ($[31] !== t13) {
+		t14 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GradeBars, { grades: t13 });
+		$[31] = t13;
+		$[32] = t14;
+	} else t14 = $[32];
 	let t15;
-	if ($[34] !== course.code || $[35] !== professor.rmp.reviews) {
-		t15 = thisCourseFirst(professor.rmp.reviews, course.code);
-		$[34] = course.code;
-		$[35] = professor.rmp.reviews;
-		$[36] = t15;
-	} else t15 = $[36];
-	let t16;
-	if ($[37] !== t15) {
-		t16 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
-			title: "What students say",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reviews, { reviews: t15 })
+	if ($[33] !== t12 || $[34] !== t14) {
+		t15 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+			title: t12,
+			children: t14
 		});
-		$[37] = t15;
+		$[33] = t12;
+		$[34] = t14;
+		$[35] = t15;
+	} else t15 = $[35];
+	let t16;
+	if ($[36] !== course.code || $[37] !== professor.rmp.reviews) {
+		t16 = thisCourseFirst(professor.rmp.reviews, course.code);
+		$[36] = course.code;
+		$[37] = professor.rmp.reviews;
 		$[38] = t16;
 	} else t16 = $[38];
 	let t17;
-	if ($[39] !== course.offerings || $[40] !== course.title) {
-		let t18;
-		if ($[42] !== course.title) {
-			t18 = (offering) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SemesterRow, {
-				offering,
-				courseTitle: course.title
-			}, offering.semester);
-			$[42] = course.title;
-			$[43] = t18;
-		} else t18 = $[43];
-		t17 = course.offerings.map(t18);
-		$[39] = course.offerings;
-		$[40] = course.title;
-		$[41] = t17;
-	} else t17 = $[41];
-	let t18;
-	if ($[44] !== t17) {
-		t18 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
-			title: "Every semester",
-			children: t17
+	if ($[39] !== t16) {
+		t17 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+			title: "What students say",
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Reviews, { reviews: t16 })
 		});
-		$[44] = t17;
-		$[45] = t18;
-	} else t18 = $[45];
+		$[39] = t16;
+		$[40] = t17;
+	} else t17 = $[40];
+	let t18;
+	if ($[41] !== course.offerings || $[42] !== course.title) {
+		let t19;
+		if ($[44] !== course.title) {
+			t19 = (offering_0) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SemesterRow, {
+				offering: offering_0,
+				courseTitle: course.title
+			}, offering_0.semester);
+			$[44] = course.title;
+			$[45] = t19;
+		} else t19 = $[45];
+		t18 = course.offerings.map(t19);
+		$[41] = course.offerings;
+		$[42] = course.title;
+		$[43] = t18;
+	} else t18 = $[43];
 	let t19;
-	if ($[46] !== course.code || $[47] !== openCourse) {
-		t19 = () => openCourse(course.code);
-		$[46] = course.code;
-		$[47] = openCourse;
-		$[48] = t19;
-	} else t19 = $[48];
+	if ($[46] !== t18) {
+		t19 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+			title: "Every semester",
+			children: t18
+		});
+		$[46] = t18;
+		$[47] = t19;
+	} else t19 = $[47];
 	let t20;
-	if ($[49] !== course.code || $[50] !== t19) {
-		t20 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+	if ($[48] !== course.code || $[49] !== openCourse) {
+		t20 = () => openCourse(course.code);
+		$[48] = course.code;
+		$[49] = openCourse;
+		$[50] = t20;
+	} else t20 = $[50];
+	let t21;
+	if ($[51] !== course.code || $[52] !== t20) {
+		t21 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
 			variant: "link",
-			onClick: t19,
+			onClick: t20,
 			children: ["Compare every professor who teaches ", course.code]
 		});
-		$[49] = course.code;
-		$[50] = t19;
-		$[51] = t20;
-	} else t20 = $[51];
-	let t21;
-	if ($[52] !== openProfessor || $[53] !== professor.name) {
-		t21 = () => openProfessor(professor.name);
-		$[52] = openProfessor;
-		$[53] = professor.name;
-		$[54] = t21;
-	} else t21 = $[54];
+		$[51] = course.code;
+		$[52] = t20;
+		$[53] = t21;
+	} else t21 = $[53];
 	let t22;
-	if ($[55] !== professor.name || $[56] !== t21) {
-		t22 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
+	if ($[54] !== openProfessor || $[55] !== professor.name) {
+		t22 = () => openProfessor(professor.name);
+		$[54] = openProfessor;
+		$[55] = professor.name;
+		$[56] = t22;
+	} else t22 = $[56];
+	let t23;
+	if ($[57] !== professor.name || $[58] !== t22) {
+		t23 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
 			variant: "link",
-			onClick: t21,
+			onClick: t22,
 			children: [
 				"See all of ",
 				professor.name,
 				"'s classes"
 			]
 		});
-		$[55] = professor.name;
-		$[56] = t21;
-		$[57] = t22;
-	} else t22 = $[57];
-	let t23;
-	if ($[58] !== t20 || $[59] !== t22) {
-		t23 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "flex flex-col items-start gap-1",
-			children: [t20, t22]
-		});
-		$[58] = t20;
-		$[59] = t22;
-		$[60] = t23;
-	} else t23 = $[60];
+		$[57] = professor.name;
+		$[58] = t22;
+		$[59] = t23;
+	} else t23 = $[59];
 	let t24;
-	if ($[61] !== t10 || $[62] !== t14 || $[63] !== t16 || $[64] !== t18 || $[65] !== t23 || $[66] !== t7 || $[67] !== t9) {
+	if ($[60] !== t21 || $[61] !== t23) {
 		t24 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "flex flex-col items-start gap-1",
+			children: [t21, t23]
+		});
+		$[60] = t21;
+		$[61] = t23;
+		$[62] = t24;
+	} else t24 = $[62];
+	let t25;
+	if ($[63] !== t11 || $[64] !== t15 || $[65] !== t17 || $[66] !== t19 || $[67] !== t24 || $[68] !== t7 || $[69] !== t9) {
+		t25 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "flex flex-col gap-5",
 			children: [
 				t7,
 				t9,
-				t10,
-				t14,
-				t16,
-				t18,
-				t23
+				t11,
+				t15,
+				t17,
+				t19,
+				t24
 			]
 		});
-		$[61] = t10;
-		$[62] = t14;
-		$[63] = t16;
-		$[64] = t18;
-		$[65] = t23;
-		$[66] = t7;
-		$[67] = t9;
-		$[68] = t24;
-	} else t24 = $[68];
-	return t24;
+		$[63] = t11;
+		$[64] = t15;
+		$[65] = t17;
+		$[66] = t19;
+		$[67] = t24;
+		$[68] = t7;
+		$[69] = t9;
+		$[70] = t25;
+	} else t25 = $[70];
+	return t25;
+}
+function _temp$6(offering) {
+	return offering.syllabi.length > 0;
 }
 function thisCourseFirst(reviews, courseCode) {
 	const courseNumber = courseCode.split(" ")[1];
 	const isThisCourse = (review) => review.course.match(/\d{4}/)?.[0] === courseNumber;
 	return [...reviews].sort((first, second) => Number(isThisCourse(second)) - Number(isThisCourse(first)));
-}
-function LatestSyllabus(t0) {
-	const $ = (0, import_compiler_runtime.c)(10);
-	const { course } = t0;
-	let t1;
-	if ($[0] !== course.offerings) {
-		t1 = course.offerings.find(_temp$3);
-		$[0] = course.offerings;
-		$[1] = t1;
-	} else t1 = $[1];
-	const latest = t1;
-	if (latest === void 0) {
-		let t2;
-		if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
-			t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-				className: "text-sm text-zinc-500",
-				children: "No syllabus on Simple Syllabus"
-			});
-			$[2] = t2;
-		} else t2 = $[2];
-		return t2;
-	}
-	let t2;
-	if ($[3] !== latest.semester) {
-		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-			className: "font-medium",
-			children: latest.semester
-		});
-		$[3] = latest.semester;
-		$[4] = t2;
-	} else t2 = $[4];
-	let t3;
-	if ($[5] !== latest.syllabi) {
-		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SyllabusLinks, { syllabi: latest.syllabi });
-		$[5] = latest.syllabi;
-		$[6] = t3;
-	} else t3 = $[6];
-	let t4;
-	if ($[7] !== t2 || $[8] !== t3) {
-		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			className: "flex flex-col gap-1 rounded-xl bg-zinc-800 p-3",
-			children: [t2, t3]
-		});
-		$[7] = t2;
-		$[8] = t3;
-		$[9] = t4;
-	} else t4 = $[9];
-	return t4;
-}
-function _temp$3(offering) {
-	return offering.syllabi.length > 0;
 }
 function SemesterRow(t0) {
 	const $ = (0, import_compiler_runtime.c)(43);
@@ -3541,11 +4130,81 @@ function ClassCard(t0) {
 	return t14;
 }
 //#endregion
+//#region src/components/CourseStats.tsx
+function CourseStats(t0) {
+	const $ = (0, import_compiler_runtime.c)(7);
+	const { teachers } = t0;
+	let t1;
+	if ($[0] !== teachers) {
+		t1 = medianGrade(gradesOf(teachers.flatMap(_temp$5)));
+		$[0] = teachers;
+		$[1] = t1;
+	} else t1 = $[1];
+	const median = t1;
+	let t2;
+	if ($[2] !== median || $[3] !== teachers) {
+		const bluebook = courseBluebook(teachers);
+		const rmp = courseRmp(teachers);
+		const t3 = median ?? "No grades yet";
+		let t4;
+		if ($[5] !== t3) {
+			t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stat, {
+				label: "Median Grade (Every Professor)",
+				value: t3
+			});
+			$[5] = t3;
+			$[6] = t4;
+		} else t4 = $[6];
+		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: "flex flex-col gap-3",
+			children: [
+				t4,
+				bluebook.sectionCount === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Unavailable, { children: "No Bluebook evaluations yet" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(StatGroup, {
+					title: "Bluebook",
+					detail: `Median of ${formatCount(bluebook.sectionCount, "section")}`,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stat, {
+						label: "Instructor",
+						value: formatOutOfFive(bluebook.instructor)
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stat, {
+						label: "Course",
+						value: formatOutOfFive(bluebook.course)
+					})]
+				}),
+				rmp.professorCount === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Unavailable, { children: "None of its professors are on Rate My Professors" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(StatGroup, {
+					title: "Rate My Professors",
+					detail: `Median of ${formatCount(rmp.professorCount, "professor")}`,
+					children: [
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stat, {
+							label: "Rating",
+							value: formatOutOfFive(rmp.rating)
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stat, {
+							label: "Difficulty",
+							value: formatOutOfFive(rmp.difficulty)
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Stat, {
+							label: "Would take again",
+							value: formatPercent(rmp.wouldTakeAgainPercent)
+						})
+					]
+				})
+			]
+		});
+		$[2] = median;
+		$[3] = teachers;
+		$[4] = t2;
+	} else t2 = $[4];
+	return t2;
+}
+function _temp$5(teacher) {
+	return teacher.course.offerings;
+}
+//#endregion
 //#region src/components/CoursePage.tsx
 function CoursePage(t0) {
-	const $ = (0, import_compiler_runtime.c)(24);
+	const $ = (0, import_compiler_runtime.c)(29);
 	const { courseCode } = t0;
-	const { professors, searchIndex } = useLookup();
+	const { professors, searchIndex, openClass } = useLookup();
 	let T0;
 	let t1;
 	let t2;
@@ -3553,14 +4212,16 @@ function CoursePage(t0) {
 	let t4;
 	let t5;
 	let t6;
-	if ($[0] !== courseCode || $[1] !== professors || $[2] !== searchIndex) {
-		t6 = Symbol.for("react.early_return_sentinel");
+	let t7;
+	let t8;
+	if ($[0] !== courseCode || $[1] !== openClass || $[2] !== professors || $[3] !== searchIndex) {
+		t8 = Symbol.for("react.early_return_sentinel");
 		bb0: {
 			const teachers = teachersOf(courseCode, professors, searchIndex);
 			if (teachers.length === 0) {
-				let t7;
-				if ($[10] !== courseCode) {
-					t7 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+				let t9;
+				if ($[13] !== courseCode) {
+					t9 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 						className: "py-12 text-center text-zinc-500",
 						children: [
 							"No one has taught ",
@@ -3568,29 +4229,30 @@ function CoursePage(t0) {
 							" yet."
 						]
 					});
-					$[10] = courseCode;
-					$[11] = t7;
-				} else t7 = $[11];
-				t6 = t7;
+					$[13] = courseCode;
+					$[14] = t9;
+				} else t9 = $[14];
+				t8 = t9;
 				break bb0;
 			}
-			const everyonesGrades = gradesOf(teachers.flatMap(_temp$2));
+			const everyonesGrades = gradesOf(teachers.flatMap(_temp$4));
 			const name = courseName(teachers);
+			const syllabus = latestSyllabus(teachers);
 			t3 = "flex flex-col gap-5";
-			const t7 = name !== null && ` · ${name}`;
-			let t8;
-			if ($[12] !== courseCode || $[13] !== t7) {
-				t8 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", {
+			const t9 = name !== null && ` · ${name}`;
+			let t10;
+			if ($[15] !== courseCode || $[16] !== t9) {
+				t10 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", {
 					className: "text-2xl font-bold",
-					children: [courseCode, t7]
+					children: [courseCode, t9]
 				});
-				$[12] = courseCode;
-				$[13] = t7;
-				$[14] = t8;
-			} else t8 = $[14];
+				$[15] = courseCode;
+				$[16] = t9;
+				$[17] = t10;
+			} else t10 = $[17];
 			t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				className: "flex flex-col",
-				children: [t8, /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+				children: [t10, /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 					className: "text-sm text-zinc-400",
 					children: [
 						teachers.length,
@@ -3601,8 +4263,21 @@ function CoursePage(t0) {
 					]
 				})]
 			});
-			t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
-				title: `Grades in ${courseCode} (every professor)`,
+			t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CourseStats, { teachers });
+			t6 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				title: "Latest syllabus",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LatestSyllabus, {
+					offering: syllabus?.offering,
+					teacher: syllabus && /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+						variant: "link",
+						className: "text-sm",
+						onClick: () => openClass(syllabus.teacher.professor.name, courseCode),
+						children: syllabus.teacher.professor.name
+					})
+				})
+			});
+			t7 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
+				title: `Grades in ${courseCode} (Every Professor)`,
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GradeBars, { grades: everyonesGrades })
 			});
 			T0 = Section;
@@ -3614,55 +4289,64 @@ function CoursePage(t0) {
 			}, teacher_0.professor.name));
 		}
 		$[0] = courseCode;
-		$[1] = professors;
-		$[2] = searchIndex;
-		$[3] = T0;
-		$[4] = t1;
-		$[5] = t2;
-		$[6] = t3;
-		$[7] = t4;
-		$[8] = t5;
-		$[9] = t6;
+		$[1] = openClass;
+		$[2] = professors;
+		$[3] = searchIndex;
+		$[4] = T0;
+		$[5] = t1;
+		$[6] = t2;
+		$[7] = t3;
+		$[8] = t4;
+		$[9] = t5;
+		$[10] = t6;
+		$[11] = t7;
+		$[12] = t8;
 	} else {
-		T0 = $[3];
-		t1 = $[4];
-		t2 = $[5];
-		t3 = $[6];
-		t4 = $[7];
-		t5 = $[8];
-		t6 = $[9];
+		T0 = $[4];
+		t1 = $[5];
+		t2 = $[6];
+		t3 = $[7];
+		t4 = $[8];
+		t5 = $[9];
+		t6 = $[10];
+		t7 = $[11];
+		t8 = $[12];
 	}
-	if (t6 !== Symbol.for("react.early_return_sentinel")) return t6;
-	let t7;
-	if ($[15] !== T0 || $[16] !== t1 || $[17] !== t2) {
-		t7 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(T0, {
+	if (t8 !== Symbol.for("react.early_return_sentinel")) return t8;
+	let t9;
+	if ($[18] !== T0 || $[19] !== t1 || $[20] !== t2) {
+		t9 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(T0, {
 			title: t1,
 			children: t2
 		});
-		$[15] = T0;
-		$[16] = t1;
-		$[17] = t2;
-		$[18] = t7;
-	} else t7 = $[18];
-	let t8;
-	if ($[19] !== t3 || $[20] !== t4 || $[21] !== t5 || $[22] !== t7) {
-		t8 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		$[18] = T0;
+		$[19] = t1;
+		$[20] = t2;
+		$[21] = t9;
+	} else t9 = $[21];
+	let t10;
+	if ($[22] !== t3 || $[23] !== t4 || $[24] !== t5 || $[25] !== t6 || $[26] !== t7 || $[27] !== t9) {
+		t10 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: t3,
 			children: [
 				t4,
 				t5,
-				t7
+				t6,
+				t7,
+				t9
 			]
 		});
-		$[19] = t3;
-		$[20] = t4;
-		$[21] = t5;
-		$[22] = t7;
-		$[23] = t8;
-	} else t8 = $[23];
-	return t8;
+		$[22] = t3;
+		$[23] = t4;
+		$[24] = t5;
+		$[25] = t6;
+		$[26] = t7;
+		$[27] = t9;
+		$[28] = t10;
+	} else t10 = $[28];
+	return t10;
 }
-function _temp$2(teacher) {
+function _temp$4(teacher) {
 	return teacher.course.offerings;
 }
 function classDetail({ course }, name) {
@@ -3812,9 +4496,9 @@ function ProfessorPage(t0) {
 	} else t2 = $[3];
 	let t3;
 	if ($[4] !== professor.department) {
-		t3 = professor.department !== null && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+		t3 = professor.department !== null && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 			className: "text-sm text-zinc-400",
-			children: [professor.department, " department"]
+			children: formatDepartment(professor.department)
 		});
 		$[4] = professor.department;
 		$[5] = t3;
@@ -3834,7 +4518,7 @@ function ProfessorPage(t0) {
 		t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ProfessorStats, {
 			rmp: professor.rmp,
 			offerings,
-			medianLabel: "Median Grade (all classes)"
+			medianLabel: "Median Grade (All Classes)"
 		});
 		$[9] = offerings;
 		$[10] = professor.rmp;
@@ -3849,7 +4533,7 @@ function ProfessorPage(t0) {
 	let t7;
 	if ($[14] !== t6) {
 		t7 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Section, {
-			title: "Grades in all classes",
+			title: "Grades in All Classes",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(GradeBars, { grades: t6 })
 		});
 		$[14] = t6;
@@ -4517,7 +5201,7 @@ function CopyLink() {
 			readOnly: true,
 			value: STORE_LINK,
 			"aria-label": "RowdySearch's link",
-			onFocus: _temp$1,
+			onFocus: _temp$3,
 			className: "min-w-0 flex-1 rounded-lg bg-zinc-900 px-3 py-1.5 text-sm text-zinc-400 outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
 		});
 		$[1] = t1;
@@ -4538,7 +5222,7 @@ function CopyLink() {
 	} else t3 = $[3];
 	return t3;
 }
-function _temp$1(e) {
+function _temp$3(e) {
 	return e.target.select();
 }
 //#endregion
@@ -4565,81 +5249,54 @@ function Home() {
 //#endregion
 //#region src/components/SearchPage.tsx
 function SearchPage(t0) {
-	const $ = (0, import_compiler_runtime.c)(22);
+	const $ = (0, import_compiler_runtime.c)(11);
 	const { query } = t0;
 	const { professors, searchIndex, updateSearch, openPage } = useLookup();
 	let t1;
-	if ($[0] !== query || $[1] !== searchIndex) {
-		t1 = search(searchIndex, query);
-		$[0] = query;
-		$[1] = searchIndex;
-		$[2] = t1;
-	} else t1 = $[2];
-	const results = t1;
-	let t2;
-	if ($[3] !== openPage || $[4] !== professors || $[5] !== query || $[6] !== results) {
-		t2 = function handleSubmit(e) {
+	if ($[0] !== openPage || $[1] !== professors || $[2] !== query || $[3] !== searchIndex || $[4] !== updateSearch) {
+		const results = search(searchIndex, query);
+		const page = pageForSearch(query, results, professors);
+		const handleSubmit = function handleSubmit(e) {
 			e.preventDefault();
-			const page = pageForSearch(query, results, professors);
 			if (page !== null) openPage(page);
 		};
-		$[3] = openPage;
-		$[4] = professors;
-		$[5] = query;
-		$[6] = results;
-		$[7] = t2;
-	} else t2 = $[7];
-	const handleSubmit = t2;
-	let t3;
-	if ($[8] !== updateSearch) {
-		t3 = (e_0) => updateSearch(e_0.target.value);
-		$[8] = updateSearch;
-		$[9] = t3;
-	} else t3 = $[9];
-	let t4;
-	if ($[10] !== query || $[11] !== t3) {
-		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-			autoFocus: true,
-			value: query,
-			onChange: t3,
-			className: "w-full rounded-lg bg-zinc-800 px-4 py-2 outline-none focus-visible:ring-2 focus-visible:ring-orange-500",
-			placeholder: "Professor, class, or subject"
-		});
-		$[10] = query;
-		$[11] = t3;
-		$[12] = t4;
-	} else t4 = $[12];
-	let t5;
-	if ($[13] !== handleSubmit || $[14] !== t4) {
-		t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("form", {
-			onSubmit: handleSubmit,
-			children: t4
-		});
-		$[13] = handleSubmit;
-		$[14] = t4;
-		$[15] = t5;
-	} else t5 = $[15];
-	let t6;
-	if ($[16] !== query || $[17] !== results) {
-		t6 = query.trim() === "" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Home, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SearchResults, {
-			query,
-			results
-		});
-		$[16] = query;
-		$[17] = results;
-		$[18] = t6;
-	} else t6 = $[18];
-	let t7;
-	if ($[19] !== t5 || $[20] !== t6) {
-		t7 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		let t2;
+		if ($[6] !== updateSearch) {
+			t2 = (e_0) => updateSearch(e_0.target.value);
+			$[6] = updateSearch;
+			$[7] = t2;
+		} else t2 = $[7];
+		let t3;
+		if ($[8] !== query || $[9] !== t2) {
+			t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+				autoFocus: true,
+				value: query,
+				onChange: t2,
+				className: "w-full rounded-lg bg-zinc-800 px-4 py-2 outline-none focus-visible:ring-2 focus-visible:ring-orange-500",
+				placeholder: "Professor, class, or subject"
+			});
+			$[8] = query;
+			$[9] = t2;
+			$[10] = t3;
+		} else t3 = $[10];
+		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "flex flex-col gap-3",
-			children: [t5, t6]
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("form", {
+				onSubmit: handleSubmit,
+				children: t3
+			}), query.trim() === "" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Home, {}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SearchResults, {
+				query,
+				results: withPageFirst(results, page)
+			})]
 		});
-		$[19] = t5;
-		$[20] = t6;
-		$[21] = t7;
-	} else t7 = $[21];
-	return t7;
+		$[0] = openPage;
+		$[1] = professors;
+		$[2] = query;
+		$[3] = searchIndex;
+		$[4] = updateSearch;
+		$[5] = t1;
+	} else t1 = $[5];
+	return t1;
 }
 function SearchResults(t0) {
 	const $ = (0, import_compiler_runtime.c)(13);
@@ -4756,9 +5413,13 @@ function LookupProvider(t0) {
 		t2 = () => {
 			const openSectionFromAddress = function openSectionFromAddress() {
 				if (window.location.hash === "") return;
-				const page = pageForSection(JSON.parse(decodeURIComponent(window.location.hash.slice(1))), gradeData.searchIndex);
-				setPages((curr) => [...curr, page]);
-				window.scrollTo(0, 0);
+				try {
+					const page = pageForSection(readSection(window.location.hash.slice(1)), gradeData.searchIndex);
+					setPages((curr) => [...curr, page]);
+					window.scrollTo(0, 0);
+				} catch (t4) {
+					console.warn("RowdySearch: couldn't open the section in the address.", t4);
+				}
 				window.history.replaceState(null, "", window.location.pathname + window.location.search);
 			};
 			openSectionFromAddress();
@@ -4802,7 +5463,7 @@ function LookupProvider(t0) {
 	let t7;
 	if ($[7] === Symbol.for("react.memo_cache_sentinel")) {
 		t7 = function goBack() {
-			changePages(_temp);
+			changePages(_temp$2);
 		};
 		$[7] = t7;
 	} else t7 = $[7];
@@ -4810,7 +5471,7 @@ function LookupProvider(t0) {
 	let t8;
 	if ($[8] === Symbol.for("react.memo_cache_sentinel")) {
 		t8 = function goHome() {
-			changePages(_temp2);
+			changePages(_temp2$1);
 		};
 		$[8] = t8;
 	} else t8 = $[8];
@@ -4902,27 +5563,52 @@ function LookupProvider(t0) {
 	} else t18 = $[25];
 	return t18;
 }
-function _temp2() {
+function _temp2$1() {
 	return [HOME_PAGE];
 }
-function _temp(curr_2) {
+function _temp$2(curr_2) {
 	return curr_2.length > 1 ? curr_2.slice(0, -1) : curr_2;
+}
+function readSection(text) {
+	const section = JSON.parse(decodeURIComponent(text));
+	if (typeof section?.instructor !== "string" || typeof section?.courseCode !== "string") throw new Error(`Not a section: ${text}`);
+	return section;
 }
 //#endregion
 //#region src/utils/gradeData.ts
 function readProfessors(rawData) {
+	if (typeof rawData !== "object" || rawData === null) throw new Error("The professors file isn't a list of professors");
 	const professors = {};
-	for (const [name, rawProfessor] of Object.entries(rawData)) professors[name] = readProfessor(name, rawProfessor);
+	const skipped = [];
+	for (const [name, rawProfessor] of Object.entries(rawData)) try {
+		professors[name] = readProfessor(name, rawProfessor);
+	} catch {
+		skipped.push(name);
+	}
+	if (skipped.length > 0) console.warn(`RowdySearch: left out ${skipped.length} professors with broken data:`, skipped);
 	return professors;
 }
 function readProfessor(name, rawProfessor) {
-	const courses = Object.entries(rawProfessor.courses).map(([code, rawCourse]) => readCourse(code, rawCourse));
+	const courses = Object.entries(rawProfessor.courses).flatMap(([code, rawCourse]) => {
+		try {
+			const course = readCourse(code, rawCourse);
+			return course.offerings.length > 0 ? [course] : [];
+		} catch {
+			console.warn(`RowdySearch: left out ${name}'s ${code}, its data is broken.`);
+			return [];
+		}
+	});
+	if (courses.length === 0) throw new Error(`${name} has no courses`);
+	const rmpProfiles = Array.isArray(rawProfessor.rmp) ? rawProfessor.rmp : [];
 	return {
 		name,
-		department: rawProfessor.rmp[0]?.department ?? null,
-		rmp: readRmp(rawProfessor.rmp),
+		department: readDepartment(rawProfessor.department) ?? rmpProfiles[0]?.department ?? null,
+		rmp: readRmp(rmpProfiles),
 		courses: courses.sort((first, second) => lastTaughtRank(second) - lastTaughtRank(first))
 	};
+}
+function readDepartment(department) {
+	return typeof department === "string" && department !== "" ? department : null;
 }
 function readCourse(code, rawCourse) {
 	const offerings = Object.entries(rawCourse.semesters).map(([semester, sections]) => readOffering(semester, sections));
@@ -4951,7 +5637,7 @@ function readSyllabus({ section, syllabusCode }) {
 	}];
 }
 function readEvaluation({ instructorEvaluation, courseEvaluation }) {
-	if (instructorEvaluation === null || courseEvaluation === null) return [];
+	if (typeof instructorEvaluation !== "number" || typeof courseEvaluation !== "number") return [];
 	return [{
 		instructor: instructorEvaluation,
 		course: courseEvaluation
@@ -4959,62 +5645,203 @@ function readEvaluation({ instructorEvaluation, courseEvaluation }) {
 }
 function readGradeCounts(section) {
 	const counts = emptyGradeCounts();
-	for (const grade of GRADES) counts[grade] = section.grades?.[grade] ?? 0;
+	for (const grade of GRADES) {
+		const count = section.grades?.[grade];
+		counts[grade] = typeof count === "number" ? count : 0;
+	}
 	return counts;
 }
 function readRmp(profiles) {
-	const wouldTakeAgainPercents = profiles.map((profile) => profile.wouldTakeAgainPercent).filter((percent) => percent !== null);
+	const numbersOf = (read) => profiles.map(read).filter((value) => typeof value === "number");
 	return {
-		rating: average(profiles.map((profile) => profile.avgRating)),
-		difficulty: average(profiles.map((profile) => profile.avgDifficulty)),
-		wouldTakeAgainPercent: average(wouldTakeAgainPercents),
+		rating: average(numbersOf((profile) => profile.avgRating)),
+		difficulty: average(numbersOf((profile) => profile.avgDifficulty)),
+		wouldTakeAgainPercent: average(numbersOf((profile) => profile.wouldTakeAgainPercent)),
 		profiles: profiles.map((profile) => ({
 			department: profile.department,
 			link: rmpLink(profile.rmpId)
 		})),
-		reviews: profiles.flatMap((profile) => profile.recentReviews)
+		reviews: profiles.flatMap((profile) => Array.isArray(profile.recentReviews) ? profile.recentReviews : [])
 	};
 }
 //#endregion
 //#region src/hooks/useGradeData.ts
 var PROFESSORS_URL = "../data/professors.json";
+var RETRY_DELAYS = [1e3, 3e3];
+var GIVE_UP_AFTER = 2e4;
+var SLOW_AFTER = 8e3;
 function useGradeData() {
-	const $ = (0, import_compiler_runtime.c)(2);
-	const [gradeData, setGradeData] = (0, import_react.useState)(null);
+	const $ = (0, import_compiler_runtime.c)(7);
 	let t0;
-	let t1;
 	if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-		t0 = () => {
-			loadGradeData().then(setGradeData);
+		t0 = {
+			status: "loading",
+			isSlow: false
 		};
-		t1 = [];
 		$[0] = t0;
-		$[1] = t1;
+	} else t0 = $[0];
+	const [state, setState] = (0, import_react.useState)(t0);
+	const [timesRetried, setTimesRetried] = (0, import_react.useState)(0);
+	let t1;
+	let t2;
+	if ($[1] !== timesRetried) {
+		t1 = () => {
+			const stop = new AbortController();
+			const slowTimer = setTimeout(() => setState({
+				status: "loading",
+				isSlow: true
+			}), SLOW_AFTER);
+			loadWithRetries(stop.signal).then((gradeData) => setState({
+				status: "ready",
+				gradeData
+			})).catch((error) => {
+				if (stop.signal.aborted) return;
+				console.error("RowdySearch: couldn't load the professors.", error);
+				setState({
+					status: "failed",
+					triedByHand: timesRetried > 0
+				});
+			}).finally(() => clearTimeout(slowTimer));
+			return () => {
+				stop.abort();
+				clearTimeout(slowTimer);
+			};
+		};
+		t2 = [timesRetried];
+		$[1] = timesRetried;
+		$[2] = t1;
+		$[3] = t2;
 	} else {
-		t0 = $[0];
-		t1 = $[1];
+		t1 = $[2];
+		t2 = $[3];
 	}
-	(0, import_react.useEffect)(t0, t1);
-	return gradeData;
+	(0, import_react.useEffect)(t1, t2);
+	let t3;
+	if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
+		t3 = function retry() {
+			setState({
+				status: "loading",
+				isSlow: false
+			});
+			setTimesRetried(_temp$1);
+		};
+		$[4] = t3;
+	} else t3 = $[4];
+	const retry = t3;
+	let t4;
+	if ($[5] !== state) {
+		t4 = {
+			state,
+			retry
+		};
+		$[5] = state;
+		$[6] = t4;
+	} else t4 = $[6];
+	return t4;
 }
-async function loadGradeData() {
-	const professors = readProfessors(await (await fetch(PROFESSORS_URL)).json());
+function _temp$1(count) {
+	return count + 1;
+}
+async function loadWithRetries(signal) {
+	for (let attempt = 0;; attempt++) try {
+		return await loadGradeData(signal);
+	} catch (error) {
+		if (signal.aborted || attempt === RETRY_DELAYS.length) throw error;
+		console.warn(`RowdySearch: loading the professors failed, trying again (${attempt + 1} of ${RETRY_DELAYS.length}).`, error);
+		await wait(RETRY_DELAYS[attempt], signal);
+	}
+}
+async function loadGradeData(signal) {
+	const response = await fetch(PROFESSORS_URL, { signal: AbortSignal.any([signal, AbortSignal.timeout(GIVE_UP_AFTER)]) });
+	if (!response.ok) throw new Error(`${PROFESSORS_URL} answered ${response.status}`);
+	const professors = readProfessors(await response.json());
+	if (Object.keys(professors).length === 0) throw new Error(`${PROFESSORS_URL} has no professors in it`);
 	return {
 		professors,
 		searchIndex: buildSearchIndex(professors)
 	};
 }
+function wait(milliseconds, signal) {
+	return new Promise((resolve, reject) => {
+		const timer = setTimeout(resolve, milliseconds);
+		signal.addEventListener("abort", () => {
+			clearTimeout(timer);
+			reject(signal.reason);
+		}, { once: true });
+	});
+}
 //#endregion
 //#region src/App.tsx
 function App() {
-	const $ = (0, import_compiler_runtime.c)(4);
-	const gradeData = useGradeData();
-	if (gradeData === null) {
+	const $ = (0, import_compiler_runtime.c)(12);
+	const { state, retry } = useGradeData();
+	if (state.status === "loading") {
 		let t0;
 		if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-			t0 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
-				className: "min-h-screen bg-zinc-900 py-12 text-center text-zinc-500",
-				children: "Loading professors..."
+			t0 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", { children: "Loading professors..." });
+			$[0] = t0;
+		} else t0 = $[0];
+		let t1;
+		if ($[1] !== retry || $[2] !== state.isSlow) {
+			t1 = state.isSlow && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+				className: "text-sm",
+				children: "This is taking longer than usual."
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+				onClick: retry,
+				children: "Try again"
+			})] });
+			$[1] = retry;
+			$[2] = state.isSlow;
+			$[3] = t1;
+		} else t1 = $[3];
+		let t2;
+		if ($[4] !== t1) {
+			t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(StatusScreen, { children: [t0, t1] });
+			$[4] = t1;
+			$[5] = t2;
+		} else t2 = $[5];
+		return t2;
+	}
+	if (state.status === "failed") {
+		let t0;
+		if ($[6] !== retry || $[7] !== state.triedByHand) {
+			t0 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(StatusScreen, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Problem, {
+				message: "RowdySearch couldn't load its professor data.",
+				onRetry: retry,
+				offerReload: state.triedByHand
+			}) });
+			$[6] = retry;
+			$[7] = state.triedByHand;
+			$[8] = t0;
+		} else t0 = $[8];
+		return t0;
+	}
+	let t0;
+	if ($[9] === Symbol.for("react.memo_cache_sentinel")) {
+		t0 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CurrentScreen, {});
+		$[9] = t0;
+	} else t0 = $[9];
+	let t1;
+	if ($[10] !== state.gradeData) {
+		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LookupProvider, {
+			gradeData: state.gradeData,
+			children: t0
+		});
+		$[10] = state.gradeData;
+		$[11] = t1;
+	} else t1 = $[11];
+	return t1;
+}
+function CurrentScreen() {
+	const $ = (0, import_compiler_runtime.c)(9);
+	const { page, isAnalyticsOpen } = useLookup();
+	if (isAnalyticsOpen) {
+		let t0;
+		if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
+			t0 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ErrorBoundary, {
+				name: "Analytical Mode",
+				fallback: _temp,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AnalyticsMode, {})
 			});
 			$[0] = t0;
 		} else t0 = $[0];
@@ -5022,44 +5849,98 @@ function App() {
 	}
 	let t0;
 	if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
-		t0 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CurrentScreen, {});
+		t0 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Header, {});
 		$[1] = t0;
 	} else t0 = $[1];
-	let t1;
-	if ($[2] !== gradeData) {
-		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LookupProvider, {
-			gradeData,
-			children: t0
+	const t1 = `the ${page.type} page`;
+	let t2;
+	if ($[2] === Symbol.for("react.memo_cache_sentinel")) {
+		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CurrentPage, {});
+		$[2] = t2;
+	} else t2 = $[2];
+	let t3;
+	if ($[3] !== page || $[4] !== t1) {
+		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ErrorBoundary, {
+			name: t1,
+			resetKey: page,
+			fallback: _temp2,
+			children: t2
 		});
-		$[2] = gradeData;
-		$[3] = t1;
-	} else t1 = $[3];
-	return t1;
-}
-function CurrentScreen() {
-	const $ = (0, import_compiler_runtime.c)(2);
-	const { isAnalyticsOpen } = useLookup();
-	if (isAnalyticsOpen) {
-		let t0;
-		if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
-			t0 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AnalyticsMode, {});
-			$[0] = t0;
-		} else t0 = $[0];
-		return t0;
-	}
-	let t0;
-	if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
-		t0 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		$[3] = page;
+		$[4] = t1;
+		$[5] = t3;
+	} else t3 = $[5];
+	let t4;
+	if ($[6] === Symbol.for("react.memo_cache_sentinel")) {
+		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Footer, {});
+		$[6] = t4;
+	} else t4 = $[6];
+	let t5;
+	if ($[7] !== t3) {
+		t5 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			className: "flex min-h-screen flex-col gap-4 bg-zinc-900 p-4",
 			children: [
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Header, {}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CurrentPage, {}),
-				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Footer, {})
+				t0,
+				t3,
+				t4
 			]
 		});
-		$[1] = t0;
-	} else t0 = $[1];
-	return t0;
+		$[7] = t3;
+		$[8] = t5;
+	} else t5 = $[8];
+	return t5;
+}
+function _temp2(retry) {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Problem, {
+		message: "Something went wrong showing this page.",
+		onRetry: retry
+	});
+}
+function _temp() {
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AnalyticsCrashed, {});
+}
+function AnalyticsCrashed() {
+	const $ = (0, import_compiler_runtime.c)(7);
+	const { closeAnalytics } = useLookup();
+	let t0;
+	if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
+		t0 = [];
+		$[0] = t0;
+	} else t0 = $[0];
+	(0, import_react.useEffect)(_temp3, t0);
+	let t1;
+	if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
+		t1 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Something went wrong in Analytical Mode." });
+		$[1] = t1;
+	} else t1 = $[1];
+	let t2;
+	if ($[2] !== closeAnalytics) {
+		t2 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+			onClick: closeAnalytics,
+			children: "Back to the sidebar"
+		});
+		$[2] = closeAnalytics;
+		$[3] = t2;
+	} else t2 = $[3];
+	let t3;
+	if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
+		t3 = /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ReloadLink, {});
+		$[4] = t3;
+	} else t3 = $[4];
+	let t4;
+	if ($[5] !== t2) {
+		t4 = /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(StatusScreen, { children: [
+			t1,
+			t2,
+			t3
+		] });
+		$[5] = t2;
+		$[6] = t4;
+	} else t4 = $[6];
+	return t4;
+}
+function _temp3() {
+	setFullScreen(false);
 }
 function CurrentPage() {
 	const $ = (0, import_compiler_runtime.c)(9);
@@ -5110,5 +5991,9 @@ function CurrentPage() {
 }
 //#endregion
 //#region src/main.tsx
-(0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(App, {}) }));
+(0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ErrorBoundary, {
+	name: "the sidebar",
+	fallback: (retry) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CrashScreen, { onRetry: retry }),
+	children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(App, {})
+}) }));
 //#endregion

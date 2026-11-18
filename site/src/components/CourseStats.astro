@@ -1,0 +1,41 @@
+---
+import type { CourseEntry } from "../data/catalog.ts";
+import { courseBluebook, courseRmp, formatCount, formatOutOfFive, formatPercent } from "../data/shared.ts";
+import Stat from "./Stat.astro";
+import StatGroup from "./StatGroup.astro";
+
+type Props = {
+  course: CourseEntry;
+};
+
+const { course } = Astro.props;
+const bluebook = courseBluebook(course.teachers);
+const rmp = courseRmp(course.teachers);
+---
+
+{/* The numbers at the top of a course's page: the middle of everyone who teaches it, so one
+    unusually easy or hard professor can't pull them far. */}
+<div class="flex flex-col gap-3">
+  <Stat label="Median Grade (Every Professor)" value={course.median ?? "No grades yet"} />
+
+  {bluebook.sectionCount === 0 ? (
+    <p class="text-sm text-zinc-500">No Bluebook evaluations yet</p>
+  ) : (
+    <StatGroup title="Bluebook">
+      <Fragment slot="detail">Median of {formatCount(bluebook.sectionCount, "section")}</Fragment>
+      <Stat label="Instructor" value={formatOutOfFive(bluebook.instructor)} />
+      <Stat label="Course" value={formatOutOfFive(bluebook.course)} />
+    </StatGroup>
+  )}
+
+  {rmp.professorCount === 0 ? (
+    <p class="text-sm text-zinc-500">None of its professors are on Rate My Professors</p>
+  ) : (
+    <StatGroup title="Rate My Professors">
+      <Fragment slot="detail">Median of {formatCount(rmp.professorCount, "professor")}</Fragment>
+      <Stat label="Rating" value={formatOutOfFive(rmp.rating)} />
+      <Stat label="Difficulty" value={formatOutOfFive(rmp.difficulty)} />
+      <Stat label="Would take again" value={formatPercent(rmp.wouldTakeAgainPercent)} />
+    </StatGroup>
+  )}
+</div>

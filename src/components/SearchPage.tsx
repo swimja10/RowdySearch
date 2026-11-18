@@ -4,7 +4,7 @@ import { Home } from "./home/Home.tsx";
 import { useLookup } from "../context/useLookup.ts";
 import { search, type Match } from "../searcher.ts";
 import { findCourse } from "../utils/courses.ts";
-import { pageForSearch } from "../utils/pageForSearch.ts";
+import { pageForSearch, withPageFirst } from "../utils/pageForSearch.ts";
 
 type SearchPageProps = {
   query: string;
@@ -13,11 +13,11 @@ type SearchPageProps = {
 export function SearchPage({ query }: SearchPageProps) {
   const { professors, searchIndex, updateSearch, openPage } = useLookup();
   const results = search(searchIndex, query);
+  const page = pageForSearch(query, results, professors);
 
   function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
 
-    const page = pageForSearch(query, results, professors);
     if (page !== null) openPage(page);
   }
 
@@ -32,7 +32,7 @@ export function SearchPage({ query }: SearchPageProps) {
           placeholder="Professor, class, or subject"
         />
       </form>
-      {query.trim() === "" ? <Home /> : <SearchResults query={query} results={results} />}
+      {query.trim() === "" ? <Home /> : <SearchResults query={query} results={withPageFirst(results, page)} />}
     </div>
   );
 }

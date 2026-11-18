@@ -1,0 +1,69 @@
+---
+import CourseStats from "../../components/CourseStats.astro";
+import GradeBars from "../../components/GradeBars.astro";
+import LatestSyllabus from "../../components/LatestSyllabus.astro";
+import LookupPage from "../../components/LookupPage.astro";
+import ProfessorTable from "../../components/ProfessorTable.astro";
+import Rates from "../../components/Rates.astro";
+import Section from "../../components/Section.astro";
+import { classUrl, courseSlug, subjectUrl } from "../../data/addresses.ts";
+import { loadCatalog, ratesOf } from "../../data/catalog.ts";
+import { formatCount, latestSyllabus } from "../../data/shared.ts";
+import { courseSummary } from "../../data/summaries.ts";
+import Base from "../../layouts/Base.astro";
+
+export function getStaticPaths() {
+  return [...loadCatalog().courses.keys()].map((code) => ({
+    params: { course: courseSlug(code) },
+    props: { code },
+  }));
+}
+
+type Props = { code: string };
+
+const course = loadCatalog().courses.get(Astro.props.code)!;
+const summary = courseSummary(course);
+const professorCount = course.teachers.length;
+// The newest syllabus anyone posted, from whichever professor posted it.
+const syllabus = latestSyllabus(course.teachers);
+const title = course.name === null ? course.code : `${course.code} ${course.name}`;
+---
+
+<Base title={`${title} at UTSA: grades by professor`} description={summary}>
+  <LookupPage
+    page={{ type: "course", courseCode: course.code }}
+    summary={summary}
+    crumbs={[{ label: "Home", href: "/" }, { label: course.subject, href: subjectUrl(course.subject) }, { label: course.code }]}>
+    <Fragment slot="heading">
+      <h1 class="text-3xl font-bold">{course.code}{course.name !== null && ` · ${course.name}`}</h1>
+      <p class="text-sm text-zinc-400">
+        {professorCount} {professorCount === 1 ? "professor has" : "professors have"} taught this class{course.name === null && ", each with their own topic"}
+      </p>
+    </Fragment>
+
+    <Fragment slot="numbers">
+      <CourseStats course={course} />
+      <Rates rates={ratesOf(course.grades)} />
+    </Fragment>
+
+    <Fragment slot="lists">
+      <Section title={`Grades in ${course.code} (Every Professor)`}>
+        <GradeBars grades={course.grades} />
+      </Section>
+
+      <Section title="Latest syllabus">
+        <LatestSyllabus offering={syllabus?.offering}>
+          {syllabus && (
+            <a href={classUrl(syllabus.teacher.professor.name, course.code)} class="text-sm text-orange-400 hover:text-orange-300 hover:underline">
+              {syllabus.teacher.professor.name}
+            </a>
+          )}
+        </LatestSyllabus>
+      </Section>
+    </Fragment>
+
+    <Section title={`${formatCount(professorCount, "professor")}, most recent first`}>
+      <ProfessorTable course={course} />
+    </Section>
+  </LookupPage>
+</Base>

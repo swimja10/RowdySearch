@@ -1,0 +1,54 @@
+---
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import Pager from "../../components/Pager.astro";
+import { professorUrl } from "../../data/addresses.ts";
+import { byLastName, lastNameOf } from "../../data/catalog.ts";
+import { isLater } from "../../data/paging.ts";
+import { loadData } from "../../data/professors.ts";
+import type { Professor } from "../../data/shared.ts";
+import Base from "../../layouts/Base.astro";
+
+const professors = Object.values(loadData().professors).sort(byLastName);
+
+// The first letter of the last name, with accents taken off ("Á" goes under A).
+const letterOf = (professor: Professor) =>
+  lastNameOf(professor.name).normalize("NFKD").replace(/[^A-Za-z]/g, "").charAt(0).toUpperCase() || "#";
+
+// The first professor under each letter is where that letter's button jumps to.
+const firstUnder = new Map<string, Professor>();
+for (const professor of professors) {
+  if (!firstUnder.has(letterOf(professor))) firstUnder.set(letterOf(professor), professor);
+}
+const letters = [...firstUnder.keys()].sort();
+const letterStartedBy = (professor: Professor) => (firstUnder.get(letterOf(professor)) === professor ? letterOf(professor) : undefined);
+
+const summary = `All ${professors.length.toLocaleString("en-US")} UTSA professors on RowdySearch, by last name.`;
+---
+
+<Base title="Every UTSA professor" description={summary}>
+  <div class="flex flex-col gap-6">
+    <Breadcrumbs crumbs={[{ label: "Home", href: "/" }, { label: "Professors" }]} />
+
+    <header class="flex flex-col gap-2">
+      <h1 class="text-3xl font-bold">Professors</h1>
+      <p class="max-w-3xl text-zinc-300">{summary}</p>
+    </header>
+
+    <nav aria-label="Jump to a letter" class="flex flex-wrap gap-1">
+      {letters.map((letter) => (
+        <a href={`#${letter}`} class="flex size-9 items-center justify-center rounded-lg bg-zinc-800 text-sm font-semibold text-orange-400 hover:bg-zinc-700">{letter}</a>
+      ))}
+    </nav>
+
+    <div data-paged="page" class="flex scroll-mt-4 flex-col gap-4">
+      <ul class="columns-2 gap-6 sm:columns-3 lg:columns-4">
+        {professors.map((professor, index) => (
+          <li data-paged-item id={letterStartedBy(professor)} class:list={["break-inside-avoid scroll-mt-4", isLater(index) && "later"]}>
+            <a href={professorUrl(professor.name)} class="block py-1.5 text-orange-400 hover:text-orange-300 hover:underline">{professor.name}</a>
+          </li>
+        ))}
+      </ul>
+      <Pager total={professors.length} />
+    </div>
+  </div>
+</Base>

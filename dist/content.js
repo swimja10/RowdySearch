@@ -77,6 +77,7 @@ async function readSchedulePlannerSection(cellUnder) {
 var SIDEBAR_URL = chrome.runtime.getURL("dist/index.html");
 var SIDEBAR_WIDTH = "420px";
 var SIDEBAR_SHADOW = "-4px 0 16px rgba(0, 0, 0, 0.4)";
+var SIDEBAR_BACKGROUND = "#18181b";
 var ON_TOP_OF_EVERYTHING = "2147483647";
 var TAB_TITLE = "RowdySearch";
 var sidebar = createSidebar();
@@ -86,6 +87,10 @@ function addSidebar() {
 	window.addEventListener("message", handleSidebarMessage);
 	chrome.runtime.onMessage.addListener(handleToolbarMessage);
 	document.body.append(sidebar, sidebarTab);
+}
+function openSidebar() {
+	if (sidebar.src === "") sidebar.src = SIDEBAR_URL;
+	setSidebarOpen(true);
 }
 function showInSidebar(section) {
 	sidebar.src = `${SIDEBAR_URL}#${encodeURIComponent(JSON.stringify(section))}`;
@@ -114,6 +119,7 @@ function handleToolbarMessage(message, _sender, sendResponse) {
 function setFullScreen(isFullScreen) {
 	sidebar.style.width = isFullScreen ? "100vw" : SIDEBAR_WIDTH;
 	sidebar.style.boxShadow = isFullScreen ? "none" : SIDEBAR_SHADOW;
+	sidebar.style.background = isFullScreen ? "transparent" : SIDEBAR_BACKGROUND;
 	sidebarTab.style.display = isFullScreen ? "none" : "block";
 }
 function createSidebar() {
@@ -127,6 +133,7 @@ function createSidebar() {
 		width: SIDEBAR_WIDTH,
 		height: "100vh",
 		border: "none",
+		background: SIDEBAR_BACKGROUND,
 		boxShadow: SIDEBAR_SHADOW,
 		zIndex: ON_TOP_OF_EVERYTHING
 	});
@@ -198,7 +205,14 @@ function columnTitles(table) {
 function searchButton(row, titles, readSection) {
 	const cellUnder = (columnTitle) => row.cells[titles.indexOf(columnTitle)];
 	const button = createSearchButton();
-	button.addEventListener("click", async () => showInSidebar(await readSection(cellUnder)));
+	button.addEventListener("click", async () => {
+		try {
+			showInSidebar(await readSection(cellUnder));
+		} catch (error) {
+			console.warn("RowdySearch: couldn't read this row.", error);
+			openSidebar();
+		}
+	});
 	return button;
 }
 function retitle(headerCell, from, to) {
@@ -263,7 +277,13 @@ new MutationObserver(addAllSearchButtons).observe(document.body, {
 	childList: true,
 	subtree: true
 });
+var brokenTables = /* @__PURE__ */ new WeakSet();
 function addAllSearchButtons() {
-	for (const searchableTable of SEARCHABLE_TABLES) for (const table of tablesWithColumns(searchableTable.columns)) addSearchButtons(table, searchableTable);
+	for (const searchableTable of SEARCHABLE_TABLES) for (const table of tablesWithColumns(searchableTable.columns)) try {
+		addSearchButtons(table, searchableTable);
+	} catch (error) {
+		if (!brokenTables.has(table)) console.warn("RowdySearch: couldn't add Search buttons to a table.", error);
+		brokenTables.add(table);
+	}
 }
 //#endregion

@@ -1,0 +1,21 @@
+---
+import type { ClassOffering } from "../data/shared.ts";
+import SyllabusLinks from "./SyllabusLinks.astro";
+
+type Props = {
+  offering: ClassOffering | undefined; // the newest semester with a syllabus, if there is one
+};
+
+const { offering } = Astro.props;
+---
+
+{/* The default slot says whose class it was, on a course page. */}
+{offering === undefined ? (
+  <span class="text-sm text-zinc-500">No syllabus on Simple Syllabus</span>
+) : (
+  <div class="flex flex-col items-start gap-1 rounded-xl bg-zinc-800 p-3">
+    <span class="font-medium">{offering.semester}</span>
+    <slot />
+    <SyllabusLinks syllabi={offering.syllabi} />
+  </div>
+)}

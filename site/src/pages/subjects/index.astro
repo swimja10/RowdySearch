@@ -1,0 +1,37 @@
+---
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import { subjectUrl } from "../../data/addresses.ts";
+import Pager from "../../components/Pager.astro";
+import { loadCatalog } from "../../data/catalog.ts";
+import { isLater } from "../../data/paging.ts";
+import { formatCount } from "../../data/shared.ts";
+import Base from "../../layouts/Base.astro";
+
+const subjects = [...loadCatalog().subjects.values()];
+const summary = `Browse all ${subjects.length} subjects UTSA has offered courses in, from ${subjects[0].subject} to ${subjects.at(-1)!.subject}.`;
+---
+
+<Base title="Every subject at UTSA" description={summary}>
+  <div class="flex flex-col gap-6">
+    <Breadcrumbs crumbs={[{ label: "Home", href: "/" }, { label: "Subjects" }]} />
+
+    <header class="flex flex-col gap-2">
+      <h1 class="text-3xl font-bold">Subjects</h1>
+      <p class="max-w-3xl text-zinc-300">{summary}</p>
+    </header>
+
+    <div data-paged="page" class="flex scroll-mt-4 flex-col gap-4">
+      <ul class="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-6">
+        {subjects.map((subject, index) => (
+          <li data-paged-item class:list={[isLater(index) && "later"]}>
+            <a href={subjectUrl(subject.subject)} class="flex flex-col rounded-xl bg-zinc-800 p-3 transition-colors hover:bg-zinc-700">
+              <span class="font-semibold text-orange-400">{subject.subject}</span>
+              <span class="text-xs text-zinc-400">{formatCount(subject.courses.length, "course")}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <Pager total={subjects.length} />
+    </div>
+  </div>
+</Base>

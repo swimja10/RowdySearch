@@ -1,0 +1,22 @@
+---
+import type { Review } from "../data/shared.ts";
+
+type Props = {
+  reviews: Review[];
+};
+
+const { reviews } = Astro.props;
+---
+
+{reviews.length === 0 ? (
+  <p class="text-sm text-zinc-500">No reviews on Rate My Professors yet.</p>
+) : (
+  <ul class="flex flex-col gap-2">
+    {reviews.map((review) => (
+      <li class="flex flex-col gap-1 rounded-xl bg-zinc-800 p-3 text-sm text-zinc-300">
+        {review.course !== "" && <span class="text-xs font-medium text-zinc-500">{review.course}</span>}
+        <span>“{review.comment}”</span>
+      </li>
+    ))}
+  </ul>
+)}

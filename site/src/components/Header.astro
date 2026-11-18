@@ -1,0 +1,124 @@
+---
+import SearchBox from "./SearchBox.astro";
+import { HEADER_LINKS, SITE_NAME } from "../data/site.ts";
+
+type Props = {
+  showSearch: boolean;
+};
+
+const { showSearch } = Astro.props;
+const currentPath = Astro.url.pathname;
+const isCurrent = (href: string) => currentPath === href;
+---
+
+{/*
+  On a laptop or bigger: the logo, the search box, and the links on one line.
+  On a tablet: the logo, the search box, and a menu button on one line.
+  On a phone: the logo and the menu button on one line, the search box under them.
+  The menu button opens the links over the whole screen. Its look and movement are in styles/global.css.
+*/}
+<header class="border-b border-zinc-800">
+  <div class="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-6 gap-y-3 px-4 py-3">
+    {/* The logo and the menu button stay on top of the open menu. */}
+    <a href="/" class="relative z-50 flex shrink-0 items-center gap-2 text-lg font-bold">
+      <img src="/icons/icon-48.png" alt="" width="28" height="28" class="size-7 rounded-md" />
+      {SITE_NAME}
+    </a>
+
+    {showSearch && (
+      <div class="order-last w-full md:order-none md:w-auto md:max-w-md md:flex-1">
+        <SearchBox />
+      </div>
+    )}
+
+    <nav aria-label="Site" class="ml-auto hidden items-center gap-4 text-sm lg:flex">
+      {HEADER_LINKS.map((link) => (
+        <a
+          href={link.href}
+          aria-current={isCurrent(link.href) ? "page" : undefined}
+          class:list={["whitespace-nowrap hover:text-orange-300", isCurrent(link.href) ? "text-orange-400" : "text-zinc-300"]}>
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    {/* <details> opens and closes by itself, so the menu works with JavaScript off. */}
+    <details data-menu class="ml-auto lg:hidden">
+      <summary
+        aria-label="Menu"
+        class="relative z-50 flex size-11 cursor-pointer list-none items-center justify-center rounded-lg text-zinc-100 [&::-webkit-details-marker]:hidden">
+        <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+      </summary>
+      <nav aria-label="Site menu" class="menu-panel fixed inset-0 z-40 flex flex-col overflow-y-auto overscroll-contain bg-zinc-900 px-8 pt-24 pb-10">
+        {HEADER_LINKS.map((link, number) => (
+          <a
+            href={link.href}
+            aria-current={isCurrent(link.href) ? "page" : undefined}
+            style={`--number: ${number}`}
+            class:list={["py-3 text-3xl font-semibold", isCurrent(link.href) ? "text-orange-400" : "text-zinc-100"]}>
+            {link.label}
+          </a>
+        ))}
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script is:inline>
+  // Opening the menu needs no code. This closes it smoothly: the closing movement plays first, and
+  // only then is the menu really closed.
+  (() => {
+    const menu = document.querySelector("details[data-menu]");
+    const button = menu.querySelector("summary");
+    const noMovement = matchMedia("(prefers-reduced-motion: reduce)");
+    const linksInARow = matchMedia("(min-width: 64rem)"); // the same width as "lg:" above
+    const CLOSING_TAKES = 300; // milliseconds, a little longer than the closing movement in global.css
+    let closingTimer;
+
+    function closeNow() {
+      clearTimeout(closingTimer);
+      menu.removeAttribute("data-closing");
+      menu.open = false;
+    }
+
+    function close() {
+      if (!menu.open || menu.hasAttribute("data-closing")) return;
+      if (noMovement.matches) return closeNow();
+      menu.setAttribute("data-closing", "");
+      closingTimer = setTimeout(closeNow, CLOSING_TAKES);
+    }
+
+    button.addEventListener("click", (event) => {
+      if (menu.hasAttribute("data-closing")) {
+        // Tapped again while it was closing: open it again.
+        event.preventDefault();
+        clearTimeout(closingTimer);
+        menu.removeAttribute("data-closing");
+      } else if (menu.open) {
+        event.preventDefault();
+        close();
+      } else {
+        // The menu covers the screen from the top, so the logo and the button have to be there too.
+        window.scrollTo(0, 0);
+      }
+    });
+
+    menu.addEventListener("toggle", () => {
+      button.setAttribute("aria-label", menu.open ? "Close menu" : "Menu");
+      // While the menu covers the page, the keyboard can't reach what's under it.
+      for (const part of document.querySelectorAll("main, footer")) part.inert = menu.open;
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") close();
+    });
+    // Coming Back to a page that was left with the menu open, or turning a tablet to a width where
+    // the links are in a row: the menu shouldn't still be open.
+    window.addEventListener("pageshow", (event) => {
+      if (event.persisted) closeNow();
+    });
+    linksInARow.addEventListener("change", () => {
+      if (linksInARow.matches) closeNow();
+    });
+  })();
+</script>

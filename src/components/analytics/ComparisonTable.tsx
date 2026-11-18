@@ -1,8 +1,8 @@
 import { twMerge } from "tailwind-merge";
 import { SeriesName } from "./SeriesName.tsx";
 import type { Subject } from "../../page.ts";
-import { formatGpa, formatOutOfFive, formatShare } from "../../utils/format.ts";
-import { countStudents, LETTER_GRADES, medianGrade } from "../../utils/grades.ts";
+import { formatGpa, formatOutOfFive, formatShare, roundHalfUp } from "../../utils/format.ts";
+import { countStudents, FINISHED_OR_WITHDREW, medianGrade } from "../../utils/grades.ts";
 import type { SeriesData } from "../../utils/series.ts";
 import { A_GRADES, averageGpa, D_AND_F_GRADES, percentDifference, percentWhoGot, WITHDREW } from "../../utils/statistics.ts";
 
@@ -33,6 +33,10 @@ export function ComparisonTable({ seriesData, onOpen }: ComparisonTableProps) {
           {seriesData.map(series => <ComparisonRow key={series.key} series={series} onOpen={onOpen} />)}
         </tbody>
       </table>
+      <p className="border-t border-zinc-700 px-3 py-2 text-xs text-zinc-500">
+        Percents are out of everyone who got a grade or withdrew, the same as the sidebar. A whole course's
+        Bluebook and RMP are the median section and the median professor, the same as on its course page.
+      </p>
     </div>
   );
 }
@@ -63,10 +67,11 @@ function ComparisonRow({ series, onOpen }: ComparisonRowProps) {
       <td className="px-3 py-2">{formatShare(percentWhoGot(grades, A_GRADES))}</td>
       <td className="px-3 py-2">{formatShare(percentWhoGot(grades, D_AND_F_GRADES))}</td>
       <td className="px-3 py-2">{formatShare(percentWhoGot(grades, WITHDREW))}</td>
-      <td className="px-3 py-2">{countStudents(grades, LETTER_GRADES).toLocaleString()}</td>
+      {/* The same count as "Based on N grades" under the sidebar's grade bars. */}
+      <td className="px-3 py-2">{countStudents(grades, FINISHED_OR_WITHDREW).toLocaleString()}</td>
       <td className="whitespace-nowrap px-3 py-2">{formatOutOfFive(series.bluebook.instructor)}</td>
       <td className="whitespace-nowrap px-3 py-2">{formatOutOfFive(series.bluebook.course)}</td>
-      <td className="whitespace-nowrap px-3 py-2">{series.professorName === null ? "—" : formatOutOfFive(series.rating)}</td>
+      <td className="whitespace-nowrap px-3 py-2">{series.rating === null ? "—" : formatOutOfFive(series.rating)}</td>
     </tr>
   );
 }
@@ -81,7 +86,7 @@ type CourseComparisonProps = {
 function CourseComparison({ gpa, courseGpa }: CourseComparisonProps) {
   if (gpa === null || courseGpa === null) return <span className="text-zinc-500">—</span>;
 
-  const difference = Math.round(percentDifference(gpa, courseGpa));
+  const difference = roundHalfUp(percentDifference(gpa, courseGpa), 0);
   if (difference === 0) return <span>Same as average</span>;
 
   if (difference > 0) return <span className="font-medium text-green-400">▲ {difference}% higher</span>;

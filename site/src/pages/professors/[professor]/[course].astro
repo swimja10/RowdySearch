@@ -1,0 +1,137 @@
+---
+import GradeBars from "../../../components/GradeBars.astro";
+import LatestSyllabus from "../../../components/LatestSyllabus.astro";
+import LookupPage from "../../../components/LookupPage.astro";
+import PersonStats from "../../../components/PersonStats.astro";
+import Rates from "../../../components/Rates.astro";
+import Reviews from "../../../components/Reviews.astro";
+import Section from "../../../components/Section.astro";
+import SyllabusLinks from "../../../components/SyllabusLinks.astro";
+import { courseSlug, courseUrl, professorSlug, professorUrl, subjectUrl } from "../../../data/addresses.ts";
+import { loadCatalog, ratesOf } from "../../../data/catalog.ts";
+import { classKey, loadData } from "../../../data/professors.ts";
+import {
+  FINISHED_OR_WITHDREW,
+  bluebookOf,
+  countStudents,
+  findCourse,
+  formatCount,
+  formatRating,
+  gradesOf,
+  medianGrade,
+  type Review,
+} from "../../../data/shared.ts";
+import { classSummary } from "../../../data/summaries.ts";
+import Base from "../../../layouts/Base.astro";
+
+// One page for every course every professor has taught.
+export function getStaticPaths() {
+  return Object.values(loadData().professors).flatMap((professor) =>
+    professor.courses.map((course) => ({
+      params: { professor: professorSlug(professor.name), course: courseSlug(course.code) },
+      props: { name: professor.name, code: course.code },
+    })),
+  );
+}
+
+type Props = { name: string; code: string };
+
+const { professors, sectionCounts } = loadData();
+const professor = professors[Astro.props.name];
+const course = findCourse(professor, Astro.props.code)!;
+const wholeCourse = loadCatalog().courses.get(course.code)!;
+
+const grades = gradesOf(course.offerings);
+const sections = sectionCounts.get(classKey(professor.name, course.code))!;
+const summary = classSummary(professor, course, sections, grades, wholeCourse);
+
+// Reviews of this course before reviews of the professor's other courses. Rate My Professors keeps
+// the course the way the student typed it ("ACC2013", or just "2013"), so only the number is compared.
+const courseNumber = course.code.split(" ")[1];
+const isThisCourse = (review: Review) => review.course.match(/\d{4}/)?.[0] === courseNumber;
+const reviews = [...professor.rmp.reviews].sort((first, second) => Number(isThisCourse(second)) - Number(isThisCourse(first)));
+
+const semesters = course.offerings.map((offering) => ({
+  offering,
+  median: medianGrade(offering.grades),
+  bluebook: bluebookOf([offering]),
+  gradeCount: countStudents(offering.grades, FINISHED_OR_WITHDREW),
+  // A semester the class was listed under another name (an older one, or another topic) says so.
+  otherTitles: offering.titles.filter((title) => title !== course.title),
+}));
+
+const everyoneElse = wholeCourse.teachers.length > 1 && wholeCourse.median !== null;
+---
+
+<Base title={`${professor.name}, ${course.code} at UTSA: ${course.title} grades and reviews`} description={summary}>
+  <LookupPage
+    page={{ type: "class", professorName: professor.name, courseCode: course.code }}
+    summary={summary}
+    crumbs={[
+      { label: "Home", href: "/" },
+      { label: wholeCourse.subject, href: subjectUrl(wholeCourse.subject) },
+      { label: course.code, href: courseUrl(course.code) },
+      { label: professor.name },
+    ]}>
+    <Fragment slot="heading">
+      <h1 class="text-3xl font-bold">
+        <a href={courseUrl(course.code)} class="text-orange-400 hover:text-orange-300 hover:underline">{course.code}</a> · {course.title}
+      </h1>
+      <p class="text-zinc-400">
+        with <a href={professorUrl(professor.name)} class="text-orange-400 hover:text-orange-300 hover:underline">{professor.name}</a>
+      </p>
+    </Fragment>
+
+    <Fragment slot="numbers">
+      <PersonStats
+        rmp={professor.rmp}
+        offerings={course.offerings}
+        medianLabel={`Median Grade in ${course.code}`}
+        medianNote={everyoneElse ? `Every professor: ${wholeCourse.median}` : undefined}
+      />
+      <Rates rates={ratesOf(grades)} />
+
+      <Section title="Latest syllabus">
+        <LatestSyllabus offering={course.offerings.find((offering) => offering.syllabi.length > 0)} />
+      </Section>
+
+      <Section title={`Grades in ${course.code}`}>
+        <GradeBars grades={grades} />
+      </Section>
+    </Fragment>
+
+    <Fragment slot="lists">
+      <Section title="Every semester">
+        {semesters.map(({ offering, median, bluebook, gradeCount, otherTitles }) => (
+          <div class="flex flex-col gap-1 rounded-xl bg-zinc-800 p-3">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex flex-col">
+                <span class="font-medium">{offering.semester}</span>
+                {otherTitles.length > 0 && <span class="text-sm text-zinc-400">{otherTitles.join(" · ")}</span>}
+              </div>
+              <div class="flex flex-col items-end text-sm">
+                <span>{median === null ? "No grades yet" : `Median ${median}`}</span>
+                {gradeCount > 0 && <span class="text-zinc-400">{formatCount(gradeCount, "grade")}</span>}
+                {bluebook.sectionCount > 0 && <span class="text-zinc-400">{formatRating("Bluebook", bluebook.instructor)}</span>}
+              </div>
+            </div>
+            <SyllabusLinks syllabi={offering.syllabi} />
+          </div>
+        ))}
+      </Section>
+
+      <Section title="What students say">
+        <Reviews reviews={reviews} />
+      </Section>
+    </Fragment>
+
+    <div class="flex flex-col items-start gap-1">
+      <a href={courseUrl(course.code)} class="text-orange-400 hover:text-orange-300 hover:underline">
+        Compare every professor who teaches {course.code}
+      </a>
+      <a href={professorUrl(professor.name)} class="text-orange-400 hover:text-orange-300 hover:underline">
+        See all of {professor.name}'s classes
+      </a>
+    </div>
+  </LookupPage>
+</Base>

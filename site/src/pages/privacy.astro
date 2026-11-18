@@ -1,0 +1,63 @@
+---
+import Base from "../layouts/Base.astro";
+import { CONTACT_EMAIL, DISCLAIMER } from "../data/site.ts";
+
+const LAST_UPDATED = "November 17, 2026";
+---
+
+<Base
+  title="Privacy"
+  description="RowdySearch has no accounts and no ads, and searches never leave your browser. This page says what the website does and doesn't collect.">
+  <article class="prose mx-auto max-w-3xl">
+    <h1 class="mb-2 text-3xl font-bold sm:text-4xl">Privacy</h1>
+    <p class="text-sm">Last updated: {LAST_UPDATED}</p>
+
+    <p>
+      This page covers the website, rowdysearch.com. The browser extension has its own policy,
+      linked from its store pages.
+    </p>
+
+    <h2>What the site collects</h2>
+    <ul>
+      <li><strong>No accounts.</strong> There is nothing to sign up for and nothing to sign in to.</li>
+      <li><strong>No ads</strong> and no advertising trackers.</li>
+      <li>
+        <strong>No cookies of its own.</strong> Cloudflare, which hosts the site, may set a
+        short-lived security cookie to tell visitors from bots.
+      </li>
+      <li>
+        <strong>Searches stay in your browser.</strong> The search runs on your own device. What you
+        type is not sent anywhere.
+      </li>
+    </ul>
+
+    <h2>Page counts</h2>
+    <p>
+      The site uses Cloudflare Web Analytics to count how many times each page is viewed, which
+      shows which professors and courses are looked up most. Cloudflare says it does this without
+      cookies and without tracking individual visitors.
+    </p>
+
+    <h2>Hosting</h2>
+    <p>
+      The site is hosted by Cloudflare. Like any web host, Cloudflare's servers see the technical
+      details of each request, such as your IP address and browser type, in order to deliver the
+      page.
+    </p>
+
+    <h2>Links to other sites</h2>
+    <p>
+      RowdySearch links to professor profiles on Rate My Professors, syllabi on Simple Syllabus, and
+      its extension's pages on the Chrome Web Store and Firefox Add-ons. The Share buttons open the
+      app you pick with a message ready to send. Nothing is posted unless you send it. Those sites
+      have their own privacy policies.
+    </p>
+
+    <h2>Changes</h2>
+    <p>If this policy changes, the new version will be posted here with a new date.</p>
+
+    <h2>Contact</h2>
+    <p>Questions go to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <p>{DISCLAIMER}</p>
+  </article>
+</Base>

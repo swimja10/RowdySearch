@@ -1,0 +1,89 @@
+---
+import GradeBars from "../../../components/GradeBars.astro";
+import LookupPage from "../../../components/LookupPage.astro";
+import PersonStats from "../../../components/PersonStats.astro";
+import Rates from "../../../components/Rates.astro";
+import Reviews from "../../../components/Reviews.astro";
+import Section from "../../../components/Section.astro";
+import { classUrl, professorSlug } from "../../../data/addresses.ts";
+import { ratesOf } from "../../../data/catalog.ts";
+import { classKey, loadData } from "../../../data/professors.ts";
+import { allOfferings, bluebookOf, formatCount, formatDepartment, formatRating, gradesOf, medianGrade } from "../../../data/shared.ts";
+import { professorSummary } from "../../../data/summaries.ts";
+import Base from "../../../layouts/Base.astro";
+
+export function getStaticPaths() {
+  return Object.keys(loadData().professors).map((name) => ({
+    params: { professor: professorSlug(name) },
+    props: { name },
+  }));
+}
+
+type Props = { name: string };
+
+const { professors, sectionCounts } = loadData();
+const professor = professors[Astro.props.name];
+const offerings = allOfferings(professor);
+const grades = gradesOf(offerings);
+
+// Every section of every course they've taught.
+const sections = { sections: 0, graded: 0 };
+for (const course of professor.courses) {
+  const count = sectionCounts.get(classKey(professor.name, course.code))!;
+  sections.sections += count.sections;
+  sections.graded += count.graded;
+}
+
+const summary = professorSummary(professor, sections, grades);
+
+const classes = professor.courses.map((course) => ({
+  course,
+  median: medianGrade(gradesOf(course.offerings)),
+  bluebook: bluebookOf(course.offerings),
+}));
+---
+
+<Base title={`${professor.name} at UTSA: grades, Bluebook, and reviews`} description={summary}>
+  <LookupPage
+    page={{ type: "professor", professorName: professor.name }}
+    summary={summary}
+    crumbs={[{ label: "Home", href: "/" }, { label: "Professors", href: "/professors/" }, { label: professor.name }]}>
+    <Fragment slot="heading">
+      <h1 class="text-3xl font-bold">{professor.name}</h1>
+      {professor.department !== null && <p class="text-sm text-zinc-400">{formatDepartment(professor.department)}</p>}
+    </Fragment>
+
+    <Fragment slot="numbers">
+      <PersonStats rmp={professor.rmp} offerings={offerings} medianLabel="Median Grade (All Classes)" />
+      <Rates rates={ratesOf(grades)} />
+      <Section title="Grades in All Classes">
+        <GradeBars grades={grades} />
+      </Section>
+    </Fragment>
+
+    <Fragment slot="lists">
+      <Section title={`Classes (${professor.courses.length})`}>
+        {classes.map(({ course, median, bluebook }) => (
+          <div class="flex items-center justify-between gap-3 rounded-xl bg-zinc-800 p-3">
+            <div class="flex flex-col items-start gap-0.5">
+              <a href={classUrl(professor.name, course.code)} class="font-medium text-orange-400 hover:text-orange-300 hover:underline">
+                {course.code} · {course.title}
+              </a>
+              <span class="text-xs text-zinc-400">
+                Latest {course.offerings[0].semester} · {formatCount(course.offerings.length, "semester")}
+              </span>
+            </div>
+            <div class="flex shrink-0 flex-col items-end text-sm">
+              <span>Median {median ?? "—"}</span>
+              {bluebook.sectionCount > 0 && <span class="text-zinc-400">{formatRating("Bluebook", bluebook.instructor)}</span>}
+            </div>
+          </div>
+        ))}
+      </Section>
+
+      <Section title="What students say">
+        <Reviews reviews={professor.rmp.reviews} />
+      </Section>
+    </Fragment>
+  </LookupPage>
+</Base>

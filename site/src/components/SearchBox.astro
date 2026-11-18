@@ -1,0 +1,61 @@
+---
+import { SEARCH_PLACEHOLDER } from "../data/site.ts";
+import { searchIndexFile } from "../search/indexFile.ts";
+
+type Props = {
+  size?: "small" | "large"; // small in the header, large on the home page
+  autofocus?: boolean; // ready to type in as the page opens, on a computer
+};
+
+const { size = "small", autofocus = false } = Astro.props;
+const isLarge = size === "large";
+const id = `search-${size}`;
+---
+
+{/* The search runs in the browser (see src/search/), so the form never submits: what you type is
+    never sent to a server. The results are drawn into the panel under the box. */}
+<form
+  role="search"
+  class="relative w-full text-left"
+  onsubmit="return false"
+  data-search
+  data-search-index={searchIndexFile().url}
+  data-search-autofocus={autofocus ? "" : undefined}>
+  <label class="sr-only" for={id}>Search RowdySearch</label>
+  <input
+    id={id}
+    type="search"
+    name="q"
+    placeholder={SEARCH_PLACEHOLDER}
+    autocomplete="off"
+    autocapitalize="off"
+    autocorrect="off"
+    spellcheck="false"
+    enterkeyhint="go"
+    role="combobox"
+    aria-expanded="false"
+    aria-controls={`${id}-results`}
+    aria-autocomplete="list"
+    class:list={[
+      "w-full rounded-xl bg-zinc-800 text-zinc-100 placeholder-zinc-500 outline-none ring-1 ring-zinc-700 focus:ring-2 focus:ring-orange-500",
+      isLarge ? "px-5 py-4 text-lg" : "px-3 py-2 text-sm",
+    ]}
+  />
+  <div
+    id={`${id}-results`}
+    data-search-panel
+    hidden
+    class="absolute top-full right-0 left-0 z-20 mt-2 max-h-[70vh] overflow-y-auto rounded-xl bg-zinc-800 shadow-2xl ring-1 ring-zinc-700">
+  </div>
+  <noscript>
+    <p class="mt-2 text-sm text-zinc-400">
+      Search needs JavaScript. You can still browse{" "}
+      <a href="/subjects/" class="text-orange-400 underline">every subject</a> and{" "}
+      <a href="/professors/" class="text-orange-400 underline">every professor</a>.
+    </p>
+  </noscript>
+</form>
+
+<script>
+  import "../search/client.ts";
+</script>

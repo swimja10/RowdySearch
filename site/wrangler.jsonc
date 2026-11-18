@@ -1,0 +1,19 @@
+{
+  // Cloudflare serves the built site as plain files. There is no Worker script, so every request
+  // is a static asset request, which is free and unlimited.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "rowdysearch",
+  "compatibility_date": "2026-06-01",
+  // The site's real address. Cloudflare makes the DNS records and the certificate itself. Every
+  // page names rowdysearch.com as its address, so search engines list that one and not www.
+  "routes": [
+    { "pattern": "rowdysearch.com", "custom_domain": true },
+    { "pattern": "www.rowdysearch.com", "custom_domain": true }
+  ],
+  "assets": {
+    "directory": "./dist",
+    // /courses/mat-1213 goes to /courses/mat-1213/, and an address that isn't a page shows 404.html.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

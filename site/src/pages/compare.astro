@@ -1,0 +1,93 @@
+---
+import CompareApp from "../compare/CompareApp.tsx";
+import { compareUrl } from "../compare/address.ts";
+import { compareFiles } from "../compare/groups.ts";
+import { professorSlug } from "../data/addresses.ts";
+import { loadCatalog } from "../data/catalog.ts";
+import { loadData } from "../data/professors.ts";
+import { searchIndexFile } from "../search/indexFile.ts";
+import Base from "../layouts/Base.astro";
+import { subjectsToStartWith } from "../../../src/utils/subjects.ts";
+
+// A few comparisons to start from, each opening the way it would from that course's page.
+const gradeData = { professors: loadData().professors, searchIndex: loadCatalog().searchIndex };
+const examples = ["CS 2123", "MAT 1213", "POL 1013"].map((courseCode) => {
+  const course = loadCatalog().courses.get(courseCode)!;
+  return {
+    label: `${courseCode} ${course.name}`,
+    href: compareUrl(subjectsToStartWith({ type: "course", courseCode }, gradeData), professorSlug),
+  };
+});
+
+const views = [
+  { name: "Grade distribution", detail: "How many students got each grade from F to A+, as lines or bars, in percent or in students." },
+  { name: "Median grade", detail: "Every median on one chart." },
+  { name: "Grade spread", detail: "A box plot: the lowest and highest grades, and the middle half of students." },
+  { name: "Side by side", detail: "Average GPA, A's, D's and F's, withdrawals, Bluebook, and Rate My Professors in one table." },
+  { name: "What students say", detail: "Everyone's Rate My Professors reviews in one place." },
+];
+---
+
+<Base
+  isWide
+  title="Analytical Mode: compare UTSA professors and courses"
+  description="Compare up to 8 UTSA professors, courses, or classes side by side: grade distributions, median grades, grade spread, GPA, Bluebook, and Rate My Professors.">
+  <div class="flex flex-col gap-6">
+    <header class="flex flex-col gap-2">
+      <h1 class="text-3xl font-bold">Analytical Mode</h1>
+      <p class="max-w-3xl text-zinc-300">
+        Compare up to 8 professors, whole courses, or one professor's class, side by side.
+      </p>
+    </header>
+
+    <CompareApp client:only="react" indexUrl={searchIndexFile().url} fileOfSubject={compareFiles().fileOfSubject}>
+      <div slot="fallback" class="py-12 text-center text-zinc-500">
+        <p>Loading Analytical Mode…</p>
+        <p class="stuck mt-4 text-sm">
+          This is taking longer than usual. <a href="" class="text-orange-400 underline">Reload Analytical Mode</a>
+        </p>
+      </div>
+    </CompareApp>
+
+    <noscript>
+      <p class="rounded-xl bg-zinc-800 p-4 text-zinc-300">
+        Analytical Mode needs JavaScript. Every professor's and course's own page works without it:
+        browse <a href="/subjects/" class="text-orange-400 underline">every subject</a> or{" "}
+        <a href="/professors/" class="text-orange-400 underline">every professor</a>.
+      </p>
+    </noscript>
+
+    <section class="flex flex-col gap-3 border-t border-zinc-800 pt-6">
+      <h2 class="text-xs font-semibold uppercase tracking-wide text-zinc-400">What it shows</h2>
+      <ul class="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
+        {views.map((view) => (
+          <li class="flex flex-col gap-1 rounded-xl bg-zinc-800 p-3">
+            <span class="font-semibold">{view.name}</span>
+            <span class="text-sm text-zinc-400">{view.detail}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="text-sm text-zinc-400">
+        Start from a course:{" "}
+        {examples.map((example, number) => (
+          <>{number > 0 && ", "}<a href={example.href} class="text-orange-400 hover:text-orange-300 hover:underline">{example.label}</a></>
+        ))}. Or open any professor's or course's page and choose Compare in Analytical Mode.
+      </p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  /* Shown only once the loading message has been up for 10 seconds. It needs no JavaScript, so it
+     still appears when Analytical Mode's own code is what failed to load. */
+  .stuck {
+    visibility: hidden;
+    animation: stuck 0s 10s forwards;
+  }
+
+  @keyframes stuck {
+    to {
+      visibility: visible;
+    }
+  }
+</style>

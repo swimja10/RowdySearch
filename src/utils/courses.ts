@@ -1,8 +1,8 @@
 import { search, type SearchIndex } from "../searcher.ts";
-import type { ClassOffering, Course, Professor } from "./gradeData.ts";
+import type { ClassOffering, Course, Professor, Rmp } from "./gradeData.ts";
 import { addGrades, type GradeCounts } from "./grades.ts";
 import { semesterRank } from "./semesters.ts";
-import { average } from "./statistics.ts";
+import { average, median } from "./statistics.ts";
 
 export type Teacher = {
   professor: Professor;
@@ -64,6 +64,51 @@ export function bluebookOf(offerings: ClassOffering[]): Bluebook {
     instructor: average(evaluations.map((evaluation) => evaluation.instructor)),
     course: average(evaluations.map((evaluation) => evaluation.course)),
     sectionCount: evaluations.length,
+  };
+}
+
+// The newest semester anyone has a syllabus up for a course, and whose class it was. When two
+// professors posted one that semester, it's the one listed first (the most recent teacher).
+export function latestSyllabus(teachers: Teacher[]): { teacher: Teacher; offering: ClassOffering } | null {
+  let latest: { teacher: Teacher; offering: ClassOffering } | null = null;
+  for (const teacher of teachers) {
+    const offering = teacher.course.offerings.find((each) => each.syllabi.length > 0);
+    if (offering && (latest === null || semesterRank(offering.semester) > semesterRank(latest.offering.semester))) {
+      latest = { teacher, offering };
+    }
+  }
+  return latest;
+}
+
+// A whole course's Bluebook and Rate My Professors numbers, on its course page and in Analytical Mode
+// alike: the median section and the median professor, so one unusual professor can't pull them far.
+export function courseBluebook(teachers: Teacher[]): Bluebook {
+  const evaluations = teachers.flatMap((teacher) => teacher.course.offerings.flatMap((offering) => offering.evaluations));
+
+  return {
+    instructor: median(evaluations.map((evaluation) => evaluation.instructor)),
+    course: median(evaluations.map((evaluation) => evaluation.course)),
+    sectionCount: evaluations.length,
+  };
+}
+
+export type CourseRmp = {
+  rating: number | null;
+  difficulty: number | null;
+  wouldTakeAgainPercent: number | null;
+  professorCount: number; // professors who teach it and are on Rate My Professors
+};
+
+// Each professor counts once, however many ratings they have.
+export function courseRmp(teachers: Teacher[]): CourseRmp {
+  const onRmp = teachers.map((teacher) => teacher.professor.rmp).filter((rmp) => rmp.profiles.length > 0);
+  const medianOf = (read: (rmp: Rmp) => number | null) => median(onRmp.map(read).filter((value) => value !== null));
+
+  return {
+    rating: medianOf((rmp) => rmp.rating),
+    difficulty: medianOf((rmp) => rmp.difficulty),
+    wouldTakeAgainPercent: medianOf((rmp) => rmp.wouldTakeAgainPercent),
+    professorCount: onRmp.length,
   };
 }
 

@@ -6,7 +6,9 @@ import type { SidebarMessage } from "../page.ts";
 const isOnAPage = window.parent !== window;
 
 // Stretch the sidebar across the whole screen for Analytical Mode, or shrink it back.
+// While it's stretched, its background is see-through, so the page shows around the growing panel.
 export function setFullScreen(isFullScreen: boolean): Promise<void> {
+  document.body.classList.toggle("see-through", isFullScreen);
   if (!isOnAPage) return Promise.resolve();
 
   return new Promise((resolve) => {

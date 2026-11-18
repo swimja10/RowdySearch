@@ -1,0 +1,44 @@
+---
+import type { Page } from "../../../src/page.ts";
+import { subjectsToStartWith } from "../../../src/utils/subjects.ts";
+import { compareUrl } from "../compare/address.ts";
+import { professorSlug } from "../data/addresses.ts";
+import { loadCatalog } from "../data/catalog.ts";
+import { loadData } from "../data/professors.ts";
+import Breadcrumbs from "./Breadcrumbs.astro";
+
+type Crumb = { label: string; href?: string };
+
+type Props = {
+  crumbs: Crumb[];
+  summary: string; // the sentence that says the page's numbers in words
+  page: Page; // which professor, class, or course this is, for the link to Analytical Mode
+};
+
+const { crumbs, summary, page } = Astro.props;
+
+// Analytical Mode opens comparing the same things it would if opened from this page in the extension.
+const gradeData = { professors: loadData().professors, searchIndex: loadCatalog().searchIndex };
+const compare = compareUrl(subjectsToStartWith(page, gradeData), professorSlug);
+---
+
+{/* The shape of every professor, class, and course page. On a phone it's one column, like the
+    extension's sidebar. On a desktop the numbers and charts sit on the left and the lists on the right. */}
+<div class="flex flex-col gap-6">
+  <Breadcrumbs crumbs={crumbs} />
+
+  <header class="flex flex-col gap-2">
+    <slot name="heading" />
+    <p class="max-w-3xl text-zinc-300">{summary}</p>
+    <a href={compare} class="self-start rounded bg-zinc-700 px-2 py-1 text-sm text-zinc-200 transition-colors hover:bg-zinc-600 active:bg-zinc-500">
+      Compare in Analytical Mode
+    </a>
+  </header>
+
+  <div class="grid items-start gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-8">
+    <div class="flex min-w-0 flex-col gap-5"><slot name="numbers" /></div>
+    <div class="flex min-w-0 flex-col gap-5"><slot name="lists" /></div>
+  </div>
+
+  <slot />
+</div>

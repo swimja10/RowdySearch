@@ -1,0 +1,5 @@
+# Every search engine and AI assistant may read every page.
+User-agent: *
+Allow: /
+
+Sitemap: https://rowdysearch.com/sitemap-index.xml
