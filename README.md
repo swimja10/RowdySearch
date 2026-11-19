@@ -6,7 +6,10 @@
 
 **Pick the right UTSA professor in one click.** RowdySearch is a Chrome extension that puts grade distributions, Bluebook course evaluations, Rate My Professors ratings, and the latest syllabus next to every class while you register.
 
-Built by Jacob Swim and Angelina Lu.
+Built by Jacob Swim.
+
+## Use it on the web
+No install needed. Look up any UTSA professor, course, or class on any device: https://rowdysearch.com
 
 ## Download the Chrome Extension
 RowdySearch: https://chromewebstore.google.com/detail/geiimkdngembhenfhcnbmlfgbclheoek?utm_source=item-share-cb
