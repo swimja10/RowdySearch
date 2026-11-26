@@ -10,47 +10,26 @@ The file is nested the way the university is:
     college -> "departments" -> department -> "subjects" -> subject -> "courses" -> course
 
 A college's own "subjects" are the courses it lists under no department.
+Every college and department also gets an empty "faculty" for professors.py to fill.
+The whole shape of the file is written out in catalog_types.py.
 """
 
 import time
-from typing import TypedDict
 
 import requests
 from bs4 import BeautifulSoup, Tag
 
+from collectors.catalog_types import Catalog, College, CourseInfo, Department, Subject
 from collectors.common_format import save
 
 BASE_UTSA_URL = "https://catalog.utsa.edu"
+# the catalog has two parts, and each part has its own menu of colleges
 LEVELS = ["undergraduate", "graduate"]
+# A menu entry with one of these words in it is read as a college. First Year
+# Experience is not called a college, but it has courses of its own (CSS and UPM).
+# CHECKED BY HAND: if UTSA adds a part with courses that is not called a college,
+# its name goes here.
 KEYWORDS = ["College", "First Year Experience"]
-
-
-class CourseInfo(TypedDict):
-    """One course as the catalog lists it. What the catalog does not give stays None."""
-
-    title: str  # "Programming I for Computer Scientists"
-    credit_hours: int
-    lecture_hours: int | None  # hours in class each week
-    lab_hours: int | None  # hours in lab each week
-    transfer_number: str | None  # the Texas common course number, "COSC 1336"
-    description: str
-
-
-class Subject(TypedDict):
-    name: str  # "Computer Science"
-    courses: dict[str, CourseInfo]  # "CS 1083" -> the course
-
-
-class Department(TypedDict):
-    subjects: dict[str, Subject]  # "CS" -> the subject
-
-
-class College(TypedDict):
-    subjects: dict[str, Subject]  # what the college lists under no department
-    departments: dict[str, Department]  # "Department of Computer Science" -> it
-
-
-Catalog = dict[str, College]  # "College of Sciences" -> the college
 
 
 def get_page(link: str) -> BeautifulSoup:
@@ -63,6 +42,7 @@ def get_page(link: str) -> BeautifulSoup:
 
 def page_name(page: BeautifulSoup) -> str:
     """The page's heading, like "Department of Chemistry"."""
+    # some headings have an invisible zero-width space in them, so it is taken out
     heading: str = page.find("h1").getText().replace("\u200b", "")
     return " ".join(heading.split())
 
@@ -96,6 +76,7 @@ def get_department_links(college_page: BeautifulSoup) -> list[str]:
 
 
 def has_courses(page: BeautifulSoup) -> bool:
+    """True when the page's course list has at least one course in it."""
     return page.select_one("#courseinventorycontainer .courseblock") is not None
 
 
@@ -131,9 +112,13 @@ def get_course_info(course: Tag) -> dict[str, CourseInfo]:
     description: str = " ".join(course.find(class_="courseblockdesc").getText().split())
 
     # title_text looks like "CS 1083. Programming I. (3-0) 3 Credit Hours. (TCCN = COSC 1336)"
+    # The first period ends the code. The last two are counted from the right, because
+    # a title can have periods of its own, like "History of the U.S. South".
     title_parts: list[str] = title_text.split(".", 1)
     code: str = title_parts[0].strip()
+    # that gives [" Programming I", " (3-0) 3 Credit Hours", " (TCCN = COSC 1336)"]
     rest_parts: list[str] = title_parts[1].rsplit(".", 2)
+    # rstrip is for the two titles the catalog ends with two periods
     title: str = " ".join(rest_parts[0].split()).rstrip(".")
     hours: str = rest_parts[1]
     transfer_text: str = rest_parts[2]
@@ -177,7 +162,11 @@ def get_catalog() -> None:
             print(f"{level}: {college_name}")
 
             if college_name not in catalog:
-                catalog[college_name] = {"subjects": {}, "departments": {}}
+                catalog[college_name] = {
+                    "subjects": {},
+                    "faculty": {},
+                    "departments": {},
+                }
             college: College = catalog[college_name]
 
             add_subjects(college["subjects"], college_page)
@@ -191,7 +180,10 @@ def get_catalog() -> None:
                     continue
 
                 if department_name not in college["departments"]:
-                    college["departments"][department_name] = {"subjects": {}}
+                    college["departments"][department_name] = {
+                        "subjects": {},
+                        "faculty": {},
+                    }
                 department: Department = college["departments"][department_name]
 
                 add_subjects(department["subjects"], department_page)

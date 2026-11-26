@@ -15,11 +15,11 @@ A college's own "faculty" are the people it lists under no department.
 
 import json
 import time
-from typing import TypedDict
 
 from bs4 import BeautifulSoup, Tag
 
-from collectors.catalog import LEVELS, Subject, get_page
+from collectors.catalog import LEVELS, get_page
+from collectors.catalog_types import Catalog, College, Department, Faculty
 from collectors.common_format import RAW_DIR, save
 
 CATALOG_FILE = "catalog_data.json"
@@ -41,30 +41,6 @@ SAME_DEPARTMENT: dict[str, str] = {
 }
 
 
-class Professor(TypedDict):
-    """One person as the faculty pages list them."""
-
-    title: str  # "Professor of Practice"
-    education: str | None  # "B.S., Trinity University; Ph.D., Rice University"
-
-
-Faculty = dict[str, Professor]  # "Agrawal, Sharad C." -> the person
-
-
-class Department(TypedDict):
-    subjects: dict[str, Subject]  # "CS" -> the subject
-    faculty: Faculty
-
-
-class College(TypedDict):
-    subjects: dict[str, Subject]  # what the college lists under no department
-    faculty: Faculty  # who the college lists under no department
-    departments: dict[str, Department]  # "Department of Computer Science" -> it
-
-
-Catalog = dict[str, College]  # "College of Sciences" -> the college
-
-
 def load_catalog() -> Catalog:
     with open(RAW_DIR / CATALOG_FILE) as file:
         return json.load(file)
@@ -84,8 +60,8 @@ def short_name(department_name: str) -> str:
 
 def reset_faculty(catalog: Catalog) -> None:
     """Takes out what an earlier run added, so a second run starts clean."""
-    for college_name in list(catalog):
-        college: College = catalog[college_name]
+    for college in catalog.values():
+        college["faculty"] = {}
         departments: dict[str, Department] = {}
 
         for department_name, department in college["departments"].items():
@@ -94,16 +70,13 @@ def reset_faculty(catalog: Catalog) -> None:
                 department["faculty"] = {}
                 departments[department_name] = department
 
-        # written out so "faculty" sits above "departments" in the file
-        catalog[college_name] = {
-            "subjects": college["subjects"],
-            "faculty": {},
-            "departments": departments,
-        }
+        college["departments"] = departments
 
 
-def get_faculty(catalog: Catalog, college_name: str, heading: str) -> Faculty:
-    """The faculty a person listed under this heading goes into."""
+def find_or_make_faculty(catalog: Catalog, college_name: str, heading: str) -> Faculty:
+    """The faculty a person listed under this heading goes into.
+    When no department matches the heading, a new department is made for it.
+    """
     college: College = catalog[college_name]
 
     # no heading: the person is listed under the college itself
@@ -115,8 +88,10 @@ def get_faculty(catalog: Catalog, college_name: str, heading: str) -> Faculty:
     if heading in SAME_DEPARTMENT:
         name_to_find = short_name(SAME_DEPARTMENT[heading])
 
-    # every college is searched, because the graduate page still has Computer Science
-    # under the College of Sciences
+    # Every college is searched, so a person goes where the catalog has the department
+    # now, even when the faculty page lists them under another college. The graduate
+    # page still has Computer Science under the College of Sciences, and the catalog
+    # has it in the College of AI, Cyber and Computing.
     for other_college in catalog.values():
         for department_name, department in other_college["departments"].items():
             if short_name(department_name) == name_to_find:
@@ -173,7 +148,7 @@ def get_professors() -> None:
                 if level == "undergraduate":
                     undergraduate_professor_names.add(name)
 
-                faculty: Faculty = get_faculty(catalog, college_name, heading)
+                faculty: Faculty = find_or_make_faculty(catalog, college_name, heading)
                 faculty[name] = {"title": title, "education": education}
                 listings += 1
 
