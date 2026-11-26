@@ -8,13 +8,13 @@ Two parts:
 
 2. The screen. For a sample of professors, it opens their professor page, one of their class pages,
    that course's page, and Analytical Mode from the class page, in the real built sidebar (like
-   tests/chaos.py, so `npm run build` first). It reads every number shown and checks it against an
+   tests/extension/chaos.py, so `npm run build` first). It reads every number shown and checks it against an
    answer worked out here, separately from the app's code, with exact fractions instead of
    floating point, so rounding mistakes can't hide. Because Analytical Mode's table is checked
    against the same answers as the pages, a number that differs between the two modes fails too.
 
-    .venv/bin/python tests/accuracy.py               the pipeline, then 40 professors
-    .venv/bin/python tests/accuracy.py --sample 200  more professors
+    .venv/bin/python tests/extension/accuracy.py               the pipeline, then 40 professors
+    .venv/bin/python tests/extension/accuracy.py --sample 200  more professors
 """
 
 import argparse
@@ -31,7 +31,7 @@ from playwright.sync_api import sync_playwright
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import chaos  # noqa: E402  (its server and its way of looking at the sidebar)
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 LETTERS = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"]
 POINTS = {"A+": 4, "A": 4, "A-": Fraction("3.67"), "B+": Fraction("3.33"), "B": 3, "B-": Fraction("2.67"),
           "C+": Fraction("2.33"), "C": 2, "C-": Fraction("1.67"), "D+": Fraction("1.33"), "D": 1, "D-": Fraction("0.67"), "F": 0}
@@ -405,7 +405,9 @@ def check_professor(s, answers, name, problems, rng):
     checked += compare(f"{name} · {code} (class page)", answers.class_page(name, code), s.frame().evaluate(READ_PAGE), problems)
 
     s.click("Analytical Mode")
-    s.wait_for("Analytical Mode's table and chart", lambda st: chaos.shows("Side by side")(st) and s.frame().locator(".main-svg").count() > 0, 20)
+    # A class with no letter grades (only incompletes, say) gets the table and a message, not a chart.
+    chart_or_message = lambda st: s.frame().locator(".main-svg").count() > 0 or chaos.shows("None of these have grades")(st)
+    s.wait_for("Analytical Mode's table and chart", lambda st: chaos.shows("Side by side")(st) and chart_or_message(st), 20)
     s.page.wait_for_timeout(300)
     shown = s.frame().evaluate(READ_ANALYTICS)
     rows = {row[0]: row[1:] for row in shown["rows"]}

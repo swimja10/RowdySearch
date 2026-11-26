@@ -9,9 +9,9 @@ It runs the built extension (dist/ and data/professors.json, so `npm run build` 
 Chromium: a fake Schedule Planner page runs the real content script, and its sidebar loads from a
 local server that injects the faults. Run it with:
 
-    .venv/bin/python tests/chaos.py              every scenario, then 25 random monkey runs
-    .venv/bin/python tests/chaos.py --monkey 100 more random runs
-    .venv/bin/python tests/chaos.py --only plotly --headed   one scenario, in a visible window
+    .venv/bin/python tests/extension/chaos.py              every scenario, then 25 random monkey runs
+    .venv/bin/python tests/extension/chaos.py --monkey 100 more random runs
+    .venv/bin/python tests/extension/chaos.py --only plotly --headed   one scenario, in a visible window
 """
 
 import argparse
@@ -28,7 +28,7 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 SIDEBAR_WIDTH = 420  # content/sidebar.ts
 
 # The fake registration page: one Schedule Planner table, plus a stand-in for the chrome.* APIs the
@@ -48,6 +48,17 @@ HOST_PAGE = """<!doctype html><html><head><meta charset="utf-8"><title>Schedule 
 } };</script>
 <script src="SIDEBAR_ORIGIN/dist/content.js"></script>
 </body></html>"""
+
+# The same page with a table in front that RowdySearch can't add buttons to: reading its rows fails.
+BROKEN_TABLE = """<table id="broken"><thead><tr><th>Subject</th><th>Course</th><th>Section</th><th>Instructor</th></tr></thead>
+<tbody><tr><td>MAT</td><td>1213</td><td>001</td><td><span>Beatty, Sean</span></td></tr></tbody></table>
+<script>Object.defineProperty(document.getElementById("broken"), "tBodies", {
+  get() { throw new Error("a table laid out in a way RowdySearch does not expect"); },
+});</script>
+"""
+BROKEN_TABLE_PAGE = HOST_PAGE.replace("<table>", BROKEN_TABLE + "<table>", 1)
+A_LATER_TABLE = """<thead><tr><th>Subject</th><th>Course</th><th>Section</th><th>Instructor</th></tr></thead>
+<tbody><tr><td>PHY</td><td>1943</td><td>003</td><td><span>Malik, Taha</span></td></tr></tbody>"""
 
 TYPES = {".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".html": "text/html", ".png": "image/png"}
 
@@ -90,6 +101,7 @@ class Chaos:
 
 CHAOS = Chaos()
 _corrupted_data = None
+_all_f_data = None
 
 
 def corrupted_professors():
@@ -124,6 +136,22 @@ def corrupted_professors():
     return _corrupted_data
 
 
+def all_f_professors():
+    """data/professors.json with every grade in PHY 1943 an F, so the course's average GPA is 0."""
+    global _all_f_data
+    if _all_f_data is None:
+        data = json.loads((ROOT / "data/professors.json").read_text(encoding="utf-8"))
+        for professor in data.values():
+            for sections in professor["courses"].get("PHY 1943", {"semesters": {}})["semesters"].values():
+                for section in sections:
+                    if section["grades"] is None:  # a section whose grades aren't out
+                        continue
+                    students = sum(section["grades"].values())
+                    section["grades"] = {grade: 0 for grade in section["grades"]} | {"F": students}
+        _all_f_data = json.dumps(data).encode()
+    return _all_f_data
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
@@ -132,6 +160,8 @@ class Handler(BaseHTTPRequestHandler):
         path = self.path.split("?")[0].split("#")[0]
         if path == "/host.html":
             return self.send(200, HOST_PAGE.replace("SIDEBAR_ORIGIN", self.server.sidebar_origin).encode(), ".html")
+        if path == "/broken-table.html":
+            return self.send(200, BROKEN_TABLE_PAGE.replace("SIDEBAR_ORIGIN", self.server.sidebar_origin).encode(), ".html")
 
         fault = CHAOS.fault_for(path)
         if fault:
@@ -141,7 +171,11 @@ class Handler(BaseHTTPRequestHandler):
         allowed = file.is_relative_to(ROOT / "dist") or file == ROOT / "data/professors.json"
         if not allowed or not file.is_file():
             return self.send(404, b"not found", ".txt")
-        body = corrupted_professors() if fault and fault.get("corrupt") else file.read_bytes()
+        body = file.read_bytes()
+        if fault and fault.get("corrupt"):
+            body = corrupted_professors()
+        if fault and fault.get("all_f"):
+            body = all_f_professors()
 
         if fault:
             if fault.get("hang"):
@@ -267,6 +301,10 @@ class Sidebar:
 
     def click(self, name, exact=True):
         self.frame().get_by_role("button", name=name, exact=exact).first.click()
+
+    def click_at_once(self, name):
+        """A click that doesn't wait for the button to hold still, for clicking during a movement."""
+        self.frame().get_by_role("button", name=name, exact=True).first.dispatch_event("click")
 
     def click_link(self, name):
         self.frame().get_by_role("link", name=name).first.click()
@@ -405,6 +443,85 @@ def chart_crashes(s):
     s.wait_for("the sidebar back at its normal width", lambda st: st["iframe"]["width"] == SIDEBAR_WIDTH, 10)
 
 
+def close_while_opening(s):
+    s.open_section()
+    s.wait_for("the class page", malik_class, 20)
+    for wait in (0, 150, 300, 400, 500, 700):  # milliseconds into the opening movement
+        s.click("Analytical Mode")
+        s.wait_for("Analytical Mode", shows("Side by side"), 10)
+        s.page.wait_for_timeout(wait)
+        s.click("✕ Close")
+        s.wait_for(f"the sidebar again, with Close pressed {wait} ms after opening",
+                   lambda st: st["iframe"]["width"] == SIDEBAR_WIDTH and malik_class(st), 10)
+
+
+def close_pressed_twice(s):
+    """A second press of Close while Analytical Mode is closing must do nothing. It used to run the
+    closing a second time, which shut Analytical Mode again if it had been reopened by then."""
+    s.open_section()
+    s.wait_for("the class page", malik_class, 20)
+    back_in_sidebar = lambda st: st["iframe"]["width"] == SIDEBAR_WIDTH and malik_class(st)
+    for gap in (50, 300, 450):  # milliseconds between the two presses
+        s.click("Analytical Mode")
+        s.wait_for("Analytical Mode", shows("Side by side"), 10)
+        s.page.wait_for_timeout(1500)  # the opening movement
+        s.click_at_once("✕ Close")
+        s.page.wait_for_timeout(gap)
+        s.click_at_once("✕ Close")
+        s.wait_for("the sidebar again", back_in_sidebar, 10)
+
+        s.click("Analytical Mode")
+        s.page.wait_for_timeout(1500)  # long enough for a second closing to have shut it
+        state = s.look()
+        if not shows("Side by side")(state) or state["iframe"]["width"] == SIDEBAR_WIDTH:
+            raise AssertionError(f"Analytical Mode, reopened after two presses of Close {gap} ms apart, "
+                                 f"was shut again (iframe {state['iframe']})")
+        s.click("✕ Close")
+        s.wait_for("the sidebar again", back_in_sidebar, 10)
+
+
+def broken_table(s):
+    """A table that buttons can't be added to must not stop the other tables, now or later."""
+    s.page.goto(s.page.url.replace("/host.html", "/broken-table.html"))
+    buttons = s.page.locator("table:not(#broken) button", has_text="Search")  # the buttons of the other tables
+    buttons.first.wait_for(timeout=10_000)
+    assert buttons.count() == 4, f"the table after the broken one has {buttons.count()} Search buttons, not 4"
+
+    # The site adds a table later. RowdySearch is still watching the page, so it gets its button.
+    s.page.evaluate("html => { const table = document.createElement(\"table\"); table.innerHTML = html; document.body.append(table); }", A_LATER_TABLE)
+    s.page.wait_for_function("document.querySelectorAll(\"table:last-of-type button\").length === 1", timeout=10_000)
+    assert not s.errors, f"the broken table stopped the script: {s.errors[:2]}"
+    buttons.last.click()
+    s.wait_for("the class from the table that was added later", malik_class, 20)
+
+
+def share_messages(s):
+    """A second share message stays its full 4 seconds: the first message's timer doesn't clear it."""
+    s.context.route(lambda url: "127.0.0.1" not in url, lambda route: route.abort())  # the apps' own sites aren't opened
+    s.open_section()
+    s.wait_for("the class page", malik_class, 20)
+    s.click("Home")
+    s.wait_for("the home page", shows("Search any professor"), 5)
+    s.click_link("Instagram")
+    s.wait_for("the message about Instagram", shows("in Instagram"), 5)
+    s.page.wait_for_timeout(2500)
+    s.click_link("Snapchat")
+    s.wait_for("the message about Snapchat", shows("in Snapchat"), 5)
+    s.page.wait_for_timeout(2500)  # 5 seconds after the first message: its timer has gone off
+    assert shows("in Snapchat")(s.look()), "the second message was cleared by the first message's timer"
+    s.wait_for("the message gone after its own 4 seconds", lambda st: "in Snapchat" not in st["text"], 5)
+
+
+def all_f_course(s):
+    """A course where every grade is an F has an average GPA of 0, and nothing is a percent of 0."""
+    CHAOS.set([{"path": "professors.json", "all_f": True}])
+    s.open_section()
+    s.wait_for("the class page", malik_class, 20)
+    s.click("Analytical Mode")
+    s.wait_for("the comparison, with the class the same as the course's average", shows("Side by side", "Same as average"), 20)
+    assert "NaN" not in s.look()["text"], "the comparison shows NaN"
+
+
 def analytics_crashes(s):
     CHAOS.set([{"path": "sidebar.js", "replace": [("function AnalyticsMode() {", "function AnalyticsMode() { throw new Error('chaos: AnalyticsMode');")]}])
     s.open_section()
@@ -475,9 +592,10 @@ def course_syllabus_crash(s):
 
 
 SCENARIOS = [healthy, slow_data, data_hiccup, data_down, data_cut_off, data_hangs, corrupted_data, no_charts,
-             charts_come_back, no_libraries, no_styles, styles_cut_off, page_crashes, chart_crashes, analytics_crashes, bad_address,
-             empty_instructor, course_page, course_page_empty, course_page_corrupted, course_stats_crash,
-             course_syllabus_crash]
+             charts_come_back, no_libraries, no_styles, styles_cut_off, page_crashes, chart_crashes,
+             close_while_opening, close_pressed_twice, broken_table, share_messages, all_f_course,
+             analytics_crashes, bad_address, empty_instructor, course_page, course_page_empty,
+             course_page_corrupted, course_stats_crash, course_syllabus_crash]
 
 
 def monkey(s, rng):

@@ -9,7 +9,14 @@ import type { AddressInfo } from "node:net";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { test } from "node:test";
-import { BATCH_SIZE, afterSubmitting, changedAddresses, pageFingerprints, siteHasKey, submit } from "../site/scripts/indexnow.mjs";
+import {
+  BATCH_SIZE,
+  afterSubmitting,
+  changedAddresses,
+  pageFingerprints,
+  siteHasKey,
+  submit,
+} from "../../site/scripts/indexnow.mjs";
 
 const SITE = "https://rowdysearch.com";
 const KEY = "0123456789abcdef0123456789abcdef";
@@ -17,7 +24,9 @@ const KEY = "0123456789abcdef0123456789abcdef";
 type Request = { path: string; body: any };
 
 // A server that answers each request the way `answer` says, and keeps what it was sent.
-async function standIn(answer: (request: Request, number: number) => { status: number; body?: string; hang?: boolean }) {
+async function standIn(
+  answer: (request: Request, number: number) => { status: number; body?: string; hang?: boolean },
+) {
   const requests: Request[] = [];
   const server = createServer((incoming: IncomingMessage, reply: ServerResponse) => {
     let text = "";
@@ -32,16 +41,29 @@ async function standIn(answer: (request: Request, number: number) => { status: n
   });
   await new Promise<void>((done) => server.listen(0, "127.0.0.1", done));
   const address = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
-  return { address, requests, close: () => { server.closeAllConnections(); server.close(); } };
+  return {
+    address,
+    requests,
+    close: () => {
+      server.closeAllConnections();
+      server.close();
+    },
+  };
 }
 
-const pages = (count: number) => Array.from({ length: count }, (_, number) => `${SITE}/professors/p${number}/`);
+const pages = (count: number) =>
+  Array.from({ length: count }, (_, number) => `${SITE}/professors/p${number}/`);
 
 // A built site with these pages, and a sitemap that lists them.
 function builtSite(contents: Record<string, string>): string {
   const folder = mkdtempSync(path.join(tmpdir(), "indexnow-"));
-  const locations = Object.keys(contents).map((address) => `<url><loc>${SITE}${address}</loc></url>`).join("");
-  writeFileSync(path.join(folder, "sitemap-index.xml"), `<sitemapindex><sitemap><loc>${SITE}/sitemap-pages.xml</loc></sitemap></sitemapindex>`);
+  const locations = Object.keys(contents)
+    .map((address) => `<url><loc>${SITE}${address}</loc></url>`)
+    .join("");
+  writeFileSync(
+    path.join(folder, "sitemap-index.xml"),
+    `<sitemapindex><sitemap><loc>${SITE}/sitemap-pages.xml</loc></sitemap></sitemapindex>`,
+  );
   writeFileSync(path.join(folder, "sitemap-pages.xml"), `<urlset>${locations}</urlset>`);
   for (const [address, page] of Object.entries(contents)) {
     mkdirSync(path.join(folder, address), { recursive: true });
@@ -62,8 +84,12 @@ test("a page counts as changed when what it says changed, not when a script or s
   const page = (style: string, median: string) =>
     `<link rel="stylesheet" href="/_astro/Base.${style}.css"><script src="/_astro/search.${style}.js"></script>` +
     `<link rel="preload" href="/search-index.${"ab12".repeat(3)}${style === "one" ? "0" : "1"}.json"><p>The median grade was ${median}.</p>`;
-  const first = pageFingerprints(builtSite({ "/": page("one", "B"), "/courses/mat-1213/": page("one", "C+") }));
-  const rebuilt = pageFingerprints(builtSite({ "/": page("two", "B"), "/courses/mat-1213/": page("two", "C") }));
+  const first = pageFingerprints(
+    builtSite({ "/": page("one", "B"), "/courses/mat-1213/": page("one", "C+") }),
+  );
+  const rebuilt = pageFingerprints(
+    builtSite({ "/": page("two", "B"), "/courses/mat-1213/": page("two", "C") }),
+  );
   assert.deepEqual(Object.keys(first), [`${SITE}/`, `${SITE}/courses/mat-1213/`]);
   assert.deepEqual(changedAddresses(first, rebuilt), [`${SITE}/courses/mat-1213/`]);
 });
@@ -76,7 +102,10 @@ test("addresses go 10,000 at a time, with the key and where to find it", async (
 
   assert.equal(result.problem, null);
   assert.deepEqual(result.accepted, addresses);
-  assert.deepEqual(indexNow.requests.map((request) => request.body.urlList.length), [BATCH_SIZE, BATCH_SIZE, 5]);
+  assert.deepEqual(
+    indexNow.requests.map((request) => request.body.urlList.length),
+    [BATCH_SIZE, BATCH_SIZE, 5],
+  );
   for (const request of indexNow.requests) {
     assert.equal(request.body.host, "rowdysearch.com");
     assert.equal(request.body.key, KEY);
@@ -96,7 +125,11 @@ for (const status of [400, 403, 422, 429, 500, 503]) {
   test(`when IndexNow answers ${status} on the second request, only the first 10,000 count as submitted`, async () => {
     const indexNow = await standIn((_, number) => ({ status: number >= 2 ? status : 200 }));
     const addresses = pages(BATCH_SIZE * 3);
-    const result = await submit(addresses, { key: KEY, endpoint: indexNow.address, retryWaitMs: 10 });
+    const result = await submit(addresses, {
+      key: KEY,
+      endpoint: indexNow.address,
+      retryWaitMs: 10,
+    });
     indexNow.close();
 
     assert.equal(result.problem, `IndexNow answered ${status}`);
@@ -113,7 +146,10 @@ test("a 403 is tried once more, since IndexNow refused the first submission and 
   indexNow.close();
   assert.equal(result.problem, null);
   assert.deepEqual(result.accepted, addresses);
-  assert.deepEqual(indexNow.requests.map((request) => request.body.urlList.length), [BATCH_SIZE, BATCH_SIZE, 2]);
+  assert.deepEqual(
+    indexNow.requests.map((request) => request.body.urlList.length),
+    [BATCH_SIZE, BATCH_SIZE, 2],
+  );
 });
 
 test("when IndexNow never answers, it gives up and nothing counts as submitted", async () => {
@@ -141,7 +177,8 @@ test("only what was accepted is remembered, so the rest is tried again", () => {
 
 test("the live site has to have the matching key file before anything is submitted", async () => {
   const live = await standIn((request) =>
-    request.path === "/indexnow-key.txt" ? { status: 200, body: `${KEY}\n` } : { status: 404 });
+    request.path === "/indexnow-key.txt" ? { status: 200, body: `${KEY}\n` } : { status: 404 },
+  );
   assert.equal(await siteHasKey(KEY, live.address), true);
   assert.equal(await siteHasKey("another-key", live.address), false);
   live.close();

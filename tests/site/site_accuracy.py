@@ -1,8 +1,8 @@
 """Checks the numbers on the built website against data/professors.json.
 
     cd site && npm run build
-    python3 tests/site_accuracy.py            # 300 random pages of each kind
-    python3 tests/site_accuracy.py --all      # every page
+    python3 tests/site/site_accuracy.py            # 300 random pages of each kind
+    python3 tests/site/site_accuracy.py --all      # every page
 
 The website works its numbers out with the extension's TypeScript. This works them out again from
 the file itself, with exact fractions and none of that code, then reads each built page's summary
@@ -19,7 +19,7 @@ import sys
 from fractions import Fraction
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 DATA_FILE = ROOT / "data" / "professors.json"
 SLUGS_FILE = ROOT / "site" / "slugs.json"
 BUILT_SITE = ROOT / "site" / "dist"

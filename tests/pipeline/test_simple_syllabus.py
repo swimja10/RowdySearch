@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from scrappers.simple_syllabus import get_course_info, save
+from collectors.simple_syllabus import get_course_info, save
 
 FIXTURE = Path(__file__).parent / "fixtures" / "simple_syllabus_page0.json"
 HAYES = "e0f17f4d-bd9a-4307-9e20-2216797e902a"
@@ -58,7 +58,7 @@ def test_section_is_stored_with_term_section_and_code(api_page):
     item = {
         "term": "Fall 2026",
         "section": "003",
-        "syllabus_code": "3u2jp5ex9",
+        "syllabusCode": "3u2jp5ex9",
     }
 
     assert item in course["sections"]
@@ -79,7 +79,7 @@ def test_co_taught_section_appears_under_each_professor():
     get_course_info({"items": [item]}, data)
     for pid in ("prof-a", "prof-b"):
         codes = [
-            s["syllabus_code"] for s in data[pid]["courses"]["CS 1083"]["sections"]
+            s["syllabusCode"] for s in data[pid]["courses"]["CS 1083"]["sections"]
         ]
         assert "abc123xyz" in codes
 

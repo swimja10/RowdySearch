@@ -1,6 +1,6 @@
 """Chaos test for the website: breaks it on purpose and checks that it recovers.
 
-The same idea as tests/chaos.py, which does this to the extension. It serves the built site
+The same idea as tests/extension/chaos.py, which does this to the extension. It serves the built site
 (site/dist, so `cd site && npm run build` first) from a local server that makes files fail while
 the site is in use: the search index arrives slowly, not at all, cut off, or in the wrong shape;
 the search's own code fails to load; Analytical Mode's data, charts, or code fail to load;
@@ -10,10 +10,10 @@ Each scenario checks three things. The page is never blank, because every page's
 its HTML. The search says what's wrong instead of doing nothing. And it comes back once things
 work again, without reloading the page.
 
-    .venv/bin/python tests/site_chaos.py                 every scenario, then 25 random monkey runs
-    .venv/bin/python tests/site_chaos.py --monkey 100    more random runs
-    .venv/bin/python tests/site_chaos.py --only index --headed    some scenarios, in a visible window
-    .venv/bin/python tests/site_chaos.py --browser webkit         in Safari's engine (or firefox)
+    .venv/bin/python tests/site/site_chaos.py                 every scenario, then 25 random monkey runs
+    .venv/bin/python tests/site/site_chaos.py --monkey 100    more random runs
+    .venv/bin/python tests/site/site_chaos.py --only index --headed    some scenarios, in a visible window
+    .venv/bin/python tests/site/site_chaos.py --browser webkit         in Safari's engine (or firefox)
 """
 
 import argparse
@@ -29,7 +29,7 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 SITE = ROOT / "site" / "dist"
 
 TYPES = {".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".html": "text/html",
@@ -163,7 +163,7 @@ class Site:
         self.browser = browser
         self.origin = origin
         viewport = {"width": 390, "height": 800} if phone else {"width": 1280, "height": 800}
-        self.context = browser.new_context(viewport=viewport, java_script_enabled=javascript)
+        self.context = browser.new_context(viewport=viewport, java_script_enabled=javascript, has_touch=phone)
         self.page = self.context.new_page()
         self.errors = []  # anything the site's code threw and didn't catch
         self.page.on("pageerror", lambda error: self.errors.append(str(error)))
@@ -373,6 +373,21 @@ def arrow_keys(s):
     s.wait_for("the page the arrow keys picked", lambda st: st["path"] == picked, 15)
 
 
+def up_arrow_first(s):
+    """Up before anything is highlighted starts from the last result."""
+    s.goto("/")
+    s.type("smith")
+    s.wait_for("several results", lambda st: st["panel"].count("\n") > 6, 15)
+    s.press("ArrowUp")
+    last = s.page.evaluate("[...document.querySelectorAll('[data-option]')].at(-1).getAttribute('href')")
+    picked = s.page.evaluate("document.querySelector('[data-option][aria-selected=true]').getAttribute('href')")
+    assert picked == last, f"Up went to {picked}, not to the last result {last}"
+    s.press("ArrowUp")
+    above = s.page.evaluate("[...document.querySelectorAll('[data-option]')].at(-2).getAttribute('href')")
+    picked = s.page.evaluate("document.querySelector('[data-option][aria-selected=true]').getAttribute('href')")
+    assert picked == above, f"a second Up went to {picked}, not to the result above the last, {above}"
+
+
 def back_and_forward(s):
     s.goto("/")
     s.type("beatty mat 1213")
@@ -394,6 +409,39 @@ def nothing_to_find(s):
     assert s.look()["path"] == "/", "Enter went somewhere with nothing to open"
     s.press("Escape")
     s.wait_for("the results closed", lambda st: st["panel"] == "", 5)
+
+
+# Safari doesn't put the cursor on a link that is clicked or tapped: the cursor just leaves the box.
+# This makes the other browsers do the same, so the test catches what only Safari would.
+LIKE_SAFARI = """
+document.addEventListener('mousedown', (event) => {
+    if (!event.target.closest('a')) return;
+    event.preventDefault();
+    document.activeElement.blur();
+}, true);
+"""
+
+
+def tap_a_result(s):
+    s.close()
+    s.__init__(s.browser, s.origin, phone=True)
+    s.page.add_init_script(LIKE_SAFARI)
+    s.goto("/")
+    s.type("beatty mat 1213")
+    s.wait_for("results", results_show("MAT 1213", "Sean Beatty"), 15)
+    s.page.locator("[data-option]").first.tap()
+    s.wait_for("the page of the result that was tapped", on_page(BEATTY_CALCULUS, "median grade was"), 15)
+
+    # The keyboard's Done key takes the cursor out of the box. The results stay, to be tapped.
+    s.goto("/")
+    s.type("data structures")
+    s.wait_for("results", results_show("CS 2123"), 15)
+    s.box().blur()
+    s.page.wait_for_timeout(300)
+    assert results_show("CS 2123")(s.look()), "closing the keyboard closed the results"
+
+    s.page.locator("h1").tap()
+    s.wait_for("the results closed by a tap somewhere else", lambda st: st["panel"] == "", 5)
 
 
 # ---------------------------------------------------------------- Analytical Mode
@@ -661,8 +709,11 @@ def found_by_search_engines(s):
     assert "Disallow" not in robots, "robots.txt keeps search engines out of something"
     sitemap = re.search(r"^Sitemap: (\S+)$", robots, re.MULTILINE)
     assert sitemap, "robots.txt doesn't point to the sitemap"
-    parts = locations(read(sitemap.group(1).replace(REAL_SITE, "")))
+    index = read(sitemap.group(1).replace(REAL_SITE, ""))
+    parts = locations(index)
     assert len(parts) == 5, f"the sitemap has {len(parts)} parts, not 5"
+    # Tools that don't read robots.txt guess /sitemap.xml.
+    assert read("/sitemap.xml") == index, "/sitemap.xml isn't the same list as the sitemap robots.txt points to"
     pages = [page for part in parts for page in locations(read(part.replace(REAL_SITE, "")))]
     assert len(pages) > 19000 and len(pages) == len(set(pages)), f"the sitemap lists {len(pages)} pages, {len(set(pages))} different"
 
@@ -717,7 +768,7 @@ def found_by_search_engines(s):
 
 SCENARIOS = [healthy, slow_index, index_hiccup, index_down, index_cut_off, index_wrong_shape, index_hangs,
              no_background_thread, no_search_code, no_scripts, javascript_off, no_styles, preload_fails,
-             arrow_keys, back_and_forward, nothing_to_find,
+             arrow_keys, up_arrow_first, back_and_forward, nothing_to_find, tap_a_result,
              compare_healthy, compare_from_a_page, compare_data_hiccup, compare_data_down, compare_data_cut_off,
              compare_no_charts, compare_list_down, compare_code_down, compare_bad_address, compare_javascript_off,
              paging, paging_two_lists, paging_javascript_off, phone_menu, desktop_links, found_by_search_engines]

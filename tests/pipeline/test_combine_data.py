@@ -1,21 +1,17 @@
 """Checks the parts of combine_data.py that choose titles, departments, and who a section belongs to.
 
-    .venv/bin/python -m pytest tests/test_combine_data.py
+    .venv/bin/python -m pytest tests/pipeline
 
-It uses small made-up data, so it runs in a moment and doesn't need the scraped files.
+It uses small made-up data, so it runs in a moment and doesn't need the collected files.
 """
 
-import sys
 from collections import Counter
-from pathlib import Path
 
 import pytest
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
-from combine_data import Combiner, main_department, split_cross_listed_title  # noqa: E402
-from course_titles import abbreviates, full_titles  # noqa: E402
-from same_names import find_same_names  # noqa: E402
+from combine_data import Combiner, main_department, split_cross_listed_title
+from course_titles import abbreviates, full_titles
+from same_names import find_same_names
 
 # ---------------------------------------------------------------- titles
 
